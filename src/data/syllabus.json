@@ -1,0 +1,5129 @@
+[
+    {
+        "id_name": "HS01 哲学",
+        "target_bit": 323,
+        "credits": 2.0,
+        "outline": "講義の概要：哲学者は古来、この世界や人間に関わる根本的な問題について議論をしてきた。この科目の目的は、そうした問題の中から有名で重要な問題を取り出して受講者と一緒に考えていくことである。これにより哲学で歴史的にどのようなことが問題になってきたかを知ると同時に、こうした問題に正面から向き合うことで、受講者は込み入った問題をきちんと把握しそれについて筋道たてて議論をする力（哲学的に議論する力）が養われる。",
+        "grading": {
+            "exam": 40,
+            "report": 45,
+            "others": 15
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "金-9",
+                    "金-10",
+                    "火-9",
+                    "火-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS05 文学",
+        "target_bit": 195,
+        "credits": 2.0,
+        "grading": {
+            "exam": 40,
+            "report": 60,
+            "others": 0
+        },
+        "outline": "黄河と長江という二大河を中心に育まれた中華文明には、それに相応しい悠久の歴史、思想があり、膨大な文学、文化があります。諸文化の源流といえる「巫祝」と呼ばれるシャーマン（古代の呪術者）への理解と、それを伝えてきた媒体である「漢字」、そしてそれが思想や文学として花開いた「故事成語」や「漢詩」の世界について具体例を挙げながら学びたいと思います。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "9/7(月)",
+                    "9/8(火)",
+                    "9/9(水)",
+                    "9/10(木)"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS06 芸術学",
+        "target_bit": 323,
+        "credits": 2.0,
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "outline": "先史時代から現代までの日本美術を、時代・作家・ジャンルを超えた横断的なテーマで取り上げ、編年的な美術史、作家論ではなく、美術をめぐる交流・影響・受容を通して、作品が生まれた背景、受容者層の動向を知り、過去の文化遺産、現代の美術作品を鑑賞する知識や感性を養い、創造的な発想、物事の見方を培う。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "金-9",
+                    "金-10",
+                    "火-9",
+                    "火-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS07 ジェンダー・セクシュアリティ論",
+        "target_bit": 195,
+        "credits": 2.0,
+        "grading": {
+            "exam": 20,
+            "report": 80,
+            "others": 0
+        },
+        "outline": "ジェンダー／セクシュアリティ研究とは、「性」をめぐる様々な事柄について、自然科学ではなく社会科学の側からアプローチする学問分野である。現在の私たちが知っておくべきジェンダー／セクシュアリティに関する知識を提供するとともに、具体的な事実やデータ、分析に基づいて、考察を深めていく。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "8/25(火)",
+                    "8/26(水)",
+                    "8/27(木)",
+                    "8/28(金)"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS10 経済学",
+        "target_bit": 67,
+        "credits": 2.0,
+        "grading": {
+            "exam": 60,
+            "report": 20,
+            "others": 20
+        },
+        "outline": "人類が長い年月をかけて築いてきた「市場」制度の機能について学習します。経済学は、家計と企業の意思決定や特定の産業の価格や生産の分析を行う「ミクロ経済学」と経済全体の動きと失業や産出量、経済成長、物価水準、インフレーションといった集計された変数に焦点を当てる「マクロ経済学」の分野から成ります。本授業では、主にミクロ経済学の基礎理論について学習します。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "金-9",
+                    "金-10",
+                    "火-9",
+                    "火-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS11 社会学",
+        "target_bit": 67,
+        "credits": 2.0,
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "outline": "社会学とは近代社会における社会の仕組みと社会問題を探求する学問です。本講義では社会学における基本的な知見と調査方法を学びますが、社会問題を自らの問題として理解するために、プレゼンテーションを積極的に取り入れています。第六回以降は、質的調査について演習形式のグループワークを通じて学んでいきます。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS12 日本国憲法",
+        "target_bit": 195,
+        "credits": 2.0,
+        "grading": {
+            "exam": 70,
+            "report": 0,
+            "others": 30
+        },
+        "outline": "本講義では、憲法の意義からはじめて、その特性、立憲主義という考え方や人権保障の歴史を学んだ上で、日本国憲法における人権の保障と国を治める仕組みの関連性と全体像を理解していきます。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "9/14(月)",
+                    "9/15(火)",
+                    "9/16(水)",
+                    "9/17(木)",
+                    "9/18(金)"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS13 国際関係論",
+        "target_bit": 195,
+        "credits": 2.0,
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "outline": "本講義の目的は、新型コロナウイルス感染拡大を踏まえ、転換期を迎えている今日の世界と日本を理解するための分析視角と考察枠組みを学ぶことにある。2011年3月11日の東日本大震災以後の日本を取り巻く国内・国際情勢に焦点を当てつつ、授業を行なう。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "9/1(火)",
+                    "9/2(水)",
+                    "9/3(木)",
+                    "9/4(金)"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS16 健康教育論",
+        "target_bit": 67,
+        "credits": 2.0,
+        "grading": {
+            "exam": 50,
+            "report": 50,
+            "others": 0
+        },
+        "outline": "本講義は、健康教育の立場から、健康を多面的に捉えることを目的とする。ヘルスプロモーションの基本的な考え方を基盤に、健康を単に「病気の有無」として捉えるのではなく、日常生活や社会環境の中で形成・維持される資源およびプロセスとして理解する。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS17 科学史",
+        "target_bit": 67,
+        "credits": 2.0,
+        "grading": {
+            "exam": 40,
+            "report": 45,
+            "others": 15
+        },
+        "outline": "現代社会の繁栄は科学技術の成功なしにはあり得ない。その一方で原子力発電やゲノム編集など、現代科学はさまざまな社会的問題を突きつけている。本科目ではそうした自然科学の本質を歴史的に振り返る。具体的には科学の歴史を古代ギリシアから遡る一方現代の科学および科学者が置かれている問題についても素描する。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS20 アカデミックスキル１",
+        "target_bit": 3,
+        "credits": 2.0,
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "outline": "教養科目の基礎となる技法―情報のインプットである「読む」、情報から自分の主張を組み立てる「考える」、主張の表現である「書く」の3つを論理的に行うことを学ぶ。また、学問を行う上での基本的マナーを身に付けることで、これからの大学生活の基礎を修得する。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "水-1",
+                    "水-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS21 アカデミックスキル２",
+        "target_bit": 259,
+        "credits": 2.0,
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "outline": "特定のテーマについて問題を発見し、設定することを通して、人文・社会科学の基礎および問題解決型教養の基礎を修得する。講義による基礎知識の確認・習得に加え、ペアワーク・グループワークやディスカッションを中心とした参加型の学習を行う。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS22 地域社会学",
+        "target_bit": 323,
+        "credits": 2.0,
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "outline": "地域社会学とは地域社会における社会構造と地域課題を探求する学問です。本講義では地域社会が現在直面している地域課題やデジタルゲームを用いた地域貢献について学びますが、それらを自分自身の「地元の問題」として理解するために、授業ではプレゼンテーションを取り入れています。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS23 経済発展論",
+        "target_bit": 323,
+        "credits": 2.0,
+        "grading": {
+            "exam": 60,
+            "report": 20,
+            "others": 20
+        },
+        "outline": "人類700万年の発展について学習します。まず、他の動物には見られない人間特有の社会性について理解を深めます。次に、近代以前の社会に目を向けて、人類社会の発展に多大な影響を与えた出来事（光と影）について学習します。それから、近代以降の社会に目を向けて、国家が経済的に発展・衰退するメカニズムについて多角的に検討していきます。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "金-9",
+                    "金-10",
+                    "火-9",
+                    "火-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS27 心理言語学概論",
+        "target_bit": 67,
+        "credits": 2.0,
+        "grading": {
+            "exam": 40,
+            "report": 30,
+            "others": 30
+        },
+        "outline": "この授業では、心理言語学の基本を理論と実務の両面から学びます。毎回の授業は講義と実習の二部構成となります。心理言語学の基本的な考え方を実験例を通じて学びながら、JavaScript言語（PCIbexサーバー経由）を用いて実験内容をカスタマイズし、収集したデータをR言語による統計分析することを体験します。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "HS28 精神保健学",
+        "target_bit": 67,
+        "credits": 2.0,
+        "grading": {
+            "exam": 0,
+            "report": 30,
+            "others": 70
+        },
+        "outline": "精神保健学は、人々の心の健康に着目した学問です。この授業では、学生時代に精神的な健康を自らプロデュースできるようにするために基礎的な知識を学びます。また、青年期から成人期に起こり得る精神疾患や疾病の予防・対策について検討していきます。運動と精神的な健康との関係についても学び、適切な運動について考える機会にします。",
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SS01 健康・スポーツ科学実習1",
+        "target_bit": 129,
+        "credits": 1.0,
+        "outline": "本授業は、新入生が大学生活の初期段階において心身ともに適応し、健康的でバランスの取れた生活リズムを形成することを目的とした、健康・スポーツ科学科目群の初年次導入的実習科目である。運動・スポーツ活動を基盤とする複数の実習領域を通して、身体を動かす楽しさを体験するとともに、活動中の身体反応や体調の変化を観察・振り返りながら、自身の体力水準や運動強度に気づき、調整しながら活動に取り組む。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "C1",
+                "schedule": [
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C2",
+                "schedule": [
+                    "月-7",
+                    "月-8"
+                ]
+            },
+            {
+                "class_id": "C3",
+                "schedule": [
+                    "月-3",
+                    "月-4"
+                ]
+            },
+            {
+                "class_id": "C4",
+                "schedule": [
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "C5",
+                "schedule": [
+                    "火-3",
+                    "火-4"
+                ]
+            },
+            {
+                "class_id": "C6",
+                "schedule": [
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SS02 健康・スポーツ科学実習2",
+        "target_bit": 385,
+        "credits": 1.0,
+        "outline": "健康スポーツ科学実習2は、後期に開講される実習科目であり、季節の移り変わりに伴う環境条件の変化を踏まえた運動・スポーツの実践を行う。さまざまな運動・スポーツ活動を基盤とする複数の実習領域を通して、自己の体力や運動負荷を科学的な視点から客観的にふりかえり、自ら判断し調整する力の形成を主眼とする。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "C1",
+                "schedule": [
+                    "火-7",
+                    "火-8"
+                ]
+            },
+            {
+                "class_id": "C2",
+                "schedule": [
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C3",
+                "schedule": [
+                    "月-7",
+                    "月-8"
+                ]
+            },
+            {
+                "class_id": "C4",
+                "schedule": [
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C5",
+                "schedule": [
+                    "火-3",
+                    "火-4"
+                ]
+            },
+            {
+                "class_id": "C6",
+                "schedule": [
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SS03 健康・スポーツ科学実習3",
+        "target_bit": 143,
+        "credits": 1.0,
+        "outline": "健康スポーツ科学実習3は、留学生を対象とした実習科目であり、運動・スポーツ活動を基盤とする複数の実習領域を通して、スポーツ活動を共通言語として多様な文化的・言語的背景をもつ学生同士が協働的に学ぶことを目的とする。言語や文化、運動経験の違いを前提に、身体活動を介した相互理解と協働の経験を重視する。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SS04 生涯スポーツ科学実習",
+        "credits": 1.0,
+        "outline": "本授業は、生涯にわたって実践可能な運動・スポーツ活動を対象に、単一実習領域（選択制）による短期集中型の実習を行う科目である。水泳、バレーボール、スキー、スノーボード、ヨガ・コンディショニング、動きの科学といった各実習領域について、学生は一つの実習領域に集中的に取り組むことで、技能の習得に加え、安全管理、用具の扱い方、運動を継続するための知識を体系的に学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "notes": "※評価は「生涯スポーツに関する理解度(25%)」「運動技能の習得度(25%)」「安全配慮および協働的な関わり(25%)」「主体的・自律的な実践態度(25%)」で総合的に評価されます。各領域には定員があり、希望者多数の場合は抽選となります。",
+        "classes": [
+            {
+                "class_id": "水泳 (夏季集中)",
+                "target_bit": 207,
+                "schedule": [
+                    "8/31(月)",
+                    "9/1(火)",
+                    "9/2(水)",
+                    "9/3(木)"
+                ]
+            },
+            {
+                "class_id": "動きの科学 (夏季集中)",
+                "target_bit": 207,
+                "schedule": [
+                    "9/7(月)",
+                    "9/8(火)",
+                    "9/10(木)",
+                    "9/11(金)"
+                ]
+            },
+            {
+                "class_id": "バレーボール (夏季集中)",
+                "target_bit": 207,
+                "schedule": [
+                    "9/15(火)",
+                    "9/16(水)",
+                    "9/17(木)",
+                    "9/18(金)"
+                ]
+            },
+            {
+                "class_id": "ヨガ・コンディショニング (第3クォーター)",
+                "target_bit": 271,
+                "schedule": [
+                    "水-5",
+                    "水-6",
+                    "水-7",
+                    "水-8"
+                ]
+            },
+            {
+                "class_id": "スキー (冬季集中)",
+                "target_bit": 463,
+                "schedule": [
+                    "TBD"
+                ]
+            },
+            {
+                "class_id": "スノーボード (冬季集中)",
+                "target_bit": 463,
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN01 Introductory English 1",
+        "target_bit": 1,
+        "credits": 1.0,
+        "outline": "This course aims to develop learners’ four language skills of reading, writing, listening, and speaking for both general communication and for computer science-related topics. In addition, the course aims to improve learners’ fluency with English; learners’ ability to engage in meaningful communicative interaction, and also further learners’ knowledge of useful and important vocabulary.",
+        "grading": {
+            "exam": 35,
+            "report": 60,
+            "others": 5
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN02 Introductory English 2",
+        "target_bit": 65,
+        "credits": 1.0,
+        "outline": "This course builds on Introductory English 1 and aims to develop learners’ four language skills of reading, writing, listening, and speaking for both general communication and for computer science-related topics. In addition, the course aims to improve learners’ fluency with English; learners’ ability to engage in meaningful communicative interaction, and also further learners’ knowledge of useful and important vocabulary.",
+        "grading": {
+            "exam": 35,
+            "report": 60,
+            "others": 5
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN03 Bridge 1 to Intermediate English",
+        "target_bit": 257,
+        "credits": 2.0,
+        "outline": "This course continues from the Introductory English 1 and Introductory English 2 courses taught in the first two quarters of the freshman year. Bridge 1 to Intermediate English aims to continue developing learners’ four language skills of reading, writing, listening and speaking for both general communication and for computer science-related topics.",
+        "grading": {
+            "exam": 35,
+            "report": 60,
+            "others": 5
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "金-5",
+                    "金-6",
+                    "火-5",
+                    "火-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN04 Bridge 2 to Intermediate English",
+        "target_bit": 321,
+        "credits": 2.0,
+        "outline": "This course continues from the Introductory English 1, Introductory English 2, and Bridge 1 to Intermediate English courses taught in the first three quarters of the freshman year. Bridge 2 to Intermediate English aims to continue developing learners’ four language skills of reading, writing, listening and speaking for both general communication and for computer science-related topics.",
+        "grading": {
+            "exam": 35,
+            "report": 60,
+            "others": 5
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "金-7",
+                    "金-8",
+                    "火-7",
+                    "火-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "金-5",
+                    "金-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN05 Intermediate English 1",
+        "target_bit": 2,
+        "credits": 1.0,
+        "outline": "Intermediate English 1 is a learner-centered course designed around the functional use of language and the communicative needs of University of Aizu (UoA) computer science students. Therefore, English is viewed principally as a tool for communication, and learning content and activities are chosen that best enable learners to effectively acquire and apply English language knowledge and skills in situations they encounter during their academic studies at UoA.",
+        "grading": {
+            "exam": 50,
+            "report": 40,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN06 Intermediate English 2",
+        "target_bit": 66,
+        "credits": 1.0,
+        "outline": "Intermediate English 2 follows from Intermediate English 1, taught in the first quarter of semester one. This is a learner-centered course designed around the functional use of language and the communicative needs of University of Aizu (UoA) computer science students.",
+        "grading": {
+            "exam": 50,
+            "report": 40,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN07 Advanced English",
+        "target_bit": 258,
+        "credits": 2.0,
+        "outline": "Advanced English is an English course focused on writing and technical presentation skills. In order to prepare students for careers as computer scientists, the course teaches the use of academic language and critical thinking in computer science (CS)-specific contexts.",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EN08 Thesis Writing and Presentation",
+        "target_bit": 392,
+        "credits": 1.0,
+        "outline": "The primary aim of this course is to enable participants to write a graduation thesis that conforms to the university guidelines and expectations of supervisors. The form, function and content of the graduation thesis and its sections will be studied in detail. Participants will plan, draft, edit and revise their own graduation thesis throughout this course.",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "4-CS/IT-SPR",
+                "schedule": [
+                    "月-5",
+                    "月-6"
+                ]
+            },
+            {
+                "class_id": "4-SY/CN",
+                "schedule": [
+                    "水-3",
+                    "水-4"
+                ]
+            },
+            {
+                "class_id": "4-IT-CMV/SE-DE",
+                "schedule": [
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EG101 Global Experience Gateway (RHIT)",
+        "target_bit": 455,
+        "credits": 2.0,
+        "outline": "ローズはルマン工科大学への短期海外プログラムに参加を希望する学生のための準備コース。海外渡航の基本情報、言語・文化準備、課題（インタビュー動画とブログ日記）の制作について学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EG102 Global Experience Gateway (Waikato)",
+        "target_bit": 455,
+        "credits": 2.0,
+        "outline": "ワイカト大学カレッジへの短期海外プログラムに参加を希望する学生のための準備コース。海外渡航の基本情報、言語・文化準備、課題（インタビュー動画とブログ日記）の制作について学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EG103 Global Experience Gateway (USM)",
+        "target_bit": 455,
+        "credits": 2.0,
+        "outline": "マレーシア科学大学への短期海外プログラムに参加を希望する学生のための準備コース。海外渡航の基本情報、言語・文化準備、課題（インタビュー動画とブログ日記）の制作について学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL102 Design of Human Languages",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "This course introduces how human languages are designed and structured. Specifically, it will focus on the word, sentence and sound structure of various languages in the world showing the structural diversity of human languages as it introduces some basic concepts and terms in linguistics.",
+        "grading": {
+            "exam": 60,
+            "report": 25,
+            "others": 15
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL115 Analysis of English Sentence Structure",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "このクラスは反転授業の形式で実施します。授業中、そして課題として、文構造を表す樹形図を描くことで英文を詳細に分析します。単純な文構造から始め、徐々に複雑な文章を扱い、樹形図の理解のために多くの時間を費やします。",
+        "grading": {
+            "exam": 75,
+            "report": 15,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL131 Language and Linguistics",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "The focus of this course is on the structural properties of human language as illuminated by modern linguistic theory. Topics will include sound patterns, sentence structure, word formation, and meaning.",
+        "grading": {
+            "exam": 60,
+            "report": 30,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL144 Conversation Analysis and the Pragmatics of Spoken Interaction",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "This short course introduces you to the pragmatics of the English language. You will learn about how conversation is constructed in real-life situations, and how our grammar patterns and vocabulary choices vary in different contexts.",
+        "grading": {
+            "exam": 45,
+            "report": 50,
+            "others": 5
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL146 Corpus Linguistics for Language Learners",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "This course aims to help students take control of their language learning. Using online corpus resources, students will learn how to identify common patterns in language use. Students will learn how to use this data to improve their English proficiency.",
+        "grading": {
+            "exam": 40,
+            "report": 30,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL152 Reading Fluency",
+        "target_bit": 324,
+        "credits": 2.0,
+        "outline": "この授業では、多読と精読の両方に取り組みます。このコースでは、この2つの読み方を通し、英文読解の流暢性を高めることを目指します。This course is specifically tailored for Japanese learners of English.",
+        "grading": {
+            "exam": 40,
+            "report": 10,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL154 SDGs で学ぶ英語ディスカッション",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "The focus of this course is on the United Nations Sustainable Development Goals (SDGs). In every class, a specific global issue will be discussed in English. Students will make short oral presentations and be required to participate in small-group discussions.",
+        "grading": {
+            "exam": 0,
+            "report": 30,
+            "others": 70
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL157 Networking Skills in International Industry Environment",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "This course introduces computer science majors to the fundamentals of launching and managing technology-driven businesses. It covers topics such as market identification, technology product development, business models, marketing, funding, and scaling a venture.",
+        "grading": {
+            "exam": 0,
+            "report": 70,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL160 Language Education in the Age of AI",
+        "target_bit": 324,
+        "credits": 2.0,
+        "outline": "This course delves into the dynamic interplay between Artificial Intelligence (AI) and language learning. Students will explore both the beneficial advancements and the challenges inherent in integrating AI into language education.",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL161 Machine Learning for Linguistics",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "This course is an introduction to machine learning techniques and their applications in linguistics, focusing on practical skills and theoretical understanding. Students will learn foundational statistical concepts and data engineering, and construct ML algorithms.",
+        "grading": {
+            "exam": 0,
+            "report": 65,
+            "others": 35
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL162 A Conceptual Approach to Understanding English",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "英語を一連の文法規則に縛られたものと捉えるのではなく、概念的に理解する方法を学びます。このアプローチにより、英文法も突き詰めれば人間の認知の産物であることに気づき、英文法が深く納得できることにつながります。",
+        "grading": {
+            "exam": 35,
+            "report": 55,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL163 Cognitive Linguistics for Computer Science English",
+        "target_bit": 324,
+        "credits": 2.0,
+        "outline": "英語を単なる文法規則の集まりとしてではなく、「意味を伝えるための道具」として理解する視点を身につけます。換喩（メトニミー）や比喩（メタファー）といった概念を通して、コンピュータサイエンスにおける複雑な考え方がどのように英語で表現されているかを学びます。",
+        "grading": {
+            "exam": 35,
+            "report": 55,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL164 App-Based Language Learning",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "This course aims to give students the tools to evaluate language learning apps and make informed decisions about the apps they use to continue their second language development.",
+        "grading": {
+            "exam": 0,
+            "report": 40,
+            "others": 60
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL165 Words in the Mind: Vocabulary Learning and Morphology",
+        "target_bit": 324,
+        "credits": 2.0,
+        "outline": "This course introduces students to key concepts in psycholinguistics and English morphological structure, with a focus on enhancing vocabulary acquisition and retention. Students will explore how words are represented, processed, and learned in the mind.",
+        "grading": {
+            "exam": 0,
+            "report": 65,
+            "others": 35
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL218 English Speaking and Presentation Skills",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "This course is designed to provide students with skills and training for 1) improving the English speaking fluency and 2) preparing/giving English presentations. By practicing English as an International Language (EIL), students will be motivated to speak English more confidently and comfortably.",
+        "grading": {
+            "exam": 0,
+            "report": 30,
+            "others": 70
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL244 An Introduction to Cross-cultural Communication",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "In this course, learners' awareness of cultural differences and the ways in which these differences are realized in communication will be raised. Learners will practice and develop all four language skills (reading, writing, listening & speaking), and will build their vocabulary.",
+        "grading": {
+            "exam": 45,
+            "report": 50,
+            "others": 5
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL249 Introduction to Company Presentations in English",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "This course develops students’ ability to give professional company presentations in English. It focuses on how to describe a company’s profile, products, achievements, and future goals in a structured, clear, and confident manner.",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL315 Content Management for IT Business",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "This is a basic technical communication course focused on XML and semantic web. Students will learn the basics of information design and content management, including how product information is designed and delivered by creating ontologies based on product information classification standards and use case scenarios.",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL318 ICT in Education",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "This course will cover Information and Communications Technology (ICT) in Education particularly focusing on affordances offered by the technology. It will provide students with theoretical and practical knowledge invaluable in the planning, implementation, and evaluation of ICT supported education.",
+        "grading": {
+            "exam": 0,
+            "report": 75,
+            "others": 25
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL321 Pronunciation: Acoustic Analysis Using Software",
+        "target_bit": 324,
+        "credits": 2.0,
+        "outline": "In this course, open-source acoustic analysis software (\"Praat\") will be taught so that students have skills to analyze speech/pronunciation beyond the classroom. Students will be taught how to write Praat scripts to automate acoustic analysis.",
+        "grading": {
+            "exam": 60,
+            "report": 20,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL329 Critical Thinking",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "This course aims to provide students with the cognitive tools to distinguish between statements of fact and opinion, between strong and weak logical arguments, and to identify how emotions and cultural values can influence the ways in which arguments are constructed, expressed, and understood.",
+        "grading": {
+            "exam": 25,
+            "report": 50,
+            "others": 25
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "EL330 Computer Science Vocabulary",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "In this CS vocabulary course, we will learn the most important words in the field through numerous activities of reading, writing, listening, and speaking. A substantial part of this course involves group work with other students, creating and presenting a corpus of vocabulary from a sub-field of CS.",
+        "grading": {
+            "exam": 40,
+            "report": 20,
+            "others": 40
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA01 線形代数 I",
+        "credits": 2.0,
+        "outline": "本講義では、線型代数の前半部分を学習する。もう一方の柱である微積分とともに履修することが求められる。この講義では、固有値問題を考える上で必要となる最小限の概念と、計算技術の習得とを目標にする。",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "notes": "※再履修クラスのみ評価基準が異なります（演習7%, 中間13%, 期末80%）",
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "target_bit": 129,
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "target_bit": 129,
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "火-5",
+                    "火-6",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "target_bit": 193,
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "水-3",
+                    "水-4",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "再履修",
+                "target_bit": 1089,
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "水-9",
+                    "水-10",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA02 線形代数 II",
+        "credits": 2.0,
+        "outline": "線型代数 I の続きとして、固有値問題を扱う。前期と同様に、微積分とともに履修することが求められる。固有値問題は、数列の漸化式を解く有力な方法を提供する。",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "target_bit": 641,
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "木-1",
+                    "木-2",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "target_bit": 641,
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "target_bit": 705,
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "水-3",
+                    "水-4",
+                    "金-1",
+                    "金-2"
+                ]
+            },
+            {
+                "class_id": "再履修",
+                "target_bit": 1153,
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "水-5",
+                    "水-6",
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA03 微積分 I",
+        "credits": 2.0,
+        "outline": "本講義では、微積分の前半部分を学習する。このうち一変数の微積分を扱う。基本的な計算技術に関しては、高校で学ぶ事柄と大差はなく、扱う関数の範囲を若干ひろげるだけのことである。",
+        "grading": {
+            "exam": 80,
+            "report": 20,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C3/C4",
+                "target_bit": 129,
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "火-5",
+                    "火-6",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C1/C2",
+                "target_bit": 193,
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "水-3",
+                    "水-4",
+                    "木-5",
+                    "木-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "target_bit": 193,
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "火-1",
+                    "火-2",
+                    "木-1",
+                    "木-2"
+                ]
+            },
+            {
+                "class_id": "再履修",
+                "target_bit": 1153,
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "水-5",
+                    "水-6",
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA04 微積分 II",
+        "credits": 2.0,
+        "outline": "微積分Iに引続き、多変数関数の微積分を扱う。１変数関数に対する微分は多変数関数に対する偏微分に拡張される。また、１変数関数に対する積分は多変数関数に対する重積分に拡張される。",
+        "grading": {
+            "exam": 80,
+            "report": 20,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C3/C4",
+                "target_bit": 641,
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C1/C2",
+                "target_bit": 705,
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "水-3",
+                    "水-4",
+                    "金-1",
+                    "金-2"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "target_bit": 705,
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "水-3",
+                    "水-4",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "再履修",
+                "target_bit": 1409,
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "水-5",
+                    "水-6",
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA05 フーリエ解析",
+        "target_bit": 2,
+        "credits": 2.0,
+        "outline": "与えられた関数を三角関数や指数関数を用いて取り扱うテクニックを習得してもらう。演習問題への解答等を通し、フーリエ解析の基本的な定理の使い方および付随する計算に習熟してもらう。",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA06 複素関数論",
+        "target_bit": 322,
+        "credits": 2.0,
+        "outline": "複素関数を導入した後，その正則性やCauchy--Riemannの関係式を学ぶ．複素平面上の曲線に沿った複素積分を定義した上で，Cauchyの積分定理，積分公式などを導く．さらにその応用としてTaylor展開および Laurent展開を得る．",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA07 確率統計学",
+        "target_bit": 2,
+        "credits": 2.0,
+        "outline": "Probability and Statistics is the most useful area in mathematics. We present an introduction to Probability and Statistics for 2nd year students.",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA08 応用代数",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "本科目では代数的な演算を定義した種々の集合とその性質について学ぶ．定義される演算が満たす条件に応じて，それら集合は，群，環，体などと呼ばれる．それらの議論の応用として，符号理論，公開鍵暗号や乱数生成などの実際的な問題について学ぶ．",
+        "grading": {
+            "exam": 70,
+            "report": 20,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "IT-CMV",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            },
+            {
+                "class_id": "CS/IT-SPR",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA09 数理論理学",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "この講義は論理，論理の推論，論理による数学的対象の形式化について学ぶ．内容は(i)リビュー、(ii) 基本論理、(iii) 導出原理、(iv)自然数論の論理的形式化からなる．",
+        "grading": {
+            "exam": 70,
+            "report": 30,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "CS",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA10 位相幾何学概論",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "現代数学の基礎となす位相幾何学(トポロジー)の諸概念とその応用について講究する．かたちを分類するためのさまざまな概念を，１，２次元のかたちを具体的な事例を用いて学習する．",
+        "grading": {
+            "exam": 60,
+            "report": 0,
+            "others": 40
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "金-9",
+                    "金-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "MA11 応用幾何とトポロジー",
+        "target_bit": 324,
+        "credits": 2.0,
+        "outline": "This course covers a selection of modern applications of geometry and topology to computer science, with particular emphasis on computer graphics and data analysis. Students will learn the concepts of \"Ray Marching\" and Persistent Homology.",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "NS01 力学",
+        "credits": 2.0,
+        "outline": "物理学はあらゆる自然科学の基礎であるが、力学はさらに物理学のなかで基本となる分野である。講義はニュートン力学について質点の運動を中心に具体例に沿いながら進める。質量、保存量、エネルギー、ポテンシャルといった概念を学ぶ。",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "target_bit": 65,
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "target_bit": 65,
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "target_bit": 65,
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "再履修",
+                "target_bit": 1345,
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "水-5",
+                    "水-6",
+                    "水-7",
+                    "水-8",
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "NS02 電磁気学",
+        "target_bit": 321,
+        "credits": 2.0,
+        "outline": "電気や磁気の法則が、電荷や電流によって作られる電場や磁場といった「場」の法則として定式化でき、それらがマクスウェルの方程式によって統一的に記述されることを学ぶ。電磁気学で強調される「場」の概念は、現代物理の基本的な考え方である。",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "NS03 量子力学",
+        "target_bit": 2,
+        "credits": 2.0,
+        "outline": "量子力学は電子や原子の運動を扱う分野で、その現象を日常レベルでは見られないこと、またその内容自体も古典力学とは全く異なっていることから、初学者にはなじみにくい。講義は、量子力学の最も基本的な題材である井戸型ポテンシャルを中心にすすめる。",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "NS04 半導体デバイス",
+        "target_bit": 258,
+        "credits": 2.0,
+        "outline": "MOS構造やデバイスに関連した半導体技術を中心に、この半導体デバイスとは何であるか、どんな原理で機能を実現しているのか、どんな分野に利用されているのか、そしてどんな未来があるのかを理解する。",
+        "grading": {
+            "exam": 75,
+            "report": 0,
+            "others": 25
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "NS05 熱・統計力学",
+        "target_bit": 66,
+        "credits": 2.0,
+        "outline": "The course deals with thermodynamics and statistical thermodynamics. The special focus is placed on entropy. The aim of this course is to help students acquire an understanding of the macro- and micro- physics.",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-3",
+                    "水-4",
+                    "水-9",
+                    "水-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI01 コンピュータリテラシー",
+        "target_bit": 1,
+        "credits": 4.0,
+        "outline": "本科目では、まず会津大学のコンピュータ環境の利用方法を学び、そこを足がかりとしてより一般的なコンピュータ、ネットワークの各種機能の利用方法、文書作成と管理の方法、ネットワークを介したコミュニケーションの原則とマナー、プログラミング及びデータ処理のための各種ツールの使用方法について学ぶ。",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "火-3",
+                    "火-4",
+                    "金-1",
+                    "金-2",
+                    "金-3",
+                    "金-4"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI03 コンピュータ理工学のすすめ",
+        "target_bit": 1,
+        "credits": 2.0,
+        "outline": "この講義では、主に新入生に対して、さまざまな分野の専門家によるさまざまな観点からの話を提供し、コンピュータ理工学の学問分野の内容と、コンピュータ理工学を学ぶ意義を理解し、今後の進路設計に役立たせる。",
+        "grading": {
+            "exam": 0,
+            "report": 95,
+            "others": 5
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-7",
+                    "火-8",
+                    "金-7",
+                    "金-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI04 コンピュータシステム概論",
+        "target_bit": 257,
+        "credits": 2.0,
+        "outline": "大学における学習を効率的に進めるために、早い段階でこれから何を学ぶのかを知り、コンピュータ理工学のトピックに幅広く触れておく必要があります。そのようなトピックを紹介するのが、この授業です。",
+        "grading": {
+            "exam": 75,
+            "report": 0,
+            "others": 25
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "金-5",
+                    "金-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI06 情報セキュリティ",
+        "target_bit": 257,
+        "credits": 2.0,
+        "outline": "機能と性能を発揮し、事故やサイバー攻撃を防ぐためには、情報セキュリティとシステム管理の技術が必要不可欠である。この科目では、情報セキュリティの基本的な概念および技術を学習する。また、最新の技術やツールを紹介するとともに、時事評論を行う。",
+        "grading": {
+            "exam": 100,
+            "report": 0,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-5",
+                    "水-6",
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI07 情報と職業",
+        "target_bit": 200,
+        "credits": 2.0,
+        "outline": "情報社会における職業について，社会的視点と個人的視点から検討する。情報社会において個人がどのように働き，生活するかについて考えられるようになることを到達目標とする。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "9/1(火)",
+                    "9/2(水)",
+                    "9/3(木)",
+                    "9/4(金)"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI08 情報倫理",
+        "target_bit": 1,
+        "credits": 2.0,
+        "outline": "コンピュータ理工学に関する、社会的・倫理的な課題および職業人としての責任と自覚に根ざした実践の必要性について理解し、基礎的知識とスキルを身につけること。ソフトウェアやハードウェアなどの提供者とユーザの基本的な法的権利を理解し、それに基づく倫理的な価値観も理解する。",
+        "grading": {
+            "exam": 50,
+            "report": 30,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-3",
+                    "水-4",
+                    "水-5",
+                    "水-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI09 システム開発とプロジェクトマネジメントの基礎",
+        "target_bit": 72,
+        "credits": 2.0,
+        "outline": "今後のIT技術を活かした就業や研究開発（R&D）のため、グローバル/IT企業で実践されているシステム開発とプロジェクトマネジメント技術の基本を学習する。DX、AIをはじめとしたビジネス環境と技術動向、DX/ITエンジニアに必要なスキルとキャリア、失敗プロジェクトの実態も学習する。",
+        "grading": {
+            "exam": 50,
+            "report": 40,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI10 マルチメディアシステム概論",
+        "target_bit": 322,
+        "credits": 2.0,
+        "outline": "マルチメディアの特徴や、その構成要素、関連する処理はコミュニケーション技術、さらにはマルチメディアシステムの期待される発展についても学習していく。マルチメディア技術に支えられている我々のディジタルライフを理解することが目的である。",
+        "grading": {
+            "exam": 50,
+            "report": 0,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI11 コンピュータネットワーク概論",
+        "target_bit": 258,
+        "credits": 2.0,
+        "outline": "現在最も一般的なコンピュータ通信ネットワークであるインターネットを学習対象とし、コンピュータ通信ネットワークの設計と運用について解説を行う。ネットワークアーキテクチャとプロトコルの基本原則、いくつかのネットワークアルゴリズムとアプリケーションについて学習する。",
+        "grading": {
+            "exam": 76,
+            "report": 24,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI12 創造力開発スタジオ",
+        "target_bit": 206,
+        "credits": 2.0,
+        "outline": "創造活動の初学者に対して、創造のプロセスを体験し、創造活動の性質を理解してもらうための講義と実践演習を行う。実践演習では、実在する課題からテーマを選択し、グループごとに新しく有益な解決策・アイデアを提案する。",
+        "grading": {
+            "exam": 0,
+            "report": 40,
+            "others": 60
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI13 コンピュータ理工学演習 I",
+        "target_bit": 130,
+        "credits": 3.0,
+        "outline": "理系の大学においてほぼ必須の科目である”電気回路”をカバーしている。回路理論を理解した上で、抵抗計測、ハイパス・ローパスフィルタおよび共振回路などを組み立て、計測機器を用いて回路の振る舞いを測定し、理論との一致と相違を理解する。",
+        "grading": {
+            "exam": 40,
+            "report": 50,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "LI14 コンピュータ理工学演習 II",
+        "target_bit": 386,
+        "credits": 3.0,
+        "outline": "理工系の基本ツールであるMathematica, MATLABの使い方を学び、データの定量的評価・統計的取扱・解析手法を身につける。それらを踏まえた技術レポートが書けるようになる。最後に、機械学習などを例に取って最新技術を体験する。",
+        "grading": {
+            "exam": 0,
+            "report": 60,
+            "others": 40
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "水-2",
+                    "水-3",
+                    "水-4"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-2",
+                    "火-3",
+                    "火-4"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-2",
+                    "火-3",
+                    "火-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "PL01 プログラミング入門",
+        "target_bit": 65,
+        "credits": 4.0,
+        "outline": "プログラミングＣのイントロダクションという位置づけでプログラミング入門を開講し、Ｃ言語の内容をじっくりと講義する。プログラミングの概念を理解し、フローチャートからプログラムを作成できるようになること、分岐・ループ・配列・関数などの基本概念を理解することが目標である。",
+        "grading": {
+            "exam": 60,
+            "report": 30,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "火-8",
+                    "金-5",
+                    "金-6",
+                    "金-7",
+                    "金-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "PL02 プログラミングC",
+        "target_bit": 257,
+        "credits": 4.0,
+        "outline": "「プログラミング入門」に続く科目として、C言語を用いたプログラミングについて学ぶ。文字・文字列・ファイル操作・ポインタ・構造体・再帰などを理解し、それを利用したプログラムを作成する。簡単なアルゴリズムの理解と実装を行い、大規模なプログラムを作成するスキルを身につける。",
+        "grading": {
+            "exam": 50,
+            "report": 30,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "PL03 プログラミングJAVA I",
+        "target_bit": 2,
+        "credits": 4.0,
+        "outline": "現代のソフトウェア開発において不可欠なプログラミングパラダイムである「オブジェクト指向」を、Java言語を通して習得します。カプセル化、継承、多態性の概念を正しく理解し、インターフェースによる抽象化設計やデザインパターンの適用などを学ぶ。",
+        "grading": {
+            "exam": 50,
+            "report": 50,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "PL04 プログラミングC++",
+        "target_bit": 260,
+        "credits": 3.0,
+        "outline": "既にＣ言語を習得している学生を対象に、Ｃ＋＋言語の基礎を教えることを目的とする。クラスと継承、動的結合という機能により、オブジェクト指向プログラミングを実現している。STLと呼ばれる標準ライブラリにより高度なデータ構造やアルゴリズムを実装する方法を学ぶ。",
+        "grading": {
+            "exam": 60,
+            "report": 30,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "IT-CMV/SE-DE",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "木-1",
+                    "木-2",
+                    "木-3"
+                ]
+            },
+            {
+                "class_id": "CS/IT-SPR",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "PL05 コンピュータ言語論",
+        "target_bit": 8,
+        "credits": 3.0,
+        "outline": "コンピュータ言語の代表であるプログラミング言語に焦点を当て、プログラミング言語のパラダイム、モデル、技術要素などを説明する。特定の言語に偏ることなく、手続き型、関数型、論理型、オブジェクト指向型のパラダイムに基づく複数の言語に共通する機能の成り立ちと原理について学ぶ。",
+        "grading": {
+            "exam": 70,
+            "report": 30,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "PL06 プログラミングJAVA II",
+        "target_bit": 4,
+        "credits": 3.0,
+        "outline": "The Java Programming II teaches some advance topics: annotation, reflection, threads, GUI, network programming, stream API and Android programming including new features in Java. Students will cultivate a deep understanding of how to design and build robust, secure applications.",
+        "grading": {
+            "exam": 50,
+            "report": 50,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "SE-DE",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "木-3",
+                    "木-4",
+                    "木-5"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU01 アルゴリズムとデータ構造 I",
+        "target_bit": 321,
+        "credits": 4.0,
+        "outline": "プログラミングにおける「アルゴリズム」と「データ構造」の密接な関係性を理解し、問題解決に最適な手法を選択・設計する能力を養います。理論と実践の両面からこれら普遍的な理論と技術の習得を目指します。",
+        "grading": {
+            "exam": 50,
+            "report": 50,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU02 情報理論と圧縮",
+        "target_bit": 260,
+        "credits": 3.0,
+        "outline": "情報理論は確率や統計の定理などを活用し情報通信や誤り訂正のための効率のよい符号化の構築を可能とする。情報源符号化と通信路符号化の数学的な定式化と、エントロピーの概念などを学ぶ。",
+        "grading": {
+            "exam": 40,
+            "report": 50,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "CS/IT-SPR",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "CN/IT-CMV",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU03 離散系論",
+        "target_bit": 66,
+        "credits": 3.0,
+        "outline": "離散系論は離散数学とも呼ばれ、計算機科学の数学的な基礎である。集合と論理、関数、関係、数え上げと組み合せ論、グラフ理論、順序、束、ブール代数について学ぶ。",
+        "grading": {
+            "exam": 70,
+            "report": 30,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-6",
+                    "火-7",
+                    "火-8",
+                    "金-6",
+                    "金-7",
+                    "金-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU04 論理回路設計論",
+        "target_bit": 258,
+        "credits": 4.0,
+        "outline": "論理回路設計における基礎知識や、設計手法ならびに最適化手法を学びます。演習では、真理値表などによる仕様より自分で論理回路を生成し、回路図作成ソフトウェア上に設計・検証します。",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "火-8",
+                    "金-5",
+                    "金-6",
+                    "金-7",
+                    "金-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU05 コンピュータアーキテクチャ論",
+        "target_bit": 4,
+        "credits": 4.0,
+        "outline": "コンピュータアーキテクチャの基礎、設計手法、および性能評価法ついて学ぶ。MIPSプロセッサを例にアーキテクチャを解説し、CADツールを使った実装・検証やアセンブラプログラミングも行う。",
+        "grading": {
+            "exam": 50,
+            "report": 50,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "SY/CN",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            },
+            {
+                "class_id": "CS/IT-SPR",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            },
+            {
+                "class_id": "IT-CMV/SE-DE",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "火-3",
+                    "火-4",
+                    "金-1",
+                    "金-2",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU06 オペレーティングシステム論",
+        "target_bit": 322,
+        "credits": 4.0,
+        "outline": "In this course, three parts of the core of operating systems will be mainly learned, including process management, memory management, and storage management. This course introduces fundamental concepts applicable to a variety of systems.",
+        "grading": {
+            "exam": 70,
+            "report": 30,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "月-8",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU08 オートマトンと言語理論",
+        "target_bit": 322,
+        "credits": 3.0,
+        "outline": "オートマトン言語理論は計算の理論の最も基本的な理論である。認識システムであるオートマトンと、生成システムである文法について学ぶ。さらに言語の階層性や記述方法について学ぶ。",
+        "grading": {
+            "exam": 70,
+            "report": 30,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "C1/C2",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "火-3",
+                    "金-1",
+                    "金-2",
+                    "金-3"
+                ]
+            },
+            {
+                "class_id": "C3/C4",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            },
+            {
+                "class_id": "C5/C6",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU09 アルゴリズムとデータ構造 II",
+        "target_bit": 68,
+        "credits": 3.0,
+        "outline": "This course covers algorithms and their complexity, graph algorithms, heaps, B-trees, matrix multiplication, dynamic programming, greedy algorithms, and more advanced topics not covered in Algorithms and Data Structures 1.",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "SY/CN",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "木-1",
+                    "木-2",
+                    "木-3"
+                ]
+            },
+            {
+                "class_id": "CS/IT-SPR/IT-CMV/SE-DE",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU10 言語処理系論",
+        "target_bit": 8,
+        "credits": 3.0,
+        "outline": "コンパイラ、トランスレータなどのプログラミング言語の処理系の役割、コンパイラの重要性、処理の方法などを学ぶ。理論と実際との関係（オートマトンや文法と処理系との関係）を理解する。",
+        "grading": {
+            "exam": 60,
+            "report": 26,
+            "others": 14
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "火-3",
+                    "金-1",
+                    "金-2",
+                    "金-3"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU11 数値解析",
+        "target_bit": 324,
+        "credits": 3.0,
+        "outline": "数値計算手法の基礎について学ぶ科目。コンピュータサイエンスにおいて幅広く使われる、数値計算手法やアイディアについて応用例を交えながら学ぶ。浮動小数点の誤差や連立方程式の解法などを含む。",
+        "grading": {
+            "exam": 55,
+            "report": 45,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "CS/IT-SPR",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "火-3",
+                    "金-1",
+                    "金-2",
+                    "金-3"
+                ]
+            },
+            {
+                "class_id": "IT-CMV",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "金-3",
+                    "金-4",
+                    "金-5"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU14 ソフトウェア工学概論",
+        "target_bit": 4,
+        "credits": 3.0,
+        "outline": "ソフトウェア工学がどのような知識・技術群であるかを理解してもらうことに主眼を置く。要件定義からテストまでの各工程の課題について考え、関連する技術・手法を紹介し、実践的な演習課題に取り組む。",
+        "grading": {
+            "exam": 65,
+            "report": 25,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "FU15 データマネジメント概論",
+        "target_bit": 66,
+        "credits": 3.0,
+        "outline": "The course is focused on representing data modeling approaches, methods of data storage, accessing and storing data using database systems. It serves as a basis for subsequent specialized courses like DBMS.",
+        "grading": {
+            "exam": 30,
+            "report": 40,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SY02 電子回路",
+        "target_bit": 324,
+        "credits": 4.0,
+        "outline": "MOSFETを中心としたアナログ電子回路の設計法について学ぶ。増幅器の基礎、オペアンプの基本、アナログとディジタルのインタフェース回路（A/D・D/A変換器）などを理解する。実験では回路を作成して動作を学ぶ。",
+        "grading": {
+            "exam": 50,
+            "report": 40,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "SY",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "火-5",
+                    "火-6",
+                    "金-3",
+                    "金-4",
+                    "金-5",
+                    "金-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SY04 組込みシステム",
+        "target_bit": 324,
+        "credits": 4.0,
+        "outline": "This course provides students with experience in embedded systems design, introducing upstream design issues and RTOS for real-time systems. Students develop C language programs using a microcontroller to extend system functionality.",
+        "grading": {
+            "exam": 50,
+            "report": 50,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "SY",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SY05 並列コンピュータシステム",
+        "target_bit": 260,
+        "credits": 3.0,
+        "outline": "コンピューターを効率よく利用するために欠かせない並列計算(Parallel Computing)、およびその応用としての高性能計算(High Performance Computing)について学ぶ。演習課題により並列プログラミングを実践する。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "SY",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SY06 VLSI設計技術",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "LSIのレイアウト設計を中心にLSI設計全般の知識を学ぶ。CMOS論理回路でのLSI設計、動作速度や消費電力の決定要因を理解し、CADツールを用いた設計フローにより回路を設計し、性能評価・動作検証を行う。",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "SY",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "火-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SY07 論理回路設計特論",
+        "target_bit": 68,
+        "credits": 3.0,
+        "outline": "ハードウェア記述言語を用いた回路のモデリング手法、論理合成ツールの概要や最適化法、設計した回路の検証法を学ぶ。演習では回路を合成し、FPGA(再構成可能デバイス)に実装して評価する。",
+        "grading": {
+            "exam": 55,
+            "report": 45,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "SY",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "CN02 ネットワークセキュリティ",
+        "target_bit": 68,
+        "credits": 3.0,
+        "outline": "This course offers the fundamentals of network security. Students will be able to understand basic concepts of cryptography techniques and the application of cryptography in all layers of the Internet.",
+        "grading": {
+            "exam": 40,
+            "report": 40,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "CN",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "CN03 ネットワークプログラミング",
+        "target_bit": 260,
+        "credits": 3.0,
+        "outline": "This course covers the practical knowledge and skills to connect computers at application, transport, and network layers. Topics include Socket basics, UDP/TCP sockets, and Software Defined Network (SDN).",
+        "grading": {
+            "exam": 40,
+            "report": 45,
+            "others": 15
+        },
+        "classes": [
+            {
+                "class_id": "CN",
+                "schedule": [
+                    "月-1",
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-1",
+                    "木-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "CN04 ワイヤレスネットワーク",
+        "target_bit": 324,
+        "credits": 2.0,
+        "outline": "This course helps to develop an understanding of the various aspects of wireless and mobile networks. It covers fundamentals of design and architecture, including wireless signal transmission, access mechanisms, and protocols like WiFi, Bluetooth, and Zigbee.",
+        "grading": {
+            "exam": 50,
+            "report": 40,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "CN",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "CN05 コンピュータネットワークシステムのモデリングとシミュレーション",
+        "target_bit": 324,
+        "credits": 3.0,
+        "outline": "Network modeling and simulation is a key step in the design and procurement of network systems. This course provides fundamental performance analysis techniques so students can design performance experiments and use simple queueing or simulation models.",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "CN",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT01 人工知能",
+        "target_bit": 260,
+        "credits": 4.0,
+        "outline": "This course lays the foundation for Artificial Intelligence, covering search algorithms, knowledge representation, constraint satisfaction, probabilistic reasoning, machine learning (including deep learning), sequential decision making, and language/foundation models.",
+        "grading": {
+            "exam": 60,
+            "report": 30,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "IT-SPR/IT-CMV",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "火-8",
+                    "金-5",
+                    "金-6",
+                    "金-7",
+                    "金-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT02 コンピュータグラフィックス論",
+        "target_bit": 68,
+        "credits": 3.0,
+        "outline": "コンピュータと情報技術の重要な応用であるコンピュータグラフィックスについて学習する。3Dビューイングパイプライン、シェーディング、レイトレーシング、自由曲線・曲面、GPUプログラミングなどの基礎理論と実践力を身に付ける。",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "CS/IT-SPR/IT-CMV",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "木-3",
+                    "木-4",
+                    "木-5"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT03 画像処理論",
+        "target_bit": 72,
+        "credits": 3.0,
+        "outline": "デジタル画像処理の基礎としてLow-Level Visionを中心に扱う。画像の表現、濃度変換、空間フィルタ、周波数領域処理、セグメンテーション、特徴抽出等を学び、Python(OpenCV)を用いた演習で実践的な理解と応用力を養う。",
+        "grading": {
+            "exam": 30,
+            "report": 70,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "IT-SPR",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT05 ロボット工学と自動制御",
+        "target_bit": 8,
+        "credits": 3.0,
+        "outline": "ロボット工学に関しては運動学とプランニング手法（人工ポテンシャル法、ロードマップ法等）を学ぶ。自動制御理論に関してはフィードバック制御の概念を中心に、伝達関数やPID制御を学び、ロボットシステムの構成について理解する。",
+        "grading": {
+            "exam": 60,
+            "report": 20,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "IT-CMV",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT06 ヒューマンインターフェイスと仮想現実",
+        "target_bit": 8,
+        "credits": 3.0,
+        "outline": "VR、AR、MRを中心としたインタラクティブ技術分野の包括的な入門コース。HCIと3D UIデザインの基本原理を探求し、Unityを使用した開発パイプラインを扱う。実践的な演習を通じて独自の没入型仮想世界を作成する。",
+        "grading": {
+            "exam": 0,
+            "report": 35,
+            "others": 65
+        },
+        "classes": [
+            {
+                "class_id": "IT-SPR/IT-CMV",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "月-11",
+                    "木-9",
+                    "木-10",
+                    "木-11"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT08 信号処理と線形システム",
+        "target_bit": 4,
+        "credits": 4.0,
+        "outline": "This course provides foundations of signal processing and linear time-invariant systems. Topics include signal representation, Fourier transform, sampling theorem, discrete convolution, z-transform, discrete Fourier transform, and digital filter design.",
+        "grading": {
+            "exam": 50,
+            "report": 40,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "CS/IT-SPR/SY",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "火-3",
+                    "火-4",
+                    "金-1",
+                    "金-2",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT09 音響音声処理論",
+        "target_bit": 8,
+        "credits": 3.0,
+        "outline": "In this course, we review the main characteristics of sound, audio, and their processing for human-computer interaction. The purpose is to learn techniques for extracting information from acoustic signals and using acoustic signals to display information.",
+        "grading": {
+            "exam": 30,
+            "report": 40,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "IT-SPR",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT10 ビジュアルコンピューティングのための幾何学",
+        "target_bit": 4,
+        "credits": 3.0,
+        "outline": "計算幾何学の基本的概念を理解し、それを念頭に置いたデータの可視化について応用できるようになる。前半でボロノイ図やドロネー三角形分割などの基本概念を、後半で多次元データやネットワーク構造等の可視化手法を学ぶ。",
+        "grading": {
+            "exam": 50,
+            "report": 50,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "IT-CMV",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-3",
+                    "木-4",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IT11 情報検索と自然言語処理",
+        "target_bit": 324,
+        "credits": 3.0,
+        "outline": "自然言語文書を対象に、テキストの取得・前処理から、特徴表現、分類・クラスタリング、情報抽出、構文解析、情報検索システムまでを一連のパイプラインとして学ぶ。PythonとNLTK等を用いた演習を通じて理解を深める。",
+        "grading": {
+            "exam": 30,
+            "report": 70,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "CS/IT-SPR",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "火-7",
+                    "金-5",
+                    "金-6",
+                    "金-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SE01 ウェブエンジニアリング",
+        "target_bit": 68,
+        "credits": 3.0,
+        "outline": "Web engineering is defined as a discipline of systematic development of Web applications. The aim of this course is to study current concepts and methods for Web application engineering, including Web App Architectures, Responsive Web Design, and Universal Design for Web.",
+        "grading": {
+            "exam": 0,
+            "report": 70,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "SE-DE",
+                "schedule": [
+                    "月-2",
+                    "月-3",
+                    "月-4",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SE04 ソフトウェア工学特論",
+        "target_bit": 324,
+        "credits": 3.0,
+        "outline": "This course covers current topics of interest in software engineering, such as formal methods, software reuse, maintenance, version management, and user interface design. Students are given a programming project to design and implement a system with a team.",
+        "grading": {
+            "exam": 40,
+            "report": 0,
+            "others": 60
+        },
+        "classes": [
+            {
+                "class_id": "SE-DE",
+                "schedule": [
+                    "火-5",
+                    "火-6",
+                    "金-5",
+                    "金-6",
+                    "金-7",
+                    "金-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SE05 ソフトウェアスタジオ",
+        "target_bit": 136,
+        "credits": 3.0,
+        "outline": "履修学生でチームを組み、顧客の要望に応えるソフトウェアの開発を行う。ヒアリングから要件定義、設計、開発、テストの各工程を実施し、顧客に納品する。リソースが限られた中でプロジェクト管理を実践し、ソフトウェア工学の手法を学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 65,
+            "others": 35
+        },
+        "classes": [
+            {
+                "class_id": "SE-DE",
+                "schedule": [
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SE06 並列分散コンピューティング",
+        "target_bit": 324,
+        "credits": 3.0,
+        "outline": "The goal of this course is to introduce the basics of concurrent and distributed systems design and implementation. We cover classical and modern approaches to coordinating independent processes to achieve high performance, paying attention to practical aspects in Java.",
+        "grading": {
+            "exam": 30,
+            "report": 50,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "SE-DE",
+                "schedule": [
+                    "月-3",
+                    "月-4",
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SE07 Pythonによるデータサイエンス概論",
+        "target_bit": 68,
+        "credits": 3.0,
+        "outline": "This course introduces students to Python programming, object-oriented concepts, database design, SQL, and data processing using data frames. Students learn how to store and retrieve large volumes of data, and perform analysis tasks relevant to AI and Big Data applications.",
+        "grading": {
+            "exam": 30,
+            "report": 40,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "SE-DE",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "月-7",
+                    "木-5",
+                    "木-6",
+                    "木-7"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "SE08 ビッグデータ分析概論",
+        "target_bit": 260,
+        "credits": 3.0,
+        "outline": "This course introduces the principles and practices of Big Data Analytics. It integrates data storage, data mining and machine learning, and predictive/time-series analytics. Students learn pattern mining, clustering, classification, and forecasting through hands-on exercises.",
+        "grading": {
+            "exam": 30,
+            "report": 40,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "SE-DE",
+                "schedule": [
+                    "火-3",
+                    "火-4",
+                    "水-5",
+                    "水-6",
+                    "金-3",
+                    "金-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT01-I ベンチャー基本コース各論 I",
+        "target_bit": 14,
+        "credits": 2.0,
+        "outline": "本コースは“ベンチャー体験工房「会津IT日新館」”の一環として開講する座学形式の授業です。ベンチャー精神育成に必要な基礎知識に関する講義と、各分野で活躍している外部講師による講義を取り混ぜて行うことにより、実践的なビジネス知識が習得できるように構成されています。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-5",
+                    "月-6",
+                    "木-5",
+                    "木-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT01-II ベンチャー基本コース各論 II",
+        "target_bit": 270,
+        "credits": 2.0,
+        "outline": "本コースは“ベンチャー体験工房「会津IT日新館」”の一環として開講する座学形式の授業です。最新のIT技術やビジネス動向に関するタイムリーな話題を提供し、さまざまな分野で活躍する講師の実体験から、イノベーションのヒントの獲得を目指します。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-7",
+                    "月-8",
+                    "木-7",
+                    "木-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT02-1 ベンチャー体験工房 1",
+        "target_bit": 142,
+        "credits": 1.0,
+        "outline": "テーマ：モノのネットワーク化で安全・安心・便利な生活環境の実現。ウェアラブルセンシング、通信、人工知能技術を用いた健康増進、生活支援、危険防止のためのIoTシステムの研究開発を行っていきます。足圧センサWondeStepを活用します。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT02-2 ベンチャー体験工房 2",
+        "target_bit": 142,
+        "credits": 1.0,
+        "outline": "テーマ：宇宙開発×ICT。宇宙開発に関する課題解決型学習(PBL)を行う。衛星や探査車、ミッションだけでなく地上試験等で取得されたデータも利活用して、機械学習、データサイエンス、データキュレーション、ソフトウエア開発等を行う。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT02-6 ベンチャー体験工房 6",
+        "target_bit": 142,
+        "credits": 1.0,
+        "outline": "ベンチャー体験工房では、地域や企業の抱える課題やニーズを把握の上、自分の意思でテーマを設定・選択し、テクノロジベンチャーへの発展を意識しながら、新製品・新サービスにつながる研究・開発の擬似体験をする。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT02-9 ベンチャー体験工房 9",
+        "target_bit": 142,
+        "credits": 1.0,
+        "outline": "入浴中の心電信号を自動的に測定・蓄積・解析・表示するシステム「快風」を用い、生体信号の計測から信号処理・データ解析までの一連のプロセスを通じて、生体情報工学の基礎知識と最新技術の日常健康管理における応用を体験する。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT05 キャリアデザインI",
+        "target_bit": 135,
+        "credits": 1.0,
+        "outline": "ひとりひとりが充実したキャリアを描くためにはどのように大学時代を過ごせばよいのか、その気づきを得るためのきっかけを提供する。前半は「自分を知る」「社会を知る」、後半はPBLに取り組み実践的に体験する。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT06 キャリアデザインII",
+        "target_bit": 388,
+        "credits": 1.0,
+        "outline": "社会で働く意味、産業界の動向、必要とされる人材像等について産業界関係者との意見交換を通じて学ぶ。また、自己分析、エントリー書類の作成、筆記試験、面接などの対策や進路決定の手続きについて実践的に学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-5",
+                    "水-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT08 TOEIC準備コース(Level A)",
+        "target_bit": 143,
+        "credits": 1.0,
+        "outline": "The course is designed to enhance students’ English proficiency through learning expressions commonly found in the TOEIC test. After the whole training program, you are expected to score over 450 on the TOEIC test.",
+        "grading": {
+            "exam": 30,
+            "report": 0,
+            "others": 70
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT08 TOEIC準備コース(Level B)",
+        "target_bit": 143,
+        "credits": 1.0,
+        "outline": "The course is designed to enhance students’ English proficiency through learning expressions commonly found in the TOEIC test. After the whole training program, you are expected to score over 525 on the TOEIC test.",
+        "grading": {
+            "exam": 30,
+            "report": 0,
+            "others": 70
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-9",
+                    "水-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT10 課外活動コース II＜インターンシップIII（大連）＞",
+        "target_bit": 463,
+        "credits": 2.0,
+        "outline": "海外の研修所や企業の現場において「実習」を体験することにより、グローバルICT人材としての素養を身に着けることを目的とします。中国の大連東軟信息学院とアルパイン株式会社の産学協同プログラムです。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT10 課外活動コースII＜インターンシップII（国内A）＞",
+        "target_bit": 207,
+        "credits": 2.0,
+        "outline": "国内の大手企業の現場における「実習」を体験することにより、企業文化の理解、及び主体的な実践力を身に着けることを目的とします。実習先：アルプスアルパイン株式会社。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT10 課外活動コースII＜インターンシップII（国内C）＞",
+        "target_bit": 207,
+        "credits": 2.0,
+        "outline": "国内の大手企業の現場における「実習」を体験することにより、企業文化の理解、及び主体的な実践力を身に着けることを目的とします。実習先：アルプス・アルパイン株式会社。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT10 課外活動コースII＜インターンシップII（国内D）＞",
+        "target_bit": 207,
+        "credits": 2.0,
+        "outline": "国内の大手企業の現場における「実習」を体験することにより、企業文化の理解、及び主体的な実践力を身に着けることを目的とします。実習先：サイバートラスト株式会社。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT10 課外活動コース II＜インターンシップIII（シリコンバレーA）＞",
+        "target_bit": 207,
+        "credits": 2.0,
+        "outline": "海外の研修所や企業の現場において「実習」を体験し、グローバルICT人材の素養を身に着けることを目的とします。米国の会津大学シリコンバレー拠点を中心に、製品開発実習や企業訪問を行います。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT10 課外活動コース II＜インターンシップIII（ダナン）＞",
+        "target_bit": 207,
+        "credits": 2.0,
+        "outline": "ベトナムのFPT大学との協定に基づいて実施されるプログラムです。ダナン市に渡航しビジネスの基礎を英語で学んだ後に、現地企業等のインターンシップに参加、グローバルビジネスを学びます。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT11 ICTベンチャー起業と経営",
+        "target_bit": 271,
+        "credits": 2.0,
+        "outline": "ICT ベンチャーの起業に当たり、必要となる知識を事例研究などを通して学びを深める。ICT 企業の設立から経営戦略、事業計画まで一通りの会社設立までの基礎知識を理解します。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-5",
+                    "水-6",
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE01 教師入門",
+        "target_bit": 194,
+        "credits": 2.0,
+        "outline": "中学校・高等学校の教員免許状の取得に必要な必修の科目であり、教職課程への導入的性格をもつ。教員の役割と責任、教職の意義について理解を深め、制度面の知識を習得する。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "8/24(月)",
+                    "8/25(火)",
+                    "8/26(水)",
+                    "8/27(木)",
+                    "8/28(金)"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE02 教育入門",
+        "target_bit": 2,
+        "credits": 2.0,
+        "outline": "教員免許状の取得に必要な必修科目。「教育」や「学校」について改めて問い直し、教育の課題を深く理解する。教育の基礎理論を学ぶことで、教える－学ぶという関係を鳥瞰する。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-1",
+                    "水-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE03 教育心理学",
+        "target_bit": 258,
+        "credits": 2.0,
+        "outline": "子どもが発達する上で教育がどのような役割を果たすのか、発達と教育の相互作用を概説する。また、学習に関する諸理論について紹介し、学習の促進・妨害要因について多角的に論じる。",
+        "grading": {
+            "exam": 80,
+            "report": 0,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE04 教育課程論",
+        "target_bit": 66,
+        "credits": 2.0,
+        "outline": "教育課程の歴史的変遷、及び幼稚園から高等学校までを俯瞰し、我が国の教育課程全体を概説する。また、教育課程の編成方法やカリキュラムマネジメントを具体例を通して紹介する。",
+        "grading": {
+            "exam": 80,
+            "report": 0,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "水-1",
+                    "水-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE05 教育方法",
+        "target_bit": 4,
+        "credits": 2.0,
+        "outline": "授業に関する教授理論を概説する。特に、学校現場で重視されている協同活動、評価方法に関して、その具体的な実践例を紹介する。",
+        "grading": {
+            "exam": 80,
+            "report": 0,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "水-9",
+                    "水-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE06 数学科教育法１",
+        "target_bit": 2,
+        "credits": 2.0,
+        "outline": "中等教育で扱われる数学的概念の背景となる学問領域に関して、より発展的な内容を扱い、数学教育に必要な素地を育成し教材研究に活用する。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-3",
+                    "水-4",
+                    "水-5",
+                    "水-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE07 数学科教育法２",
+        "target_bit": 2,
+        "credits": 2.0,
+        "outline": "中学校数学科の目標や数学教育の背景、指導方法などを理解し、授業設計の立案や様々な授業場面を想定した演習などを行う。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-7",
+                    "水-8",
+                    "水-9",
+                    "水-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE08 数学科教育法３",
+        "target_bit": 258,
+        "credits": 2.0,
+        "outline": "高等学校での数学学習の本質や指導における要点などを理解し、評価を踏まえた授業設計の立案方法などを学習し、模擬授業を通じた演習を行う。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-5",
+                    "水-6",
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE09 数学科教育法４",
+        "target_bit": 322,
+        "credits": 2.0,
+        "outline": "教育心理学と数学教育学の知見を踏まえて、数学教師にとって必要な視点を概説する。教科横断的カリキュラムやフィールドワーク（授業見学）も行う。",
+        "grading": {
+            "exam": 80,
+            "report": 0,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "水-5",
+                    "水-6"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE10 情報科教育法１",
+        "target_bit": 68,
+        "credits": 2.0,
+        "outline": "高等学校教諭免許状「情報」を取得する学生を対象とし、共通教科「情報」の目標や指導法について学習指導要領を通して実践的に学ぶ。",
+        "grading": {
+            "exam": 70,
+            "report": 30,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-5",
+                    "水-6",
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE11 情報科教育法２",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "情報科教育法１に続き、専門教科「情報科」の指導法について実践的に学ぶ。機械制御やPythonによる教材作成演習などを行う。",
+        "grading": {
+            "exam": 70,
+            "report": 30,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-5",
+                    "水-6",
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE12 道徳教育",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "学習指導要領等で「道徳」「道徳教育」がどう定義されているかを学び、教育実践を計画・実施できる資質・能力を習得する。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-1",
+                    "火-2",
+                    "金-1",
+                    "金-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE13 特別活動",
+        "target_bit": 260,
+        "credits": 2.0,
+        "outline": "学校における様々な構成の集団での活動（特別活動）の意義を理解し、その特質を踏まえた指導に必要な知識並びに素養を身につける。",
+        "grading": {
+            "exam": 0,
+            "report": 70,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "月-9",
+                    "月-10",
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE14 生徒指導・教育相談",
+        "target_bit": 322,
+        "credits": 2.0,
+        "outline": "生徒指導と教育相談について、基本的な考え方や技法を身につける。防衛機制等を活用した心理学的な知識や教育カウンセリングの基本技法を学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 70,
+            "others": 30
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "火-9",
+                    "火-10",
+                    "水-1",
+                    "水-2"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE15 キャリア教育",
+        "target_bit": 452,
+        "credits": 2.0,
+        "outline": "児童生徒の社会的・職業的自立に向けて必要な資質を育むキャリア教育の意義や理論を概説する。事例紹介やペア・グループによる研究プロジェクトも行う。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE16 教育実習１",
+        "target_bit": 200,
+        "credits": 4.0,
+        "outline": "中学校一種、または中高両方の免許取得希望者を対象とした、教育実習校での3週間の実習。学校教育の現場で実践を通して研究する。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE17 教育実習２",
+        "target_bit": 200,
+        "credits": 2.0,
+        "outline": "高校一種のみの免許の取得希望者が対象の教育実習であり、教育実習校で２週間の実習を行う。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE18 教育実習事前事後指導",
+        "target_bit": 136,
+        "credits": 1.0,
+        "outline": "教育実習を実りあるものにするため、実習の準備（事前指導）と反省（事後指導）を行う。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-7",
+                    "水-8"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE19 教育制度論",
+        "target_bit": 386,
+        "credits": 2.0,
+        "outline": "学校制度を支えてきた基本的枠組みと、その枠組みを改変しようとしている今日の変革動向とその課題を講じる。",
+        "grading": {
+            "exam": 80,
+            "report": 0,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-9",
+                    "水-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE20 教職実践演習（中・高）",
+        "target_bit": 264,
+        "credits": 2.0,
+        "outline": "教員として必要な資質能力についての修得状態を総合的に把握し指導する。事例研究、ロールプレイイング、グループ討議、模擬授業などを実施する。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "木-1",
+                    "木-2",
+                    "木-3",
+                    "木-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE21 特別支援教育入門",
+        "target_bit": 450,
+        "credits": 1.0,
+        "outline": "インクルーシブ教育の考えを説明し、個々の教育的ニーズを把握し、ニーズに応じた適切な指導と必要な支援を行うことの必要性を示す。",
+        "grading": {
+            "exam": 60,
+            "report": 40,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE22 総合的な学習の時間の指導法",
+        "target_bit": 450,
+        "credits": 1.0,
+        "outline": "「総合的な学習の時間」の指導に必要な事項を理解し、創意工夫を生かした教育活動の展開に必要な基礎的知識を学習する。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "TBD"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "TE23 情報機器の活用に関する理論と方法",
+        "target_bit": 388,
+        "credits": 2.0,
+        "outline": "教育現場におけるICT活用に関する現状を理解し、授業への活用方法、情報モラルやプログラミング教育など生徒の情報活用能力の指導法などを幅広く取り上げる。",
+        "grading": {
+            "exam": 80,
+            "report": 0,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "ALL",
+                "schedule": [
+                    "水-9",
+                    "水-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IE01 システム総合演習 I",
+        "target_bit": 132,
+        "credits": 3.0,
+        "outline": "Raspberry Piを用いてコンピュータシステムを構築し、実際に動かすことでモノのインターネットで利用されるようなコンピュータシステムを理解する。Pythonによるプログラミング、センサーとアクチュエータの制御、物体検出モデルのディプロイメントなどを学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "FR/SY/CN",
+                "schedule": [
+                    "水-2",
+                    "水-3",
+                    "水-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IE02 システム総合演習 II",
+        "target_bit": 388,
+        "credits": 3.0,
+        "outline": "Field-Programmable Gate Array (FPGA)を利用した組込みシステム開発について学ぶ。スイッチ、LEDの制御や画像処理を題材に、ソフトウェアとハードウェアを合わせた組込みシステム開発を基礎から学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "FR/SY/CN",
+                "schedule": [
+                    "水-2",
+                    "水-3",
+                    "水-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IE03 ソフトウェア総合演習 I",
+        "target_bit": 132,
+        "credits": 3.0,
+        "outline": "学生が2-3人のチームで与えられた課題を解決するソフトウェアの開発を通してソフトウェア開発の実践的な能力を身につける。3週間1フェーズで段階的に開発を行い、適切なデータ構造やアルゴリズムの選択と実装を意識した開発を行う。",
+        "grading": {
+            "exam": 25,
+            "report": 65,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "CS/IT-SPR/FR/IT-CMV/SE-DE",
+                "schedule": [
+                    "水-2",
+                    "水-3",
+                    "水-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "IE04 ソフトウェア総合演習 II",
+        "target_bit": 388,
+        "credits": 3.0,
+        "outline": "数人のチームでソフトウェアの開発を通して実践的な能力を身につける。ソフトウェア総合演習Ⅰで取り組んだ内容に加え、オブジェクト指向による設計、データベースの利用、ユーザインタフェースを含む課題に取り組む。",
+        "grading": {
+            "exam": 25,
+            "report": 65,
+            "others": 10
+        },
+        "classes": [
+            {
+                "class_id": "CS/IT-SPR/FR/IT-CMV/SE-DE",
+                "schedule": [
+                    "水-2",
+                    "水-3",
+                    "水-4"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-001 大規模分散Webインフラ構築入門",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "総合的なWebインフラ基盤とその管理をテーマとして、負荷分散・高可用性機能、管理の自動化などの構築や活用を経験する。学内のkubernetesクラスターを利用し、大規模Webアプリケーションを開発・運用する知識と技術の習得を目指す。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "id_name": "課外プロジェクト",
+                "classes": [
+                    {
+                        "class_id": "月曜枠",
+                        "schedule": [
+                            "月-9",
+                            "月-10"
+                        ]
+                    },
+                    {
+                        "class_id": "木曜枠",
+                        "schedule": [
+                            "木-9",
+                            "木-10"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-002 学内生活を便利にするサービスを作ろう",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "会津大学内で実際に利用できるアプリケーション・サービスの構築を目指す。アプリケーションの動作環境としてKubernetesを想定しており、自らの技術力を用いて、問題発見・解決能力や学内生活の質の向上を目指す。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-003 月惑星データ解析＋宇宙生物学",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "小惑星・月惑星の画像や形状データに基づくデータの可視化処理体験や、国際宇宙ステーションたんぽぽプロジェクトを含む宇宙生物学関連の活動を行う。施設見学会や観望会も実施する。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-004 教師になろう！",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "学校の教員を目指す学生を主な対象として、教職に役立つ情報や機会を提供する。教育時事に関する文献講読や、中学生に対する学習支援活動（任意参加）などを通じて教職の実際を学ぶ。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-005 社会美容科学　〜データで考えるジェンダー社会学〜",
+        "target_bit": 143,
+        "credits": 1.0,
+        "outline": "美容とコスメ利用という観点から、その社会的効果や影響を調査研究する新領域の講義と演習。データサイエンスやSNS分析、LLMシミュレーションを通して理解を深め、ジェンダーと社会の関係についても考究する。",
+        "grading": {
+            "exam": 0,
+            "report": 80,
+            "others": 20
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-006 会津デジタルアート＆クラフト＆ゲームプロジェクト",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "デジタルアート、デジタルクラフト、デジタルゲームのいずれかの分野を担当し、学期末に開催される会津の地域イベントに向けて作品を制作していく演習形式のプロジェクト。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-007 異文化リーダーシップトレーニング―異文化理解の実践",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "グローバル社会で活躍するために必要な知識、スキル、実践力を総合的に育成する。フィールドワークやワークショップを通じて異文化理解を深め、リーダーシップを発揮するために必要な資質を向上させる。",
+        "grading": {
+            "exam": 0,
+            "report": 20,
+            "others": 80
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-008 会津ならではのスポーツ活動",
+        "target_bit": 143,
+        "credits": 1.0,
+        "outline": "会津地域でしか体験できないスポーツを実践し、その背景にある歴史や地理を学ぶ。「スポーツ×観光」にフォーカスし、調査・分析やGPSを用いた活動等を行う。",
+        "grading": {
+            "exam": 0,
+            "report": 40,
+            "others": 60
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-009 AIモデルを作ってラズベリーパイで動かそう！！",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "深層学習モデルの作り方と、ラズベリーパイでの動かし方を学ぶ。Google ColaboratoryとTensorFlowを使って画像分類モデルを作成し、モデルカーを指定したコース上で自動走行させる。",
+        "grading": {
+            "exam": 0,
+            "report": 30,
+            "others": 70
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-010 Advanced Pattern Recognition using AI",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "AIを用いたPattern Recognition Software開発研究会。ペンタブレットやLeap Motionなどのセンサーを用いたパターン認識に関するソフトウェア開発を行い、プログラミング技術を向上させる。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-011 自己啓発研究会",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "エニアグラムを活用し、自らの性格構造や内的動機を理解しながら、個人としての成長と社会的成熟を実現することを目指す学際的な探究・実践プログラム。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-012 FPGAボードを使って手のひらサイズPCを作ってみよう",
+        "target_bit": 143,
+        "credits": 1.0,
+        "outline": "FPGAを活用して、演算の中枢であるCPUや周辺回路を含んだハードウェアを実装し、OS(Linux)を載せることで小型のコンピュータの実現に取り組む。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-013 競技プログラミング",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "学生のプログラミング能力と問題解決能力を高め、実践的なプログラミングの演習を行います。国際大学対抗プログラミングコンテストICPCのアジア地区・世界大会への出場を目指します。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-014 実践的プログラミング",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "プログラミング能力を高め、アルゴリズム、機械学習、フレームワーク等に関する知識を深めることを目的とする。学生の希望に応じてC/C++やPythonによるアルゴリズム習得、WEBアプリ開発などを実践する。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-015 論理的思考・批判的思考をしてみよう",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "ゼミ形式で、理論的な技術書を輪番で読むことにより、論理的思考および批判的思考(クリティカルシンキング)の充実を図る。",
+        "grading": {
+            "exam": 0,
+            "report": 0,
+            "others": 100
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-016 心理学統計法 (基礎)",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "心理学や教育学の分野で用いられる統計の基礎について学ぶ。データをどのように整理し、結果を読み取るかという考え方を重視し、統計ソフト「HAD」を用いた簡単なデータ分析を体験する。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-017 アントレプレナーシップ育成プログラム",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "学生の「自分らしさを活かして挑戦する力」を育成することを目的とする。ワークショップ形式の学びを通して、自己・他者理解を深めながら、関心をアイデアとして整理し形にするプロセスを体験する。",
+        "grading": {
+            "exam": 0,
+            "report": 40,
+            "others": 60
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-018 音楽で学ぶPythonプログラミング",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "Python用の音楽情報処理ライブラリであるPytaktを使い、MIDI情報処理を中心とした音楽プログラミングを行い、プログラミングスキルを習得する。機械学習を活用した自動作曲などにも挑戦する。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-019 電子工作プロジェクト",
+        "target_bit": 655,
+        "credits": 1.0,
+        "outline": "電子工作に必要な基礎的な技術を、実際に手を動かしながら体験する。前期でははんだ付けや回路の仕組み、基板設計や筐体制作を学び、後期ではマイコンを用いて自分で考えた電子工作作品の制作に取り組む。",
+        "grading": {
+            "exam": 0,
+            "report": 50,
+            "others": 50
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    }
+]
