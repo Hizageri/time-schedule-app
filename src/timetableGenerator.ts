@@ -141,3 +141,93 @@ export const generateTimetables = (
 
     return finalTimetables;
 };
+
+// --- Bit Decoding and Filtering Utilities ---
+
+export const getTargetGrades = (bit: number): number[] => {
+    const grades: number[] = [];
+    for (let i = 0; i < 6; i++) {
+        if ((bit & (1 << i)) > 0) grades.push(i + 1);
+    }
+    return grades;
+};
+
+export const getTermLabel = (bit: number): string => {
+    const termVal = (bit >> 8) & 3;
+    if (termVal === 0) return '前期';
+    if (termVal === 1) return '後期';
+    if (termVal === 2) return '通年';
+    return '不明';
+};
+
+export const getQuarterLabel = (bit: number): string => {
+    const qVal = (bit >> 6) & 3;
+    if (qVal === 0) return '奇数Q';
+    if (qVal === 1) return '偶数Q';
+    if (qVal === 2) return 'またぎ';
+    if (qVal === 3) return '集中等';
+    return '不明';
+};
+
+export const isRetakeCourse = (bit: number): boolean => {
+    return (bit & (1 << 10)) > 0;
+};
+
+export const filterByBit = (
+    courses: CourseData[],
+    filters: { selectedGrade: number, term: 'first' | 'second' | 'full', isReRegistrationOnly: boolean }
+): CourseData[] => {
+    const { selectedGrade, term } = filters;
+
+    let tBit = 0;
+    if (term === 'second') tBit = 1;
+    else if (term === 'full') tBit = 2;
+
+    return courses.filter(course => {
+        const bit = course.target_bit;
+
+        // Grade Match (AND)
+        const gradeMatch = (bit & (1 << (selectedGrade - 1))) > 0;
+
+        // Term Match (course term matches user term, or course is full-year 2)
+        const courseTerm = (bit >> 8) & 3;
+        const termMatch = (courseTerm === tBit) || (courseTerm === 2);
+
+        return gradeMatch && termMatch;
+    }).sort((a, b) => {
+        const aRetake = isRetakeCourse(a.target_bit) ? 1 : 0;
+        const bRetake = isRetakeCourse(b.target_bit) ? 1 : 0;
+
+        // Prioritize retake
+        if (aRetake !== bRetake) {
+            return bRetake - aRetake;
+        }
+
+        // Fallback proximity sort
+        const minGradeA = Math.min(...getTargetGrades(a.target_bit));
+        const minGradeB = Math.min(...getTargetGrades(b.target_bit));
+        const distA = Math.abs(minGradeA - selectedGrade);
+        const distB = Math.abs(minGradeB - selectedGrade);
+        return distA - distB;
+    });
+};
+export const getPeriodLabel = (bit: number): string => {
+    const term = (bit >> 8) & 0b11;    // Bit 9-8 (00:前期, 01:後期, 10:両方)
+    const quarter = (bit >> 6) & 0b11; // Bit 7-6 (00:奇数, 01:偶数, 10:通期, 11:集中)
+
+    if (quarter === 0b11) return '集中';
+
+    if (term === 0b00) { // 前期
+        if (quarter === 0b00) return '1Q';
+        if (quarter === 0b01) return '2Q';
+        if (quarter === 0b10) return '前期';
+    } else if (term === 0b01) { // 後期
+        if (quarter === 0b00) return '3Q';
+        if (quarter === 0b01) return '4Q';
+        if (quarter === 0b10) return '後期';
+    } else if (term === 0b10 && quarter === 0b10) {
+        return '通年';
+    }
+
+    return '不明'; // 万が一のエラー用
+};

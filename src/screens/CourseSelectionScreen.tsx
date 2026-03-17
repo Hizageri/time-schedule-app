@@ -1,43 +1,21 @@
 import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../AppContext';
 import { MOCK_COURSES } from '../data';
-import { calculateStudentBit, canTakeClass } from '../types';
 import type { CourseData } from '../types';
+import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCourse } from '../timetableGenerator';
 import { BookOpen, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
 
 export const CourseSelectionScreen: React.FC = () => {
     const { state, setScreen, toggleSelectedCourse } = useAppContext();
     const [selectedCourseForModal, setSelectedCourseForModal] = useState<CourseData | null>(null);
 
-    const studentBit = useMemo(() => {
-        return calculateStudentBit(
-            state.timetableConditions.targetGrade,
-            state.timetableConditions.term,
-            state.timetableConditions.hasRetake
-        );
-    }, [state.timetableConditions]);
-
     const availableCourses = useMemo(() => {
-        // In V3, target_bit is at the root of CourseData
-        const validCourses = MOCK_COURSES.filter(course => canTakeClass(course.target_bit, studentBit));
-
-        // Sort by proximity to target grade
-        const targetG = state.timetableConditions.targetGrade;
-        const getMinGrade = (bit: number) => {
-            for (let i = 0; i < 6; i++) {
-                if ((bit & (1 << i)) > 0) return i + 1;
-            }
-            return 1;
-        };
-
-        return validCourses.sort((a, b) => {
-            const minA = getMinGrade(a.target_bit);
-            const minB = getMinGrade(b.target_bit);
-            const distA = Math.abs(minA - targetG);
-            const distB = Math.abs(minB - targetG);
-            return distA - distB;
+        return filterByBit(MOCK_COURSES, {
+            selectedGrade: state.timetableConditions.targetGrade,
+            term: state.timetableConditions.term,
+            isReRegistrationOnly: state.timetableConditions.hasRetake
         });
-    }, [studentBit]);
+    }, [state.timetableConditions]);
 
     const handleProceed = () => {
         if (state.selectedCourses.length === 0) {
@@ -80,6 +58,10 @@ export const CourseSelectionScreen: React.FC = () => {
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {availableCourses.map(course => {
                             const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
+                            const retake = isRetakeCourse(course.target_bit);
+                            const gradesArr = getTargetGrades(course.target_bit);
+                            const periodLabel = getPeriodLabel(course.target_bit);
+
                             return (
                                 <div key={course.id_name}
                                     className={`rounded-xl shadow-sm border transition-all cursor-pointer ${isSelected ? 'bg-indigo-50 border-indigo-400 ring-1 ring-indigo-400' : 'bg-white border-gray-200 hover:border-indigo-300 hover:shadow-md'}`}
@@ -94,8 +76,21 @@ export const CourseSelectionScreen: React.FC = () => {
                                                 readOnly
                                             />
                                             <div className="ml-3">
+                                                {retake && (
+                                                    <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-600 border border-red-200 mb-1">
+                                                        再履修対象
+                                                    </span>
+                                                )}
                                                 <h3 className="font-bold text-lg text-gray-800 leading-tight mb-1">{course.id_name}</h3>
-                                                <div className="text-xs text-gray-500">
+                                                <div className="flex flex-wrap gap-1 mt-2">
+                                                    <span className="bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
+                                                        対象: {gradesArr.length === 6 ? '全学年' : `${gradesArr.join(',')}年`}
+                                                    </span>
+                                                    <span className="bg-green-50 text-green-700 border border-green-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
+                                                        {periodLabel}
+                                                    </span>
+                                                </div>
+                                                <div className="text-xs text-gray-500 mt-2">
                                                     {course.classes.length}種類のクラスが開講
                                                 </div>
                                             </div>
