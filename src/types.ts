@@ -9,11 +9,14 @@ export type TimeSlot =
 export interface ClassInfo {
     class_id: string;
     schedule: TimeSlot[];
+    // 追加: クラスごとにターゲットビットを持てるようにする（?をつけて任意にする）
+    target_bit?: number; 
 }
 
 export interface CourseData {
     id_name: string;
-    target_bit: number;
+    // 修正: 外側にビットがない場合もあるので、? をつけて任意（Optional）にする
+    target_bit?: number; 
     credits: number;
     outline: string;
     grading?: { exam: number; report: number; others: number };
@@ -81,7 +84,7 @@ export interface AppState {
     selectedCourses: CourseData[]; // holding selected courses before commit
     committedClasses: {
         courseId: string;
-        targetBit: number; // to identify quarter later
+        targetBit: number | undefined; // to identify quarter later
         classId: string;
         schedule: TimeSlot[];
     }[];

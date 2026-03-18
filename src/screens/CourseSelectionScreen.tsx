@@ -57,11 +57,11 @@ export const CourseSelectionScreen: React.FC = () => {
                 <div className="animate-in fade-in">
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {availableCourses.map(course => {
+                            const displayBit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
                             const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
-                            const retake = isRetakeCourse(course.target_bit);
-                            const gradesArr = getTargetGrades(course.target_bit);
-                            const periodLabel = getPeriodLabel(course.target_bit);
-
+                            const retake = isRetakeCourse(displayBit);
+                            const gradesArr = getTargetGrades(displayBit);
+                            const periodLabel = getPeriodLabel(displayBit);
                             return (
                                 <div key={course.id_name}
                                     className={`rounded-xl shadow-sm border transition-all cursor-pointer ${isSelected ? 'bg-indigo-50 border-indigo-400 ring-1 ring-indigo-400' : 'bg-white border-gray-200 hover:border-indigo-300 hover:shadow-md'}`}
