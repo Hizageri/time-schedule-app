@@ -6,7 +6,7 @@ import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCourse } from '..
 import { BookOpen, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
 
 export const CourseSelectionScreen: React.FC = () => {
-    const { state, setScreen, toggleSelectedCourse } = useAppContext();
+    const { state, setScreen, toggleSelectedCourse, pinClass } = useAppContext();
     const [selectedCourseForModal, setSelectedCourseForModal] = useState<CourseData | null>(null);
 
     const availableCourses = useMemo(() => {
@@ -149,7 +149,7 @@ export const CourseSelectionScreen: React.FC = () => {
                             </div>
 
                             {selectedCourseForModal.grading && (
-                                <div>
+                                <div className="mb-6">
                                     <h4 className="text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">成績評価の割合</h4>
                                     <div className="bg-gray-50 rounded-lg p-4 space-y-2">
                                         <div className="flex justify-between text-sm">
@@ -167,6 +167,41 @@ export const CourseSelectionScreen: React.FC = () => {
                                     </div>
                                 </div>
                             )}
+
+                            <div>
+                                <h4 className="text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">受講クラス制限</h4>
+                                <p className="text-xs text-gray-500 mb-3">AIによる自動割り当てではなく、特定のクラスを指定したい場合は選択してください。</p>
+                                <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
+                                    <label className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors ${!state.pinnedClasses[selectedCourseForModal.id_name] ? 'bg-indigo-50 border-indigo-300 ring-1 ring-indigo-300' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>
+                                        <input
+                                            type="radio"
+                                            name="classSelection"
+                                            checked={!state.pinnedClasses[selectedCourseForModal.id_name]}
+                                            onChange={() => pinClass(selectedCourseForModal.id_name, null)}
+                                            className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                        />
+                                        <div className="ml-3 flex-1">
+                                            <span className="block text-sm font-medium text-gray-900">おまかせ (AI自動割り当て)</span>
+                                        </div>
+                                    </label>
+
+                                    {selectedCourseForModal.classes.map(cls => (
+                                        <label key={cls.class_id} className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors ${state.pinnedClasses[selectedCourseForModal.id_name] === cls.class_id ? 'bg-indigo-50 border-indigo-300 ring-1 ring-indigo-300' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>
+                                            <input
+                                                type="radio"
+                                                name="classSelection"
+                                                checked={state.pinnedClasses[selectedCourseForModal.id_name] === cls.class_id}
+                                                onChange={() => pinClass(selectedCourseForModal.id_name, cls.class_id)}
+                                                className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                                            />
+                                            <div className="ml-3 flex-1">
+                                                <span className="block text-sm font-medium text-gray-900">{cls.class_id}</span>
+                                                <span className="block text-xs text-gray-500 mt-1">{cls.schedule.join(', ')}</span>
+                                            </div>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

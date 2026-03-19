@@ -24,14 +24,14 @@ export const GeneratorScreen: React.FC = () => {
         setIsGenerating(true);
         // Simulate a small delay for "AI processing" effect
         setTimeout(() => {
-            const results = generateTimetables(state.timetableSettings, state.selectedCourses);
+            const results = generateTimetables(state);
             setPatterns(results);
             if (results.length > 0) {
                 setEditableClasses(results[0].classes);
             }
             setIsGenerating(false);
         }, 800);
-    }, [state.selectedCourses, state.timetableSettings]);
+    }, [state]);
 
     const handleTabChange = (p: PatternType) => {
         setActivePattern(p);
@@ -70,7 +70,7 @@ export const GeneratorScreen: React.FC = () => {
     const getPreviewCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
         return editableClasses.filter(c => {
-            const qType = getQuarterType(c.targetBit);
+            const qType = getQuarterType(c.targetBit ?? 0);
             if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return false;
             if (qType === 'intensive') return false;
             return c.schedule.includes(slotStr);

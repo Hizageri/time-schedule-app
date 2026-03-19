@@ -10,13 +10,13 @@ export interface ClassInfo {
     class_id: string;
     schedule: TimeSlot[];
     // 追加: クラスごとにターゲットビットを持てるようにする（?をつけて任意にする）
-    target_bit?: number; 
+    target_bit?: number;
 }
 
 export interface CourseData {
     id_name: string;
     // 修正: 外側にビットがない場合もあるので、? をつけて任意（Optional）にする
-    target_bit?: number; 
+    target_bit?: number;
     credits: number;
     outline: string;
     grading?: { exam: number; report: number; others: number };
@@ -89,6 +89,7 @@ export interface AppState {
         schedule: TimeSlot[];
     }[];
     grades: Record<string, { grade: string, classDifficulty: number, testDifficulty: number }>;
+    pinnedClasses: Record<string, string>; // courseId -> classId
 }
 
 export const defaultState: AppState = {
@@ -98,11 +99,11 @@ export const defaultState: AppState = {
         university: '会津大学',
         dreamJob: '',
         gradingScale: [
-            { label: 'S (秀)', point: 4 },
-            { label: 'A (優)', point: 3 },
-            { label: 'B (良)', point: 2 },
-            { label: 'C (可)', point: 1 },
-            { label: 'D (不可)', point: 0 }
+            { label: 'A', point: 4 },
+            { label: 'B', point: 3 },
+            { label: 'C', point: 2 },
+            { label: 'D', point: 0 },
+            { label: 'F', point: 0 }
         ],
         termSystem: '4学期制'
     },
@@ -118,5 +119,6 @@ export const defaultState: AppState = {
     },
     selectedCourses: [],
     committedClasses: [],
-    grades: {}
+    grades: {},
+    pinnedClasses: {}
 };
