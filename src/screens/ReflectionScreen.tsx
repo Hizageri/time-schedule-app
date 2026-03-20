@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useAppContext } from '../AppContext';
 import { CheckCircle, Save, ChevronLeft } from 'lucide-react';
+import { MOCK_COURSES } from '../data';
 
 export const ReflectionScreen: React.FC = () => {
     const { state, saveGrade, setScreen, updateConditions } = useAppContext();
@@ -20,18 +21,46 @@ export const ReflectionScreen: React.FC = () => {
 
     const uniqueCourses = Array.from(new Set(state.committedClasses.map(c => c.courseId)));
 
+    const gpaData = useMemo(() => {
+        let totalCredits = 0;
+        let totalEarnedCredits = 0;
+        let totalPoints = 0;
+
+        Object.entries(state.grades).forEach(([courseId, gradeInfo]) => {
+            const course = MOCK_COURSES.find(c => c.id_name === courseId);
+            if (!course) return;
+            const credits = course.credits;
+            const scale = state.userProfile.gradingScale.find(s => s.label === gradeInfo.grade);
+            const point = scale ? scale.point : 0;
+
+            totalCredits += credits;
+            if (point > 0) totalEarnedCredits += credits;
+            totalPoints += point * credits;
+        });
+
+        const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
+        return { gpa, totalCredits, totalEarnedCredits };
+    }, [state.grades, state.userProfile.gradingScale]);
+
     return (
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center justify-center">
             <div className="max-w-3xl w-full bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
 
-                <div className="p-8 border-b border-gray-100 bg-indigo-50/50">
-                    <h2 className="text-2xl font-bold text-gray-800 flex items-center mb-2">
-                        <CheckCircle className="w-7 h-7 mr-3 text-indigo-600" />
-                        学期の振り返り・成績入力
-                    </h2>
-                    <p className="text-gray-600 text-sm">
-                        お疲れ様でした！次の時間割を作成する前に、今学期の成績と感想（難易度など）を記録しましょう。このデータはAIコンサルの精度向上に使われます。
-                    </p>
+                <div className="p-8 border-b border-gray-100 bg-indigo-50/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div className="flex-1">
+                        <h2 className="text-2xl font-bold text-gray-800 flex items-center mb-2">
+                            <CheckCircle className="w-7 h-7 mr-3 text-indigo-600" />
+                            学期の振り返り・成績入力
+                        </h2>
+                        <p className="text-gray-600 text-sm">
+                            お疲れ様でした！次の時間割を作成する前に、今学期の成績と感想（難易度など）を記録しましょう。このデータはAIコンサルの精度向上に使われます。
+                        </p>
+                    </div>
+                    <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 text-center min-w-[150px]">
+                        <div className="text-xs text-gray-500 font-bold mb-1 uppercase tracking-wider">現在のGPA</div>
+                        <div className="text-3xl font-black text-indigo-600">{gpaData.gpa}</div>
+                        <div className="text-xs text-gray-500 mt-2 font-medium">単位数 (修得/登録): <span className="text-gray-900">{gpaData.totalEarnedCredits} / {gpaData.totalCredits}</span></div>
+                    </div>
                 </div>
 
                 <div className="p-8">
