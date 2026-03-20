@@ -14,6 +14,7 @@ interface AppContextType {
     setScreen: (screen: AppState['currentScreen']) => void;
     saveGrade: (courseId: string, gradeData: { grade: string, classDifficulty: number, testDifficulty: number }) => void;
     pinClass: (courseId: string, classId: string | null) => void;
+    resetTermData: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -71,8 +72,17 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         });
     };
 
+    const resetTermData = () => {
+        setState(prev => ({
+            ...prev,
+            selectedCourses: [],
+            committedClasses: [],
+            pinnedClasses: {}
+        }));
+    };
+
     return (
-        <AppContext.Provider value={{ state, setState, updateProfile, updateSettings, updateConditions, toggleSelectedCourse, setCommittedClasses, setScreen, saveGrade, pinClass }}>
+        <AppContext.Provider value={{ state, setState, updateProfile, updateSettings, updateConditions, toggleSelectedCourse, setCommittedClasses, setScreen, saveGrade, pinClass, resetTermData }}>
             {children}
         </AppContext.Provider>
     );

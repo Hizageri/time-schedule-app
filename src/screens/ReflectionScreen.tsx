@@ -3,22 +3,26 @@ import { useAppContext } from '../AppContext';
 import { CheckCircle, Save, ChevronLeft } from 'lucide-react';
 
 export const ReflectionScreen: React.FC = () => {
-    const { state, saveGrade, setScreen, updateConditions } = useAppContext();
+    const { state, saveGrade, setScreen, updateConditions, resetTermData } = useAppContext();
 
-    // Local state for grades if we want to batch save them
-    // For simplicity we use the context directly via saveGrade
+    const uniqueCourses = Array.from(new Set(state.committedClasses.map(c => c.courseId)));
 
     const handleComplete = () => {
+        const hasEmpty = uniqueCourses.some(courseId => !state.grades[courseId] || state.grades[courseId].grade === '');
+        if (hasEmpty) {
+            alert('すべての科目の成績を選択してください');
+            return;
+        }
+
         // Advanced the selected term logic or reset classes etc.
         updateConditions({
             term: state.timetableConditions.term === 'first' ? 'second' : 'first',
             targetGrade: state.timetableConditions.term === 'second' ? Math.min(6, state.timetableConditions.targetGrade + 1) : state.timetableConditions.targetGrade
         });
+        resetTermData();
         // Go back to condition screen to plan next term
         setScreen(2);
     };
-
-    const uniqueCourses = Array.from(new Set(state.committedClasses.map(c => c.courseId)));
 
     return (
         <div className="min-h-screen bg-background p-12 flex flex-col items-center justify-center">
@@ -44,8 +48,7 @@ export const ReflectionScreen: React.FC = () => {
                     ) : (
                         <div className="space-y-6">
                             {uniqueCourses.map(courseId => {
-                                const defaultGrade = state.userProfile.gradingScale.length > 0 ? state.userProfile.gradingScale[0].label : 'S';
-                                const currentGrade = state.grades[courseId] || { grade: defaultGrade, classDifficulty: 3, testDifficulty: 3 };
+                                const currentGrade = state.grades[courseId] || { grade: '', classDifficulty: 3, testDifficulty: 3 };
 
                                 return (
                                     <div key={courseId} className="bg-card/50 rounded-xl p-5 border border-border">
@@ -59,6 +62,7 @@ export const ReflectionScreen: React.FC = () => {
                                                     value={currentGrade.grade}
                                                     onChange={(e) => saveGrade(courseId, { ...currentGrade, grade: e.target.value })}
                                                 >
+                                                    <option value="" disabled>選択してください</option>
                                                     {state.userProfile.gradingScale.map((g, idx) => (
                                                         <option key={idx} value={g.label}>{g.label}</option>
                                                     ))}

@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../AppContext';
 import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../types';
-import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCourse } from '../timetableGenerator';
+import { filterByBit, getTargetGrades, getPeriodLabel } from '../timetableGenerator';
 import { BookOpen, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
 import { getSubjectColor } from '../utils';
 
@@ -42,7 +42,17 @@ export const CourseSelectionScreen: React.FC = () => {
             return checkTermMatch(c.target_bit) || c.classes.some(cls => checkTermMatch(cls.target_bit));
         });
 
-        return [...baseFiltered, ...failedCourses];
+        // 取得済み（ポイントが0より大きい）科目をリストから完全に除外する
+        return [...baseFiltered, ...failedCourses].filter(course => {
+            const gradeInfo = state.grades[course.id_name];
+            if (!gradeInfo) return true; // 未履修は残す
+
+            const scale = state.userProfile.gradingScale.find(s => s.label === gradeInfo.grade);
+            if (scale && scale.point > 0) {
+                return false; // A, B, C, S など合格済みの科目は完全除外
+            }
+            return true; // D, F (ポイント0) などは再履修として残す
+        });
     }, [state.timetableConditions, state.grades, state.userProfile.gradingScale]);
 
     const handleProceed = () => {
@@ -69,8 +79,12 @@ export const CourseSelectionScreen: React.FC = () => {
                     <div className="text-right mr-4 text-sm">
                         <span className="text-muted">選択単位数: </span>
                         <span className="font-bold text-accent text-lg">
-                            {state.selectedCourses.reduce((sum, c) => sum + c.credits, 0)}
-                        </span> <span className="text-muted">単位</span>
+                            {state.selectedCourses.reduce((sum, c) => {
+                                const pastGrade = state.grades[c.id_name]?.grade;
+                                const isPassed = pastGrade && (state.userProfile.gradingScale.find(s => s.label === pastGrade)?.point ?? 0) > 0;
+                                return sum + (isPassed ? 0 : c.credits);
+                            }, 0)}
+                        </span> <span className="text-muted">単位 (今期新規)</span>
                     </div>
 
                     <button
@@ -89,8 +103,16 @@ export const CourseSelectionScreen: React.FC = () => {
                         {availableCourses.map(course => {
                             const displayBit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
                             const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
-                            const retake = isRetakeCourse(displayBit);
+
                             const gradesArr = getTargetGrades(displayBit);
+                            const minCourseYear = Math.min(...gradesArr);
+                            const userYear = state.timetableConditions.targetGrade;
+
+                            const pastGrade = state.grades[course.id_name]?.grade;
+                            const pastPoint = pastGrade ? state.userProfile.gradingScale.find(s => s.label === pastGrade)?.point : undefined;
+                            const isFailedOrUnregistered = !pastGrade || pastPoint === 0 || pastGrade === 'D' || pastGrade === 'F';
+                            const retake = minCourseYear < userYear && isFailedOrUnregistered;
+
                             const periodLabel = getPeriodLabel(displayBit);
                             const colorClass = getSubjectColor(course.id_name);
                             return (
