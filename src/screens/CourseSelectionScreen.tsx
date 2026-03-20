@@ -10,12 +10,39 @@ export const CourseSelectionScreen: React.FC = () => {
     const [selectedCourseForModal, setSelectedCourseForModal] = useState<CourseData | null>(null);
 
     const availableCourses = useMemo(() => {
-        return filterByBit(MOCK_COURSES, {
+        const baseFiltered = filterByBit(MOCK_COURSES, {
             selectedGrade: state.timetableConditions.targetGrade,
             term: state.timetableConditions.term,
             isReRegistrationOnly: state.timetableConditions.hasRetake
         });
-    }, [state.timetableConditions]);
+
+        // 単位を落とした（ポイントが0の）科目を対象学年が違っても追加する
+        const targetTermBit = state.timetableConditions.term === 'second' ? 1 : state.timetableConditions.term === 'full' ? 2 : 0;
+
+        const failedCourses = MOCK_COURSES.filter(c => {
+            // 既に基本フィルターに含まれているならスキップ
+            if (baseFiltered.some(bc => bc.id_name === c.id_name)) return false;
+
+            // 成績情報を取得
+            const gradeInfo = state.grades[c.id_name];
+            if (!gradeInfo) return false;
+
+            // ポイントが0か判定
+            const scale = state.userProfile.gradingScale.find(s => s.label === gradeInfo.grade);
+            if (!scale || scale.point !== 0) return false;
+
+            // 学期（前期／後期など）が一致しているか判定
+            const checkTermMatch = (bit: number | undefined) => {
+                if (bit === undefined) return false;
+                const courseTerm = (bit >> 8) & 3;
+                return (courseTerm === targetTermBit) || (courseTerm === 2);
+            };
+
+            return checkTermMatch(c.target_bit) || c.classes.some(cls => checkTermMatch(cls.target_bit));
+        });
+
+        return [...baseFiltered, ...failedCourses];
+    }, [state.timetableConditions, state.grades, state.userProfile.gradingScale]);
 
     const handleProceed = () => {
         if (state.selectedCourses.length === 0) {
