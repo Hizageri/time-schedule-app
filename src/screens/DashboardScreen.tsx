@@ -116,27 +116,36 @@ export const DashboardScreen: React.FC = () => {
             {/* Tabs */}
             <div className="bg-card border-b border-border">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex space-x-8">
+                    <div className="flex justify-between items-center w-full">
+                        <div className="flex space-x-8">
+                            <button
+                                onClick={() => setActiveTab('timetable')}
+                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'timetable' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                            >
+                                <CalendarIcon className="w-4 h-4 mr-2" />
+                                時間割
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('grades')}
+                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'grades' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                            >
+                                <Award className="w-4 h-4 mr-2" />
+                                成績
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('profile')}
+                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                            >
+                                <User className="w-4 h-4 mr-2" />
+                                プロフィール
+                            </button>
+                        </div>
                         <button
-                            onClick={() => setActiveTab('timetable')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'timetable' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                            onClick={() => setScreen(7)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow-sm transition-transform hover:scale-105 flex items-center text-sm font-semibold"
                         >
-                            <CalendarIcon className="w-4 h-4 mr-2" />
-                            時間割
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('grades')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'grades' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
-                        >
-                            <Award className="w-4 h-4 mr-2" />
-                            成績
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('profile')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
-                        >
-                            <User className="w-4 h-4 mr-2" />
-                            プロフィール
+                            <PlusCircle className="w-4 h-4 mr-2" />
+                            次学期の時間割を作る
                         </button>
                     </div>
                 </div>
@@ -398,17 +407,6 @@ export const DashboardScreen: React.FC = () => {
                     </div>
                 )}
 
-                <div className="fixed bottom-8 right-8">
-                    <button
-                        onClick={() => {
-                            setScreen(7);
-                        }}
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-lg shadow-indigo-300 transition-transform hover:scale-105 flex items-center group"
-                    >
-                        <PlusCircle className="w-6 h-6 mr-2" />
-                        <span className="font-semibold pr-2">次学期の時間割を作る</span>
-                    </button>
-                </div>
             </main>
 
             {/* Intensive Class Schedule Modal */}
