@@ -65,7 +65,7 @@ export const OnboardingScreen: React.FC = () => {
                             <label className="block text-sm font-medium text-foreground mb-2">大学</label>
                             <input
                                 type="text"
-                                className="w-full px-6 py-4 rounded-xl border border-border bg-muted text-muted shadow-sm outline-none select-none cursor-not-allowed text-lg"
+                                className="w-full px-6 py-4 rounded-xl border border-border bg-muted text-[#1a1a1a] shadow-sm outline-none select-none cursor-not-allowed text-lg"
                                 value="会津大学"
                                 disabled
                             />

@@ -8,7 +8,7 @@ export const ConditionScreen: React.FC = () => {
     return (
         <div className="min-h-screen bg-background p-12 flex items-center justify-center">
             <div className="max-w-xl w-full bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
-                <div className="bg-foreground p-6 text-white text-center relative overflow-hidden">
+                <div className="bg-slate-900 p-6 text-white text-center relative overflow-hidden">
                     <div className="absolute top-0 right-0 -mt-4 -mr-4 bg-white/10 w-24 h-24 rounded-full blur-2xl"></div>
                     <CalendarClock className="w-10 h-10 mx-auto mb-3 text-background/80 relative z-10" />
                     <h2 className="text-xl font-bold relative z-10">時間割の条件設定</h2>
