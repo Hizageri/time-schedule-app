@@ -64,6 +64,39 @@ export const GeneratorScreen: React.FC = () => {
         return 'intensive';
     };
 
+    // Subject color coding function
+    const getSubjectColor = (courseId: string) => {
+        const name = courseId.toLowerCase();
+        
+        // Mathematics
+        if (name.includes('数学') || name.includes('統計') || name.includes('確率') || name.includes('代数')) {
+            return 'bg-blue-100 text-blue-900 border-l-4 border-blue-500';
+        }
+        
+        // English
+        if (name.includes('英語') || name.includes('英会') || name.includes('コミュニケーション')) {
+            return 'bg-yellow-100 text-yellow-900 border-l-4 border-yellow-500';
+        }
+        
+        // Science
+        if (name.includes('物理') || name.includes('化学') || name.includes('生物') || name.includes('科学')) {
+            return 'bg-green-100 text-green-900 border-l-4 border-green-500';
+        }
+        
+        // Programming
+        if (name.includes('プログラミング') || name.includes('情報') || name.includes('コンピュータ')) {
+            return 'bg-purple-100 text-purple-900 border-l-4 border-purple-500';
+        }
+        
+        // Humanities
+        if (name.includes('歴史') || name.includes('文学') || name.includes('哲学') || name.includes('経済')) {
+            return 'bg-orange-100 text-orange-900 border-l-4 border-orange-500';
+        }
+        
+        // Default color
+        return 'bg-slate-100 text-slate-900 border-l-4 border-slate-500';
+    };
+
     // Cell Rendering
     const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
     const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
@@ -80,10 +113,22 @@ export const GeneratorScreen: React.FC = () => {
 
     if (isGenerating) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="text-center animate-pulse">
-                    <RefreshCw className="w-12 h-12 text-indigo-500 mx-auto mb-4 animate-spin" />
-                    <h2 className="text-xl font-bold text-gray-700">AIが最適な時間割を構築中...</h2>
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex items-center justify-center p-12">
+                <div className="text-center space-y-8">
+                    <div className="w-24 h-24 bg-gradient-to-br from-slate-900 to-slate-700 rounded-2xl shadow-2xl flex items-center justify-center mx-auto">
+                        <div className="grid grid-cols-3 gap-1">
+                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
+                        </div>
+                    </div>
+                    <h2 className="text-2xl font-bold text-slate-700">AIが最適な時間割を構築中...</h2>
                 </div>
             </div>
         );
@@ -91,11 +136,13 @@ export const GeneratorScreen: React.FC = () => {
 
     if (patterns.length === 0) {
         return (
-            <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
-                <div className="bg-white p-8 rounded-xl shadow-md max-w-lg w-full text-center">
-                    <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
-                    <h2 className="text-xl font-bold text-gray-800 mb-2">スケジュールの衝突</h2>
-                    <p className="text-gray-600 mb-6">
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 p-12 flex items-center justify-center">
+                <div className="bg-white p-12 rounded-2xl shadow-2xl max-w-2xl w-full text-center space-y-6">
+                    <div className="w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mx-auto">
+                        <AlertCircle className="w-10 h-10 text-red-500" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-slate-800 mb-2">スケジュールの衝突</h2>
+                    <p className="text-slate-600 text-lg leading-relaxed">
                         選択した科目の間で、どうしても時限が重なってしまうため時間割を組むことができません。いくつか科目を絞ってみてください。
                     </p>
                     <button
@@ -111,17 +158,17 @@ export const GeneratorScreen: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-            <header className="bg-white border-b border-gray-200 sticky top-0 z-20 px-6 py-4 flex justify-between items-center shadow-sm">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex flex-col">
+            <header className="bg-white border-b border-slate-200 sticky top-0 z-20 px-8 py-4 flex justify-between items-center shadow-sm">
                 <div>
-                    <h1 className="text-xl font-bold text-gray-800 flex items-center">
-                        <Sparkles className="w-6 h-6 mr-2 text-indigo-600" />
-                        AI 提案時間割 5パターン
+                    <h1 className="text-2xl font-bold text-slate-900 flex items-center">
+                        <Sparkles className="w-6 h-6 mr-3 text-slate-700" />
+                        AI Timetable - 5つの戦略
                     </h1>
                 </div>
                 <button
                     onClick={handleConfirm}
-                    className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-8 rounded-xl shadow-md transition-all flex items-center group"
+                    className="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-10 rounded-xl shadow-lg transition-all flex items-center group text-lg"
                 >
                     <Save className="w-5 h-5 mr-2" />
                     この時間割で確定
@@ -130,8 +177,8 @@ export const GeneratorScreen: React.FC = () => {
 
             <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col lg:flex-row gap-6">
                 {/* Left Col: Pattern Navigation */}
-                <div className="w-full lg:w-1/4 flex flex-col space-y-3">
-                    <h3 className="font-bold text-gray-700 ml-1 mb-1">コンセプトを選択</h3>
+                <div className="w-full lg:w-1/4 flex flex-col space-y-4">
+                    <h3 className="font-bold text-slate-800 text-lg mb-3">戦略を選択</h3>
                     <AnimatePresence mode="wait">
                         {patterns.map((p, idx) => {
                             const info = patternLabels[p.patternId];
@@ -144,7 +191,7 @@ export const GeneratorScreen: React.FC = () => {
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ delay: idx * 0.1 }}
                                     onClick={() => handleTabChange(p.patternId)}
-                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 border-transparent transform scale-105' : 'bg-white text-gray-800 border-gray-200 hover:border-indigo-300 hover:shadow-md'}`}
+                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-slate-900 text-white shadow-lg shadow-slate-200 border-transparent transform scale-105' : 'bg-white text-slate-800 border-slate-200 hover:border-slate-400 hover:shadow-md'}`}
                                     whileHover={{ scale: isActive ? 1.05 : 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -155,41 +202,36 @@ export const GeneratorScreen: React.FC = () => {
                                             animate={{ rotate: 360 }}
                                             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                                         >
-                                            <Sparkles className="w-4 h-4 text-indigo-300" />
+                                            <Sparkles className="w-4 h-4 text-slate-300" />
                                         </motion.div>}
                                     </div>
-                                    <div className={`text-xs ${isActive ? 'text-indigo-100' : 'text-gray-500'}`}>{info.desc}</div>
+                                    <div className={`text-sm ${isActive ? 'text-slate-200' : 'text-slate-600'}`}>{info.desc}</div>
                                 </motion.button>
                             );
                         })}
                     </AnimatePresence>
-
-                    <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-sm text-yellow-800">
-                        <p className="font-bold flex items-center mb-1"><Edit3 className="w-4 h-4 mr-1" /> 微調整も可能</p>
-                        プレビュー内で特定のクラスを変えたい場合は、あとでダッシュボードからでも修正可能です。(V3モック)
-                    </div>
                 </div>
 
                 {/* Right Col: Grid Preview */}
                 <div className="w-full lg:w-3/4">
                     <motion.div 
-                        className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full"
+                        className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col h-[calc(100vh-200px)]"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                            <h2 className="font-bold text-indigo-900 flex items-center">
+                        <div className="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                            <h2 className="font-bold text-slate-900 text-lg flex items-center">
                                 <CalendarIcon className="w-5 h-5 mr-2" />
                                 {patternLabels[activePattern].label} プレビュー
                             </h2>
                             {/* Quarter Toggle Controls */}
-                            <div className="flex bg-gray-200/80 p-1 rounded-lg">
+                            <div className="flex bg-slate-200/80 p-1 rounded-lg">
                                 {termQuarters.map(q => (
                                     <motion.button
                                         key={q.val}
                                         onClick={() => setActiveQuarter(q.val as 'odd' | 'even')}
-                                        className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                                        className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-800'}`}
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -199,29 +241,32 @@ export const GeneratorScreen: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="flex-1 overflow-x-auto overflow-y-auto p-4 max-h-[70vh]">
-                            <table className="w-full min-w-[600px] border-collapse relative">
+                        <div className="flex-1 overflow-x-auto overflow-y-auto p-4">
+                            <table className="w-full min-w-[600px] border-collapse relative h-full">
                                 <thead>
                                     <tr>
-                                        <th className="sticky top-0 w-12 border border-gray-200 bg-gray-100 p-2 text-gray-500 text-xs font-medium z-10">時限</th>
+                                        <th className="sticky top-0 w-12 border border-slate-200 bg-slate-100 p-2 text-slate-600 text-xs font-medium z-10">時限</th>
                                         {days.map(d => (
-                                            <th key={d} className="sticky top-0 border border-gray-200 bg-indigo-50/90 backdrop-blur p-2 text-indigo-800 text-sm font-bold w-1/5 z-10">{d}</th>
+                                            <th key={d} className="sticky top-0 border border-slate-200 bg-slate-50/90 backdrop-blur p-2 text-slate-800 text-sm font-bold w-1/5 z-10">{d}</th>
                                         ))}
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className="h-full">
                                     {periods.map(p => (
-                                        <tr key={p}>
-                                            <td className="border border-gray-200 bg-gray-50 p-2 text-center text-gray-500 text-xs font-medium">{p}</td>
+                                        <tr key={p} className="h-full">
+                                            <td className="border border-slate-200 bg-slate-50 p-2 text-center text-slate-600 text-xs font-medium">{p}</td>
                                             {days.map(d => {
                                                 const cells = getPreviewCellClasses(d, p);
                                                 const hasConflict = cells.length > 1;
                                                 return (
-                                                    <td key={`${d}-${p}`} className={`border p-1 h-20 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50' : 'border-gray-200 hover:bg-gray-50'}`}>
+                                                    <td key={`${d}-${p}`} className={`border p-1 h-20 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50' : 'border-slate-200 hover:bg-slate-50'}`}>
                                                         {cells.map((c, idx) => (
                                                             <motion.div 
                                                                 key={idx} 
-                                                                className={`text-[11px] p-2 rounded shadow-sm leading-tight transition-transform cursor-pointer ${hasConflict ? 'bg-red-100 text-red-900 border-red-200 border' : 'bg-gradient-to-br from-indigo-100 to-blue-50 border border-indigo-200 text-indigo-900'}`}
+                                                                className={`text-[11px] p-2 rounded shadow-sm leading-tight transition-transform cursor-pointer ${hasConflict ? 'bg-red-100 text-red-900 border-red-200 border' : (() => {
+                                                                    const colorClass = getSubjectColor(c.courseId);
+                                                                    return colorClass;
+                                                                })()}`}
                                                                 initial={{ scale: 0.8, opacity: 0 }}
                                                                 animate={{ scale: 1, opacity: 1 }}
                                                                 transition={{ delay: idx * 0.05 }}
