@@ -7,6 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
+        /* Sophisticated Monotone + Accent System */
+        background: '#fafafa',
+        foreground: '#1a1a1a',
+        card: '#f0f0f0',
+        accent: '#2563eb',
+        border: '#e5e5e5',
+        muted: '#666666',
+        
+        /* Existing colors for compatibility */
         primary: {
           50: '#eff6ff',
           100: '#dbeafe',

@@ -113,22 +113,22 @@ export const GeneratorScreen: React.FC = () => {
 
     if (isGenerating) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex items-center justify-center p-12">
+            <div className="min-h-screen bg-background flex items-center justify-center p-12">
                 <div className="text-center space-y-8">
-                    <div className="w-24 h-24 bg-gradient-to-br from-slate-900 to-slate-700 rounded-2xl shadow-2xl flex items-center justify-center mx-auto">
+                    <div className="w-24 h-24 bg-gradient-to-br from-foreground to-foreground/80 rounded-2xl shadow-2xl flex items-center justify-center mx-auto">
                         <div className="grid grid-cols-3 gap-1">
-                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-white rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
+                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
                         </div>
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-700">AIが最適な時間割を構築中...</h2>
+                    <h2 className="text-2xl font-bold text-foreground">AIが最適な時間割を構築中...</h2>
                 </div>
             </div>
         );
@@ -136,18 +136,18 @@ export const GeneratorScreen: React.FC = () => {
 
     if (patterns.length === 0) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 p-12 flex items-center justify-center">
-                <div className="bg-white p-12 rounded-2xl shadow-2xl max-w-2xl w-full text-center space-y-6">
+            <div className="min-h-screen bg-background p-12 flex items-center justify-center">
+                <div className="bg-card p-12 rounded-2xl shadow-2xl max-w-2xl w-full text-center space-y-6">
                     <div className="w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mx-auto">
                         <AlertCircle className="w-10 h-10 text-red-500" />
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-800 mb-2">スケジュールの衝突</h2>
-                    <p className="text-slate-600 text-lg leading-relaxed">
+                    <h2 className="text-2xl font-bold text-foreground mb-2">スケジュールの衝突</h2>
+                    <p className="text-muted text-lg leading-relaxed">
                         選択した科目の間で、どうしても時限が重なってしまうため時間割を組むことができません。いくつか科目を絞ってみてください。
                     </p>
                     <button
                         onClick={() => setScreen(3)}
-                        className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors flex items-center mx-auto"
+                        className="bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-6 rounded-lg transition-colors flex items-center mx-auto"
                     >
                         <ChevronRight className="w-5 h-5 mr-1 rotate-180" />
                         科目選択に戻る
@@ -158,17 +158,17 @@ export const GeneratorScreen: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 flex flex-col">
-            <header className="bg-white border-b border-slate-200 sticky top-0 z-20 px-8 py-4 flex justify-between items-center shadow-sm">
+        <div className="min-h-screen bg-background flex flex-col">
+            <header className="bg-card border-b border-border sticky top-0 z-20 px-8 py-4 flex justify-between items-center shadow-sm">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 flex items-center">
-                        <Sparkles className="w-6 h-6 mr-3 text-slate-700" />
+                    <h1 className="text-2xl font-bold text-foreground flex items-center">
+                        <Sparkles className="w-6 h-6 mr-3 text-accent" />
                         AI Timetable - 5つの戦略
                     </h1>
                 </div>
                 <button
                     onClick={handleConfirm}
-                    className="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-10 rounded-xl shadow-lg transition-all flex items-center group text-lg"
+                    className="bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-10 rounded-xl shadow-lg transition-all flex items-center group text-lg"
                 >
                     <Save className="w-5 h-5 mr-2" />
                     この時間割で確定
@@ -178,7 +178,7 @@ export const GeneratorScreen: React.FC = () => {
             <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col lg:flex-row gap-6">
                 {/* Left Col: Pattern Navigation */}
                 <div className="w-full lg:w-1/4 flex flex-col space-y-4">
-                    <h3 className="font-bold text-slate-800 text-lg mb-3">戦略を選択</h3>
+                    <h3 className="font-bold text-foreground text-lg mb-3">戦略を選択</h3>
                     <AnimatePresence mode="wait">
                         {patterns.map((p, idx) => {
                             const info = patternLabels[p.patternId];
@@ -191,7 +191,7 @@ export const GeneratorScreen: React.FC = () => {
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ delay: idx * 0.1 }}
                                     onClick={() => handleTabChange(p.patternId)}
-                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-slate-900 text-white shadow-lg shadow-slate-200 border-transparent transform scale-105' : 'bg-white text-slate-800 border-slate-200 hover:border-slate-400 hover:shadow-md'}`}
+                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-accent text-white shadow-lg shadow-accent/20 border-transparent transform scale-105' : 'bg-card text-foreground border-border hover:border-accent/50 hover:shadow-md'}`}
                                     whileHover={{ scale: isActive ? 1.05 : 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -202,10 +202,10 @@ export const GeneratorScreen: React.FC = () => {
                                             animate={{ rotate: 360 }}
                                             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                                         >
-                                            <Sparkles className="w-4 h-4 text-slate-300" />
+                                            <Sparkles className="w-4 h-4 text-accent/30" />
                                         </motion.div>}
                                     </div>
-                                    <div className={`text-sm ${isActive ? 'text-slate-200' : 'text-slate-600'}`}>{info.desc}</div>
+                                    <div className={`text-sm ${isActive ? 'text-accent/90' : 'text-muted'}`}>{info.desc}</div>
                                 </motion.button>
                             );
                         })}
@@ -215,23 +215,23 @@ export const GeneratorScreen: React.FC = () => {
                 {/* Right Col: Grid Preview */}
                 <div className="w-full lg:w-3/4">
                     <motion.div 
-                        className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col h-[calc(100vh-200px)]"
+                        className="bg-card rounded-xl shadow-lg border border-border overflow-hidden flex flex-col h-[calc(100vh-200px)]"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div className="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-                            <h2 className="font-bold text-slate-900 text-lg flex items-center">
-                                <CalendarIcon className="w-5 h-5 mr-2" />
+                        <div className="p-4 border-b border-border bg-card flex justify-between items-center">
+                            <h2 className="font-bold text-foreground text-lg flex items-center">
+                                <CalendarIcon className="w-5 h-5 mr-2 text-accent" />
                                 {patternLabels[activePattern].label} プレビュー
                             </h2>
                             {/* Quarter Toggle Controls */}
-                            <div className="flex bg-slate-200/80 p-1 rounded-lg">
+                            <div className="flex bg-muted/80 p-1 rounded-lg">
                                 {termQuarters.map(q => (
                                     <motion.button
                                         key={q.val}
                                         onClick={() => setActiveQuarter(q.val as 'odd' | 'even')}
-                                        className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-800'}`}
+                                        className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-card text-foreground shadow-sm' : 'text-muted hover:text-foreground'}`}
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -245,21 +245,21 @@ export const GeneratorScreen: React.FC = () => {
                             <table className="w-full min-w-[600px] border-collapse relative h-full">
                                 <thead>
                                     <tr>
-                                        <th className="sticky top-0 w-12 border border-slate-200 bg-slate-100 p-2 text-slate-600 text-xs font-medium z-10">時限</th>
+                                        <th className="sticky top-0 w-12 border border-border bg-card p-2 text-muted text-xs font-medium z-10">時限</th>
                                         {days.map(d => (
-                                            <th key={d} className="sticky top-0 border border-slate-200 bg-slate-50/90 backdrop-blur p-2 text-slate-800 text-sm font-bold w-1/5 z-10">{d}</th>
+                                            <th key={d} className="sticky top-0 border border-border bg-card/90 backdrop-blur p-2 text-foreground text-sm font-bold w-1/5 z-10">{d}</th>
                                         ))}
                                     </tr>
                                 </thead>
                                 <tbody className="h-full">
                                     {periods.map(p => (
                                         <tr key={p} className="h-full">
-                                            <td className="border border-slate-200 bg-slate-50 p-2 text-center text-slate-600 text-xs font-medium">{p}</td>
+                                            <td className="border border-border bg-card p-2 text-center text-muted text-xs font-medium">{p}</td>
                                             {days.map(d => {
                                                 const cells = getPreviewCellClasses(d, p);
                                                 const hasConflict = cells.length > 1;
                                                 return (
-                                                    <td key={`${d}-${p}`} className={`border p-1 h-20 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50' : 'border-slate-200 hover:bg-slate-50'}`}>
+                                                    <td key={`${d}-${p}`} className={`border p-1 h-20 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50' : 'border-border hover:bg-card'}`}>
                                                         {cells.map((c, idx) => (
                                                             <motion.div 
                                                                 key={idx} 

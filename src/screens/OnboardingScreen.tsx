@@ -15,22 +15,22 @@ export const OnboardingScreen: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-gray-50 p-12">
+        <div className="min-h-screen flex items-center justify-center bg-background p-12">
             <div className="w-full max-w-2xl space-y-16">
                 {/* Icon Section */}
                 <div className="flex justify-center">
                     <div className="relative">
-                        <div className="w-24 h-24 bg-gradient-to-br from-slate-900 to-slate-700 rounded-2xl shadow-2xl flex items-center justify-center">
+                        <div className="w-24 h-24 bg-gradient-to-br from-foreground to-foreground/80 rounded-2xl shadow-2xl flex items-center justify-center">
                             <div className="grid grid-cols-3 gap-1">
-                                <div className="w-3 h-3 bg-white rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white/60 rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white/60 rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white/60 rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white/60 rounded-sm"></div>
-                                <div className="w-3 h-3 bg-white rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background/60 rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background/60 rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background/60 rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background/60 rounded-sm"></div>
+                                <div className="w-3 h-3 bg-background rounded-sm"></div>
                             </div>
                         </div>
                     </div>
@@ -40,10 +40,10 @@ export const OnboardingScreen: React.FC = () => {
                 <div className="text-center space-y-8">
                     {/* Title */}
                     <div className="space-y-4">
-                        <h1 className="text-6xl font-bold text-slate-900 tracking-tight">
+                        <h1 className="text-6xl font-bold text-foreground tracking-tight">
                             AI Timetable
                         </h1>
-                        <p className="text-xl text-slate-600 font-light leading-relaxed max-w-lg mx-auto">
+                        <p className="text-xl text-muted font-light leading-relaxed max-w-lg mx-auto">
                             最適な時間割を数秒で生成します。
                         </p>
                     </div>
@@ -51,10 +51,10 @@ export const OnboardingScreen: React.FC = () => {
                     {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-6 max-w-md mx-auto">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">ニックネーム</label>
+                            <label className="block text-sm font-medium text-foreground mb-2">ニックネーム</label>
                             <input
                                 type="text"
-                                className="w-full px-6 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all shadow-sm outline-none text-lg"
+                                className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
                                 placeholder="例: 会津 太郎"
                                 value={state.userProfile.nickname}
                                 onChange={(e) => updateProfile({ nickname: e.target.value })}
@@ -62,20 +62,20 @@ export const OnboardingScreen: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">大学</label>
+                            <label className="block text-sm font-medium text-foreground mb-2">大学</label>
                             <input
                                 type="text"
-                                className="w-full px-6 py-4 rounded-xl border border-slate-100 bg-slate-50 text-slate-500 shadow-sm outline-none select-none cursor-not-allowed text-lg"
+                                className="w-full px-6 py-4 rounded-xl border border-border bg-muted text-muted shadow-sm outline-none select-none cursor-not-allowed text-lg"
                                 value="会津大学"
                                 disabled
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">なりたい職業 (目標)</label>
+                            <label className="block text-sm font-medium text-foreground mb-2">なりたい職業 (目標)</label>
                             <input
                                 type="text"
-                                className="w-full px-6 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all shadow-sm outline-none text-lg"
+                                className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
                                 placeholder="例: AIエンジニア、データサイエンティスト"
                                 value={state.userProfile.dreamJob}
                                 onChange={(e) => updateProfile({ dreamJob: e.target.value })}
@@ -84,9 +84,9 @@ export const OnboardingScreen: React.FC = () => {
 
                         <div className="grid grid-cols-2 gap-6">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-2">稼働曜日</label>
+                                <label className="block text-sm font-medium text-foreground mb-2">稼働曜日</label>
                                 <select
-                                    className="w-full px-6 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all shadow-sm outline-none text-lg"
+                                    className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
                                     value={state.timetableSettings.workingDays}
                                     onChange={(e) => updateSettings({ workingDays: Number(e.target.value) })}
                                 >
@@ -95,9 +95,9 @@ export const OnboardingScreen: React.FC = () => {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-2">最大時限数</label>
+                                <label className="block text-sm font-medium text-foreground mb-2">最大時限数</label>
                                 <select
-                                    className="w-full px-6 py-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-slate-900 focus:border-slate-900 transition-all shadow-sm outline-none text-lg"
+                                    className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
                                     value={state.timetableSettings.maxPeriods}
                                     onChange={(e) => updateSettings({ maxPeriods: Number(e.target.value) })}
                                 >
@@ -110,7 +110,7 @@ export const OnboardingScreen: React.FC = () => {
 
                         <button
                             type="submit"
-                            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-5 px-8 rounded-xl shadow-lg transition-all flex items-center justify-center group text-lg"
+                            className="w-full bg-accent hover:bg-accent/90 text-white font-semibold py-5 px-8 rounded-xl shadow-lg transition-all flex items-center justify-center group text-lg"
                         >
                             次へ進む
                             <ChevronRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
