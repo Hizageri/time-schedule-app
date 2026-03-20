@@ -120,7 +120,7 @@ export const OnboardingScreen: React.FC = () => {
 
                         <button
                             type="submit"
-                            className="w-full bg-accent hover:bg-accent/90 text-white font-semibold py-5 px-8 rounded-xl shadow-lg transition-all flex items-center justify-center group text-lg"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-5 px-8 rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center group text-lg"
                         >
                             次へ進む
                             <ChevronRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
