@@ -104,7 +104,7 @@ export const ProposalScreen: React.FC = () => {
                         <div className="flex justify-center">
                             <button
                                 onClick={() => setScreen(5)}
-                                className="bg-accent hover:bg-accent/90 text-white font-semibold py-4 px-12 rounded-xl shadow-lg transition-all flex items-center group text-lg"
+                                className="btn-primary flex items-center group text-lg py-4 px-12"
                             >
                                 この科目で時間割を組む
                                 <ChevronRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />

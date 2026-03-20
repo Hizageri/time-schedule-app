@@ -123,7 +123,7 @@ export const ReflectionScreen: React.FC = () => {
                     <div className="flex justify-between items-center mt-10 border-t border-border pt-6">
                         <button
                             onClick={() => setScreen(5)}
-                            className="px-6 py-2 rounded-lg border border-border text-muted hover:bg-card transition-colors flex items-center"
+                            className="btn-ghost flex items-center"
                         >
                             <ChevronLeft className="w-5 h-5 mr-1" />
                             キャンセル
@@ -131,7 +131,7 @@ export const ReflectionScreen: React.FC = () => {
 
                         <button
                             onClick={handleComplete}
-                            className="bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all flex items-center"
+                            className="btn-primary flex items-center"
                         >
                             <Save className="w-5 h-5 mr-2" />
                             保存して次の学期へ

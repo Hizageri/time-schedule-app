@@ -72,21 +72,21 @@ export const DashboardScreen: React.FC = () => {
                     <div className="flex space-x-8">
                         <button
                             onClick={() => setActiveTab('timetable')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'timetable' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'timetable' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
                         >
                             <CalendarIcon className="w-4 h-4 mr-2" />
                             時間割
                         </button>
                         <button
                             onClick={() => setActiveTab('grades')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'grades' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'grades' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
                         >
                             <Award className="w-4 h-4 mr-2" />
                             成績
                         </button>
                         <button
                             onClick={() => setActiveTab('profile')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
                         >
                             <User className="w-4 h-4 mr-2" />
                             プロフィール

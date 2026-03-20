@@ -48,14 +48,14 @@ export const ConditionScreen: React.FC = () => {
                     <div className="flex justify-between pt-4">
                         <button
                             onClick={() => setScreen(1)}
-                            className="px-6 py-3 rounded-xl border border-border text-muted font-medium hover:bg-card transition-colors flex items-center"
+                            className="btn-secondary flex items-center"
                         >
                             <ChevronLeft className="w-5 h-5 mr-1" />
                             戻る
                         </button>
                         <button
                             onClick={() => setScreen(3)}
-                            className="bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all flex items-center group shadow-accent/20"
+                            className="btn-primary flex items-center group"
                         >
                             科目選択へ
                             <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />

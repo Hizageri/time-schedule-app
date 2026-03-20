@@ -72,7 +72,7 @@ export const CourseSelectionScreen: React.FC = () => {
 
                     <button
                         onClick={handleProceed}
-                        className="bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-6 rounded-lg shadow-sm transition-all flex items-center group cursor-pointer"
+                        className="btn-primary flex items-center group cursor-pointer"
                     >
                         AI先輩に相談する
                         <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -147,7 +147,7 @@ export const CourseSelectionScreen: React.FC = () => {
                     <div className="mt-8">
                         <button
                             onClick={() => setScreen(2)}
-                            className="px-6 py-2 rounded-lg border border-border text-muted hover:bg-card transition-colors flex items-center bg-transparent"
+                            className="btn-ghost flex items-center"
                         >
                             <ChevronLeft className="w-4 h-4 mr-1" />
                             戻る

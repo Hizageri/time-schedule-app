@@ -7,13 +7,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        /* Sophisticated Monotone + Accent System */
-        background: '#fafafa',
-        foreground: '#1a1a1a',
-        card: '#f0f0f0',
+        /* Eye-Friendly Sophisticated Monotone + Accent System */
+        background: '#faf9f6', /* Soft off-white */
+        foreground: '#1e293b', /* Dark slate instead of pure black */
+        card: '#f8fafc', /* Very light slate */
         accent: '#2563eb',
-        border: '#e5e5e5',
-        muted: '#666666',
+        border: '#e2e8f0', /* Soft border */
+        muted: '#64748b', /* Medium slate */
+        
+        /* Enhanced button states */
+        'button-hover': '#1d4ed8', /* Darker accent for hover */
+        'button-active': '#1e40af', /* Even darker for active */
         
         /* Existing colors for compatibility */
         primary: {
