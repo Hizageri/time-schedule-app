@@ -13,6 +13,7 @@ interface AppContextType {
     setCommittedClasses: (classes: AppState['committedClasses']) => void;
     setScreen: (screen: AppState['currentScreen']) => void;
     saveGrade: (courseId: string, gradeData: { grade: string, classDifficulty: number, testDifficulty: number }) => void;
+    pinClass: (courseId: string, classId: string | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -58,8 +59,20 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         }));
     };
 
+    const pinClass = (courseId: string, classId: string | null) => {
+        setState(prev => {
+            const newPinned = { ...prev.pinnedClasses };
+            if (classId === null) {
+                delete newPinned[courseId];
+            } else {
+                newPinned[courseId] = classId;
+            }
+            return { ...prev, pinnedClasses: newPinned };
+        });
+    };
+
     return (
-        <AppContext.Provider value={{ state, setState, updateProfile, updateSettings, updateConditions, toggleSelectedCourse, setCommittedClasses, setScreen, saveGrade }}>
+        <AppContext.Provider value={{ state, setState, updateProfile, updateSettings, updateConditions, toggleSelectedCourse, setCommittedClasses, setScreen, saveGrade, pinClass }}>
             {children}
         </AppContext.Provider>
     );

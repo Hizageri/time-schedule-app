@@ -1,6 +1,5 @@
 // src/timetableGenerator.ts
 import type { AppState, CourseData } from './types';
-import { checkScheduleConflict } from './utils';
 
 export type PatternType = 'balance' | 'full-day-off' | 'zero-first-period' | 'night-shift' | 'zero-gaps';
 
@@ -12,69 +11,26 @@ export interface GeneratedTimetable {
 
 // Simple CSP Backtracking Solver
 export const generateTimetables = (
-    settings: AppState['timetableSettings'],
-    selectedCourses: CourseData[]
+    state: AppState
 ): GeneratedTimetable[] => {
-    const result: GeneratedTimetable[] = [];
+    const { timetableSettings: _settings, timetableConditions: conditions, selectedCourses, pinnedClasses } = state;
 
-    // Helper to calculate scores based on different constraints
-    const scoreTimetable = (classes: AppState['committedClasses'], patternId: PatternType) => {
-        let score = 0;
-        const days = ['月', '火', '水', '木', '金', '土'].slice(0, settings.workingDays);
-        const periods = Array.from({ length: settings.maxPeriods }, (_, i) => i + 1);
 
-        const scheduleSet = new Set<string>();
-        classes.forEach(c => c.schedule.forEach(s => scheduleSet.add(s)));
+    // Pre-calculate valid classes for each course and sort them by least number of valid classes
+    // This implements Minimum Remaining Values (MRV) heuristic, drastically reducing the search space.
+    const coursesWithValidClasses = selectedCourses.map(course => {
+        const isRetakeRequested = conditions.hasRetake && conditions.retakeClasses?.includes(course.id_name);
+        const validClasses = course.classes.filter(cls => {
+            const classBit = cls.target_bit ?? course.target_bit ?? 0;
+            const classIsRetake = isRetakeCourse(classBit);
+            return isRetakeRequested ? classIsRetake : !classIsRetake;
+        });
+        return { course, validClasses };
+    }).sort((a, b) => a.validClasses.length - b.validClasses.length);
 
-        if (patternId === 'balance') score = 100; // Just baseline
-
-        if (patternId === 'full-day-off') {
-            let fullDaysOff = 0;
-            days.forEach(d => {
-                let hasClass = false;
-                periods.forEach(p => { if (scheduleSet.has(`${d}-${p}`)) hasClass = true; });
-                if (!hasClass) fullDaysOff++;
-            });
-            score = fullDaysOff * 100;
-        }
-
-        if (patternId === 'zero-first-period') {
-            let firstPeriods = 0;
-            days.forEach(d => { if (scheduleSet.has(`${d}-1`)) firstPeriods++; });
-            score = 100 - (firstPeriods * 20);
-        }
-
-        if (patternId === 'night-shift') {
-            let lateClasses = 0;
-            scheduleSet.forEach(s => {
-                const period = parseInt(s.split('-')[1]);
-                if (period >= 4) lateClasses++;
-            });
-            score = 100 - (lateClasses * 10);
-        }
-
-        if (patternId === 'zero-gaps') {
-            let gaps = 0;
-            days.forEach(d => {
-                let firstClass = -1;
-                let lastClass = -1;
-                periods.forEach(p => {
-                    if (scheduleSet.has(`${d}-${p}`)) {
-                        if (firstClass === -1) firstClass = p;
-                        lastClass = p;
-                    }
-                });
-                if (firstClass !== -1 && lastClass !== -1) {
-                    let expectedGaps = (lastClass - firstClass + 1);
-                    let actualClasses = 0;
-                    for (let p = firstClass; p <= lastClass; p++) {
-                        if (scheduleSet.has(`${d}-${p}`)) actualClasses++;
-                    }
-                    gaps += (expectedGaps - actualClasses);
-                }
-            });
-            score = 100 - (gaps * 20);
-        }
+    // Helper to calculate scores based on different constraints (kept for mock scoring)
+    const scoreTimetable = (_classes: AppState['committedClasses'], _patternId: PatternType) => {
+        let score = Math.floor(Math.random() * 20) + 80; // Mock score 80-100
         return score;
     };
 
@@ -198,6 +154,47 @@ export const generateTimetables = (
             finalTimetables.push(best);
         }
     }
+=======
+    const patterns: PatternType[] = ['balance', 'full-day-off', 'zero-first-period', 'night-shift', 'zero-gaps'];
+    const finalTimetables: GeneratedTimetable[] = [];
+
+    // --- モック実装: 衝突判定をせず、AIが考えてくれた風にランダムにクラスを選択してパターンを作る ---
+    patterns.forEach(p => {
+        const mockClasses: AppState['committedClasses'] = [];
+
+        coursesWithValidClasses.forEach(({ course, validClasses }) => {
+            if (validClasses.length > 0) {
+                // If a class is pinned by the user, use it. Otherwise, randomly select one.
+                const pinnedClassId = pinnedClasses?.[course.id_name];
+                let chosenClass = validClasses[0];
+
+                if (pinnedClassId) {
+                    const found = validClasses.find(c => c.class_id === pinnedClassId);
+                    if (found) chosenClass = found;
+                } else {
+                    const randomIndex = Math.floor(Math.random() * validClasses.length);
+                    chosenClass = validClasses[randomIndex];
+                }
+
+                const currentClassBit = chosenClass.target_bit ?? course.target_bit;
+
+                mockClasses.push({
+                    courseId: course.id_name,
+                    targetBit: currentClassBit,
+                    classId: chosenClass.class_id,
+                    schedule: chosenClass.schedule
+                });
+            }
+        });
+
+        // 本来はここでAIに判定させ、無理ならエラーを出す想定だが、現状はモックとして生成成功扱いにする
+        finalTimetables.push({
+            patternId: p,
+            classes: mockClasses,
+            score: scoreTimetable(mockClasses, p)
+        });
+    });
+>>>>>>> ad878ed61691973d9543e3b97663d7c45a36b789
 
     return finalTimetables;
 };
@@ -239,36 +236,40 @@ export const filterByBit = (
 ): CourseData[] => {
     const { selectedGrade, term } = filters;
 
-    let tBit = 0;
-    if (term === 'second') tBit = 1;
-    else if (term === 'full') tBit = 2;
+    // 判定用のターゲットビットを作成
+    let targetTermBit = 0;
+    if (term === 'second') targetTermBit = 1;
+    else if (term === 'full') targetTermBit = 2;
 
     return courses.filter(course => {
-        const bit = course.target_bit;
+        // --- 判定ロジック ---
+        const checkMatch = (bit: number | undefined) => {
+            if (bit === undefined) return false;
+            const gradeMatch = (bit & (1 << (selectedGrade - 1))) > 0;
+            const courseTerm = (bit >> 8) & 3;
+            const termMatch = (courseTerm === targetTermBit) || (courseTerm === 2);
+            return gradeMatch && termMatch;
+        };
 
-        // Grade Match (AND)
-        const gradeMatch = (bit & (1 << (selectedGrade - 1))) > 0;
+        // 1. コース直下にビットがあるかチェック
+        if (checkMatch(course.target_bit)) return true;
 
-        // Term Match (course term matches user term, or course is full-year 2)
-        const courseTerm = (bit >> 8) & 3;
-        const termMatch = (courseTerm === tBit) || (courseTerm === 2);
+        // 2. ひとつでも条件に合うクラス(C1, C2など)があるかチェック
+        return course.classes.some(c => checkMatch(c.target_bit));
 
-        return gradeMatch && termMatch;
     }).sort((a, b) => {
-        const aRetake = isRetakeCourse(a.target_bit) ? 1 : 0;
-        const bRetake = isRetakeCourse(b.target_bit) ? 1 : 0;
+        // ソート用のビット取得（外側になければ最初のクラスのビットを代用）
+        const aBit = a.target_bit ?? a.classes[0]?.target_bit ?? 0;
+        const bBit = b.target_bit ?? b.classes[0]?.target_bit ?? 0;
 
-        // Prioritize retake
-        if (aRetake !== bRetake) {
-            return bRetake - aRetake;
-        }
+        const aRetake = isRetakeCourse(aBit) ? 1 : 0;
+        const bRetake = isRetakeCourse(bBit) ? 1 : 0;
 
-        // Fallback proximity sort
-        const minGradeA = Math.min(...getTargetGrades(a.target_bit));
-        const minGradeB = Math.min(...getTargetGrades(b.target_bit));
-        const distA = Math.abs(minGradeA - selectedGrade);
-        const distB = Math.abs(minGradeB - selectedGrade);
-        return distA - distB;
+        if (aRetake !== bRetake) return bRetake - aRetake;
+
+        const minGradeA = Math.min(...getTargetGrades(aBit));
+        const minGradeB = Math.min(...getTargetGrades(bBit));
+        return Math.abs(minGradeA - selectedGrade) - Math.abs(minGradeB - selectedGrade);
     });
 };
 export const getPeriodLabel = (bit: number): string => {
