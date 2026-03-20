@@ -2,11 +2,16 @@ import { GoogleGenAI } from '@google/genai';
 import type { CourseData, AppState } from '../types';
 
 // Use standard Vite env variable for the API key
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
+const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 
-// Initialize the SDK
-// If the key is missing, it will throw when calling the API, which we should catch in the UI.
-const ai = new GoogleGenAI(GEMINI_API_KEY ? { apiKey: GEMINI_API_KEY } : {});
+// Safety Guard: Validate API key existence
+if (!GOOGLE_API_KEY) {
+    console.error('CRITICAL: VITE_GOOGLE_API_KEY is missing. Please set it in your .env file.');
+    throw new Error('API Key is missing. Please set VITE_GOOGLE_API_KEY in your .env file.');
+}
+
+// Initialize the SDK with proper error handling
+const ai = new GoogleGenAI({ apiKey: GOOGLE_API_KEY });
 
 export interface ConsultationResponse {
     overallFeedback: string;
@@ -33,9 +38,7 @@ export const generateConsultation = async (
     userProfile: AppState['userProfile'],
     courses: CourseData[]
 ): Promise<ConsultationResponse> => {
-    if (!GEMINI_API_KEY) {
-        throw new Error('API Key is missing. Please set VITE_GEMINI_API_KEY in your .env file.');
-    }
+    // API key validation is already handled at module level
 
     const courseDetails = courses.map(c => `- ${c.id_name}: (${c.credits} credits). Overview: ${c.outline}`).join('\n');
 
@@ -85,9 +88,7 @@ ${courseDetails}
 export const generateTimetablePatterns = async (
     courses: CourseData[]
 ): Promise<TimetablePatternsResponse> => {
-    if (!GEMINI_API_KEY) {
-        throw new Error('API Key is missing. Please set VITE_GEMINI_API_KEY in your .env file.');
-    }
+    // API key validation is already handled at module level
 
     // Map each course to its available classes
     const courseClassMap = courses.map(course => {
