@@ -4,6 +4,7 @@ import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../types';
 import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCourse } from '../timetableGenerator';
 import { BookOpen, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
+import { getSubjectColor } from '../utils';
 
 export const CourseSelectionScreen: React.FC = () => {
     const { state, setScreen, toggleSelectedCourse, pinClass } = useAppContext();
@@ -66,8 +67,10 @@ export const CourseSelectionScreen: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-4">
                     <div className="text-right mr-4 text-sm">
-                        <span className="text-muted">選択中: </span>
-                        <span className="font-bold text-accent text-lg">{state.selectedCourses.length}</span> <span className="text-muted">科目</span>
+                        <span className="text-muted">選択単位数: </span>
+                        <span className="font-bold text-accent text-lg">
+                            {state.selectedCourses.reduce((sum, c) => sum + c.credits, 0)}
+                        </span> <span className="text-muted">単位</span>
                     </div>
 
                     <button
@@ -89,9 +92,10 @@ export const CourseSelectionScreen: React.FC = () => {
                             const retake = isRetakeCourse(displayBit);
                             const gradesArr = getTargetGrades(displayBit);
                             const periodLabel = getPeriodLabel(displayBit);
+                            const colorClass = getSubjectColor(course.id_name);
                             return (
                                 <div key={course.id_name}
-                                    className={`rounded-xl shadow-sm border transition-all cursor-pointer ${isSelected ? 'bg-accent/10 border-accent ring-1 ring-accent/50' : 'bg-card border-border hover:border-accent/50 hover:shadow-md'}`}
+                                    className={`rounded-xl shadow-sm border transition-all cursor-pointer ${colorClass} ${isSelected ? 'ring-2 ring-accent border-transparent scale-[1.02]' : 'hover:shadow-md hover:opacity-90'}`}
                                     onClick={() => toggleSelectedCourse(course)}
                                 >
                                     <div className="p-5 flex justify-between items-start">

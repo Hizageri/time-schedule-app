@@ -5,6 +5,7 @@ import { generateTimetables } from '../timetableGenerator';
 import type { GeneratedTimetable, PatternType } from '../timetableGenerator';
 import { ChevronRight, Sparkles, AlertCircle, Save, Calendar as CalendarIcon } from 'lucide-react';
 import type { AppState } from '../types';
+import { getSubjectColor } from '../utils';
 
 export const GeneratorScreen: React.FC = () => {
     const { state, setScreen, setCommittedClasses } = useAppContext();
@@ -62,39 +63,6 @@ export const GeneratorScreen: React.FC = () => {
         if (qVal === 1) return 'even';
         if (qVal === 2) return 'across';
         return 'intensive';
-    };
-
-    // Subject color coding function
-    const getSubjectColor = (courseId: string) => {
-        const name = courseId.toLowerCase();
-
-        // Mathematics
-        if (name.includes('数学') || name.includes('統計') || name.includes('確率') || name.includes('代数')) {
-            return 'bg-blue-100 text-blue-800 border-l-4 border-blue-500';
-        }
-
-        // English
-        if (name.includes('英語') || name.includes('英会') || name.includes('コミュニケーション')) {
-            return 'bg-yellow-100 text-yellow-800 border-l-4 border-yellow-500';
-        }
-
-        // Science
-        if (name.includes('物理') || name.includes('化学') || name.includes('生物') || name.includes('科学')) {
-            return 'bg-green-100 text-green-800 border-l-4 border-green-500';
-        }
-
-        // Programming
-        if (name.includes('プログラミング') || name.includes('情報') || name.includes('コンピュータ')) {
-            return 'bg-purple-100 text-purple-800 border-l-4 border-purple-500';
-        }
-
-        // Humanities
-        if (name.includes('歴史') || name.includes('文学') || name.includes('哲学') || name.includes('経済')) {
-            return 'bg-orange-100 text-orange-800 border-l-4 border-orange-500';
-        }
-
-        // Default color
-        return 'bg-slate-100 text-slate-800 border-l-4 border-slate-500';
     };
 
     // Cell Rendering
@@ -191,7 +159,7 @@ export const GeneratorScreen: React.FC = () => {
                                     exit={{ opacity: 0, x: -20 }}
                                     transition={{ delay: idx * 0.1 }}
                                     onClick={() => handleTabChange(p.patternId)}
-                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-accent text-white shadow-lg shadow-accent/20 border-transparent transform scale-105' : 'bg-card text-foreground border-border hover:border-accent/50 hover:shadow-md'}`}
+                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-accent/10 border-accent text-foreground shadow-lg shadow-accent/20 transform scale-105' : 'bg-card text-foreground border-border hover:border-accent/50 hover:shadow-md'}`}
                                     whileHover={{ scale: isActive ? 1.05 : 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                 >
@@ -202,10 +170,10 @@ export const GeneratorScreen: React.FC = () => {
                                             animate={{ rotate: 360 }}
                                             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                                         >
-                                            <Sparkles className="w-4 h-4 text-white/80" />
+                                            <Sparkles className="w-4 h-4 text-accent" />
                                         </motion.div>}
                                     </div>
-                                    <div className={`text-sm ${isActive ? 'text-white/90' : 'text-muted'}`}>{info.desc}</div>
+                                    <div className={`text-sm ${isActive ? 'text-foreground/90 font-medium' : 'text-muted'}`}>{info.desc}</div>
                                 </motion.button>
                             );
                         })}
@@ -215,7 +183,7 @@ export const GeneratorScreen: React.FC = () => {
                 {/* Right Col: Grid Preview */}
                 <div className="w-full lg:w-3/4">
 
-                    <motion.div 
+                    <motion.div
                         className="bg-card rounded-xl shadow-lg border border-border overflow-hidden flex flex-col h-[calc(100vh-200px)]"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}

@@ -62,13 +62,23 @@ export const OnboardingScreen: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-foreground mb-2">大学</label>
-                            <input
-                                type="text"
-                                className="w-full px-6 py-4 rounded-xl border border-border bg-muted text-[#1a1a1a] shadow-sm outline-none select-none cursor-not-allowed text-lg"
-                                value="会津大学"
-                                disabled
-                            />
+                            <label className="block text-sm font-medium text-muted mb-2">
+                                大学
+                            </label>
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    className="w-full px-6 py-4 rounded-xl border-2 border-border bg-white text-foreground font-bold shadow-sm select-none cursor-not-allowed text-lg transition-all"
+                                    value="会津大学"
+                                    disabled
+                                />
+                                {/* 右側に鍵アイコンなどを置くと「固定」がより伝わる */}
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted/30">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
 
                         <div>

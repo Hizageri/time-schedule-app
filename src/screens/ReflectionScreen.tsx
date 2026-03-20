@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useAppContext } from '../AppContext';
 import { CheckCircle, Save, ChevronLeft } from 'lucide-react';
-import { MOCK_COURSES } from '../data';
 
 export const ReflectionScreen: React.FC = () => {
     const { state, saveGrade, setScreen, updateConditions } = useAppContext();
@@ -21,27 +20,6 @@ export const ReflectionScreen: React.FC = () => {
 
     const uniqueCourses = Array.from(new Set(state.committedClasses.map(c => c.courseId)));
 
-    const gpaData = useMemo(() => {
-        let totalCredits = 0;
-        let totalEarnedCredits = 0;
-        let totalPoints = 0;
-
-        Object.entries(state.grades).forEach(([courseId, gradeInfo]) => {
-            const course = MOCK_COURSES.find(c => c.id_name === courseId);
-            if (!course) return;
-            const credits = course.credits;
-            const scale = state.userProfile.gradingScale.find(s => s.label === gradeInfo.grade);
-            const point = scale ? scale.point : 0;
-
-            totalCredits += credits;
-            if (point > 0) totalEarnedCredits += credits;
-            totalPoints += point * credits;
-        });
-
-        const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
-        return { gpa, totalCredits, totalEarnedCredits };
-    }, [state.grades, state.userProfile.gradingScale]);
-
     return (
         <div className="min-h-screen bg-background p-12 flex flex-col items-center justify-center">
             <div className="max-w-3xl w-full bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
@@ -55,11 +33,6 @@ export const ReflectionScreen: React.FC = () => {
                         <p className="text-muted text-sm">
                             お疲れ様でした！次の時間割を作成する前に、今学期の成績と感想（難易度など）を記録しましょう。このデータはAIコンサルの精度向上に使われます。
                         </p>
-                    </div>
-                    <div className="bg-card p-4 rounded-xl shadow-sm border border-border text-center min-w-[150px]">
-                        <div className="text-xs text-muted font-bold mb-1 uppercase tracking-wider">現在のGPA</div>
-                        <div className="text-3xl font-black text-accent">{gpaData.gpa}</div>
-                        <div className="text-xs text-muted mt-2 font-medium">単位数 (修得/登録): <span className="text-foreground">{gpaData.totalEarnedCredits} / {gpaData.totalCredits}</span></div>
                     </div>
                 </div>
 

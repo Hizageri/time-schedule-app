@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../AppContext';
 import { Calendar as CalendarIcon, Award, User, PlusCircle, Edit3, Save } from 'lucide-react';
+import { MOCK_COURSES } from '../data';
 
 export const DashboardScreen: React.FC = () => {
     const { state, setScreen, updateProfile } = useAppContext();
@@ -48,6 +49,27 @@ export const DashboardScreen: React.FC = () => {
     const getIntensiveClasses = () => {
         return state.committedClasses.filter(c => getQuarterType(c.targetBit ?? 0) === 'intensive' || c.schedule.includes('TBD'));
     };
+
+    const gpaData = useMemo(() => {
+        let totalCredits = 0;
+        let totalEarnedCredits = 0;
+        let totalPoints = 0;
+
+        Object.entries(state.grades).forEach(([courseId, gradeInfo]) => {
+            const course = MOCK_COURSES.find(c => c.id_name === courseId);
+            if (!course) return;
+            const credits = course.credits;
+            const scale = state.userProfile.gradingScale.find(s => s.label === gradeInfo.grade);
+            const point = scale ? scale.point : 0;
+
+            totalCredits += credits;
+            if (point > 0) totalEarnedCredits += credits;
+            totalPoints += point * credits;
+        });
+
+        const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
+        return { gpa, totalCredits, totalEarnedCredits };
+    }, [state.grades, state.userProfile.gradingScale]);
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
@@ -176,11 +198,18 @@ export const DashboardScreen: React.FC = () => {
                 )}
 
                 {activeTab === 'grades' && (
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 animate-in fade-in">
-                        <h2 className="font-bold text-gray-800 mb-4 flex items-center">
-                            <Award className="w-5 h-5 mr-2 text-indigo-500" />
-                            成績データ (振り返り)
-                        </h2>
+                    <div className="bg-card rounded-xl shadow-sm border border-border p-6 animate-in fade-in">
+                        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+                            <h2 className="font-bold text-foreground text-lg flex items-center">
+                                <Award className="w-5 h-5 mr-3 text-accent" />
+                                成績データ
+                            </h2>
+                            <div className="bg-background px-4 py-2 rounded-lg border border-border text-center shadow-sm">
+                                <div className="text-xs text-muted font-bold mb-1 uppercase tracking-wider">現在のGPA</div>
+                                <div className="text-2xl font-black text-accent leading-none">{gpaData.gpa}</div>
+                                <div className="text-xs text-muted mt-2 font-medium">修得単位: <span className="text-foreground">{gpaData.totalEarnedCredits} / {gpaData.totalCredits}</span></div>
+                            </div>
+                        </div>
                         {Object.keys(state.grades).length === 0 ? (
                             <p className="text-gray-500 text-sm">成績データはまだありません。</p>
                         ) : (
