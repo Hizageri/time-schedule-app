@@ -1,62 +1,101 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../AppContext';
-import { generateTimetables } from '../timetableGenerator';
-import type { GeneratedTimetable, PatternType } from '../timetableGenerator';
-import { ChevronRight, Sparkles, AlertCircle, Save, Calendar as CalendarIcon } from 'lucide-react';
-import type { AppState } from '../types';
+import { Sparkles, AlertCircle, Save, Calendar as CalendarIcon, Loader2, Edit3, Settings2 } from 'lucide-react';
 import { getSubjectColor } from '../utils';
+import { generateTimetablePatterns } from '../services/aiService';
+import type { TimetablePatternsResponse } from '../services/aiService';
 
 export const GeneratorScreen: React.FC = () => {
     const { state, setScreen, setCommittedClasses } = useAppContext();
-    const [patterns, setPatterns] = useState<GeneratedTimetable[]>([]);
-    const [activePattern, setActivePattern] = useState<PatternType>('balance');
+    const [patternsData, setPatternsData] = useState<TimetablePatternsResponse | null>(null);
+    const [activePatternIndex, setActivePatternIndex] = useState<number>(0);
     const [isGenerating, setIsGenerating] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // For manual edits within the preview
-    const [editableClasses, setEditableClasses] = useState<AppState['committedClasses']>([]);
+    // Current editable class assignments for the active pattern
+    // Record<courseId, classId>
+    const [editableAssignments, setEditableAssignments] = useState<Record<string, string>>({});
 
-    // Q1/Q2 toggler specifically for previewing the timetable
+    const activePattern = patternsData?.patterns[activePatternIndex];
+
     const termQuarters = state.timetableConditions.term === 'first'
         ? [{ val: 'odd', label: 'Q1' }, { val: 'even', label: 'Q2' }]
         : [{ val: 'odd', label: 'Q3' }, { val: 'even', label: 'Q4' }];
     const [activeQuarter, setActiveQuarter] = useState<'odd' | 'even'>('odd');
 
     useEffect(() => {
-        setIsGenerating(true);
-        // Simulate a small delay for "AI processing" effect
-        setTimeout(() => {
-            const results = generateTimetables(state);
-            setPatterns(results);
-            if (results.length > 0) {
-                setEditableClasses(results[0].classes);
-            }
-            setIsGenerating(false);
-        }, 800);
-    }, [state]);
+        const fetchPatterns = async () => {
+            console.log("送る科目データ:", state.selectedCourses);
+            setIsGenerating(true);
+            try {
+                if (!state.selectedCourses || state.selectedCourses.length === 0) {
+                    console.warn("selectedCourses is empty!");
+                    setIsGenerating(false);
+                    return;
+                }
+                const res = await generateTimetablePatterns(state.selectedCourses);
+                setPatternsData(res);
 
-    const handleTabChange = (p: PatternType) => {
-        setActivePattern(p);
-        const match = patterns.find(pt => pt.patternId === p);
-        if (match) {
-            setEditableClasses(JSON.parse(JSON.stringify(match.classes)));
+                if (res.patterns.length > 0) {
+                    const initialAssignments: Record<string, string> = {};
+                    res.patterns[0].assignments.forEach(a => {
+                        initialAssignments[a.courseId] = a.classId;
+                    });
+                    setEditableAssignments(initialAssignments);
+                }
+            } catch (err: any) {
+                console.error(err);
+                setError(err.message || 'AIからの応答の取得に失敗しました。');
+            } finally {
+                setIsGenerating(false);
+            }
+        };
+
+        fetchPatterns();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleTabChange = (index: number) => {
+        setActivePatternIndex(index);
+        if (patternsData?.patterns[index]) {
+            const newAssignments: Record<string, string> = {};
+            patternsData.patterns[index].assignments.forEach(a => {
+                newAssignments[a.courseId] = a.classId;
+            });
+            setEditableAssignments(newAssignments);
         }
     };
 
-    const handleConfirm = () => {
-        setCommittedClasses(editableClasses);
-        setScreen(6); // Go to Dashboard
+    const handleAssignmentChange = (courseId: string, newClassId: string) => {
+        setEditableAssignments(prev => ({
+            ...prev,
+            [courseId]: newClassId
+        }));
     };
 
-    const patternLabels: Record<PatternType, { label: string, desc: string }> = useMemo(() => ({
-        'balance': { label: 'AIおすすめ (バランス型)', desc: '偏りが少なく最も理想的な配置' },
-        'full-day-off': { label: '全休クリエイト型', desc: '授業が全くない日を最大限作る' },
-        'zero-first-period': { label: '脱・1限型 (朝ゆったり)', desc: '1限目（朝）の授業を極力減らす' },
-        'night-shift': { label: '夜バイト優先型', desc: '夕方以降のスケジュールを空ける' },
-        'zero-gaps': { label: '空きコマ・ゼロ型', desc: '授業間の長時間の空きを減らす' }
-    }), []);
+    const handleConfirm = () => {
+        const finalClasses: typeof state.committedClasses = [];
 
-    // Helper to decipher quarter from target_bit (Bits 6-7)
+        state.selectedCourses.forEach(course => {
+            const assignedClassId = editableAssignments[course.id_name];
+            if (assignedClassId) {
+                const classInfo = course.classes.find(c => c.class_id === assignedClassId);
+                if (classInfo) {
+                    finalClasses.push({
+                        courseId: course.id_name,
+                        classId: classInfo.class_id,
+                        schedule: classInfo.schedule,
+                        targetBit: course.target_bit
+                    });
+                }
+            }
+        });
+
+        setCommittedClasses(finalClasses);
+        setScreen(6); // Dashboard
+    };
+
     const getQuarterType = (bit: number): 'odd' | 'even' | 'across' | 'intensive' => {
         const qVal = (bit >> 6) & 3;
         if (qVal === 0) return 'odd';
@@ -65,61 +104,61 @@ export const GeneratorScreen: React.FC = () => {
         return 'intensive';
     };
 
-    // Cell Rendering
     const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
     const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
 
     const getPreviewCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
-        return editableClasses.filter(c => {
-            const qType = getQuarterType(c.targetBit ?? 0);
-            if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return false;
-            if (qType === 'intensive') return false;
-            return c.schedule.includes(slotStr);
+        const activeClasses: any[] = [];
+
+        state.selectedCourses.forEach(course => {
+            const assignedClassId = editableAssignments[course.id_name];
+            if (!assignedClassId) return;
+
+            const classInfo = course.classes.find(c => c.class_id === assignedClassId);
+            if (!classInfo) return;
+
+            const qType = getQuarterType(course.target_bit ?? 0);
+            if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return;
+            if (qType === 'intensive') return;
+
+            if (classInfo.schedule.includes(slotStr)) {
+                activeClasses.push({
+                    courseId: course.id_name,
+                    classId: classInfo.class_id
+                });
+            }
         });
+        return activeClasses;
     };
 
     if (isGenerating) {
         return (
-            <div className="min-h-screen bg-background flex items-center justify-center p-12">
-                <div className="text-center space-y-8">
-                    <div className="w-24 h-24 bg-gradient-to-br from-foreground to-foreground/80 rounded-2xl shadow-2xl flex items-center justify-center mx-auto">
-                        <div className="grid grid-cols-3 gap-1">
-                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background/60 rounded-sm animate-pulse"></div>
-                            <div className="w-3 h-3 bg-background rounded-sm animate-pulse"></div>
-                        </div>
-                    </div>
-                    <h2 className="text-2xl font-bold text-foreground">AIが最適な時間割を構築中...</h2>
+            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-12">
+                <Loader2 className="w-16 h-16 text-accent animate-spin mb-6" />
+                <h2 className="text-2xl font-bold text-foreground">AIが最適な時間割を構築中...</h2>
+                <p className="text-muted mt-2">目標に合わせた5つの戦略を生成しています</p>
+                <div className="w-64 h-2 bg-muted/20 rounded-full mt-8 overflow-hidden">
+                    <div className="h-full bg-accent animate-pulse w-full"></div>
                 </div>
             </div>
         );
     }
 
-    if (patterns.length === 0) {
+    if (error || !patternsData || patternsData.patterns.length === 0) {
         return (
             <div className="min-h-screen bg-background p-12 flex items-center justify-center">
                 <div className="bg-card p-12 rounded-2xl shadow-2xl max-w-2xl w-full text-center space-y-6">
                     <div className="w-20 h-20 bg-red-100 rounded-2xl flex items-center justify-center mx-auto">
                         <AlertCircle className="w-10 h-10 text-red-500" />
                     </div>
-                    <h2 className="text-2xl font-bold text-foreground mb-2">スケジュールの衝突</h2>
-                    <p className="text-muted text-lg leading-relaxed">
-                        選択した科目の間で、どうしても時限が重なってしまうため時間割を組むことができません。いくつか科目を絞ってみてください。
+                    <h2 className="text-2xl font-bold text-foreground mb-2">生成エラー</h2>
+                    <p className="text-muted text-lg leading-relaxed bg-red-50 p-4 rounded-lg">
+                        {error || '時間割パターンを生成できませんでした。'}
                     </p>
-                    <button
-                        onClick={() => setScreen(3)}
-                        className="btn-primary flex items-center mx-auto"
-                    >
-                        <ChevronRight className="w-5 h-5 mr-1 rotate-180" />
-                        科目選択に戻る
-                    </button>
+                    <div className="flex gap-4 justify-center">
+                        <button onClick={() => setScreen(4)} className="btn-secondary">アドバイスへ戻る</button>
+                    </div>
                 </div>
             </div>
         );
@@ -127,7 +166,7 @@ export const GeneratorScreen: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
-            <header className="bg-card border-b border-border sticky top-0 z-20 px-8 py-4 flex justify-between items-center shadow-sm">
+            <header className="bg-card border-b border-border sticky top-0 z-30 px-6 py-4 flex justify-between items-center shadow-sm">
                 <div>
                     <h1 className="text-2xl font-bold text-foreground flex items-center">
                         <Sparkles className="w-6 h-6 mr-3 text-accent" />
@@ -136,116 +175,93 @@ export const GeneratorScreen: React.FC = () => {
                 </div>
                 <button
                     onClick={handleConfirm}
-                    className="btn-primary flex items-center group text-lg py-3 px-10"
+                    className="btn-primary flex items-center group shadow-md"
                 >
                     <Save className="w-5 h-5 mr-2" />
                     この時間割で確定
                 </button>
             </header>
 
-            <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col lg:flex-row gap-6">
+            <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col lg:flex-row gap-6 h-[calc(100vh-80px)] overflow-hidden">
                 {/* Left Col: Pattern Navigation */}
-                <div className="w-full lg:w-1/4 flex flex-col space-y-4">
-                    <h3 className="font-bold text-foreground text-lg mb-3">戦略を選択</h3>
+                <div className="w-full lg:w-1/4 flex flex-col space-y-3 overflow-y-auto pr-2 pb-6 custom-scrollbar">
+                    <h3 className="font-bold text-foreground text-lg mb-2 sticky top-0 bg-background z-10 py-2">戦略を選択</h3>
                     <AnimatePresence mode="wait">
-                        {patterns.map((p, idx) => {
-                            const info = patternLabels[p.patternId];
-                            const isActive = activePattern === p.patternId;
+                        {patternsData.patterns.map((p, idx) => {
+                            const isActive = activePatternIndex === idx;
                             return (
                                 <motion.button
                                     key={idx}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    onClick={() => handleTabChange(p.patternId)}
-                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-accent/10 border-accent text-foreground shadow-lg shadow-accent/20 transform scale-105' : 'bg-card text-foreground border-border hover:border-accent/50 hover:shadow-md'}`}
-                                    whileHover={{ scale: isActive ? 1.05 : 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => handleTabChange(idx)}
+                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-accent/10 border-accent text-foreground shadow-md transform scale-105' : 'bg-card text-foreground border-border hover:border-accent/50'}`}
                                 >
-                                    <div className="font-bold mb-1 flex items-center justify-between">
-                                        {info.label}
-                                        {isActive && <motion.div
-                                            initial={{ rotate: 0 }}
-                                            animate={{ rotate: 360 }}
-                                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                        >
-                                            <Sparkles className="w-4 h-4 text-accent" />
-                                        </motion.div>}
+                                    <div className="font-bold mb-1 flex items-center justify-between text-base">
+                                        {p.name}
+                                        {isActive && <Sparkles className="w-4 h-4 text-accent" />}
                                     </div>
-                                    <div className={`text-sm ${isActive ? 'text-foreground/90 font-medium' : 'text-muted'}`}>{info.desc}</div>
+                                    <div className={`text-xs leading-relaxed ${isActive ? 'text-foreground/90 font-medium' : 'text-muted'}`}>{p.description}</div>
                                 </motion.button>
                             );
                         })}
                     </AnimatePresence>
                 </div>
 
-                {/* Right Col: Grid Preview */}
-                <div className="w-full lg:w-3/4">
+                {/* Right Col: Grid Preview & Manual Tweaks */}
+                <div className="w-full lg:w-3/4 flex flex-col h-full overflow-hidden">
 
-                    <motion.div
-                        className="bg-card rounded-xl shadow-lg border border-border overflow-hidden flex flex-col h-[calc(100vh-200px)]"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <div className="p-4 border-b border-border bg-card flex justify-between items-center">
-                            <h2 className="font-bold text-foreground text-lg flex items-center">
-                                <CalendarIcon className="w-5 h-5 mr-2 text-accent" />
-                                {patternLabels[activePattern].label} プレビュー
+                    {/* Preview Area */}
+                    <div className="bg-card rounded-t-xl shadow-sm border border-border border-b-0 flex flex-col h-1/2 min-h-[300px]">
+                        <div className="p-3 border-b border-border flex justify-between items-center">
+                            <h2 className="font-bold text-foreground text-sm flex items-center">
+                                <CalendarIcon className="w-4 h-4 mr-2 text-accent" />
+                                プレビュー: {activePattern?.name}
                             </h2>
-                            {/* Quarter Toggle Controls */}
-                            <div className="flex bg-muted/80 p-1 rounded-lg">
+                            <div className="flex bg-muted/50 p-1 rounded-md">
                                 {termQuarters.map(q => (
-                                    <motion.button
+                                    <button
                                         key={q.val}
                                         onClick={() => setActiveQuarter(q.val as 'odd' | 'even')}
-                                        className={`px-3 py-1.5 text-xs font-bold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-card text-foreground shadow-sm' : 'text-muted hover:text-foreground'}`}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
+                                        className={`px-3 py-1 text-xs font-bold rounded transition-colors ${activeQuarter === q.val ? 'bg-background text-foreground shadow-sm border border-border/50' : 'text-muted hover:text-foreground'}`}
                                     >
                                         {q.label}表示
-                                    </motion.button>
+                                    </button>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="flex-1 overflow-x-auto overflow-y-auto p-4">
-                            <table className="w-full min-w-[600px] border-collapse relative h-full">
+                        <div className="flex-1 overflow-auto custom-scrollbar p-2">
+                            <table className="w-full border-collapse relative h-full min-w-[500px]">
                                 <thead>
                                     <tr>
-                                        <th className="sticky top-0 w-12 border border-border bg-card p-2 text-muted text-xs font-medium z-10">時限</th>
+                                        <th className="sticky top-0 w-8 border border-border bg-card p-1 text-muted text-[10px] font-medium z-10">時限</th>
                                         {days.map(d => (
-                                            <th key={d} className="sticky top-0 border border-border bg-card/90 backdrop-blur p-2 text-foreground text-sm font-bold w-1/5 z-10">{d}</th>
+                                            <th key={d} className="sticky top-0 border border-border bg-card/95 backdrop-blur p-1 text-foreground text-xs font-bold w-1/5 z-10">{d}</th>
                                         ))}
                                     </tr>
                                 </thead>
-                                <tbody className="h-full">
+                                <tbody>
                                     {periods.map(p => (
-                                        <tr key={p} className="h-full">
-                                            <td className="border border-border bg-card p-2 text-center text-muted text-xs font-medium">{p}</td>
+                                        <tr key={p}>
+                                            <td className="border border-border bg-card/50 p-1 text-center text-muted text-[11px] font-medium">{p}</td>
                                             {days.map(d => {
                                                 const cells = getPreviewCellClasses(d, p);
                                                 const hasConflict = cells.length > 1;
                                                 return (
-                                                    <td key={`${d}-${p}`} className={`border p-1 h-20 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50' : 'border-border hover:bg-card'}`}>
-                                                        {cells.map((c, idx) => (
-                                                            <motion.div
-                                                                key={idx}
-                                                                className={`text-[11px] p-2 rounded shadow-sm leading-tight transition-transform cursor-pointer ${hasConflict ? 'bg-red-100 text-red-900 border-red-200 border' : (() => {
-                                                                    const colorClass = getSubjectColor(c.courseId);
-                                                                    return colorClass;
-                                                                })()}`}
-                                                                initial={{ scale: 0.8, opacity: 0 }}
-                                                                animate={{ scale: 1, opacity: 1 }}
-                                                                transition={{ delay: idx * 0.05 }}
-                                                                whileHover={{ scale: 1.05, y: -2 }}
-                                                                whileTap={{ scale: 0.95 }}
-                                                            >
-                                                                <div className="font-bold truncate">{c.courseId}</div>
-                                                                <div className="text-[10px] opacity-75 mt-0.5">{c.classId}</div>
-                                                            </motion.div>
-                                                        ))}
+                                                    <td key={`${d}-${p}`} className={`border p-0.5 h-16 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50/50' : 'border-border'}`}>
+                                                        <div className="flex flex-col gap-0.5 h-full overflow-y-auto custom-scrollbar">
+                                                            {cells.map((c, idx) => (
+                                                                <div
+                                                                    key={idx}
+                                                                    className={`text-[10px] p-1.5 rounded-sm shadow-sm leading-tight border ${hasConflict ? 'bg-red-100 text-red-900 border-red-200' : 'bg-background border-border bg-opacity-80'}`}
+                                                                >
+                                                                    <div className="font-bold truncate text-foreground flex items-center gap-1">
+                                                                        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: getSubjectColor(c.courseId)?.match(/text-(\w+)-/)?.[1] || 'gray' }}></div>
+                                                                        {c.courseId}
+                                                                    </div>
+                                                                    <div className="text-[9px] text-muted truncate mt-0.5">{c.classId}</div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
                                                     </td>
                                                 );
                                             })}
@@ -254,7 +270,51 @@ export const GeneratorScreen: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </motion.div>
+                    </div>
+
+                    {/* Manual Override Editor Section */}
+                    <div className="bg-background border border-border rounded-b-xl shadow-inner flex flex-col h-1/2 min-h-[250px] overflow-hidden">
+                        <div className="p-3 border-b border-border bg-muted/10 flex justify-between items-center sticky top-0 z-10">
+                            <h3 className="font-bold text-foreground text-sm flex items-center">
+                                <Settings2 className="w-4 h-4 mr-2 text-muted" />
+                                手動微調整 (クラス変更)
+                            </h3>
+                            <span className="text-xs text-muted font-medium bg-background px-2 py-0.5 rounded border border-border">
+                                リアルタイム反映
+                            </span>
+                        </div>
+
+                        <div className="p-4 overflow-y-auto custom-scrollbar flex-1 bg-muted/5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                {state.selectedCourses.map(course => {
+                                    const currentAssigned = editableAssignments[course.id_name];
+                                    return (
+                                        <div key={course.id_name} className="bg-card border border-border rounded-lg p-3 shadow-sm hover:border-accent/40 transition-colors">
+                                            <div className="font-bold text-sm text-foreground mb-1 truncate" title={course.id_name}>
+                                                <span className="text-muted mr-1 font-mono text-xs">{course.id_name}</span>
+                                            </div>
+                                            <div className="flex items-center gap-2 mt-2">
+                                                <Edit3 className="w-3.5 h-3.5 text-muted shrink-0" />
+                                                <select
+                                                    className="flex-1 bg-background border border-border rounded-md px-2 py-1.5 text-xs font-semibold text-foreground focus:ring-1 focus:ring-accent outline-none"
+                                                    value={currentAssigned || ''}
+                                                    onChange={(e) => handleAssignmentChange(course.id_name, e.target.value)}
+                                                >
+                                                    <option value="" disabled>クラスを選択</option>
+                                                    {course.classes.map(c => (
+                                                        <option key={c.class_id} value={c.class_id}>
+                                                            {c.class_id} ({c.schedule.join(', ')})
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </main>
         </div>
