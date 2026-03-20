@@ -107,22 +107,63 @@ export const isRetakeCourse = (bit: number): boolean => {
     return (bit & (1 << 10)) > 0;
 };
 
+/**
+ * 判断科目が「再履修・未履修」の対象候補かどうかを判定する
+ */
+export const isRetakeCandidate = (
+    course: CourseData,
+    userGrades: AppState['grades'],
+    gradingScale: AppState['userProfile']['gradingScale'],
+    currentGrade: number
+): boolean => {
+    // 1. 「OT」から始まる教養科目を完全に除外する
+    if (course.id_name.startsWith('OT')) return false;
+
+    // 2. 成績が記録されており、かつ合格（ポイント > 0）している場合は除外
+    const gradeInfo = userGrades[course.id_name];
+    if (gradeInfo) {
+        const scale = gradingScale.find(s => s.label === gradeInfo.grade);
+        if (scale && scale.point > 0) return false;
+        if (scale && scale.point === 0) return true; // D, Fなどは確定で再履修対象
+    }
+
+    // 3. 履修年次を過ぎているか判定
+    const bit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
+    const targetGrades = getTargetGrades(bit);
+    const maxGrade = Math.max(...targetGrades, 0);
+
+    // 未受講かつ、現在の学年が推奨学年の上限を超えている
+    return !gradeInfo && currentGrade > maxGrade;
+};
+
 export const filterByBit = (
-    courses: CourseData[],
-    filters: { selectedGrade: number, term: 'first' | 'second' | 'full', isReRegistrationOnly: boolean }
+    allCourses: CourseData[],
+    filters: {
+        selectedGrade: number,
+        term: 'first' | 'second' | 'full',
+        isReRegistrationOnly: boolean,
+        userGrades: AppState['grades'],
+        gradingScale: AppState['userProfile']['gradingScale']
+    }
 ): CourseData[] => {
-    const { selectedGrade, term } = filters;
+    const { selectedGrade, term, isReRegistrationOnly, userGrades, gradingScale } = filters;
 
     // 判定用のターゲットビットを作成
     let targetTermBit = 0;
     if (term === 'second') targetTermBit = 1;
     else if (term === 'full') targetTermBit = 2;
 
-    return courses.filter(course => {
+    return allCourses.filter(course => {
         // --- 判定ロジック ---
         const checkMatch = (bit: number | undefined) => {
             if (bit === undefined) return false;
-            const gradeMatch = (bit & (1 << (selectedGrade - 1))) > 0;
+
+            // 通常：指定した学年が含まれているか
+            // 再履修のみ：ユーザーの成績と年次を元に判定
+            const gradeMatch = isReRegistrationOnly
+                ? isRetakeCandidate(course, userGrades, gradingScale, selectedGrade)
+                : (bit & (1 << (selectedGrade - 1))) > 0;
+
             const courseTerm = (bit >> 8) & 3;
             const termMatch = (courseTerm === targetTermBit) || (courseTerm === 2);
             return gradeMatch && termMatch;

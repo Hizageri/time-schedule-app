@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../AppContext';
 import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../types';
-import { filterByBit, getTargetGrades, getPeriodLabel } from '../timetableGenerator';
+import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate } from '../timetableGenerator';
 import { BookOpen, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
 import { getSubjectColor } from '../utils';
 
@@ -14,45 +14,39 @@ export const CourseSelectionScreen: React.FC = () => {
         const baseFiltered = filterByBit(MOCK_COURSES, {
             selectedGrade: state.timetableConditions.targetGrade,
             term: state.timetableConditions.term,
-            isReRegistrationOnly: state.timetableConditions.hasRetake
+            isReRegistrationOnly: state.timetableConditions.hasRetake,
+            userGrades: state.grades,
+            gradingScale: state.userProfile.gradingScale
         });
 
-        // 単位を落とした（ポイントが0の）科目を対象学年が違っても追加する
+        // 再履修・未履修の自動抽出
         const targetTermBit = state.timetableConditions.term === 'second' ? 1 : state.timetableConditions.term === 'full' ? 2 : 0;
 
-        const failedCourses = MOCK_COURSES.filter(c => {
+        const reRegistrationCourses = MOCK_COURSES.filter(c => {
             // 既に基本フィルターに含まれているならスキップ
             if (baseFiltered.some(bc => bc.id_name === c.id_name)) return false;
 
-            // 成績情報を取得
-            const gradeInfo = state.grades[c.id_name];
-            if (!gradeInfo) return false;
-
-            // ポイントが0か判定
-            const scale = state.userProfile.gradingScale.find(s => s.label === gradeInfo.grade);
-            if (!scale || scale.point !== 0) return false;
+            // 共通ユーティリティで判定
+            const isCandidate = isRetakeCandidate(
+                c,
+                state.grades,
+                state.userProfile.gradingScale,
+                state.timetableConditions.targetGrade
+            );
+            if (!isCandidate) return false;
 
             // 学期（前期／後期など）が一致しているか判定
-            const checkTermMatch = (bit: number | undefined) => {
-                if (bit === undefined) return false;
-                const courseTerm = (bit >> 8) & 3;
+            const checkTermMatch = (b: number | undefined) => {
+                if (b === undefined) return false;
+                const courseTerm = (b >> 8) & 3;
                 return (courseTerm === targetTermBit) || (courseTerm === 2);
             };
 
             return checkTermMatch(c.target_bit) || c.classes.some(cls => checkTermMatch(cls.target_bit));
         });
 
-        // 取得済み（ポイントが0より大きい）科目をリストから完全に除外する
-        return [...baseFiltered, ...failedCourses].filter(course => {
-            const gradeInfo = state.grades[course.id_name];
-            if (!gradeInfo) return true; // 未履修は残す
-
-            const scale = state.userProfile.gradingScale.find(s => s.label === gradeInfo.grade);
-            if (scale && scale.point > 0) {
-                return false; // A, B, C, S など合格済みの科目は完全除外
-            }
-            return true; // D, F (ポイント0) などは再履修として残す
-        });
+        // すべての候補を結合（既に合格済みのものは filterByBit や isRetakeCandidate 側で除外済み）
+        return [...baseFiltered, ...reRegistrationCourses];
     }, [state.timetableConditions, state.grades, state.userProfile.gradingScale]);
 
     const handleProceed = () => {
