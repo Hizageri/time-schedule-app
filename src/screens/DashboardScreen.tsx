@@ -53,14 +53,22 @@ export const DashboardScreen: React.FC = () => {
     // Manual GPA State
     const [calcGpaData, setCalcGpaData] = useState<{ gpa: string, details: Record<string, number>, totalCredits: number, earnedCredits: number } | null>(null);
     const [isGpaSimulatorOpen, setIsGpaSimulatorOpen] = useState(false);
-    const [simulatedGrades, setSimulatedGrades] = useState<Record<string, string>>({});
+    const [simulatedCreditCounts, setSimulatedCreditCounts] = useState<Record<string, number>>({});
 
     const handleOpenGpaSimulator = () => {
-        const initialGrades: Record<string, string> = {};
-        Object.keys(state.grades).forEach(courseId => {
-            initialGrades[courseId] = state.grades[courseId].grade;
+        const initialCounts: Record<string, number> = {};
+        state.userProfile.gradingScale.forEach(s => initialCounts[s.label] = 0);
+
+        Object.entries(state.grades).forEach(([courseId, gradeInfo]) => {
+            const course = MOCK_COURSES.find(c => c.id_name === courseId);
+            if (!course) return;
+            const credits = course.credits;
+            if (initialCounts[gradeInfo.grade] !== undefined) {
+                initialCounts[gradeInfo.grade] += credits;
+            }
         });
-        setSimulatedGrades(initialGrades);
+
+        setSimulatedCreditCounts(initialCounts);
         setIsGpaSimulatorOpen(true);
         setCalcGpaData(null);
     };
@@ -71,18 +79,13 @@ export const DashboardScreen: React.FC = () => {
         let totalPoints = 0;
         const details: Record<string, number> = {};
 
-        state.userProfile.gradingScale.forEach(s => details[s.label] = 0);
-
-        Object.entries(simulatedGrades).forEach(([courseId, gradeLabel]) => {
-            const course = MOCK_COURSES.find(c => c.id_name === courseId);
-            if (!course) return;
-            const credits = course.credits;
-            const scale = state.userProfile.gradingScale.find(s => s.label === gradeLabel);
-            if (scale) {
-                totalCredits += credits;
-                totalPoints += scale.point * credits;
-                details[scale.label] += credits;
-                if (scale.point > 0) totalEarnedCredits += credits;
+        state.userProfile.gradingScale.forEach(s => {
+            const count = simulatedCreditCounts[s.label] || 0;
+            details[s.label] = count;
+            totalCredits += count;
+            totalPoints += count * s.point;
+            if (s.point > 0) {
+                totalEarnedCredits += count;
             }
         });
 
@@ -264,33 +267,39 @@ export const DashboardScreen: React.FC = () => {
                         {isGpaSimulatorOpen && !calcGpaData && (
                             <div className="bg-background border border-border rounded-xl p-5 mb-6 shadow-inner animate-in fade-in slide-in-from-top-4">
                                 <h3 className="font-bold text-foreground mb-4 border-b border-border pb-2">GPAシミュレーター</h3>
-                                <p className="text-sm text-muted mb-4">現在の成績が表示されています。微調整して確定してください。</p>
-                                <div className="space-y-3 mb-6 max-h-[40vh] overflow-y-auto pr-2">
-                                    {Object.keys(state.grades).length === 0 ? (
-                                        <p className="text-muted text-sm my-4 text-center">計算可能な成績データがありません。</p>
-                                    ) : (
-                                        Object.keys(state.grades).map(courseId => (
-                                            <div key={courseId} className="flex justify-between items-center bg-card p-3 rounded-lg border border-border">
-                                                <span className="font-medium text-foreground text-sm truncate pr-4">{courseId}</span>
-                                                <select
-                                                    className="px-3 py-1.5 rounded-md border border-border focus:ring-1 focus:ring-accent outline-none bg-background text-sm font-semibold w-24"
-                                                    value={simulatedGrades[courseId] || ''}
-                                                    onChange={(e) => setSimulatedGrades(prev => ({ ...prev, [courseId]: e.target.value }))}
-                                                >
-                                                    {state.userProfile.gradingScale.map((g, idx) => (
-                                                        <option key={idx} value={g.label}>{g.label}</option>
-                                                    ))}
-                                                </select>
+                                <p className="text-sm text-muted mb-4">現在の成績データから算出した各評価の単位数です。数値を変更してシミュレーションできます。</p>
+                                <div className="space-y-3 mb-4">
+                                    {state.userProfile.gradingScale.map((g) => (
+                                        <div key={g.label} className="flex justify-between items-center bg-card p-3 rounded-lg border border-border">
+                                            <div className="flex flex-col">
+                                                <span className="font-bold text-foreground text-sm">{g.label}</span>
+                                                <span className="text-xs text-muted">({g.point} pt)</span>
                                             </div>
-                                        ))
-                                    )}
+                                            <div className="flex items-center">
+                                                <input
+                                                    type="number"
+                                                    min="0"
+                                                    step="0.5"
+                                                    className="px-3 py-1.5 rounded-md border border-border focus:ring-1 focus:ring-accent outline-none bg-background text-sm font-semibold w-24 text-right"
+                                                    value={simulatedCreditCounts[g.label]?.toString() || '0'}
+                                                    onChange={(e) => setSimulatedCreditCounts(prev => ({ ...prev, [g.label]: Math.max(0, parseFloat(e.target.value) || 0) }))}
+                                                />
+                                                <span className="ml-2 text-sm text-muted">単位</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex justify-between items-center mb-6 px-2">
+                                    <span className="font-bold text-muted">合計:</span>
+                                    <span className="font-black text-accent text-lg">
+                                        {Object.values(simulatedCreditCounts).reduce((a, b) => a + b, 0)} <span className="text-sm text-muted font-bold">単位</span>
+                                    </span>
                                 </div>
                                 <div className="flex justify-end gap-3">
                                     <button onClick={() => setIsGpaSimulatorOpen(false)} className="btn-ghost text-sm py-2">キャンセル</button>
                                     <button
                                         onClick={handleCalculateGpa}
                                         className="btn-primary text-sm py-2"
-                                        disabled={Object.keys(state.grades).length === 0}
                                     >
                                         確定してGPAを算出
                                     </button>
