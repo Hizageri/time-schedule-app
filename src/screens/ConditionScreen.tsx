@@ -6,13 +6,13 @@ export const ConditionScreen: React.FC = () => {
     const { state, updateConditions, setScreen } = useAppContext();
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
-            <div className="max-w-xl w-full bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                <div className="bg-indigo-600 p-6 text-white text-center relative overflow-hidden">
+        <div className="min-h-screen bg-background p-12 flex items-center justify-center">
+            <div className="max-w-xl w-full bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
+                <div className="bg-foreground p-6 text-white text-center relative overflow-hidden">
                     <div className="absolute top-0 right-0 -mt-4 -mr-4 bg-white/10 w-24 h-24 rounded-full blur-2xl"></div>
-                    <CalendarClock className="w-10 h-10 mx-auto mb-3 text-indigo-100 relative z-10" />
+                    <CalendarClock className="w-10 h-10 mx-auto mb-3 text-background/80 relative z-10" />
                     <h2 className="text-xl font-bold relative z-10">時間割の条件設定</h2>
-                    <p className="text-indigo-100 text-sm mt-1 relative z-10">
+                    <p className="text-background/70 text-sm mt-1 relative z-10">
                         こんにちは、{state.userProfile.nickname}さん。新学期の条件を教えてください。
                     </p>
                 </div>
@@ -20,9 +20,9 @@ export const ConditionScreen: React.FC = () => {
                 <div className="p-8 space-y-8">
                     <div className="grid grid-cols-2 gap-6">
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">対象学年</label>
+                            <label className="block text-sm font-semibold text-foreground mb-2">対象学年</label>
                             <select
-                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm outline-none"
+                                className="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent focus:border-accent shadow-sm outline-none bg-card"
                                 value={state.timetableConditions.targetGrade}
                                 onChange={(e) => updateConditions({ targetGrade: parseInt(e.target.value, 10) })}
                             >
@@ -33,9 +33,9 @@ export const ConditionScreen: React.FC = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">学期 (期)</label>
+                            <label className="block text-sm font-semibold text-foreground mb-2">学期 (期)</label>
                             <select
-                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm outline-none"
+                                className="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent focus:border-accent shadow-sm outline-none bg-card"
                                 value={state.timetableConditions.term}
                                 onChange={(e) => updateConditions({ term: e.target.value as any })}
                             >
@@ -45,20 +45,17 @@ export const ConditionScreen: React.FC = () => {
                         </div>
                     </div>
 
-
-
-
                     <div className="flex justify-between pt-4">
                         <button
                             onClick={() => setScreen(1)}
-                            className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors flex items-center"
+                            className="px-6 py-3 rounded-xl border border-border text-muted font-medium hover:bg-card transition-colors flex items-center"
                         >
                             <ChevronLeft className="w-5 h-5 mr-1" />
                             戻る
                         </button>
                         <button
                             onClick={() => setScreen(3)}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all flex items-center group shadow-indigo-200/50"
+                            className="bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all flex items-center group shadow-accent/20"
                         >
                             科目選択へ
                             <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />

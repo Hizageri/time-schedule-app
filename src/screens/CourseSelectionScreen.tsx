@@ -53,26 +53,26 @@ export const CourseSelectionScreen: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-            <header className="bg-white border-b border-gray-200 sticky top-0 z-20 px-6 py-4 flex justify-between items-center shadow-sm">
+        <div className="min-h-screen bg-background flex flex-col">
+            <header className="bg-card border-b border-border sticky top-0 z-20 px-6 py-4 flex justify-between items-center shadow-sm">
                 <div>
-                    <h1 className="text-xl font-bold text-gray-800 flex items-center">
-                        <BookOpen className="w-6 h-6 mr-2 text-indigo-600" />
+                    <h1 className="text-xl font-bold text-foreground flex items-center">
+                        <BookOpen className="w-6 h-6 mr-2 text-accent" />
                         受講可能科目リスト
                     </h1>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-muted mt-1">
                         興味のある科目をチェックして下さい。クラス調整は後で行います。
                     </p>
                 </div>
                 <div className="flex items-center space-x-4">
                     <div className="text-right mr-4 text-sm">
-                        <span className="text-gray-500">選択中: </span>
-                        <span className="font-bold text-indigo-600 text-lg">{state.selectedCourses.length}</span> <span className="text-gray-500">科目</span>
+                        <span className="text-muted">選択中: </span>
+                        <span className="font-bold text-accent text-lg">{state.selectedCourses.length}</span> <span className="text-muted">科目</span>
                     </div>
 
                     <button
                         onClick={handleProceed}
-                        className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm transition-all flex items-center group cursor-pointer"
+                        className="bg-accent hover:bg-accent/90 text-white font-semibold py-2 px-6 rounded-lg shadow-sm transition-all flex items-center group cursor-pointer"
                     >
                         AI先輩に相談する
                         <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -91,14 +91,14 @@ export const CourseSelectionScreen: React.FC = () => {
                             const periodLabel = getPeriodLabel(displayBit);
                             return (
                                 <div key={course.id_name}
-                                    className={`rounded-xl shadow-sm border transition-all cursor-pointer ${isSelected ? 'bg-indigo-50 border-indigo-400 ring-1 ring-indigo-400' : 'bg-white border-gray-200 hover:border-indigo-300 hover:shadow-md'}`}
+                                    className={`rounded-xl shadow-sm border transition-all cursor-pointer ${isSelected ? 'bg-accent/10 border-accent ring-1 ring-accent/50' : 'bg-card border-border hover:border-accent/50 hover:shadow-md'}`}
                                     onClick={() => toggleSelectedCourse(course)}
                                 >
                                     <div className="p-5 flex justify-between items-start">
                                         <div className="flex items-start">
                                             <input
                                                 type="checkbox"
-                                                className="w-5 h-5 mt-1 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 pointer-events-none"
+                                                className="w-5 h-5 mt-1 text-accent rounded border-border focus:ring-accent pointer-events-none"
                                                 checked={isSelected}
                                                 readOnly
                                             />
@@ -108,7 +108,7 @@ export const CourseSelectionScreen: React.FC = () => {
                                                         再履修対象
                                                     </span>
                                                 )}
-                                                <h3 className="font-bold text-lg text-gray-800 leading-tight mb-1">{course.id_name}</h3>
+                                                <h3 className="font-bold text-lg text-foreground leading-tight mb-1">{course.id_name}</h3>
                                                 <div className="flex flex-wrap gap-1 mt-2">
                                                     <span className="bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
                                                         対象: {gradesArr.length === 6 ? '全学年' : `${gradesArr.join(',')}年`}
@@ -117,17 +117,17 @@ export const CourseSelectionScreen: React.FC = () => {
                                                         {periodLabel}
                                                     </span>
                                                 </div>
-                                                <div className="text-xs text-gray-500 mt-2">
+                                                <div className="text-xs text-muted mt-2">
                                                     {course.classes.length}種類のクラスが開講
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="bg-white/50 border-t border-gray-100 p-3 flex justify-between items-center text-sm">
-                                        <span className="bg-gray-100 px-2 py-1 rounded-md text-gray-600 font-medium text-xs">{course.credits} 単位</span>
+                                    <div className="bg-card/50 border-t border-border p-3 flex justify-between items-center text-sm">
+                                        <span className="bg-background px-2 py-1 rounded-md text-muted font-medium text-xs">{course.credits} 単位</span>
                                         <button
                                             onClick={(e) => { e.stopPropagation(); setSelectedCourseForModal(course); }}
-                                            className="flex items-center text-indigo-600 hover:text-indigo-800 font-medium text-xs"
+                                            className="flex items-center text-accent hover:text-accent/80 font-medium text-xs"
                                         >
                                             <Info className="w-4 h-4 mr-1" /> 詳細を見る
                                         </button>
@@ -137,8 +137,8 @@ export const CourseSelectionScreen: React.FC = () => {
                         })}
 
                         {availableCourses.length === 0 && (
-                            <div className="col-span-full text-center py-20 text-gray-500">
-                                <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                            <div className="col-span-full text-center py-20 text-muted">
+                                <BookOpen className="w-12 h-12 mx-auto mb-4 text-muted/50" />
                                 <p>条件に一致する科目がありません。</p>
                             </div>
                         )}
@@ -147,10 +147,10 @@ export const CourseSelectionScreen: React.FC = () => {
                     <div className="mt-8">
                         <button
                             onClick={() => setScreen(2)}
-                            className="px-6 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-white transition-colors flex items-center bg-transparent"
+                            className="px-6 py-2 rounded-lg border border-border text-muted hover:bg-card transition-colors flex items-center bg-transparent"
                         >
-                            <ChevronLeft className="w-5 h-5 mr-1" />
-                            条件設定に戻る
+                            <ChevronLeft className="w-4 h-4 mr-1" />
+                            戻る
                         </button>
                     </div>
                 </div>

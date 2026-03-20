@@ -50,16 +50,16 @@ export const DashboardScreen: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col">
+        <div className="min-h-screen bg-background flex flex-col">
             {/* Top Navbar */}
-            <header className="bg-indigo-600 text-white shadow-md">
+            <header className="bg-foreground text-white shadow-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center">
                         <h1 className="text-xl font-bold flex items-center">
                             <CalendarIcon className="w-6 h-6 mr-2" />
                             My Dashboard
                         </h1>
-                        <div className="text-sm font-medium bg-indigo-700 px-3 py-1 rounded-full">
+                        <div className="text-sm font-medium bg-foreground/80 px-3 py-1 rounded-full">
                             {state.userProfile.nickname} さん
                         </div>
                     </div>
@@ -67,26 +67,26 @@ export const DashboardScreen: React.FC = () => {
             </header>
 
             {/* Tabs */}
-            <div className="bg-white border-b border-gray-200">
+            <div className="bg-card border-b border-border">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex space-x-8">
                         <button
                             onClick={() => setActiveTab('timetable')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'timetable' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'timetable' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
                         >
                             <CalendarIcon className="w-4 h-4 mr-2" />
                             時間割
                         </button>
                         <button
                             onClick={() => setActiveTab('grades')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'grades' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'grades' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
                         >
                             <Award className="w-4 h-4 mr-2" />
                             成績
                         </button>
                         <button
                             onClick={() => setActiveTab('profile')}
-                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'profile' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-colors ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
                         >
                             <User className="w-4 h-4 mr-2" />
                             プロフィール
@@ -99,22 +99,22 @@ export const DashboardScreen: React.FC = () => {
             <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
                 {activeTab === 'timetable' && (
                     <div className="space-y-6 animate-in fade-in">
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                            <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center flex-wrap gap-4">
-                                <h2 className="font-bold text-gray-800 flex items-center">
+                        <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden">
+                            <div className="p-4 border-b border-border bg-card flex justify-between items-center flex-wrap gap-4">
+                                <h2 className="font-bold text-foreground flex items-center">
                                     時間割グリッド
-                                    <span className="ml-3 text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded font-semibold">
+                                    <span className="ml-3 text-xs bg-accent/10 text-accent px-2 py-1 rounded font-semibold">
                                         {state.timetableConditions.term === 'first' ? '前期' : '後期'}
                                     </span>
                                 </h2>
 
                                 {/* Quarter Toggle Controls */}
-                                <div className="flex bg-gray-200/60 p-1 rounded-lg">
+                                <div className="flex bg-muted/60 p-1 rounded-lg">
                                     {termQuarters.map(q => (
                                         <button
                                             key={q.val}
                                             onClick={() => setActiveQuarter(q.val as 'odd' | 'even')}
-                                            className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                                            className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-card text-accent shadow-sm' : 'text-muted hover:text-foreground'}`}
                                         >
                                             {q.label}
                                         </button>
@@ -126,20 +126,20 @@ export const DashboardScreen: React.FC = () => {
                                 <table className="w-full min-w-[600px] border-collapse relative">
                                     <thead>
                                         <tr>
-                                            <th className="sticky top-0 z-10 w-16 border border-gray-200 bg-gray-100 p-2 text-gray-500 text-sm font-medium">時限</th>
+                                            <th className="sticky top-0 z-10 w-16 border border-border bg-card p-2 text-muted text-sm font-medium">時限</th>
                                             {days.map(d => (
-                                                <th key={d} className={`sticky top-0 z-10 border border-gray-200 p-2 text-sm font-bold w-1/5 ${d === '土' ? 'bg-blue-50 text-blue-800' : 'bg-indigo-50/90 text-indigo-800 backdrop-blur'}`}>{d}</th>
+                                                <th key={d} className={`sticky top-0 z-10 border border-border p-2 text-sm font-bold w-1/5 ${d === '土' ? 'bg-blue-50 text-blue-800' : 'bg-accent/10 text-foreground backdrop-blur'}`}>{d}</th>
                                             ))}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {periods.map(p => (
                                             <tr key={p}>
-                                                <td className="border border-gray-200 bg-gray-50 p-2 text-center text-gray-500 font-medium">{p}限</td>
+                                                <td className="border border-border bg-card p-2 text-center text-muted font-medium">{p}限</td>
                                                 {days.map(d => {
                                                     const cellClasses = getCellClasses(d, p);
                                                     return (
-                                                        <td key={`${d}-${p}`} className="border border-gray-200 p-2 h-24 align-top">
+                                                        <td key={`${d}-${p}`} className="border border-border p-2 h-24 align-top">
                                                             {cellClasses.map((c, idx) => (
                                                                 <div key={idx} className="bg-blue-100 border border-blue-200 text-blue-800 text-xs p-2 rounded mb-1 shadow-sm">
                                                                     <div className="font-bold">{c.courseId}</div>

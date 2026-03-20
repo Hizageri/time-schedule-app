@@ -54,7 +54,7 @@ export const OnboardingScreen: React.FC = () => {
                             <label className="block text-sm font-medium text-foreground mb-2">ニックネーム</label>
                             <input
                                 type="text"
-                                className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
+                                className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card placeholder:text-muted/60"
                                 placeholder="例: 会津 太郎"
                                 value={state.userProfile.nickname}
                                 onChange={(e) => updateProfile({ nickname: e.target.value })}
@@ -75,7 +75,7 @@ export const OnboardingScreen: React.FC = () => {
                             <label className="block text-sm font-medium text-foreground mb-2">なりたい職業 (目標)</label>
                             <input
                                 type="text"
-                                className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
+                                className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card placeholder:text-muted/60"
                                 placeholder="例: AIエンジニア、データサイエンティスト"
                                 value={state.userProfile.dreamJob}
                                 onChange={(e) => updateProfile({ dreamJob: e.target.value })}
