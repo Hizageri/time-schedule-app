@@ -37,8 +37,14 @@ export const DashboardScreen: React.FC = () => {
 
     const getCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
+        const sessionTermBit = state.timetableConditions.term === 'second' ? 1 : (state.timetableConditions.term === 'full' ? 2 : 0);
+
         return state.committedClasses.filter(c => {
-            const qType = getQuarterType(c.targetBit ?? 0);
+            const bit = c.targetBit ?? 0;
+            const courseTerm = (bit >> 8) & 3;
+            if (courseTerm !== 2 && courseTerm !== sessionTermBit) return false;
+
+            const qType = getQuarterType(bit);
             // Match active quarter OR if it's "across" (通年/またぎ)
             if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return false;
             if (qType === 'intensive') return false; // Intensives go below
@@ -47,7 +53,15 @@ export const DashboardScreen: React.FC = () => {
     };
 
     const getIntensiveClasses = () => {
-        return state.committedClasses.filter(c => getQuarterType(c.targetBit ?? 0) === 'intensive' || c.schedule.includes('TBD') || !c.schedule.some(s => s.includes('-')));
+        const sessionTermBit = state.timetableConditions.term === 'second' ? 1 : (state.timetableConditions.term === 'full' ? 2 : 0);
+
+        return state.committedClasses.filter(c => {
+            const bit = c.targetBit ?? 0;
+            const courseTerm = (bit >> 8) & 3;
+            if (courseTerm !== 2 && courseTerm !== sessionTermBit) return false;
+
+            return getQuarterType(bit) === 'intensive' || c.schedule.includes('TBD') || !c.schedule.some(s => s.includes('-'));
+        });
     };
 
     // Manual GPA State

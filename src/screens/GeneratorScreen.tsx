@@ -34,7 +34,7 @@ export const GeneratorScreen: React.FC = () => {
                     setIsGenerating(false);
                     return;
                 }
-                const res = await generateTimetablePatterns(state.selectedCourses);
+                const res = await generateTimetablePatterns(state.selectedCourses, state.timetableConditions.baseClass);
                 setPatternsData(res);
 
                 if (res.patterns.length > 0) {
@@ -86,7 +86,7 @@ export const GeneratorScreen: React.FC = () => {
                         courseId: course.id_name,
                         classId: classInfo.class_id,
                         schedule: classInfo.schedule,
-                        targetBit: course.target_bit
+                        targetBit: classInfo.target_bit ?? course.target_bit
                     });
                 }
             }
@@ -110,6 +110,7 @@ export const GeneratorScreen: React.FC = () => {
     const getPreviewCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
         const activeClasses: any[] = [];
+        const sessionTermBit = state.timetableConditions.term === 'second' ? 1 : (state.timetableConditions.term === 'full' ? 2 : 0);
 
         state.selectedCourses.forEach(course => {
             const assignedClassId = editableAssignments[course.id_name];
@@ -118,7 +119,14 @@ export const GeneratorScreen: React.FC = () => {
             const classInfo = course.classes.find(c => c.class_id === assignedClassId);
             if (!classInfo) return;
 
-            const qType = getQuarterType(course.target_bit ?? 0);
+            const bit = classInfo.target_bit ?? course.target_bit ?? 0;
+
+            // Check Term (bits 9-8)
+            const courseTerm = (bit >> 8) & 3;
+            if (courseTerm !== 2 && courseTerm !== sessionTermBit) return;
+
+            // Check Quarter (bits 7-6)
+            const qType = getQuarterType(bit);
             if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return;
             if (qType === 'intensive') return;
 
@@ -168,9 +176,9 @@ export const GeneratorScreen: React.FC = () => {
         <div className="min-h-screen bg-background flex flex-col">
             <header className="bg-card border-b border-border sticky top-0 z-30 px-6 py-4 flex justify-between items-center shadow-sm">
                 <div>
-                    <h1 className="text-2xl font-bold text-foreground flex items-center">
+                    <h1 className="text-xl font-bold text-foreground flex items-center">
                         <Sparkles className="w-6 h-6 mr-3 text-accent" />
-                        AI Timetable - 5つの戦略
+                        AI提案 - 5つの戦略
                     </h1>
                 </div>
                 <button
@@ -193,13 +201,13 @@ export const GeneratorScreen: React.FC = () => {
                                 <motion.button
                                     key={idx}
                                     onClick={() => handleTabChange(idx)}
-                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-accent/10 border-accent text-foreground shadow-md transform scale-105' : 'bg-card text-foreground border-border hover:border-accent/50'}`}
+                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-accent/10 border-accent/40 text-foreground ring-1 ring-accent/20' : 'bg-card text-foreground border-border hover:border-accent/40'}`}
                                 >
-                                    <div className="font-bold mb-1 flex items-center justify-between text-base">
+                                    <div className="font-bold mb-1 flex items-center justify-between text-md">
                                         {p.name}
                                         {isActive && <Sparkles className="w-4 h-4 text-accent" />}
                                     </div>
-                                    <div className={`text-xs leading-relaxed ${isActive ? 'text-foreground/90 font-medium' : 'text-muted'}`}>{p.description}</div>
+                                    <div className={`text-xs leading-relaxed ${isActive ? 'text-foreground/80 font-medium' : 'text-muted'}`}>{p.description}</div>
                                 </motion.button>
                             );
                         })}
@@ -235,7 +243,7 @@ export const GeneratorScreen: React.FC = () => {
                                     <tr>
                                         <th className="sticky top-0 w-8 border border-border bg-card p-1 text-muted text-[10px] font-medium z-10">時限</th>
                                         {days.map(d => (
-                                            <th key={d} className="sticky top-0 border border-border bg-card/95 backdrop-blur p-1 text-foreground text-xs font-bold w-1/5 z-10">{d}</th>
+                                            <th key={d} className="sticky top-0 border border-border bg-accent/10 backdrop-blur p-1 text-foreground text-xs font-bold w-1/5 z-10">{d}</th>
                                         ))}
                                     </tr>
                                 </thead>

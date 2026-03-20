@@ -80,6 +80,7 @@ export interface AppState {
         term: 'first' | 'second' | 'full';
         hasRetake: boolean;
         retakeClasses: string[]; // IDs
+        baseClass: string;
     };
     selectedCourses: CourseData[]; // holding selected courses before commit
     committedClasses: {
@@ -115,7 +116,8 @@ export const defaultState: AppState = {
         targetGrade: 1,
         term: 'first',
         hasRetake: false,
-        retakeClasses: []
+        retakeClasses: [],
+        baseClass: 'C1'
     },
     selectedCourses: [],
     committedClasses: [],

@@ -36,7 +36,6 @@ export const ProposalScreen: React.FC = () => {
         };
 
         fetchAI();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const toggleCourse = (courseId: string) => {
@@ -45,9 +44,7 @@ export const ProposalScreen: React.FC = () => {
 
     const handleFinalize = () => {
         const finalized = state.selectedCourses.filter(c => {
-            // AIが "MA01" のように省略して返却した場合でもマッチするようにする
             const matchingKey = Object.keys(selectedToKeep).find(key => c.id_name.includes(key) || key.includes(c.id_name));
-            // 見つかった場合はそのチェック状態を使用。見つからなければ安全のため残す(true)
             return matchingKey ? selectedToKeep[matchingKey] : true;
         });
         setState(prev => ({ ...prev, selectedCourses: finalized }));
@@ -79,24 +76,31 @@ export const ProposalScreen: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-background p-4 md:p-12 flex flex-col items-center">
-            <div className="max-w-4xl w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 relative">
-
-                {/* Header */}
-                <div className="bg-slate-900/90 backdrop-blur p-8 rounded-2xl text-white flex flex-col border border-border/50 relative overflow-hidden shadow-2xl">
-                    <div className="absolute top-0 right-0 -mt-10 -mr-10 bg-accent/20 w-40 h-40 rounded-full blur-3xl pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 -mb-10 -ml-10 bg-blue-500/20 w-40 h-40 rounded-full blur-3xl pointer-events-none"></div>
-
-                    <h2 className="text-3xl font-black mb-2 relative z-10 tracking-tight">AI先輩のアドバイス</h2>
-                    <p className="text-background/80 text-sm flex items-center relative z-10 font-medium">
-                        <Briefcase className="w-4 h-4 mr-2" /> 目標: {dreamJob}
+        <div className="min-h-screen bg-background flex flex-col">
+            <header className="bg-card border-b border-border sticky top-0 z-30 px-6 py-4 flex justify-between items-center shadow-sm">
+                <div>
+                    <h1 className="text-xl font-bold text-foreground flex items-center">
+                        <Quote className="w-6 h-6 mr-3 text-accent" />
+                        AI先輩のアドバイス
+                    </h1>
+                    <p className="text-xs text-muted mt-1 flex items-center">
+                        <Briefcase className="w-3.5 h-3.5 mr-1.5" /> 目標: {dreamJob}
                     </p>
                 </div>
+                <button
+                    onClick={handleFinalize}
+                    className="btn-primary flex items-center group shadow-md"
+                    disabled={Object.values(selectedToKeep).filter(Boolean).length === 0}
+                >
+                    時間割を自動生成
+                    <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
+                </button>
+            </header>
 
+            <main className="flex-1 max-w-4xl w-full mx-auto p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4">
                 {/* Overall Feedback */}
-                <div className="bg-card rounded-2xl p-6 md:p-8 border border-border shadow-sm relative">
-                    <Quote className="absolute top-6 left-6 w-10 h-10 text-accent/10 -rotate-12" />
-                    <p className="text-foreground text-lg leading-relaxed font-medium relative z-10 pl-4 py-2">
+                <div className="bg-accent/5 rounded-2xl p-6 border border-accent/10 relative">
+                    <p className="text-foreground text-md leading-relaxed font-medium">
                         {consultation.overallFeedback}
                     </p>
                 </div>
@@ -110,7 +114,7 @@ export const ProposalScreen: React.FC = () => {
                         </span>
                     </h3>
 
-                    <div className="grid grid-cols-1 gap-4">
+                    <div className="grid grid-cols-1 gap-4 pb-12">
                         {consultation.courseFeedbacks.map((fb, idx) => {
                             const isChecked = selectedToKeep[fb.courseId];
                             return (
@@ -140,25 +144,7 @@ export const ProposalScreen: React.FC = () => {
                         })}
                     </div>
                 </div>
-
-                <div className="flex justify-between items-center bg-card p-6 rounded-2xl border border-border shadow-sm sticky bottom-6 z-20">
-                    <button
-                        onClick={() => setScreen(3)}
-                        className="btn-ghost text-muted hover:text-foreground"
-                    >
-                        科目選択に戻る
-                    </button>
-                    <button
-                        onClick={handleFinalize}
-                        className="btn-primary flex items-center group shadow-md hover:shadow-lg py-3 px-8 text-base"
-                        disabled={Object.values(selectedToKeep).filter(Boolean).length === 0}
-                    >
-                        チェックした科目で時間割を組む
-                        <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                </div>
-
-            </div>
+            </main>
         </div>
     );
 };

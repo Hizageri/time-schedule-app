@@ -45,6 +45,30 @@ export const ConditionScreen: React.FC = () => {
                         </div>
                     </div>
 
+                    <div>
+                        <label className="block text-sm font-semibold text-foreground mb-2">ベースクラス (優先したいコース)</label>
+                        <select
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent focus:border-accent shadow-sm outline-none bg-card"
+                            value={state.timetableConditions.baseClass}
+                            onChange={(e) => updateConditions({ baseClass: e.target.value })}
+                        >
+                            {state.timetableConditions.targetGrade <= 2 ? (
+                                ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'].map(c => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))
+                            ) : (
+                                ['CS', 'IT-SPR', 'SY', 'CN', 'IT-CMV', 'SE-DE'].map(c => (
+                                    <option key={c} value={c}>{c}</option>
+                                ))
+                            )}
+                        </select>
+                        <p className="text-muted text-xs mt-2">
+                            {state.timetableConditions.targetGrade <= 2
+                                ? "1~2年生向けの基本的なクラス分けです。"
+                                : "3~4年生向けの専門コース（トラック）に応じたクラス分けです。"}
+                        </p>
+                    </div>
+
                     <div className="flex justify-between pt-4">
                         <button
                             onClick={() => setScreen(1)}

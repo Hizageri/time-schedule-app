@@ -43,10 +43,10 @@ export const generateConsultation = async (
     const courseDetails = courses.map(c => `- ${c.id_name}: (${c.credits} credits). Overview: ${c.outline}`).join('\n');
 
     const prompt = `
-あなたは会津大学の教務に精通した、少し口の悪い「AI先輩」です。
+あなたは会津大学の教務に精通した、親しみやすくも誠実な「AI先輩」です。
 学生の情報:
 名前: ${userProfile.nickname}
-将来の目標: ${userProfile.dreamJob || '未設定（喝を入れてください）'}
+将来の目標: ${userProfile.dreamJob || '未設定（特に目標がない場合は、まず何を目指すべきか優しく諭してください）'}
 
 選択された科目:
 ${courseDetails}
@@ -54,8 +54,10 @@ ${courseDetails}
 タスク:
 以下の制約を厳守して、学生の履修計画にアドバイスしてください。
 1. **必ず日本語で回答すること**。専門用語以外で英語は使わない。
-2. 'overallFeedback' には、全体のバランスや目標への適合性を書く。褒めるだけでなく、厳しい批判や「これ取らないと3年で詰むぞ」といった助言も入れること。
-3. 'courseFeedbacks' 配列には、各科目ごとに「なぜ必要か」または「なぜ不要か」を目標に紐付けて書く。
+2. **性格**: 以前は少し毒舌でしたが、これからは「温かみのある信頼できる先輩」として振る舞ってください。褒めすぎず、学生が将来後悔しそうな点や無理のある計画については、誠実に懸念を伝えてください。
+3. **書式**: 'overallFeedback' や 'comment' の中に、不要な二重引用符（"）を入れないでください。
+4. 'overallFeedback' には、全体のバランスや目標への適合性を書く。
+5. 'courseFeedbacks' 配列には、各科目ごとに「なぜ必要か」または「なぜ不要か」を目標に紐付けて書く。
 
 以下のJSON形式で厳密に回答してください:
 {
@@ -71,7 +73,7 @@ ${courseDetails}
 `;
 
     const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'models/gemini-1.5-flash',
         contents: prompt,
         config: {
             responseMimeType: 'application/json',
@@ -86,7 +88,8 @@ ${courseDetails}
 };
 
 export const generateTimetablePatterns = async (
-    courses: CourseData[]
+    courses: CourseData[],
+    baseClass: string
 ): Promise<TimetablePatternsResponse> => {
     // API key validation is already handled at module level
 
@@ -110,11 +113,11 @@ ${JSON.stringify(courseClassMap, null, 2)}
 タスク:
 各科目から必ず1つのクラスを選び、5パターンの時間割を作成してください。
 【重要ルール】
+- **最優先事項**: **「コマの重複（重なり）」を可能な限りゼロにすること。** 重複がないスケジュールを出すことが、パターンの特徴よりも重要です。
 - **必ず日本語で回答すること**。
-- **「作成不可能」という回答は禁止。** 多少のコマの重なり（重複）が発生しても構わないので、必ず5つのパターンを提案すること。
-- 重複がある場合は、その旨を 'description' に記載すること。
-- **会津大学のクラス制への対応**: 1-2年生は「C1〜C6」、3-4年生は「CS, IT-SPR, SY, CN, IT-CMV, SE-DE」というクラス（コース）ごとに授業が重ならないよう設計されています。
-- **時間割作成の戦略**: 各パターンを作成する際、まずベースとなる【基準クラス（例: C1）】を1つ決め、そのクラス名が含まれる授業を最優先で選択してください。これにより、物理的なコマの重なりを最小限に抑えた現実的な時間割を作成すること。
+- **「作成不可能」という回答は禁止。** どうしても重なりが発生する場合のみ、その旨を 'description' に記載すること。
+- **ベースクラスの活用**: 学生は「${baseClass}」をベースのクラスとして選択しています。科目の中に「${baseClass}」という名前のクラスがある場合は、それを最優先で選択してください。
+- **パターンの説明**: 'description' は、なぜそのパターンがその名前にふさわしいか、簡潔な定型文で回答してください。AIからの余計な挨拶や長文の解説は不要です。
 
 以下の5つの名前でパターンを作成してください:
 1. "AIおすすめ"
@@ -129,7 +132,7 @@ ${JSON.stringify(courseClassMap, null, 2)}
     {
       "id": "pattern1",
       "name": "AIおすすめ",
-      "description": "パターンの解説（日本語）",
+      "description": "どうしても重なりが発生する場合のみ記載する",
       "assignments": [
         { "courseId": "MA01", "classId": "C1" }
       ]
@@ -139,7 +142,7 @@ ${JSON.stringify(courseClassMap, null, 2)}
 `;
 
     const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'models/gemini-1.5-flash',
         contents: prompt,
         config: {
             responseMimeType: 'application/json',
