@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../AppContext';
 import { generateTimetables } from '../timetableGenerator';
 import type { GeneratedTimetable, PatternType } from '../timetableGenerator';
@@ -131,23 +132,37 @@ export const GeneratorScreen: React.FC = () => {
                 {/* Left Col: Pattern Navigation */}
                 <div className="w-full lg:w-1/4 flex flex-col space-y-3">
                     <h3 className="font-bold text-gray-700 ml-1 mb-1">コンセプトを選択</h3>
-                    {patterns.map((p, idx) => {
-                        const info = patternLabels[p.patternId];
-                        const isActive = activePattern === p.patternId;
-                        return (
-                            <button
-                                key={idx}
-                                onClick={() => handleTabChange(p.patternId)}
-                                className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 border-transparent transform scale-105' : 'bg-white text-gray-800 border-gray-200 hover:border-indigo-300 hover:shadow-md'}`}
-                            >
-                                <div className="font-bold mb-1 flex items-center justify-between">
-                                    {info.label}
-                                    {isActive && <Sparkles className="w-4 h-4 text-indigo-300" />}
-                                </div>
-                                <div className={`text-xs ${isActive ? 'text-indigo-100' : 'text-gray-500'}`}>{info.desc}</div>
-                            </button>
-                        );
-                    })}
+                    <AnimatePresence mode="wait">
+                        {patterns.map((p, idx) => {
+                            const info = patternLabels[p.patternId];
+                            const isActive = activePattern === p.patternId;
+                            return (
+                                <motion.button
+                                    key={idx}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    onClick={() => handleTabChange(p.patternId)}
+                                    className={`text-left p-4 rounded-xl border transition-all ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200 border-transparent transform scale-105' : 'bg-white text-gray-800 border-gray-200 hover:border-indigo-300 hover:shadow-md'}`}
+                                    whileHover={{ scale: isActive ? 1.05 : 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                >
+                                    <div className="font-bold mb-1 flex items-center justify-between">
+                                        {info.label}
+                                        {isActive && <motion.div
+                                            initial={{ rotate: 0 }}
+                                            animate={{ rotate: 360 }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                        >
+                                            <Sparkles className="w-4 h-4 text-indigo-300" />
+                                        </motion.div>}
+                                    </div>
+                                    <div className={`text-xs ${isActive ? 'text-indigo-100' : 'text-gray-500'}`}>{info.desc}</div>
+                                </motion.button>
+                            );
+                        })}
+                    </AnimatePresence>
 
                     <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-xl text-sm text-yellow-800">
                         <p className="font-bold flex items-center mb-1"><Edit3 className="w-4 h-4 mr-1" /> 微調整も可能</p>
@@ -157,7 +172,12 @@ export const GeneratorScreen: React.FC = () => {
 
                 {/* Right Col: Grid Preview */}
                 <div className="w-full lg:w-3/4">
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full">
+                    <motion.div 
+                        className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
                         <div className="p-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
                             <h2 className="font-bold text-indigo-900 flex items-center">
                                 <CalendarIcon className="w-5 h-5 mr-2" />
@@ -166,13 +186,15 @@ export const GeneratorScreen: React.FC = () => {
                             {/* Quarter Toggle Controls */}
                             <div className="flex bg-gray-200/80 p-1 rounded-lg">
                                 {termQuarters.map(q => (
-                                    <button
+                                    <motion.button
                                         key={q.val}
                                         onClick={() => setActiveQuarter(q.val as 'odd' | 'even')}
                                         className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-white text-indigo-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
                                     >
                                         {q.label}表示
-                                    </button>
+                                    </motion.button>
                                 ))}
                             </div>
                         </div>
@@ -197,10 +219,18 @@ export const GeneratorScreen: React.FC = () => {
                                                 return (
                                                     <td key={`${d}-${p}`} className={`border p-1 h-20 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50' : 'border-gray-200 hover:bg-gray-50'}`}>
                                                         {cells.map((c, idx) => (
-                                                            <div key={idx} className={`text-[11px] p-2 rounded shadow-sm leading-tight transition-transform hover:scale-105 cursor-pointer ${hasConflict ? 'bg-red-100 text-red-900 border-red-200 border' : 'bg-gradient-to-br from-indigo-100 to-blue-50 border border-indigo-200 text-indigo-900'}`}>
+                                                            <motion.div 
+                                                                key={idx} 
+                                                                className={`text-[11px] p-2 rounded shadow-sm leading-tight transition-transform cursor-pointer ${hasConflict ? 'bg-red-100 text-red-900 border-red-200 border' : 'bg-gradient-to-br from-indigo-100 to-blue-50 border border-indigo-200 text-indigo-900'}`}
+                                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                                animate={{ scale: 1, opacity: 1 }}
+                                                                transition={{ delay: idx * 0.05 }}
+                                                                whileHover={{ scale: 1.05, y: -2 }}
+                                                                whileTap={{ scale: 0.95 }}
+                                                            >
                                                                 <div className="font-bold truncate">{c.courseId}</div>
                                                                 <div className="text-[10px] opacity-75 mt-0.5">{c.classId}</div>
-                                                            </div>
+                                                            </motion.div>
                                                         ))}
                                                     </td>
                                                 );
@@ -210,7 +240,7 @@ export const GeneratorScreen: React.FC = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </main>
         </div>

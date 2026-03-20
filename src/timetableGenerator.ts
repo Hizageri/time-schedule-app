@@ -118,26 +118,86 @@ export const generateTimetables = (
 
     if (result.length === 0) return []; // No valid configuration found
 
-    const patterns: PatternType[] = ['balance', 'full-day-off', 'zero-first-period', 'night-shift', 'zero-gaps'];
+    // Generate distinct timetables for each pattern using specialized algorithms
     const finalTimetables: GeneratedTimetable[] = [];
-
-    patterns.forEach(p => {
-        let best = result[0];
-        let bestScore = -9999;
-        result.forEach(r => {
-            const s = scoreTimetable(r.classes, p);
-            if (s > bestScore) {
-                bestScore = s;
-                best = r;
+    
+    // For each pattern, generate a specialized solution
+    const patterns: PatternType[] = ['balance', 'full-day-off', 'zero-first-period', 'night-shift', 'zero-gaps'];
+    for (const patternId of patterns) {
+        const patternResults: GeneratedTimetable[] = [];
+        
+        const backtrackWithPattern = (courseIndex: number, currentSelection: AppState['committedClasses']) => {
+            if (courseIndex === selectedCourses.length) {
+                if (patternResults.length < 10) {
+                    const score = scoreTimetable(currentSelection, patternId);
+                    patternResults.push({
+                        patternId,
+                        classes: [...currentSelection],
+                        score
+                    });
+                }
+                return;
             }
-        });
-        // Deep clone the best classes
-        finalTimetables.push({
-            patternId: p,
-            classes: JSON.parse(JSON.stringify(best.classes)),
-            score: bestScore
-        });
-    });
+
+            const course = selectedCourses[courseIndex];
+            if (course.classes.length === 0) {
+                backtrackWithPattern(courseIndex + 1, currentSelection);
+                return;
+            }
+
+            // Sort classes based on pattern preferences
+            const sortedClasses = [...course.classes].sort((a, b) => {
+                if (patternId === 'zero-first-period') {
+                    // Prefer classes not in 1st period
+                    const aHasFirst = a.schedule.some(s => s.endsWith('-1'));
+                    const bHasFirst = b.schedule.some(s => s.endsWith('-1'));
+                    return aHasFirst - bHasFirst;
+                }
+                if (patternId === 'night-shift') {
+                    // Prefer earlier classes
+                    const aLatest = Math.max(...a.schedule.map(s => parseInt(s.split('-')[1])));
+                    const bLatest = Math.max(...b.schedule.map(s => parseInt(s.split('-')[1])));
+                    return aLatest - bLatest;
+                }
+                if (patternId === 'full-day-off') {
+                    // Prefer concentrated schedules
+                    const aDays = new Set(a.schedule.map(s => s.split('-')[0]));
+                    const bDays = new Set(b.schedule.map(s => s.split('-')[0]));
+                    return aDays.size - bDays.size;
+                }
+                if (patternId === 'zero-gaps') {
+                    // Prefer back-to-back classes
+                    return 0; // Keep original order for simplicity
+                }
+                return 0; // balance - keep original order
+            });
+
+            for (const validClass of sortedClasses) {
+                const scheduleArrays = currentSelection.map(c => c.schedule);
+                if (!checkScheduleConflict(scheduleArrays, validClass.schedule)) {
+                    currentSelection.push({
+                        courseId: course.id_name,
+                        targetBit: course.target_bit,
+                        classId: validClass.class_id,
+                        schedule: validClass.schedule
+                    });
+                    backtrackWithPattern(courseIndex + 1, currentSelection);
+                    currentSelection.pop();
+                    if (patternResults.length >= 10) return;
+                }
+            }
+        };
+
+        backtrackWithPattern(0, []);
+        
+        if (patternResults.length > 0) {
+            // Find best solution for this pattern
+            const best = patternResults.reduce((best, current) => 
+                current.score > best.score ? current : best
+            );
+            finalTimetables.push(best);
+        }
+    }
 
     return finalTimetables;
 };
