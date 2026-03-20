@@ -37,7 +37,7 @@ export const DashboardScreen: React.FC = () => {
     const getCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
         return state.committedClasses.filter(c => {
-            const qType = getQuarterType(c.targetBit);
+            const qType = getQuarterType(c.targetBit ?? 0);
             // Match active quarter OR if it's "across" (通年/またぎ)
             if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return false;
             if (qType === 'intensive') return false; // Intensives go below
@@ -46,7 +46,7 @@ export const DashboardScreen: React.FC = () => {
     };
 
     const getIntensiveClasses = () => {
-        return state.committedClasses.filter(c => getQuarterType(c.targetBit) === 'intensive' || c.schedule.includes('TBD'));
+        return state.committedClasses.filter(c => getQuarterType(c.targetBit ?? 0) === 'intensive' || c.schedule.includes('TBD'));
     };
 
     return (

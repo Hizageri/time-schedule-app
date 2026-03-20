@@ -1,36 +1,36 @@
 import React from 'react';
 import { useAppContext } from '../AppContext';
-import { Sparkles, Briefcase, GraduationCap, ChevronRight } from 'lucide-react';
+import { Briefcase, GraduationCap, ChevronRight } from 'lucide-react';
 
 // Subject color coding function
 const getSubjectColor = (courseName: string) => {
     const name = courseName.toLowerCase();
-    
+
     // Mathematics
     if (name.includes('数学') || name.includes('統計') || name.includes('確率') || name.includes('代数')) {
         return 'bg-blue-100 text-blue-900 border-l-4 border-blue-500';
     }
-    
+
     // English
     if (name.includes('英語') || name.includes('英会') || name.includes('コミュニケーション')) {
         return 'bg-yellow-100 text-yellow-900 border-l-4 border-yellow-500';
     }
-    
+
     // Science
     if (name.includes('物理') || name.includes('化学') || name.includes('生物') || name.includes('科学')) {
         return 'bg-green-100 text-green-900 border-l-4 border-green-500';
     }
-    
+
     // Programming
     if (name.includes('プログラミング') || name.includes('情報') || name.includes('コンピュータ')) {
         return 'bg-purple-100 text-purple-900 border-l-4 border-purple-500';
     }
-    
+
     // Humanities
     if (name.includes('歴史') || name.includes('文学') || name.includes('哲学') || name.includes('経済')) {
         return 'bg-orange-100 text-orange-900 border-l-4 border-orange-500';
     }
-    
+
     // Default color
     return 'bg-slate-100 text-slate-900 border-l-4 border-slate-500';
 };

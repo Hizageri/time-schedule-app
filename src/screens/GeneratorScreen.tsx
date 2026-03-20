@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../AppContext';
 import { generateTimetables } from '../timetableGenerator';
 import type { GeneratedTimetable, PatternType } from '../timetableGenerator';
-import { ChevronRight, Sparkles, AlertCircle, RefreshCw, Save, Calendar as CalendarIcon, Edit3 } from 'lucide-react';
+import { ChevronRight, Sparkles, AlertCircle, Save, Calendar as CalendarIcon } from 'lucide-react';
 import type { AppState } from '../types';
 
 export const GeneratorScreen: React.FC = () => {
@@ -67,32 +67,32 @@ export const GeneratorScreen: React.FC = () => {
     // Subject color coding function
     const getSubjectColor = (courseId: string) => {
         const name = courseId.toLowerCase();
-        
+
         // Mathematics
         if (name.includes('数学') || name.includes('統計') || name.includes('確率') || name.includes('代数')) {
             return 'bg-blue-100 text-blue-900 border-l-4 border-blue-500';
         }
-        
+
         // English
         if (name.includes('英語') || name.includes('英会') || name.includes('コミュニケーション')) {
             return 'bg-yellow-100 text-yellow-900 border-l-4 border-yellow-500';
         }
-        
+
         // Science
         if (name.includes('物理') || name.includes('化学') || name.includes('生物') || name.includes('科学')) {
             return 'bg-green-100 text-green-900 border-l-4 border-green-500';
         }
-        
+
         // Programming
         if (name.includes('プログラミング') || name.includes('情報') || name.includes('コンピュータ')) {
             return 'bg-purple-100 text-purple-900 border-l-4 border-purple-500';
         }
-        
+
         // Humanities
         if (name.includes('歴史') || name.includes('文学') || name.includes('哲学') || name.includes('経済')) {
             return 'bg-orange-100 text-orange-900 border-l-4 border-orange-500';
         }
-        
+
         // Default color
         return 'bg-slate-100 text-slate-900 border-l-4 border-slate-500';
     };
@@ -214,7 +214,7 @@ export const GeneratorScreen: React.FC = () => {
 
                 {/* Right Col: Grid Preview */}
                 <div className="w-full lg:w-3/4">
-                    <motion.div 
+                    <motion.div
                         className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col h-[calc(100vh-200px)]"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -261,8 +261,8 @@ export const GeneratorScreen: React.FC = () => {
                                                 return (
                                                     <td key={`${d}-${p}`} className={`border p-1 h-20 align-top transition-colors ${hasConflict ? 'border-red-400 bg-red-50' : 'border-slate-200 hover:bg-slate-50'}`}>
                                                         {cells.map((c, idx) => (
-                                                            <motion.div 
-                                                                key={idx} 
+                                                            <motion.div
+                                                                key={idx}
                                                                 className={`text-[11px] p-2 rounded shadow-sm leading-tight transition-transform cursor-pointer ${hasConflict ? 'bg-red-100 text-red-900 border-red-200 border' : (() => {
                                                                     const colorClass = getSubjectColor(c.courseId);
                                                                     return colorClass;
