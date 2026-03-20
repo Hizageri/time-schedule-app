@@ -1,8 +1,6 @@
 import React from 'react';
 import { useAppContext } from '../AppContext';
-import { ChevronRight, ChevronLeft, CalendarClock, AlertTriangle } from 'lucide-react';
-import { MOCK_COURSES } from '../data';
-import { getTargetGrades } from '../timetableGenerator';
+import { ChevronRight, ChevronLeft, CalendarClock } from 'lucide-react';
 
 export const ConditionScreen: React.FC = () => {
     const { state, updateConditions, setScreen } = useAppContext();
@@ -47,86 +45,8 @@ export const ConditionScreen: React.FC = () => {
                         </div>
                     </div>
 
-// Removed quarter selection for V2
 
-                    <div className="border-t border-gray-100 pt-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <div>
-                                <h3 className="text-md font-semibold text-gray-800 flex items-center">
-                                    <AlertTriangle className="w-5 h-5 text-amber-500 mr-2" />
-                                    再履修科目はありますか？
-                                </h3>
-                                <p className="text-xs text-gray-500 mt-1">過去に単位を落とした科目がある場合はチェックしてください</p>
-                            </div>
-                            <label className="relative inline-flex items-center cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    className="sr-only peer"
-                                    checked={state.timetableConditions.hasRetake}
-                                    onChange={(e) => updateConditions({ hasRetake: e.target.checked })}
-                                />
-                                <div className="w-14 h-7 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-indigo-600"></div>
-                            </label>
-                        </div>
 
-                        {state.timetableConditions.hasRetake && (() => {
-                            const TARGET_RETAKE_COURSES = ["MA01 線形代数 I", "MA02 線形代数 II", "MA03 微積分 I", "MA04 微積分 II", "NS01 力学"];
-                            const currentTargetTermBit = state.timetableConditions.term === 'second' ? 1 : 0;
-                            const currentTargetGrade = state.timetableConditions.targetGrade;
-
-                            const retakeCandidates = MOCK_COURSES.filter(course => {
-                                if (!TARGET_RETAKE_COURSES.includes(course.id_name)) return false;
-
-                                const bit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
-                                const grades = getTargetGrades(bit);
-                                const minGrade = Math.min(...grades);
-                                const courseTerm = (bit >> 8) & 3;
-
-                                // Check if the course is from a previous period (grade/term)
-                                const isPast = minGrade < currentTargetGrade || (minGrade === currentTargetGrade && courseTerm === 0 && currentTargetTermBit === 1);
-
-                                // Check if grade is 0 or unachieved (using grades dictionary in state)
-                                const courseGrade = state.grades[course.id_name]?.grade;
-                                // Assume 'D', 'F', or undefined means unachieved/failed
-                                const isUnachieved = !courseGrade || courseGrade === 'D' || courseGrade === 'F';
-
-                                return isPast && isUnachieved;
-                            });
-
-                            if (retakeCandidates.length === 0) {
-                                return (
-                                    <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4 animate-in fade-in slide-in-from-top-4">
-                                        <p className="text-sm text-amber-800">該当する未取得・再履修科目はありません。</p>
-                                    </div>
-                                );
-                            }
-
-                            return (
-                                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4 animate-in fade-in slide-in-from-top-4">
-                                    <p className="text-sm text-amber-800 font-medium mb-3">未取得科目リスト</p>
-                                    <div className="space-y-2">
-                                        {retakeCandidates.map(course => (
-                                            <label key={course.id_name} className="flex items-center space-x-3 p-2 hover:bg-amber-100/50 rounded-lg cursor-pointer transition-colors">
-                                                <input
-                                                    type="checkbox"
-                                                    className="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"
-                                                    checked={state.timetableConditions.retakeClasses.includes(course.id_name)}
-                                                    onChange={(e) => {
-                                                        const current = state.timetableConditions.retakeClasses;
-                                                        const next = e.target.checked
-                                                            ? [...current, course.id_name]
-                                                            : current.filter(id => id !== course.id_name);
-                                                        updateConditions({ retakeClasses: next });
-                                                    }}
-                                                />
-                                                <span className="text-sm text-gray-700">{course.id_name}</span>
-                                            </label>
-                                        ))}
-                                    </div>
-                                </div>
-                            );
-                        })()}
-                    </div>
 
                     <div className="flex justify-between pt-4">
                         <button
