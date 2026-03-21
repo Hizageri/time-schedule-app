@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../AppContext';
-import { Calendar as CalendarIcon, Award, User, PlusCircle, Edit3, Save, X, Info, Settings2, RefreshCcw } from 'lucide-react';
+import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
+import { Header } from '../components/ui/Header';
 import { MOCK_COURSES } from '../data';
 
 export const DashboardScreen: React.FC = () => {
@@ -113,53 +114,41 @@ export const DashboardScreen: React.FC = () => {
     return (
         <div className="min-h-screen bg-background flex flex-col">
             {/* Top Navbar */}
-            <header className="bg-foreground text-white shadow-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16 items-center">
-                        <h1 className="text-xl font-bold flex items-center">
-                            <CalendarIcon className="w-6 h-6 mr-2" />
-                            My Dashboard
-                        </h1>
-                        <div className="text-sm font-medium bg-foreground/80 px-3 py-1 rounded-full">
-                            {state.userProfile.nickname} さん
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <Header
+                title="ダッシュボード"
+                subtitle={`${state.userProfile.nickname} さん`}
+                icon={CalendarIcon}
+                action={{
+                    label: "成績を入力して次学期へ",
+                    onClick: () => setScreen(7),
+                    icon: Flame
+                }}
+            />
 
             {/* Tabs */}
             <div className="bg-card border-b border-border">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center w-full">
-                        <div className="flex space-x-8">
-                            <button
-                                onClick={() => setActiveTab('timetable')}
-                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'timetable' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
-                            >
-                                <CalendarIcon className="w-4 h-4 mr-2" />
-                                時間割
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('grades')}
-                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'grades' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
-                            >
-                                <Award className="w-4 h-4 mr-2" />
-                                成績
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('profile')}
-                                className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
-                            >
-                                <User className="w-4 h-4 mr-2" />
-                                プロフィール
-                            </button>
-                        </div>
+                    <div className="flex space-x-8">
                         <button
-                            onClick={() => setScreen(7)}
-                            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow-sm transition-transform hover:scale-105 flex items-center text-sm font-semibold"
+                            onClick={() => setActiveTab('timetable')}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'timetable' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
                         >
-                            <PlusCircle className="w-4 h-4 mr-2" />
-                            次学期の時間割を作る
+                            <CalendarIcon className="w-4 h-4 mr-2" />
+                            時間割
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('grades')}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'grades' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                        >
+                            <Award className="w-4 h-4 mr-2" />
+                            成績
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('profile')}
+                            className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center transition-all duration-200 hover:scale-105 ${activeTab === 'profile' ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground hover:border-border'}`}
+                        >
+                            <User className="w-4 h-4 mr-2" />
+                            プロフィール
                         </button>
                     </div>
                 </div>
@@ -192,24 +181,24 @@ export const DashboardScreen: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="p-4 overflow-x-auto overflow-y-auto max-h-[65vh]">
-                                <table className="w-full min-w-[600px] border-collapse relative">
+                            <div className="p-2 overflow-x-auto overflow-y-auto max-h-[70vh]">
+                                <table className="w-full border-collapse relative" style={{ fontSize: 'clamp(10px, 2vw, 14px)', tableLayout: 'fixed' }}>
                                     <thead>
                                         <tr>
-                                            <th className="sticky top-0 z-10 w-16 border border-border bg-card p-2 text-muted text-sm font-medium">時限</th>
+                                            <th className="sticky top-0 z-10 w-12 border border-border bg-card p-1 text-muted text-xs font-medium">時限</th>
                                             {days.map(d => (
-                                                <th key={d} className={`sticky top-0 z-10 border border-border p-2 text-sm font-bold w-1/5 ${d === '土' ? 'bg-blue-50 text-blue-800' : 'bg-accent/10 text-foreground backdrop-blur'}`}>{d}</th>
+                                                <th key={d} className={`sticky top-0 z-10 border border-border p-1 text-xs font-bold ${d === '土' ? 'bg-blue-50 text-blue-800' : 'bg-accent/10 text-foreground backdrop-blur'}`}>{d}</th>
                                             ))}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {periods.map(p => (
                                             <tr key={p}>
-                                                <td className="border border-border bg-card p-2 text-center text-muted font-medium">{p}限</td>
+                                                <td className="border border-border bg-card p-1 text-center text-muted font-medium text-xs">{p}限</td>
                                                 {days.map(d => {
                                                     const cellClasses = getCellClasses(d, p);
                                                     return (
-                                                        <td key={`${d}-${p}`} className="border border-border p-2 h-24 align-top">
+                                                        <td key={`${d}-${p}`} className="border border-border p-1 h-16 align-top">
                                                             {cellClasses.map((c, idx) => (
                                                                 <div key={idx} className="bg-blue-100 border border-blue-200 text-blue-800 text-xs p-2 rounded mb-1 shadow-sm">
                                                                     <div className="font-bold">{c.courseId}</div>
@@ -257,7 +246,7 @@ export const DashboardScreen: React.FC = () => {
                                 成績データ
                             </h2>
                             {!isGpaSimulatorOpen && !calcGpaData && (
-                                <button onClick={handleOpenGpaSimulator} className="btn-primary flex items-center py-2 px-4 shadow-sm text-sm">
+                                <button onClick={handleOpenGpaSimulator} className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow-sm transition-transform hover:scale-105 flex items-center text-sm font-semibold">
                                     <Settings2 className="w-4 h-4 mr-2" />
                                     GPAを計算する
                                 </button>
@@ -322,7 +311,7 @@ export const DashboardScreen: React.FC = () => {
                                     <button onClick={() => setIsGpaSimulatorOpen(false)} className="btn-ghost text-sm py-2">キャンセル</button>
                                     <button
                                         onClick={handleCalculateGpa}
-                                        className="btn-primary text-sm py-2"
+                                        className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow-sm transition-transform hover:scale-105 flex items-center text-sm font-semibold"
                                     >
                                         確定してGPAを算出
                                     </button>

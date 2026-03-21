@@ -1,4 +1,10 @@
 import type { TimeSlot } from "./types";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
 
 export const checkScheduleConflict = (
     // 既存のクラス情報（スケジュールとビットのペア）の配列を受け取る

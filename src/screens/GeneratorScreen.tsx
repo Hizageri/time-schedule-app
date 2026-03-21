@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../AppContext';
 import { Sparkles, AlertCircle, Save, Calendar as CalendarIcon, Loader2, Edit3, Settings2 } from 'lucide-react';
+import { Header } from '../components/ui/Header';
 import { getSubjectColor } from '../utils';
 import { generateTimetablePatterns } from '../services/aiService';
 import type { TimetablePatternsResponse } from '../services/aiService';
@@ -174,21 +175,15 @@ export const GeneratorScreen: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
-            <header className="bg-card border-b border-border sticky top-0 z-30 px-6 py-4 flex justify-between items-center shadow-sm">
-                <div>
-                    <h1 className="text-xl font-bold text-foreground flex items-center">
-                        <Sparkles className="w-6 h-6 mr-3 text-accent" />
-                        AI提案 - 5つの戦略
-                    </h1>
-                </div>
-                <button
-                    onClick={handleConfirm}
-                    className="btn-primary flex items-center group shadow-md"
-                >
-                    <Save className="w-5 h-5 mr-2" />
-                    この時間割で確定
-                </button>
-            </header>
+            <Header
+                title="AI提案 - 5つの戦略"
+                icon={Sparkles}
+                action={{
+                    label: "この時間割で確定",
+                    onClick: handleConfirm,
+                    icon: Save
+                }}
+            />
 
             <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col lg:flex-row gap-6 h-[calc(100vh-80px)] overflow-hidden">
                 {/* Left Col: Pattern Navigation */}

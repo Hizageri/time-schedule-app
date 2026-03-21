@@ -6,6 +6,7 @@ import { CourseSelectionScreen } from './screens/CourseSelectionScreen';
 import { ProposalScreen } from './screens/ProposalScreen';
 import { GeneratorScreen } from './screens/GeneratorScreen';
 import { DashboardScreen } from './screens/DashboardScreen';
+import { GradeInputScreen } from './screens/GradeInputScreen';
 import { ReflectionScreen } from './screens/ReflectionScreen';
 
 const ScreenManager: React.FC = () => {
@@ -18,7 +19,8 @@ const ScreenManager: React.FC = () => {
     case 4: return <ProposalScreen />;
     case 5: return <GeneratorScreen />;
     case 6: return <DashboardScreen />;
-    case 7: return <ReflectionScreen />;
+    case 7: return <GradeInputScreen />;
+    case 8: return <ReflectionScreen />;
     default: return <OnboardingScreen />;
   }
 };

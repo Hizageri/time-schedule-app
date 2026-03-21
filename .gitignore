@@ -27,3 +27,5 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+# Google Cloud Service Account Key
+service-account.json

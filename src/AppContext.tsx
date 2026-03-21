@@ -14,6 +14,7 @@ interface AppContextType {
     setScreen: (screen: AppState['currentScreen']) => void;
     saveGrade: (courseId: string, gradeData: { grade: string, classDifficulty: number, testDifficulty: number }) => void;
     pinClass: (courseId: string, classId: string | null) => void;
+    updateClassroomName: (slotKey: string, classroomName: string) => void;
     resetTermData: () => void;
 }
 
@@ -72,6 +73,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         });
     };
 
+    const updateClassroomName = (slotKey: string, classroomName: string) => {
+        setState(prev => ({
+            ...prev,
+            classroomNames: { ...prev.classroomNames, [slotKey]: classroomName }
+        }));
+    };
+
     const resetTermData = () => {
         setState(prev => ({
             ...prev,
@@ -82,7 +90,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
 
     return (
-        <AppContext.Provider value={{ state, setState, updateProfile, updateSettings, updateConditions, toggleSelectedCourse, setCommittedClasses, setScreen, saveGrade, pinClass, resetTermData }}>
+        <AppContext.Provider value={{ state, setState, updateProfile, updateSettings, updateConditions, toggleSelectedCourse, setCommittedClasses, setScreen, saveGrade, pinClass, updateClassroomName, resetTermData }}>
             {children}
         </AppContext.Provider>
     );

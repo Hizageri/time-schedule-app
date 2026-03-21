@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../AppContext';
-import { Briefcase, ChevronRight, Loader2, CheckSquare, Square, AlertCircle, Quote } from 'lucide-react';
+import { Quote, CheckSquare, Square, AlertCircle, Loader2 } from 'lucide-react';
+import { Header } from '../components/ui/Header';
 import { generateConsultation } from '../services/aiService';
 import type { ConsultationResponse } from '../services/aiService';
 
@@ -77,25 +78,15 @@ export const ProposalScreen: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-background flex flex-col">
-            <header className="bg-card border-b border-border sticky top-0 z-30 px-6 py-4 flex justify-between items-center shadow-sm">
-                <div>
-                    <h1 className="text-xl font-bold text-foreground flex items-center">
-                        <Quote className="w-6 h-6 mr-3 text-accent" />
-                        AI先輩のアドバイス
-                    </h1>
-                    <p className="text-xs text-muted mt-1 flex items-center">
-                        <Briefcase className="w-3.5 h-3.5 mr-1.5" /> 目標: {dreamJob}
-                    </p>
-                </div>
-                <button
-                    onClick={handleFinalize}
-                    className="btn-primary flex items-center group shadow-md"
-                    disabled={Object.values(selectedToKeep).filter(Boolean).length === 0}
-                >
-                    時間割を自動生成
-                    <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
-                </button>
-            </header>
+            <Header
+                title="AI先輩のアドバイス"
+                subtitle={`目標: ${dreamJob}`}
+                icon={Quote}
+                action={{
+                    label: "時間割を自動生成",
+                    onClick: handleFinalize
+                }}
+            />
 
             <main className="flex-1 max-w-4xl w-full mx-auto p-6 space-y-8 animate-in fade-in slide-in-from-bottom-4">
                 {/* Overall Feedback */}

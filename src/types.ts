@@ -63,7 +63,7 @@ export interface GradingScale {
 }
 
 export interface AppState {
-    currentScreen: 1 | 2 | 3 | 4 | 5 | 6 | 7;
+    currentScreen: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
     userProfile: {
         nickname: string;
         university: string;
@@ -91,6 +91,7 @@ export interface AppState {
     }[];
     grades: Record<string, { grade: string, classDifficulty: number, testDifficulty: number }>;
     pinnedClasses: Record<string, string>; // courseId -> classId
+    classroomNames: Record<string, string>; // slotKey (e.g. "月-1") -> classroom name
 }
 
 export const defaultState: AppState = {
@@ -122,5 +123,6 @@ export const defaultState: AppState = {
     selectedCourses: [],
     committedClasses: [],
     grades: {},
-    pinnedClasses: {}
+    pinnedClasses: {},
+    classroomNames: {}
 };
