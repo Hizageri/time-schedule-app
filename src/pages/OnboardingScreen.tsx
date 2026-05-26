@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppContext } from '../AppContext';
+import { useAppContext } from '../logic/AppContext';
 import { ChevronRight } from 'lucide-react';
 
 export const OnboardingScreen: React.FC = () => {

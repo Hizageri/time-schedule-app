@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../AppContext';
+import { useAppContext } from '../logic/AppContext';
 import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
-import { Header } from '../components/ui/Header';
+import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
 
 export const DashboardScreen: React.FC = () => {

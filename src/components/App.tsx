@@ -1,13 +1,13 @@
 import React from 'react';
-import { AppProvider, useAppContext } from './AppContext';
-import { OnboardingScreen } from './screens/OnboardingScreen';
-import { ConditionScreen } from './screens/ConditionScreen';
-import { CourseSelectionScreen } from './screens/CourseSelectionScreen';
-import { ProposalScreen } from './screens/ProposalScreen';
-import { GeneratorScreen } from './screens/GeneratorScreen';
-import { DashboardScreen } from './screens/DashboardScreen';
-import { GradeInputScreen } from './screens/GradeInputScreen';
-import { ReflectionScreen } from './screens/ReflectionScreen';
+import { AppProvider, useAppContext } from '../logic/AppContext';
+import { OnboardingScreen } from '../pages/OnboardingScreen';
+import { ConditionScreen } from '../pages/ConditionScreen';
+import { CourseSelectionScreen } from '../pages/CourseSelectionScreen';
+import { ProposalScreen } from '../pages/ProposalScreen';
+import { GeneratorScreen } from '../pages/GeneratorScreen';
+import { DashboardScreen } from '../pages/DashboardScreen';
+import { GradeInputScreen } from '../pages/GradeInputScreen';
+import { ReflectionScreen } from '../pages/ReflectionScreen';
 
 const ScreenManager: React.FC = () => {
   const { state } = useAppContext();

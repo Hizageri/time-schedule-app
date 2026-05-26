@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAppContext } from '../AppContext';
+import { useAppContext } from '../logic/AppContext';
 import { Sparkles, AlertCircle, Save, Calendar as CalendarIcon, Loader2, Edit3, Settings2 } from 'lucide-react';
-import { Header } from '../components/ui/Header';
-import { getSubjectColor } from '../utils';
-import { generateTimetablePatterns } from '../services/aiService';
-import type { TimetablePatternsResponse } from '../services/aiService';
+import { Header } from '../ui/Header';
+import { getSubjectColor } from '../logic/utils';
+import { generateTimetablePatterns } from '../api/aiService';
+import type { TimetablePatternsResponse } from '../api/aiService';
 
 export const GeneratorScreen: React.FC = () => {
     const { state, setScreen, setCommittedClasses } = useAppContext();

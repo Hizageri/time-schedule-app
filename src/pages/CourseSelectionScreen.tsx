@@ -1,10 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import { useAppContext } from '../AppContext';
+import { useAppContext } from '../logic/AppContext';
 import { MOCK_COURSES } from '../data';
-import type { CourseData } from '../types';
-import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate } from '../timetableGenerator';
+import type { CourseData } from '../logic/types';
+import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate } from '../logic/timetableGenerator';
 import { BookOpen, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
-import { getSubjectColor } from '../utils';
+import { getSubjectColor } from '../logic/utils';
 
 export const CourseSelectionScreen: React.FC = () => {
     const { state, setScreen, toggleSelectedCourse, pinClass } = useAppContext();

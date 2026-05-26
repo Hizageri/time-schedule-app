@@ -94,18 +94,31 @@
   }
 }
 
-/* Enhanced button styles with better interactivity */
+/* Enhanced button styles with better contrast and visibility */
 @layer components {
   .btn-primary {
-    @apply bg-accent-600 hover:bg-accent-700 active:bg-accent-800 text-white font-semibold py-2 px-6 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 border border-transparent;
-    box-shadow: 0 1px 3px var(--color-button-shadow);
+    @apply bg-accent-600 hover:bg-accent-700 active:bg-accent-800 text-white font-semibold py-2 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105 active:scale-95 border border-accent-500;
+    box-shadow: 0 2px 4px var(--color-button-shadow);
   }
   
   .btn-secondary {
-    @apply bg-card hover:bg-background text-foreground font-medium py-2 px-6 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 border border-border hover:border-accent-500/50;
+    @apply bg-card hover:bg-background-50 text-foreground font-medium py-2 px-6 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 border border-border hover:border-accent-400 hover:bg-accent-50;
   }
   
   .btn-ghost {
-    @apply bg-transparent hover:bg-card text-muted hover:text-foreground font-medium py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95;
+    @apply bg-transparent hover:bg-background-50 text-muted hover:text-foreground font-medium py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 border border-transparent hover:border-border;
+  }
+
+  /* Enhanced focus and active states */
+  .btn-primary:focus {
+    @apply ring-2 ring-accent-400 ring-offset-2 ring-offset-background;
+  }
+  
+  .btn-secondary:focus {
+    @apply ring-2 ring-border ring-offset-2 ring-offset-background;
+  }
+  
+  .btn-ghost:focus {
+    @apply ring-1 ring-border ring-offset-2 ring-offset-background;
   }
 }

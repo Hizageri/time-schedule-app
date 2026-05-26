@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../AppContext';
-import { Header } from '../components/ui/Header';
-import { Button } from '../components/ui/Button';
+import { useAppContext } from '../logic/AppContext';
+import { Header } from '../ui/Header';
+import { Button } from '../ui/Button';
 import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star } from 'lucide-react';
-import { generateGradeReaction } from '../services/aiService';
+import { generateGradeReaction } from '../ai/aiService';
 
 interface GradeInput {
   courseId: string;

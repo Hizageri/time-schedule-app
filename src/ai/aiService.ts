@@ -1,17 +1,49 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import type { CourseData, AppState } from '../types';
+import type { CourseData, AppState } from '../logic/types';
+import { GOOGLE_API_KEY as CONFIG_API_KEY } from './api_key';
 
-// Use standard Vite env variable for the API key
-const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+// Use standard Vite env variable for the API key, fallback to config file
+const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY || CONFIG_API_KEY;
 
 // Safety Guard: Validate API key existence
-if (!GOOGLE_API_KEY) {
-    console.error('CRITICAL: VITE_GOOGLE_API_KEY is missing. Please set it in your .env file.');
-    throw new Error('API Key is missing. Please set VITE_GOOGLE_API_KEY in your .env file.');
+if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'ここにAPIキーを入力してください') {
+    console.error('CRITICAL: API Key is missing. Please set it in your .env file or src/api/api_key.ts');
+    throw new Error('API Key is missing. Please set VITE_GOOGLE_API_KEY in your .env file or update src/api/api_key.ts');
 }
 
 // Initialize the SDK with proper error handling
 const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+
+// Response sanitizer function for robust JSON parsing
+const sanitizeJsonResponse = (responseText: string): string => {
+    // Remove markdown code blocks
+    let cleaned = responseText.replace(/```json/gi, '').replace(/```/g, '');
+    
+    // Trim whitespace
+    cleaned = cleaned.trim();
+    
+    // Extract JSON from surrounding text if needed
+    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+        cleaned = jsonMatch[0];
+    }
+    
+    // Escape internal double quotes in string values to prevent JSON syntax errors
+    cleaned = cleaned.replace(/"([^"]*)"([^"]*)"/g, (match, p1, p2) => {
+        // Don't escape already escaped quotes
+        if (p1.endsWith('\\')) return match;
+        return `"${p1.replace(/"/g, '\\"')}${p2.replace(/"/g, '\\"')}"`;
+    });
+    
+    return cleaned;
+};
+
+// Graceful fallback wrapper for failed JSON parsing
+const createFallbackJson = (rawText: string): string => {
+    // Escape double quotes in the raw text to prevent breaking JSON
+    const escapedText = rawText.replace(/"/g, '\\"');
+    return `{"response": "${escapedText}"}`;
+};
 
 export interface ConsultationResponse {
     overallFeedback: string;
@@ -78,16 +110,35 @@ ${courseDetails}
   ]
 }`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.5-flash",
+        systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"response\": \"your_message_here\" }. Do not include any markdown blocks (like ```json), extra text, or line breaks outside the JSON."
+    });
     const response = await model.generateContent(prompt);
 
     if (!response.response.text) {
         throw new Error('No response from AI');
     }
 
-    // Parse response, removing Markdown code blocks if present
-    const responseText = response.response.text().replace(/```json|```/g, "").trim();
-    return JSON.parse(responseText) as ConsultationResponse;
+    // Use sanitizer function for robust parsing
+    const cleanedResponse = sanitizeJsonResponse(response.response.text());
+    
+    try {
+        return JSON.parse(cleanedResponse) as ConsultationResponse;
+    } catch (error) {
+        console.error('JSON Parse Error:', error);
+        console.error('Raw Response:', response.response.text());
+        
+        // Fallback response structure
+        return {
+            overallFeedback: "AI応答の解析に失敗しました",
+            courseFeedbacks: courses.map(c => ({
+                courseId: c.id_name,
+                courseName: c.id_name,
+                comment: "評価不能"
+            }))
+        };
+    }
 };
 
 export const generateTimetablePatterns = async (
@@ -142,16 +193,40 @@ ${JSON.stringify(courseClassMap, null, 2)}
 }
 `;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.5-flash",
+        systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"response\": \"your_message_here\" }. Do not include any markdown blocks (like ```json), extra text, or line breaks outside the JSON."
+    });
     const response = await model.generateContent(prompt);
-
+    
     if (!response.response.text) {
         throw new Error('No response from AI');
     }
 
-    // Parse response, removing Markdown code blocks if present
-    const responseText = response.response.text().replace(/```json|```/g, "").trim();
-    return JSON.parse(responseText) as TimetablePatternsResponse;
+    // Use sanitizer function for robust parsing
+    const cleanedResponse = sanitizeJsonResponse(response.response.text());
+    
+    try {
+        const result = JSON.parse(cleanedResponse) as TimetablePatternsResponse;
+        if (result.patterns.length !== 5) {
+            throw new Error('Invalid number of patterns');
+        }
+        return result;
+    } catch (error) {
+        console.error('JSON Parse Error:', error);
+        console.error('Raw Response:', response.response.text);
+        
+        // Fallback response structure
+        return {
+            patterns: [
+                {id: "p1", name: "AIおすすめ", description: "生成エラー", assignments: []},
+                {id: "p2", name: "休日最大化", description: "生成エラー", assignments: []},
+                {id: "p3", name: "朝限回避", description: "生成エラー", assignments: []},
+                {id: "p4", name: "遅い時間回避", description: "生成エラー", assignments: []},
+                {id: "p5", name: "空きコマ削減", description: "生成エラー", assignments: []}
+            ]
+        };
+    }
 };
 
 export const generateGradeReaction = async (
@@ -189,9 +264,33 @@ export const generateGradeReaction = async (
 本文（挨拶不要、目立つ科目に1つ触れて短文の連撃で！）
 アドバイス（一言で仕留めろ）
 
-文字列で直接回答せよ。JSONは不要。`;
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+以下のJSON形式で厳密に回答してください:
+{
+  "response": "称号: 『〜〜〜』\n本文\nアドバイス"
+}
+`;
+
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.5-flash",
+        systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"response\": \"your_message_here\" }. Do not include any markdown blocks (like ```json), extra text, or line breaks outside the JSON."
+    });
     const response = await model.generateContent(prompt);
     
-    return response.response.text();
+    if (!response.response.text) {
+        throw new Error('No response from AI');
+    }
+
+    // Use sanitizer function for robust parsing
+    const cleanedResponse = sanitizeJsonResponse(response.response.text());
+    
+    try {
+        const parsed = JSON.parse(cleanedResponse);
+        return parsed.response || "AI応答の解析に失敗しました";
+    } catch (error) {
+        console.error('JSON Parse Error:', error);
+        console.error('Raw Response:', response.response.text);
+        
+        // Fallback: wrap raw text in JSON structure
+        return `{"response": "${response.response.text().replace(/"/g, '\\"')}"}`;
+    }
 };
