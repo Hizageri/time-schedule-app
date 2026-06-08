@@ -1,14 +1,13 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import type { CourseData, AppState } from '../logic/types';
-import { GOOGLE_API_KEY as CONFIG_API_KEY } from './api_key';
 
-// Use standard Vite env variable for the API key, fallback to config file
-const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY || CONFIG_API_KEY;
+// Use standard Vite env variable for the API key
+const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 
 // Safety Guard: Validate API key existence
 if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'ここにAPIキーを入力してください') {
-    console.error('CRITICAL: API Key is missing. Please set it in your .env file or src/api/api_key.ts');
-    throw new Error('API Key is missing. Please set VITE_GOOGLE_API_KEY in your .env file or update src/api/api_key.ts');
+    console.error('CRITICAL: API Key is missing. Please set it in your .env file');
+    throw new Error('API Key is missing. Please set VITE_GOOGLE_API_KEY in your .env file');
 }
 
 // Initialize the SDK with proper error handling
@@ -28,22 +27,12 @@ const sanitizeJsonResponse = (responseText: string): string => {
         cleaned = jsonMatch[0];
     }
     
-    // Escape internal double quotes in string values to prevent JSON syntax errors
-    cleaned = cleaned.replace(/"([^"]*)"([^"]*)"/g, (match, p1, p2) => {
-        // Don't escape already escaped quotes
-        if (p1.endsWith('\\')) return match;
-        return `"${p1.replace(/"/g, '\\"')}${p2.replace(/"/g, '\\"')}"`;
-    });
+
     
     return cleaned;
 };
 
-// Graceful fallback wrapper for failed JSON parsing
-const createFallbackJson = (rawText: string): string => {
-    // Escape double quotes in the raw text to prevent breaking JSON
-    const escapedText = rawText.replace(/"/g, '\\"');
-    return `{"response": "${escapedText}"}`;
-};
+
 
 export interface ConsultationResponse {
     overallFeedback: string;
@@ -112,7 +101,7 @@ ${courseDetails}
 
     const model = genAI.getGenerativeModel({ 
         model: "gemini-2.5-flash",
-        systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"response\": \"your_message_here\" }. Do not include any markdown blocks (like ```json), extra text, or line breaks outside the JSON."
+        systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"overallFeedback\": \"overall feedback text\", \"courseFeedbacks\": [ { \"courseId\": \"course ID\", \"courseName\": \"course name\", \"comment\": \"feedback comment\" } ] }. Do not include any markdown blocks (like ```json) or extra text outside the JSON."
     });
     const response = await model.generateContent(prompt);
 
@@ -195,7 +184,7 @@ ${JSON.stringify(courseClassMap, null, 2)}
 
     const model = genAI.getGenerativeModel({ 
         model: "gemini-2.5-flash",
-        systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"response\": \"your_message_here\" }. Do not include any markdown blocks (like ```json), extra text, or line breaks outside the JSON."
+        systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"patterns\": [ { \"id\": \"pattern id\", \"name\": \"pattern name\", \"description\": \"description text\", \"assignments\": [ { \"courseId\": \"course ID\", \"classId\": \"class ID\" } ] } ] }. Do not include any markdown blocks (like ```json) or extra text outside the JSON."
     });
     const response = await model.generateContent(prompt);
     

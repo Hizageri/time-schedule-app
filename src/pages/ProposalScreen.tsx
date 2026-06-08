@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { Quote, CheckSquare, Square, AlertCircle, Loader2 } from 'lucide-react';
 import { Header } from '../ui/Header';
-import { generateConsultation } from '../api/aiService';
-import type { ConsultationResponse } from '../api/aiService';
+import { generateConsultation } from '../ai/aiService';
+import type { ConsultationResponse } from '../ai/aiService';
 
 export const ProposalScreen: React.FC = () => {
     const { state, setState, setScreen } = useAppContext();

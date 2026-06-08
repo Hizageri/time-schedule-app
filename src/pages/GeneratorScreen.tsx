@@ -4,8 +4,8 @@ import { useAppContext } from '../logic/AppContext';
 import { Sparkles, AlertCircle, Save, Calendar as CalendarIcon, Loader2, Edit3, Settings2 } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { getSubjectColor } from '../logic/utils';
-import { generateTimetablePatterns } from '../api/aiService';
-import type { TimetablePatternsResponse } from '../api/aiService';
+import { generateTimetablePatterns } from '../ai/aiService';
+import type { TimetablePatternsResponse } from '../ai/aiService';
 
 export const GeneratorScreen: React.FC = () => {
     const { state, setScreen, setCommittedClasses } = useAppContext();
