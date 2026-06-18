@@ -65,7 +65,7 @@ export default async function handler(req: any, res: any) {
     try {
         const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.0-flash",
+            model: "gemini-2.5-flash",
             systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"response\": \"your_message_here\" }. Do not include any markdown blocks (like ```json), extra text, or line breaks outside the JSON."
         });
         const response = await model.generateContent(prompt);

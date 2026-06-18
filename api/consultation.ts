@@ -59,7 +59,7 @@ ${courseDetails}
     try {
         const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
         const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.0-flash",
+            model: "gemini-2.5-flash",
             systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"overallFeedback\": \"overall feedback text\", \"courseFeedbacks\": [ { \"courseId\": \"course ID\", \"courseName\": \"course name\", \"comment\": \"feedback comment\" } ] }. Do not include any markdown blocks (like ```json) or extra text outside the JSON."
         });
         const response = await model.generateContent(prompt);
