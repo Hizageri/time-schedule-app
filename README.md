@@ -1,2 +1,2 @@
 アプリのURLはこちら
-http://localhost:5173/
+time-schedule-app-two.vercel.app
