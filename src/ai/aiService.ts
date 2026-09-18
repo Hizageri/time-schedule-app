@@ -28,6 +28,11 @@ export interface GradeInput {
     credits: number;
 }
 
+export interface GradeReactionResponse {
+    title: string;
+    message: string;
+}
+
 export const generateConsultation = async (
     userProfile: AppState['userProfile'],
     courses: CourseData[]
@@ -65,7 +70,7 @@ export const generateTimetablePatterns = async (
 export const generateGradeReaction = async (
     userProfile: AppState['userProfile'],
     grades: GradeInput[]
-): Promise<string> => {
+): Promise<GradeReactionResponse> => {
     const response = await fetch('/api/grade-reaction', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -76,6 +81,5 @@ export const generateGradeReaction = async (
         throw new Error('AI grade reaction request failed');
     }
 
-    const data = await response.json() as { reaction: string };
-    return data.reaction;
+    return response.json() as Promise<GradeReactionResponse>;
 };

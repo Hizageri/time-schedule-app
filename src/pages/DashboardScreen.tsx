@@ -5,8 +5,19 @@ import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
 
 export const DashboardScreen: React.FC = () => {
-    const { state, setScreen, updateProfile } = useAppContext();
+    const { state, setScreen, updateProfile, removeCommittedClass, startNewSemester, user, logout } = useAppContext();
     const [activeTab, setActiveTab] = useState<'timetable' | 'grades' | 'profile'>('timetable');
+
+    const handleRemoveClass = (courseId: string, classId: string) => {
+        removeCommittedClass(courseId, classId);
+    };
+
+    const handleStartNewSemester = () => {
+        const confirmed = window.confirm("現在の時間割と成績をリセットし、新学期の準備をしますか？（取得済みの単位は記録されます）");
+        if (confirmed) {
+            startNewSemester();
+        }
+    };
 
     // Quarter Toggle State
     const termQuarters = state.timetableConditions.term === 'first'
@@ -181,8 +192,9 @@ export const DashboardScreen: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="p-2 overflow-x-auto overflow-y-auto max-h-[70vh]">
-                                <table className="w-full border-collapse relative" style={{ fontSize: 'clamp(10px, 2vw, 14px)', tableLayout: 'fixed' }}>
+                            {/* Timetable Grid View (Forced Grid on all devices with horizontal scroll on mobile) */}
+                            <div className="w-full overflow-x-auto overflow-y-auto custom-scrollbar p-2 max-h-[70vh]">
+                                <table className="w-full border-collapse relative min-w-[500px]" style={{ fontSize: 'clamp(10px, 2vw, 14px)' }}>
                                     <thead>
                                         <tr>
                                             <th className="sticky top-0 z-10 w-12 border border-border bg-card p-1 text-muted text-xs font-medium">時限</th>
@@ -200,8 +212,19 @@ export const DashboardScreen: React.FC = () => {
                                                     return (
                                                         <td key={`${d}-${p}`} className="border border-border p-1 h-16 align-top">
                                                             {cellClasses.map((c, idx) => (
-                                                                <div key={idx} className="bg-blue-100 border border-blue-200 text-blue-800 text-xs p-2 rounded mb-1 shadow-sm">
-                                                                    <div className="font-bold">{c.courseId}</div>
+                                                                <div key={idx} className="relative group bg-blue-100 border border-blue-200 text-blue-800 text-xs p-2 rounded mb-1 shadow-sm">
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            handleRemoveClass(c.courseId, c.classId);
+                                                                        }}
+                                                                        className="absolute top-1 right-1 p-0.5 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition-colors cursor-pointer"
+                                                                        title="この授業を削除"
+                                                                    >
+                                                                        <X className="w-3 h-3" />
+                                                                    </button>
+                                                                    <div className="font-bold pr-3">{c.courseId}</div>
                                                                     <div className="text-[10px] text-blue-600 mt-1">{c.classId}</div>
                                                                 </div>
                                                             ))}
@@ -334,78 +357,149 @@ export const DashboardScreen: React.FC = () => {
                                 ))}
                             </div>
                         )}
+
+                        {/* Start New Semester Section */}
+                        <div className="mt-8 pt-6 border-t-2 border-red-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-red-50/50 p-5 rounded-2xl border border-red-200">
+                            <div>
+                                <h4 className="font-bold text-red-900 text-base flex items-center">
+                                    <RefreshCcw className="w-5 h-5 mr-2 text-red-600" />
+                                    学期の切り替え・新学期へ進む
+                                </h4>
+                                <p className="text-xs text-red-700 mt-1 font-medium">
+                                    今学期の成績記録を完了し、修得単位を保存した上で新学期の時間割作成へ進みます。
+                                </p>
+                            </div>
+                            <button
+                                onClick={handleStartNewSemester}
+                                className="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-5 py-3 rounded-xl shadow-md transition-transform hover:scale-105 shrink-0 flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto"
+                            >
+                                <RefreshCcw className="w-4 h-4" />
+                                この学期を終了して新学期へ進む
+                            </button>
+                        </div>
                     </div>
                 )}
 
                 {activeTab === 'profile' && (
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 animate-in fade-in max-w-2xl relative">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="font-bold text-gray-800 flex items-center">
-                                <User className="w-5 h-5 mr-2 text-indigo-500" />
-                                プロフィール情報
-                            </h2>
-                            {!isEditingProfile ? (
-                                <button
-                                    onClick={() => setIsEditingProfile(true)}
-                                    className="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center transition-colors"
-                                >
-                                    <Edit3 className="w-4 h-4 mr-1" /> 編集する
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={handleSaveProfile}
-                                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center transition-colors shadow-sm"
-                                >
-                                    <Save className="w-4 h-4 mr-1" /> 保存する
-                                </button>
-                            )}
+                    <div className="space-y-6">
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 animate-in fade-in max-w-2xl relative">
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="font-bold text-gray-800 flex items-center">
+                                    <User className="w-5 h-5 mr-2 text-indigo-500" />
+                                    プロフィール情報
+                                </h2>
+                                {!isEditingProfile ? (
+                                    <button
+                                        onClick={() => setIsEditingProfile(true)}
+                                        className="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center transition-colors"
+                                    >
+                                        <Edit3 className="w-4 h-4 mr-1" /> 編集する
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={handleSaveProfile}
+                                        className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center transition-colors shadow-sm"
+                                    >
+                                        <Save className="w-4 h-4 mr-1" /> 保存する
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                    <div className="text-gray-500 text-sm">ニックネーム</div>
+                                    <div className="col-span-2">
+                                        {isEditingProfile ? (
+                                            <input
+                                                type="text"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
+                                                value={editNickname}
+                                                onChange={(e) => setEditNickname(e.target.value)}
+                                            />
+                                        ) : (
+                                            <span className="font-medium text-gray-800">{state.userProfile.nickname}</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                    <div className="text-gray-500 text-sm">なりたい職業</div>
+                                    <div className="col-span-2">
+                                        {isEditingProfile ? (
+                                            <input
+                                                type="text"
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
+                                                value={editDreamJob}
+                                                onChange={(e) => setEditDreamJob(e.target.value)}
+                                            />
+                                        ) : (
+                                            <span className="font-medium text-gray-800">{state.userProfile.dreamJob || '未設定'}</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                    <div className="text-gray-500 text-sm">大学</div>
+                                    <div className="col-span-2 font-medium text-gray-500">{state.userProfile.university} (変更不可)</div>
+                                </div>
+                                <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                    <div className="text-gray-500 text-sm">成績評価システム</div>
+                                    <div className="col-span-2 font-medium text-gray-800">
+                                        {state.userProfile.gradingScale.map(g => g.label).join(', ')}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                    <div className="text-gray-500 text-sm">学期制</div>
+                                    <div className="col-span-2 font-medium text-gray-800">{state.userProfile.termSystem}</div>
+                                </div>
+                                <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                    <div className="text-gray-500 text-sm">連携アカウント</div>
+                                    <div className="col-span-2 font-medium text-gray-800 flex items-center justify-between">
+                                        <span className="truncate">{user?.email || 'Googleログイン済み'}</span>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                console.log("[DashboardScreen Profile] ログアウトボタンがクリックされました");
+                                                if (logout) {
+                                                    logout();
+                                                }
+                                            }}
+                                            className="text-xs text-red-600 hover:text-red-800 font-bold border border-red-200 bg-red-50 hover:bg-red-100 px-3 py-1 rounded-lg transition-colors cursor-pointer pointer-events-auto"
+                                        >
+                                            ログアウト
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="space-y-4">
-                            <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
-                                <div className="text-gray-500 text-sm">ニックネーム</div>
-                                <div className="col-span-2">
-                                    {isEditingProfile ? (
-                                        <input
-                                            type="text"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            value={editNickname}
-                                            onChange={(e) => setEditNickname(e.target.value)}
-                                        />
-                                    ) : (
-                                        <span className="font-medium text-gray-800">{state.userProfile.nickname}</span>
-                                    )}
+                        {/* これまで取得した単位一覧 */}
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 animate-in fade-in max-w-2xl">
+                            <div className="flex justify-between items-center mb-4">
+                                <h3 className="font-bold text-gray-800 text-base flex items-center">
+                                    <Award className="w-5 h-5 mr-2 text-emerald-600" />
+                                    これまで取得した単位一覧
+                                </h3>
+                                <span className="text-xs bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full font-bold">
+                                    {state.earnedCredits?.length || 0} 科目修得済み
+                                </span>
+                            </div>
+
+                            {(!state.earnedCredits || state.earnedCredits.length === 0) ? (
+                                <p className="text-sm text-gray-400 py-4 text-center">まだ過去の修得単位記録はありません。</p>
+                            ) : (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-60 overflow-y-auto custom-scrollbar">
+                                    {state.earnedCredits.map((item, idx) => (
+                                        <div key={idx} className="bg-emerald-50/70 border border-emerald-200 p-2.5 rounded-lg flex items-center justify-between text-xs">
+                                            <span className="font-bold text-emerald-950 truncate" title={item.courseName}>
+                                                {item.courseName}
+                                            </span>
+                                            <span className="text-[10px] bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-mono font-bold shrink-0 ml-2">
+                                                修得済
+                                            </span>
+                                        </div>
+                                    ))}
                                 </div>
-                            </div>
-                            <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
-                                <div className="text-gray-500 text-sm">なりたい職業</div>
-                                <div className="col-span-2">
-                                    {isEditingProfile ? (
-                                        <input
-                                            type="text"
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
-                                            value={editDreamJob}
-                                            onChange={(e) => setEditDreamJob(e.target.value)}
-                                        />
-                                    ) : (
-                                        <span className="font-medium text-gray-800">{state.userProfile.dreamJob || '未設定'}</span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
-                                <div className="text-gray-500 text-sm">大学</div>
-                                <div className="col-span-2 font-medium text-gray-500">{state.userProfile.university} (変更不可)</div>
-                            </div>
-                            <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
-                                <div className="text-gray-500 text-sm">成績評価システム</div>
-                                <div className="col-span-2 font-medium text-gray-800">
-                                    {state.userProfile.gradingScale.map(g => g.label).join(', ')}
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
-                                <div className="text-gray-500 text-sm">学期制</div>
-                                <div className="col-span-2 font-medium text-gray-800">{state.userProfile.termSystem}</div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 )}

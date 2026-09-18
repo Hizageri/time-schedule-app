@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../logic/AppContext';
-import { Quote, CheckSquare, Square, AlertCircle, Loader2 } from 'lucide-react';
+import { Quote, CheckSquare, Square, AlertCircle } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { generateConsultation } from '../ai/aiService';
 import type { ConsultationResponse } from '../ai/aiService';
+import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const ProposalScreen: React.FC = () => {
     const { state, setState, setScreen } = useAppContext();
 
     const [loading, setLoading] = useState(true);
+    const [isComplete, setIsComplete] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [consultation, setConsultation] = useState<ConsultationResponse | null>(null);
     const [selectedToKeep, setSelectedToKeep] = useState<Record<string, boolean>>({});
@@ -28,10 +30,14 @@ export const ProposalScreen: React.FC = () => {
                 const initialChecks: Record<string, boolean> = {};
                 res.courseFeedbacks.forEach(c => initialChecks[c.courseId] = true);
                 setSelectedToKeep(initialChecks);
+
+                setIsComplete(true);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 400);
             } catch (err: any) {
                 console.error(err);
                 setError(err.message || 'AIからの応答の取得に失敗しました。APIキーが設定されているか確認してください。');
-            } finally {
                 setLoading(false);
             }
         };
@@ -53,13 +59,7 @@ export const ProposalScreen: React.FC = () => {
     };
 
     if (loading) {
-        return (
-            <div className="min-h-screen bg-background flex flex-col items-center justify-center p-12">
-                <Loader2 className="w-16 h-16 text-accent animate-spin mb-6" />
-                <h2 className="text-2xl font-bold text-foreground">AI先輩が分析中...</h2>
-                <p className="text-muted mt-2">目標「{dreamJob}」に向けて選択科目を評価しています</p>
-            </div>
-        );
+        return <LoadingSenpai isComplete={isComplete} />;
     }
 
     if (error || !consultation) {

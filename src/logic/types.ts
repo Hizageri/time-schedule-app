@@ -21,6 +21,8 @@ export interface CourseData {
     outline: string;
     grading?: { exam: number; report: number; others: number };
     classes: ClassInfo[];
+    reviews_bit?: number;
+    comment?: string;
 }
 
 // 11-bit filtering logic calculation
@@ -90,6 +92,7 @@ export interface AppState {
         schedule: TimeSlot[];
     }[];
     grades: Record<string, { grade: string, classDifficulty: number, testDifficulty: number }>;
+    earnedCredits: { courseId: string; courseName: string }[];
     pinnedClasses: Record<string, string>; // courseId -> classId
     classroomNames: Record<string, string>; // slotKey (e.g. "月-1") -> classroom name
 }
@@ -123,6 +126,13 @@ export const defaultState: AppState = {
     selectedCourses: [],
     committedClasses: [],
     grades: {},
+    earnedCredits: [],
     pinnedClasses: {},
     classroomNames: {}
 };
+
+export interface ChatMessage {
+    role: 'user' | 'model';
+    content: string;
+    timestamp: string;
+}

@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+dotenv.config();
 
 const sanitizeJsonResponse = (responseText: string): string => {
     let cleaned = responseText.replace(/```json/gi, '').replace(/```/g, '');
@@ -9,6 +10,8 @@ const sanitizeJsonResponse = (responseText: string): string => {
     if (jsonMatch) {
         cleaned = jsonMatch[0];
     }
+    // 末尾のカンマ（Trailing Comma）を削除
+    cleaned = cleaned.replace(/,\s*([\]}])/g, '$1');
     return cleaned;
 };
 
@@ -17,27 +20,30 @@ export default async function handler(req: any, res: any) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    if (!GOOGLE_API_KEY || GOOGLE_API_KEY === 'ここにAPIキーを入力してください') {
+    const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+
+    if (!apiKey || apiKey === 'ここにAPIキーを入力してください') {
+        console.error('\x1b[31m[Grade Reaction API Error]: API Key is missing.\x1b[0m');
         return res.status(500).json({ error: 'API Key is missing.' });
     }
 
-    const { userProfile, grades } = req.body;
+    const { userProfile, grades } = req.body || {};
 
-    const enteredGrades = grades.filter((g: any) => g.grade && g.grade.trim() !== '');
+    const enteredGrades = (grades || []).filter((g: any) => g.grade && g.grade.trim() !== '');
     if (enteredGrades.length === 0) {
-        return res.status(200).json({ reaction: "成績入力してから来いよ！評価不能だ。" });
+        return res.status(200).json({ title: "未評価", message: "成績入力してから来いよ！評価不能だ。" });
     }
 
     const gradeDetails = enteredGrades.map((g: any) => `- ${g.courseName}: ${g.grade}`).join('\n');
     const totalPoints = enteredGrades.reduce((sum: number, g: any) => {
-        const gradePoint = userProfile.gradingScale.find((s: any) => s.label === g.grade)?.point || 0;
+        const gradePoint = userProfile?.gradingScale?.find((s: any) => s.label === g.grade)?.point || 0;
         return sum + (gradePoint * g.credits);
     }, 0);
     const totalCredits = enteredGrades.reduce((sum: number, g: any) => sum + g.credits, 0);
     const semesterGpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
 
     const prompt = `
-あなたは会津大学（U-Aizu）の教務や学生生活の裏表を知り尽くした「AI先輩」だ。
+あなたはお世話になっている会津大学（U-Aizu）の経験豊富で頼れるが、口が荒く高圧的な「AI先輩」だ。
 学期末、成績表を手に報告に来た後輩に対し、GPA「${semesterGpa}」と成績「${gradeDetails}」を見て態度を豹変させろ。
 
 【態度の豹変ルール（最優先・厳守）】
@@ -51,22 +57,22 @@ export default async function handler(req: any, res: any) {
    - 態度: 徹底的な軽蔑、罵倒、絶縁。
    - 口調: 「お前、大学に何しに来てんの？」「学食のカレーを食う資格もねえよ」と徹底的に煽れ。
 
-【出力構成（150文字以内・簡潔に！）】
-称号: 『〜〜〜』
-本文（挨拶不要、目立つ科目に1つ触れて短文の連撃で！）
-アドバイス（一言で仕留めろ）
+【出力要件】
+- title: 成績や状況を表すユニークでインパクトのある称号（例: 『単位乞食の生存者』『会津の神童』など）
+- message: 本文とアドバイスを明確に区切らず、会話の流れの中で自然にアドバイスを組み込んで、1つのまとまったセリフとして出力してください（約150文字程度）。
 
-以下のJSON形式で厳密に回答してください:
+以下のJSONフォーマットのみを厳密に出力してください:
 {
-  "response": "称号: 『〜〜〜』\n本文\nアドバイス"
+  "title": "称号",
+  "message": "評価とアドバイスを統合した一続きのセリフ"
 }
 `;
 
     try {
-        const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
+        const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ 
             model: "gemini-2.5-flash",
-            systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"response\": \"your_message_here\" }. Do not include any markdown blocks (like ```json), extra text, or line breaks outside the JSON."
+            systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"title\": \"称号\", \"message\": \"評価とアドバイスを統合した一続きのセリフ\" }. Persona: AI Senior in Japanese. Do not separate body and advice; integrate them into a single continuous natural spoken message from the persona. Do not include any markdown blocks or text outside the JSON."
         });
         const response = await model.generateContent(prompt);
         
@@ -74,11 +80,24 @@ export default async function handler(req: any, res: any) {
             throw new Error('No response from AI');
         }
 
-        const cleanedResponse = sanitizeJsonResponse(response.response.text());
-        const parsed = JSON.parse(cleanedResponse);
-        return res.status(200).json({ reaction: parsed.response || "AI応答の解析に失敗しました" });
+        const rawText = response.response.text();
+        const cleanedResponse = sanitizeJsonResponse(rawText);
+
+        try {
+            const parsed = JSON.parse(cleanedResponse);
+            return res.status(200).json({
+                title: parsed.title || "AI先輩の評価",
+                message: parsed.message || parsed.response || "AI応答の解析に失敗しました"
+            });
+        } catch (parseErr) {
+            console.error("JSON Parse Error. Raw output from Gemini:", rawText);
+            throw parseErr;
+        }
     } catch (error: any) {
-        console.error('API Error:', error);
-        return res.status(200).json({ reaction: "AI先輩は今忙しいようだ。後で出直してこい。" });
+        console.error('\x1b[31m[Grade Reaction API Error Details]:\x1b[0m', error.stack || error.message || error);
+        return res.status(200).json({
+            title: "通信エラー",
+            message: "AI先輩は今忙しいようだ。後で出直してこい。"
+        });
     }
 }

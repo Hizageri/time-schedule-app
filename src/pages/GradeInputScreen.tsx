@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { Header } from '../ui/Header';
 import { Button } from '../ui/Button';
-import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star } from 'lucide-react';
+import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star, RefreshCcw } from 'lucide-react';
 import { generateGradeReaction } from '../ai/aiService';
+import type { GradeReactionResponse } from '../ai/aiService';
 
 interface GradeInput {
   courseId: string;
@@ -13,16 +14,25 @@ interface GradeInput {
 }
 
 export const GradeInputScreen: React.FC = () => {
-  const { state, setScreen, saveGrade } = useAppContext();
-  const [gradeInputs, setGradeInputs] = useState<GradeInput[]>(() => 
-    state.committedClasses.map(c => ({
+  const { state, setScreen, saveGrade, startNewSemester } = useAppContext();
+  const [gradeInputs, setGradeInputs] = useState<GradeInput[]>(() => {
+    // Single Source of Truth: state.selectedCourses
+    if (state.selectedCourses && state.selectedCourses.length > 0) {
+      return state.selectedCourses.map(course => ({
+        courseId: course.id_name,
+        courseName: course.id_name,
+        grade: state.grades[course.id_name]?.grade || '',
+        credits: course.credits || 2
+      }));
+    }
+    return state.committedClasses.map(c => ({
       courseId: c.courseId,
-      courseName: c.courseId, // You might want to store full course names
+      courseName: c.courseId,
       grade: state.grades[c.courseId]?.grade || '',
-      credits: 2 // Default credits, you might want to store this
-    }))
-  );
-  const [aiReaction, setAiReaction] = useState<string | null>(null);
+      credits: 2
+    }));
+  });
+  const [aiReaction, setAiReaction] = useState<GradeReactionResponse | null>(null);
   const [isGeneratingReaction, setIsGeneratingReaction] = useState(false);
 
   const handleGradeChange = (courseId: string, grade: string) => {
@@ -37,7 +47,10 @@ export const GradeInputScreen: React.FC = () => {
     const validGrades = gradeInputs.filter(input => input.grade);
     
     if (validGrades.length === 0) {
-      setAiReaction('成績を入力してからにしろよ！何も評価できるものがないじゃねえか。');
+      setAiReaction({
+        title: '未評価',
+        message: '成績を入力してからにしろよ！何も評価できるものがないじゃねえか。'
+      });
       return;
     }
 
@@ -46,13 +59,16 @@ export const GradeInputScreen: React.FC = () => {
       const reaction = await generateGradeReaction(state.userProfile, validGrades);
       setAiReaction(reaction);
     } catch (error) {
-      setAiReaction('なんだかエラーが出たな。もう一回試してみろ。');
+      setAiReaction({
+        title: 'エラー',
+        message: 'なんだかエラーが出たな。もう一回試してみろ。'
+      });
     } finally {
       setIsGeneratingReaction(false);
     }
   };
 
-  const handleSaveAndContinue = () => {
+  const handleSaveAndReturnToDashboard = () => {
     gradeInputs.forEach(input => {
       if (input.grade) {
         saveGrade(input.courseId, {
@@ -62,7 +78,26 @@ export const GradeInputScreen: React.FC = () => {
         });
       }
     });
-    setScreen(1); // Go to condition screen for next semester
+    setScreen(6); // Return to Dashboard
+  };
+
+  const handleStartNewSemester = () => {
+    // 1. 入力された成績を保存
+    gradeInputs.forEach(input => {
+      if (input.grade) {
+        saveGrade(input.courseId, {
+          grade: input.grade,
+          classDifficulty: 3,
+          testDifficulty: 3
+        });
+      }
+    });
+
+    // 2. 確認ダイアログでリセット実行
+    const confirmed = window.confirm("現在の時間割と成績をリセットし、新学期の準備をしますか？（取得済みの単位は記録されます）");
+    if (confirmed) {
+      startNewSemester();
+    }
   };
 
   const getGradeIcon = (grade: string) => {
@@ -91,16 +126,15 @@ export const GradeInputScreen: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header
         title="成績入力"
-        subtitle="前期の成績を入力して、AI先輩に評価してもらおう"
+        subtitle="取得した成績を入力して、AI先輩の判定とGPA算出を行いましょう"
         icon={Award}
         action={{
-          label: "次学期の時間割を作る",
-          onClick: handleSaveAndContinue,
-          icon: Flame
+          label: "ダッシュボードに戻る",
+          onClick: handleSaveAndReturnToDashboard
         }}
       />
 
-      <main className="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
+      <main className="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6 pb-12">
         {/* Grade Input Section */}
         <div className="space-y-4">
           <h2 className="font-bold text-foreground text-xl flex items-center border-b border-border pb-2">
@@ -156,20 +190,45 @@ export const GradeInputScreen: React.FC = () => {
 
         {/* AI Reaction Display */}
         {aiReaction && (
-          <div className="bg-accent/5 rounded-2xl p-6 border border-accent/10 relative">
+          <div className="bg-gradient-to-r from-accent/10 via-accent/5 to-transparent rounded-2xl p-6 border border-accent/20 relative shadow-sm animate-in fade-in slide-in-from-bottom-3">
             <div className="absolute top-4 right-4">
               <Flame className="w-6 h-6 text-accent animate-pulse" />
             </div>
+
             <div className="pr-10">
-              <h3 className="font-bold text-foreground text-lg mb-3 flex items-center">
-                AI先輩の評価
-              </h3>
-              <p className="text-foreground text-md leading-relaxed font-medium whitespace-pre-wrap">
-                {aiReaction}
-              </p>
+              {/* Prominent Title (称号) */}
+              <div className="mb-3">
+                <span className="inline-block bg-accent/15 border border-accent/30 text-accent font-black text-sm md:text-base px-3 py-1 rounded-full shadow-2xs">
+                  称号: {aiReaction.title}
+                </span>
+              </div>
+
+              {/* Single continuous natural speech message from AI Senior */}
+              <div className="bg-card/60 backdrop-blur border border-border p-4 rounded-xl text-foreground text-sm md:text-base leading-relaxed font-medium">
+                {aiReaction.message}
+              </div>
             </div>
           </div>
         )}
+
+        {/* Flow Control Action Buttons */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-border">
+          <Button
+            onClick={handleSaveAndReturnToDashboard}
+            variant="outline"
+            className="w-full sm:w-auto"
+          >
+            成績を一時保存してダッシュボードへ
+          </Button>
+
+          <button
+            onClick={handleStartNewSemester}
+            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition-transform hover:scale-105 flex items-center justify-center gap-2 text-base cursor-pointer"
+          >
+            <RefreshCcw className="w-5 h-5" />
+            この学期を終了して新学期へ進む
+          </button>
+        </div>
       </main>
     </div>
   );

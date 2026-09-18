@@ -1,0 +1,1634 @@
+[
+  {
+    "id": "HS01 哲学",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 2,
+    "comment": "テストの内容は記憶系。大量の文章からテストでは一問一答形式でテストが行われる"
+  },
+  {
+    "id": "HS05 文学",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 0,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "HS06 芸術学",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "HS07 ジェンダー・セクシュアリティ論",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 1,
+    "comment": "授業中に発言する生徒だけ成績が良くなるといわれるが発言しなくても単位は簡単に取れる"
+  },
+  {
+    "id": "HS10 経済学",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 2,
+    "attendance": 5,
+    "comment": "大体の授業で課題はあるが簡単。テストも課題が自力で解けるならかなり簡単である。"
+  },
+  {
+    "id": "HS11 社会学",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 3,
+    "attendance": 2,
+    "comment": "毎授業で配られる資料に空いている穴を講義を聞くうえで穴埋め、それを提出するのが課題。出席は点呼。授業の最後の方にあるプレゼン次第さえしっかりやれば単位は取得可能"
+  },
+  {
+    "id": "HS12 日本国憲法",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "HS13 国際関係論",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 5,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "HS16 健康教育論",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "HS17 科学史",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "HS20 アカデミックスキル１",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 2,
+    "comment": "テストは作文のようなものを書く。Ａ評価をとるのはだいぶ厳しい。単位取得自体は簡単"
+  },
+  {
+    "id": "HS21 アカデミックスキル２",
+    "difficulty": 2,
+    "assignment": 5,
+    "exam": 4,
+    "attendance": 2,
+    "comment": "課題の量が多くあまりお勧めできない科目。毎授業で宿題が出て作文のようなものを書かなければならない"
+  },
+  {
+    "id": "HS22 地域社会学",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 4,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "HS23 経済発展論",
+    "difficulty": 4,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "HS27 心理言語学概論",
+    "difficulty": 1,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "HS28 精神保健学",
+    "difficulty": 4,
+    "assignment": 5,
+    "exam": 1,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "SS01 健康・スポーツ科学実習1",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 4,
+    "comment": "出席は毎授業開始時に点呼をする.先生によっては厳しい先生もいる.とても楽しい授業.Ａ評価をとるのは授業態度が大事"
+  },
+  {
+    "id": "SS02 健康・スポーツ科学実習2",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 4,
+    "comment": "出席は毎授業開始時に点呼をする.先生によっては厳しい先生もいる.とても楽しい授業.Ａ評価をとるのは授業態度が大事"
+  },
+  {
+    "id": "SS03 健康・スポーツ科学実習3",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 4,
+    "comment": "出席は毎授業開始時に点呼をする.先生によっては厳しい先生もいる.とても楽しい授業.Ａ評価をとるのは授業態度が大事"
+  },
+  {
+    "id": "SS04 生涯スポーツ科学実習（水泳）",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 5,
+    "comment": "出席は毎授業開始時に点呼をする.先生によっては厳しい先生もいる.とても楽しい授業.Ａ評価をとるのは授業態度が大事"
+  },
+  {
+    "id": "SS04 生涯スポーツ科学実習（動きの科学）",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "SS04 生涯スポーツ科学実習（バレーボール）",
+    "difficulty": 1,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "SS04 生涯スポーツ科学実習（ヨガ・コンディショニング）",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "SS04 生涯スポーツ科学実習（スキー）",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 3,
+    "comment": "遅刻をするとA評価をとることができない。授業自体はとても楽しい"
+  },
+  {
+    "id": "SS04 生涯スポーツ科学実習（スノーボード）",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 4,
+    "comment": "遅刻をするとA評価をとることができない。授業自体はとても楽しい"
+  },
+  {
+    "id": "EN01 Introductory English 1",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 5,
+    "comment": "Vocabulary quizzesをしっかりやっておけばテスト自体は簡単。出席はとても厳しく学校のPCからではないと出席を出すことができない"
+  },
+  {
+    "id": "EN02 Introductory English 2",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 5,
+    "comment": "Vocabulary quizzesをしっかりやっておけばテスト自体は簡単。出席はとても厳しく学校のPCからではないと出席を出すことができない"
+  },
+  {
+    "id": "EN03 Bridge 1 to Intermediate English",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 5,
+    "comment": "Vocabulary quizzesをしっかりやっておけばテスト自体は簡単。出席はとても厳しく学校のPCからではないと出席を出すことができない"
+  },
+  {
+    "id": "EN04 Bridge 2 to Intermediate English",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 5,
+    "comment": "Vocabulary quizzesをしっかりやっておけばテスト自体は簡単。出席はとても厳しく学校のPCからではないと出席を出すことができない"
+  },
+  {
+    "id": "EN05 Intermediate English 1",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 2,
+    "attendance": 5,
+    "comment": "毎授業dictationとリスニングとvocabularyとセンテンスフレームの学習の課題が出る。加えて全部で5回、作文をする課題が出る。テストは簡単。出席はとても厳しく学校のPCからではないと出席を出すことができない"
+  },
+  {
+    "id": "EN06 Intermediate English 2",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 2,
+    "attendance": 5,
+    "comment": "毎授業dictationとリスニングとvocabularyとセンテンスフレームの学習の課題が出る。加えて全部で5回、作文をする課題が出る。テストは簡単。出席はとても厳しく学校のPCからではないと出席を出すことができない"
+  },
+  {
+    "id": "EN07 Advanced English",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 5,
+    "comment": "課題がとても多く苦労する。出席も厳しい"
+  },
+  {
+    "id": "EN08 Thesis Writing and Presentation",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 5,
+    "comment": "課題がとても多く苦労する。出席も厳しい"
+  },
+  {
+    "id": "EG101 Global Experience Gateway (RHIT)",
+    "difficulty": 3,
+    "assignment": 5,
+    "exam": 1,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "EG102 Global Experience Gateway (Waikato)",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 5,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "EG103 Global Experience Gateway (USM)",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "EL102 Design of Human Languages",
+    "difficulty": 1,
+    "assignment": 5,
+    "exam": 4,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "EL115 Analysis of English Sentence Structure",
+    "difficulty": 2,
+    "assignment": 5,
+    "exam": 1,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "EL131 Language and Linguistics",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "EL144 Conversation Analysis and the Pragmatics of Spoken Interaction",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "EL146 Corpus Linguistics for Language Learners",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "EL152 Reading Fluency",
+    "difficulty": 1,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "EL154 SDGs で学ぶ英語ディスカッション",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "EL157 Networking Skills in International Industry Environment",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 5,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "EL160 Language Education in the Age of AI",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "EL161 Machine Learning for Linguistics",
+    "difficulty": 1,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "EL162 A Conceptual Approach to Understanding English",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "EL163 Cognitive Linguistics for Computer Science English",
+    "difficulty": 1,
+    "assignment": 3,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "EL164 App-Based Language Learning",
+    "difficulty": 5,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "EL165 Words in the Mind: Vocabulary Learning and Morphology",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "EL218 English Speaking and Presentation Skills",
+    "difficulty": 1,
+    "assignment": 3,
+    "exam": 5,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "EL244 An Introduction to Cross-cultural Communication",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 5,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "EL249 Introduction to Company Presentations in English",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "EL315 Content Management for IT Business",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "EL318 ICT in Education",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "EL321 Pronunciation: Acoustic Analysis Using Software",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "EL329 Critical Thinking",
+    "difficulty": 4,
+    "assignment": 1,
+    "exam": 5,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "EL330 Computer Science Vocabulary",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "MA01 線形代数 I(C1/C2)",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 4,
+    "comment": "出席は少し厳しく学生証をホワイトボードを背景にして写真を撮って提出しないと出席にならない。テストは5問しかなく単位を取ることは簡単"
+  },
+  {
+    "id": "MA01 線形代数 I(C3/C4)",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 4,
+    "comment": "毎授業の終わりに出席あり。終わりだけ授業に行き出席することも可能。テストは、問１から３までは形式が決まっているので過去問をやれば簡単。問４はランダムな証明問題なのでしっかりとした勉強が必要。課題の提出はないが、演習の時間に名前を呼ばれ、課題の問題をホワイトボードで解かされる場合がある。"
+  },
+  {
+    "id": "MA01 線形代数 I(C5/C6)",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 1,
+    "comment": "めちゃくちゃ楽です。　教授が超当たりの方で基本的に何をしていてもよい　テストも基本的なものしかないので超楽な単位"
+  },
+  {
+    "id": "MA02 線形代数 II(C1/C2)",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 4,
+    "comment": "出席は少し厳しく学生証をホワイトボードを背景にして写真を撮って提出しないと出席にならない。テストは5問しかなく単位を取ることは簡単"
+  },
+  {
+    "id": "MA02 線形代数 II(C3/C4)",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 4,
+    "comment": "毎授業の終わりに出席あり。終わりだけ授業に行き出席することも可能。テストは、問１から３までは形式が決まっているので過去問をやれば簡単。問４はランダムな証明問題なのでしっかりとした勉強が必要。課題の提出はないが、演習の時間に名前を呼ばれ、課題の問題をホワイトボードで解かされる場合がある。"
+  },
+   {
+    "id": "MA02 線形代数 II(C5/C6)",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 5,
+    "comment": "毎授業の演習の時間内に問題を解いて提出しないと出席にならない　"
+  },
+  {
+    "id": "MA03 微積分 I(C1/C2)",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 4,
+    "comment": "出席は少し厳しく学生証をホワイトボードを背景にして写真を撮って提出しないと出席にならない　テストは5問しかなく単位を取ることは簡単"
+  },
+  {
+    "id": "MA03 微積分 I(C3/C4)",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 3,
+    "comment": "出席の方式は、授業最初にレポートを提出する。レポート出して帰宅も可能。テストは過去問と形式が似ているので対策は簡単。"
+  },
+   {
+    "id": "MA03 微積分 I(C5/C6)",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 5,
+    "attendance": 2,
+    "comment": "出席の方式は教授から配られる名簿の名前の欄にチャックマークを付ける　意外とテストが難しい"
+  },
+  {
+    "id": "MA04 微積分 II(C1/C2)",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "MA04 微積分 II(C3/C4)",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 2,
+    "attendance": 3,
+    "comment": "出席は、名前がランダム（１０人くらい）に呼ばれる。前回出席していない人は優先的に名前が呼ばれる。テストは形式が決まってるので対策は簡単。"
+  },
+   {
+    "id": "MA04 微積分 II(C5/C6)",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 3,
+    "comment": "授業自体少し難しい　課題の量もおおい　裏技で再履修のクラス(微積分Ⅱの再履修)をとると教授が神の方で楽になるかも"
+  },
+  {
+    "id": "MA05 フーリエ解析",
+    "difficulty": 5,
+    "assignment": 1,
+    "exam": 5,
+    "attendance": 1,
+    "comment": "過去問に似ているといわれたが全然違う問題が出た。対策は過去問と演習問題を解いておくといい"
+  },
+  {
+    "id": "MA06 複素関数論",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 3,
+    "comment": "最初に演習問題が書いてある紙をもらってそれを解いてもらう.中間と期末その演習問題を解いておけば単位はもらえる.お菓子を食べてると怒られる"
+  },
+  {
+    "id": "MA07 確率統計学",
+    "difficulty": 3,
+    "assignment": 1,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "MA08 応用代数",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "MA09 数理論理学",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "MA10 位相幾何学概論",
+    "difficulty": 3,
+    "assignment": 1,
+    "exam": 5,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "MA11 応用幾何とトポロジー",
+    "difficulty": 1,
+    "assignment": 5,
+    "exam": 4,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "NS01 力学",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 5,
+    "comment": "課題が毎日出る。演習の時間内に問題を解き終わらないと出席にならない。高校時代に力学をやっていない学生は苦労している。テストは、各演習の問題をすべて完璧にすれば突破できる。中間試験と期末試験を合計して70点取らないといけない（どちらもMAX100点）"
+  },
+  {
+    "id": "NS02 電磁気学",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 5,
+    "comment": "会津大学生全員が難しいと答えるような高難易度授業.クラスによっては、各授業でボーナス点などがある"
+  },
+  {
+    "id": "NS03 量子力学",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "NS04 半導体デバイス",
+    "difficulty": 5,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 3,
+    "comment": "英語のクラスをとると単位をとれない.日本語のクラスをとると楽になる.中間に計算が出た.a4の紙にメモをしてもっていく"
+  },
+  {
+    "id": "NS05 熱・統計力学",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "LI01 コンピュータリテラシー",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 3,
+    "comment": "毎授業の際に教授から名簿が配られ名前の欄にチェックマークを付けると出席扱い.過去問を持っていたらテスト楽勝.プログラミングをしていく上で大事なのでおろそかにするべからず"
+  },
+  {
+    "id": "LI03 コンピュータ理工学のすすめ",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 1,
+    "comment": "授業も別に聞かなくても単位を取ることができる授業.テストは過去問を持っていれば単位は取れる"
+  },
+  {
+    "id": "LI04 コンピュータシステム概論",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 2,
+    "comment": "この授業の内容を完璧に理解できると基本情報技術者試験に合格することができる.覚える量が多くて大変.ほかのクラスが終わった後に受けるクラスの人はその人らに問題をもらうのが裏技"
+  },
+  {
+    "id": "LI06 情報セキュリティ",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 3,
+    "attendance": 1,
+    "comment": "授業は別に聞かなくても大丈夫.テストは過去問を持っていれば単位はとれる"
+  },
+  {
+    "id": "LI07 情報と職業",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "LI08 情報倫理",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 3,
+    "attendance": 5,
+    "comment": "出席は毎授業ペーパーが配られ、それの提出をもって出席となる。テストは過去問がないときついが、過去問があれば余裕。課題はなし。"
+  },
+  {
+    "id": "LI09 システム開発とプロジェクトマネジメントの基礎",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "LI10 マルチメディアシステム概論",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "LI11 コンピュータネットワーク概論",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "LI12 創造力開発スタジオ",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "LI13 コンピュータ理工学演習 I",
+    "difficulty": 3,
+    "assignment": 5,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "LI14 コンピュータ理工学演習 II",
+    "difficulty": 4,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "PL01 プログラミング入門",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 2,
+    "comment": "ここを過去問やＡＩに頼るとこの後の授業で苦労する.課題は習った内容を演習する.AIを使って課題を爆速で終わらせる生徒もいるが理解しないと意味がない.教授がAIで問題を解いていないかチェックしている"
+  },
+  {
+    "id": "PL02 プログラミングC",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 2,
+    "comment": "ここを過去問やＡＩに頼るとこの後の授業で苦労する.課題は習った内容を演習する.AIを使って課題を爆速で終わらせる生徒もいるが理解しないと意味がない.教授がAIで問題を解いていないかチェックしている"
+  },
+  {
+    "id": "PL03 プログラミングJAVA I",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 1,
+    "comment": "課題は習った内容を演習する。出席はLMS上のクイズを回答することですることができるので、いかなくてもよい。テストは過去問と全く一緒か、かなり似通っているので2年分やれば単位は取れる。"
+  },
+  {
+    "id": "PL04 プログラミングC++",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 2,
+    "comment": "プログラミング自体にある程度知識がある生徒はとても楽な授業.プログラミングCとかでやった内容を言語を変えて復習する.過去問を入手できればより楽になる"
+  },
+  {
+    "id": "PL05 コンピュータ言語論",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "PL06 プログラミングJAVA II",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 5,
+    "comment": "問題は過去問と似ている.出席だけ少し面倒なので複数人で回すとより楽になる"
+  },
+  {
+    "id": "FU01 アルゴリズムとデータ構造 I",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 2,
+    "comment": "会津大学屈指の難しさの授業.プログラミングへの理解をおろそかにしていた生徒は地獄を見る授業.教授がAIで問題を解いていないかチェックしている"
+  },
+  {
+    "id": "FU02 情報理論と圧縮",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "FU03 離散系論",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 3,
+    "comment": "クラスによってだいぶ難易度に差がある。２回に一回演習あり。演習の問題を解けるようにしておけばテストは取れる。"
+  },
+  {
+    "id": "FU04 論理回路設計論",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "FU05 コンピュータアーキテクチャ論",
+    "difficulty": 5,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 3,
+    "comment": "FU05 論理回路設計の知識がないとこの授業をとることはできない"
+  },
+  {
+    "id": "FU06 オペレーティングシステム論",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "FU08 オートマトンと言語理論",
+    "difficulty": 1,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "FU09 アルゴリズムとデータ構造 II",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 1,
+    "comment": "学校に行かなくても単位をくれる.課題さえやっとけばいい.過去問をやっとけばいい"
+  },
+  {
+    "id": "FU10 言語処理系論",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "FU11 数値解析",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "FU14 ソフトウェア工学概論",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 4,
+    "attendance": 3,
+    "comment": "過去問から問題が変わった.AIを使ってやると楽な単位"
+  },
+  {
+    "id": "FU15 データマネジメント概論",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 1,
+    "comment": "講義は、LMS上のクイズで出席をとる。抗議に行かなくても出席できる。課題は少し大変。AIをうまく使わないと厳しい。"
+  },
+  {
+    "id": "SY02 電子回路",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 5,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "SY04 組込みシステム",
+    "difficulty": 5,
+    "assignment": 1,
+    "exam": 3,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "SY05 並列コンピュータシステム",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "SY06 VLSI設計技術",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 5,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "SY07 論理回路設計特論",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "CN02 ネットワークセキュリティ",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "CN03 ネットワークプログラミング",
+    "difficulty": 4,
+    "assignment": 1,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "CN04 ワイヤレスネットワーク",
+    "difficulty": 4,
+    "assignment": 1,
+    "exam": 5,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "CN05 コンピュータネットワークシステムのモデリングとシミュレーション",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "IT01 人工知能",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "IT02 コンピュータグラフィックス論",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 5,
+    "comment": "授業自体がとても難しく単位を諦める生徒も多い"
+  },
+  {
+    "id": "IT03 画像処理論",
+    "difficulty": 4,
+    "assignment": 5,
+    "exam": 3,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "IT05 ロボット工学と自動制御",
+    "difficulty": 1,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "IT06 ヒューマンインターフェイスと仮想現実",
+    "difficulty": 4,
+    "assignment": 5,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "IT08 信号処理と線形システム",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 1,
+    "comment": "家とかで印刷したものを提出すれば出席扱い.テストは持ち込み可能で過去問と問題一緒.超楽な単位"
+  },
+  {
+    "id": "IT09 音響音声処理論",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "IT10 ビジュアルコンピューティングのための幾何学",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "IT11 情報検索と自然言語処理",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "SE01 ウェブエンジニアリング",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 5,
+    "attendance": 1,
+    "comment": "学校に行かなくてもいいが理解せずに課題だけ終わらせて満足していると最終発表で苦しむことになる"
+  },
+  {
+    "id": "SE04 ソフトウェア工学特論",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "SE05 ソフトウェアスタジオ",
+    "difficulty": 1,
+    "assignment": 5,
+    "exam": 3,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "SE06 並列分散コンピューティング",
+    "difficulty": 5,
+    "assignment": 1,
+    "exam": 4,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "SE07 Pythonによるデータサイエンス概論",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 1,
+    "comment": "過去問を解いておけばいい.出席も学校に行かなくてもいい"
+  },
+  {
+    "id": "SE08 ビッグデータ分析概論",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT01-I ベンチャー基本コース各論 I",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "OT01-II ベンチャー基本コース各論 II",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "OT02-1 ベンチャー体験工房 1",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT02-2 ベンチャー体験工房 2",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT02-6 ベンチャー体験工房 6",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT02-9 ベンチャー体験工房 9",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "OT05 キャリアデザインI",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT06 キャリアデザインII",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT08 TOEIC準備コース(Level A)",
+    "difficulty": 3,
+    "assignment": 1,
+    "exam": 4,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT08 TOEIC準備コース(Level B)",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "OT10 課外活動コース II＜インターンシップIII（大連）＞",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "OT10 課外活動コースII＜インターンシップII（国内A）＞",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT10 課外活動コースII＜インターンシップII（国内C）＞",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT10 課外活動コースII＜インターンシップII（国内D）＞",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 5,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT10 課外活動コース II＜インターンシップIII（シリコンバレーA）＞",
+    "difficulty": 5,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "OT10 課外活動コース II＜インターンシップIII（ダナン）＞",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT11 ICTベンチャー起業と経営",
+    "difficulty": 1,
+    "assignment": 5,
+    "exam": 1,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE01 教師入門",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 5,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "TE02 教育入門",
+    "difficulty": 4,
+    "assignment": 1,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "TE03 教育心理学",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "TE04 教育課程論",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 2,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE05 教育方法",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "TE06 数学科教育法１",
+    "difficulty": 5,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "TE07 数学科教育法２",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE08 数学科教育法３",
+    "difficulty": 4,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "TE09 数学科教育法４",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "TE10 情報科教育法１",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "TE11 情報科教育法２",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 4,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "TE12 道徳教育",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 1,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE13 特別活動",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 1,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE14 生徒指導・教育相談",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "TE15 キャリア教育",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "TE16 教育実習１",
+    "difficulty": 4,
+    "assignment": 4,
+    "exam": 3,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "TE17 教育実習２",
+    "difficulty": 5,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE18 教育実習事前事後指導",
+    "difficulty": 1,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE19 教育制度論",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "TE20 教職実践演習（中・高）",
+    "difficulty": 2,
+    "assignment": 3,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE21 特別支援教育入門",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 4,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "TE22 総合的な学習の時間の指導法",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "TE23 情報機器の活用に関する理論と方法",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "IE01 システム総合演習 I",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "IE02 システム総合演習 II",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "IE03 ソフトウェア総合演習 I",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "IE04 ソフトウェア総合演習 II",
+    "difficulty": 2,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT03-001 大規模分散Webインフラ構築入門",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 2,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT03-002 学内生活を便利にするサービスを作ろう",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 3,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT03-003 月惑星データ解析＋宇宙生物学",
+    "difficulty": 5,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "OT03-004 教師になろう！",
+    "difficulty": 2,
+    "assignment": 1,
+    "exam": 1,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT03-005 社会美容科学　〜データで考えるジェンダー社会学〜",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT03-006 会津デジタルアート＆クラフト＆ゲームプロジェクト",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT03-007 異文化リーダーシップトレーニング―異文化理解の実践",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT03-008 会津ならではのスポーツ活動",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 3,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "OT03-009 AIモデルを作ってラズベリーパイで動かそう！！",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT03-010 Advanced Pattern Recognition using AI",
+    "difficulty": 5,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 3,
+    "comment": ""
+  },
+  {
+    "id": "OT03-011 自己啓発研究会",
+    "difficulty": 3,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT03-012 FPGAボードを使って手のひらサイズPCを作ってみよう",
+    "difficulty": 1,
+    "assignment": 2,
+    "exam": 2,
+    "attendance": 1,
+    "comment": ""
+  },
+  {
+    "id": "OT03-013 競技プログラミング",
+    "difficulty": 2,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT03-014 実践的プログラミング",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT03-015 論理的思考・批判的思考をしてみよう",
+    "difficulty": 4,
+    "assignment": 2,
+    "exam": 5,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT03-016 心理学統計法 (基礎)",
+    "difficulty": 5,
+    "assignment": 1,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT03-017 アントレプレナーシップ育成プログラム",
+    "difficulty": 1,
+    "assignment": 4,
+    "exam": 4,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "OT03-018 音楽で学ぶPythonプログラミング",
+    "difficulty": 1,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "OT03-019 電子工作プロジェクト",
+    "difficulty": 5,
+    "assignment": 2,
+    "exam": 4,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "NS01 力学（再履修）",
+    "difficulty": 5,
+    "assignment": 4,
+    "exam": 2,
+    "attendance": 5,
+    "comment": ""
+  },
+  {
+    "id": "MA01 線形代数 I（再履修）",
+    "difficulty": 3,
+    "assignment": 4,
+    "exam": 5,
+    "attendance": 3,
+    "comment": "課題が毎日出る.授業中にスマホをいじっていると怒られる.テストの内容が難しい"
+  },
+  {
+    "id": "MA02 線形代数 II（再履修）",
+    "difficulty": 1,
+    "assignment": 1,
+    "exam": 2,
+    "attendance": 2,
+    "comment": ""
+  },
+  {
+    "id": "MA03 微積分 I（再履修）",
+    "difficulty": 3,
+    "assignment": 5,
+    "exam": 5,
+    "attendance": 4,
+    "comment": ""
+  },
+  {
+    "id": "MA04 微積分 II（再履修）",
+    "difficulty": 3,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 3,
+    "comment": "教授がとてもやさしい方なのでわざと再履修になる生徒もいるぐらい"
+  }
+]

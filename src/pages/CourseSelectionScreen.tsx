@@ -3,11 +3,12 @@ import { useAppContext } from '../logic/AppContext';
 import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../logic/types';
 import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate } from '../logic/timetableGenerator';
-import { BookOpen, ChevronLeft, ChevronRight, X, Info } from 'lucide-react';
+import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../logic/utils';
+import { CourseDetailModal } from '../components/CourseDetailModal';
 
 export const CourseSelectionScreen: React.FC = () => {
-    const { state, setScreen, toggleSelectedCourse, pinClass } = useAppContext();
+    const { state, setScreen, toggleSelectedCourse } = useAppContext();
     const [selectedCourseForModal, setSelectedCourseForModal] = useState<CourseData | null>(null);
 
     const availableCourses = useMemo(() => {
@@ -66,7 +67,7 @@ export const CourseSelectionScreen: React.FC = () => {
                         受講可能科目リスト
                     </h1>
                     <p className="text-sm text-muted mt-1">
-                        興味のある科目をチェックして下さい。クラス調整は後で行います。
+                        科目カードをクリックするとシラバス詳細や先輩の口コミを確認できます。
                     </p>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -112,15 +113,19 @@ export const CourseSelectionScreen: React.FC = () => {
                             return (
                                 <div key={course.id_name}
                                     className={`rounded-xl shadow-sm border transition-all cursor-pointer ${colorClass} ${isSelected ? 'ring-2 ring-accent border-transparent scale-[1.02]' : 'hover:shadow-md hover:opacity-90'}`}
-                                    onClick={() => toggleSelectedCourse(course)}
+                                    onClick={() => setSelectedCourseForModal(course)}
                                 >
                                     <div className="p-5 flex justify-between items-start">
                                         <div className="flex items-start">
                                             <input
                                                 type="checkbox"
-                                                className="w-5 h-5 mt-1 text-accent rounded border-border focus:ring-accent pointer-events-none"
+                                                className="w-5 h-5 mt-1 text-accent rounded border-border focus:ring-accent cursor-pointer"
                                                 checked={isSelected}
-                                                readOnly
+                                                onChange={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleSelectedCourse(course);
+                                                }}
+                                                onClick={(e) => e.stopPropagation()}
                                             />
                                             <div className="ml-3">
                                                 {retake && (
@@ -147,9 +152,9 @@ export const CourseSelectionScreen: React.FC = () => {
                                         <span className="bg-background px-2 py-1 rounded-md text-muted font-medium text-xs">{course.credits} 単位</span>
                                         <button
                                             onClick={(e) => { e.stopPropagation(); setSelectedCourseForModal(course); }}
-                                            className="flex items-center text-accent hover:text-accent/80 font-medium text-xs"
+                                            className="flex items-center text-accent hover:text-accent/80 font-medium text-xs cursor-pointer"
                                         >
-                                            <Info className="w-4 h-4 mr-1" /> 詳細を見る
+                                            <Info className="w-4 h-4 mr-1" /> 詳細・口コミを見る
                                         </button>
                                     </div>
                                 </div>
@@ -176,83 +181,18 @@ export const CourseSelectionScreen: React.FC = () => {
                 </div>
             </main>
 
-            {/* Course Detail Modal */}
-            {selectedCourseForModal && (
-                <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200">
-                        <div className="flex justify-between items-center p-5 border-b border-gray-100">
-                            <h3 className="font-bold text-lg text-gray-800">{selectedCourseForModal.id_name}</h3>
-                            <button
-                                onClick={() => setSelectedCourseForModal(null)}
-                                className="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-500"
-                            >
-                                <X className="w-6 h-6" />
-                            </button>
-                        </div>
-                        <div className="p-6">
-                            <div className="mb-6">
-                                <h4 className="text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">概要</h4>
-                                <p className="text-gray-600 text-sm leading-relaxed">{selectedCourseForModal.outline}</p>
-                            </div>
-
-                            {selectedCourseForModal.grading && (
-                                <div className="mb-6">
-                                    <h4 className="text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">成績評価の割合</h4>
-                                    <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-                                        <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600">試験 (Exam)</span>
-                                            <span className="font-semibold text-gray-800">{selectedCourseForModal.grading.exam}%</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600">レポート (Report)</span>
-                                            <span className="font-semibold text-gray-800">{selectedCourseForModal.grading.report}%</span>
-                                        </div>
-                                        <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600">その他 (Others)</span>
-                                            <span className="font-semibold text-gray-800">{selectedCourseForModal.grading.others}%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
-                            <div>
-                                <h4 className="text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">受講クラス制限</h4>
-                                <p className="text-xs text-gray-500 mb-3">AIによる自動割り当てではなく、特定のクラスを指定したい場合は選択してください。</p>
-                                <div className="space-y-2 max-h-48 overflow-y-auto pr-2">
-                                    <label className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors ${!state.pinnedClasses[selectedCourseForModal.id_name] ? 'bg-indigo-50 border-indigo-300 ring-1 ring-indigo-300' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>
-                                        <input
-                                            type="radio"
-                                            name="classSelection"
-                                            checked={!state.pinnedClasses[selectedCourseForModal.id_name]}
-                                            onChange={() => pinClass(selectedCourseForModal.id_name, null)}
-                                            className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                                        />
-                                        <div className="ml-3 flex-1">
-                                            <span className="block text-sm font-medium text-gray-900">おまかせ (AI自動割り当て)</span>
-                                        </div>
-                                    </label>
-
-                                    {selectedCourseForModal.classes.map(cls => (
-                                        <label key={cls.class_id} className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors ${state.pinnedClasses[selectedCourseForModal.id_name] === cls.class_id ? 'bg-indigo-50 border-indigo-300 ring-1 ring-indigo-300' : 'bg-white border-gray-200 hover:bg-gray-50'}`}>
-                                            <input
-                                                type="radio"
-                                                name="classSelection"
-                                                checked={state.pinnedClasses[selectedCourseForModal.id_name] === cls.class_id}
-                                                onChange={() => pinClass(selectedCourseForModal.id_name, cls.class_id)}
-                                                className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                                            />
-                                            <div className="ml-3 flex-1">
-                                                <span className="block text-sm font-medium text-gray-900">{cls.class_id}</span>
-                                                <span className="block text-xs text-gray-500 mt-1">{cls.schedule.join(', ')}</span>
-                                            </div>
-                                        </label>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Course Detail Modal Component */}
+            <CourseDetailModal
+                course={selectedCourseForModal}
+                isOpen={!!selectedCourseForModal}
+                color={selectedCourseForModal ? getSubjectColor(selectedCourseForModal.id_name) : ''}
+                onClose={() => setSelectedCourseForModal(null)}
+                onSelect={(courseToSelect) => {
+                    toggleSelectedCourse(courseToSelect);
+                }}
+                isSelected={selectedCourseForModal ? state.selectedCourses.some(c => c.id_name === selectedCourseForModal.id_name) : false}
+            />
         </div>
     );
 };
+
