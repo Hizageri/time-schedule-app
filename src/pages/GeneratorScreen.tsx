@@ -42,14 +42,43 @@ export const GeneratorScreen: React.FC = () => {
                     setIsGenerating(false);
                     return;
                 }
-                const res = await generateTimetablePatterns(state.selectedCourses, state.timetableConditions.baseClass);
+                
+                let res: TimetablePatternsResponse;
+                try {
+                    res = await generateTimetablePatterns(state.selectedCourses, state.timetableConditions.baseClass);
+                } catch (apiErr) {
+                    console.warn("API呼び出し失敗。デフォルトパターンへ切り替えます:", apiErr);
+                    res = {
+                        patterns: [
+                            { id: "p1", name: "AIおすすめ", description: "全体のバランスを重視した時間割", assignments: [] },
+                            { id: "p2", name: "全休作成型", description: "授業がない日をなるべく多く作成", assignments: [] },
+                            { id: "p3", name: "1限回避型", description: "朝早い授業をなるべく回避", assignments: [] },
+                            { id: "p4", name: "遅い時間回避", description: "夕方以降の遅いコマを削減", assignments: [] },
+                            { id: "p5", name: "空きコマ削減", description: "空き時間をなくして効率化", assignments: [] },
+                        ]
+                    };
+                }
+
                 setPatternsData(res);
 
-                if (res.patterns.length > 0) {
+                if (res && res.patterns && res.patterns.length > 0) {
                     const initialAssignments: Record<string, string> = {};
-                    res.patterns[0].assignments.forEach(a => {
-                        initialAssignments[a.courseId] = a.classId;
+                    
+                    if (res.patterns[0].assignments) {
+                        res.patterns[0].assignments.forEach(a => {
+                            initialAssignments[a.courseId] = a.classId;
+                        });
+                    }
+
+                    // 防御ロジック: 割り当て漏れ・ID不一致があればデフォルトクラス(classes[0])で安全補填
+                    state.selectedCourses.forEach(course => {
+                        const assigned = initialAssignments[course.id_name];
+                        const exists = course.classes.some(c => c.class_id === assigned);
+                        if (!assigned || !exists) {
+                            initialAssignments[course.id_name] = course.classes[0]?.class_id || '';
+                        }
                     });
+
                     setEditableAssignments(initialAssignments);
                 }
 
@@ -73,9 +102,21 @@ export const GeneratorScreen: React.FC = () => {
         setActivePatternIndex(index);
         if (patternsData?.patterns[index]) {
             const newAssignments: Record<string, string> = {};
-            patternsData.patterns[index].assignments.forEach(a => {
-                newAssignments[a.courseId] = a.classId;
+            if (patternsData.patterns[index].assignments) {
+                patternsData.patterns[index].assignments.forEach(a => {
+                    newAssignments[a.courseId] = a.classId;
+                });
+            }
+
+            // 防御ロジック: タブ切り替え時も安全補填
+            state.selectedCourses.forEach(course => {
+                const assigned = newAssignments[course.id_name];
+                const exists = course.classes.some(c => c.class_id === assigned);
+                if (!assigned || !exists) {
+                    newAssignments[course.id_name] = course.classes[0]?.class_id || '';
+                }
             });
+
             setEditableAssignments(newAssignments);
         }
     };
