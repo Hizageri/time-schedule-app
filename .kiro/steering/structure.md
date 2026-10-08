@@ -1,6 +1,7 @@
 # Structure Steering
 
-> 2026-10-08 時点のコードから作成。現状の構成と、`CLAUDE.md`・`specs/02_architecture.md` にある移行先の構成を併記する。
+> updated_at: 2026-10-08（旧 `specs/` への参照をなくし、steering だけで読めるようにした）
+> 2026-10-08 時点のコードから作成。現状の構成と、移行先の構成を併記する。
 
 ## 現状のディレクトリ構成
 
@@ -12,7 +13,6 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   chatbot.ts               AI先輩チャット（未使用）
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
-specs/                     要件・アーキテクチャ・スキーマ・タスク（cc-sdd）
 src/
   main.tsx                 エントリ。index.css を読み込み App を描画
   data.ts                  JSON を結合して MOCK_COURSES を作る
@@ -47,7 +47,7 @@ src/
 
 画面を追加するときは `AppState['currentScreen']` の型、`ScreenManager` の `switch`、遷移元の `setScreen()` をそろえて変える。
 
-## 移行先の構成（`specs/04_tasks.md` フェーズ5で実施）
+## 移行先の構成（今後 spec で対応予定）
 
 | 現状 | 移行先 |
 |------|--------|
@@ -60,7 +60,7 @@ src/
 | `ui/styles/` | `assets/` |
 
 - 移行先の役割：`components/` 汎用 UI / `pages/` 画面 / `hooks/` ロジック / `context/` グローバル状態 / `utils/` UI のない純粋関数 / `lib/` 外部ライブラリの初期化 / `types/` 型 / `data/` 固定 JSON / `assets/` 静的素材
-- **移行はタスク単位でまとめて行う。** それ以外の作業で新しいファイルを置くときは、現状の構成の同じ役割の場所に置く（例：新しい画面は `pages/`、ビット判定は `logic/timetableGenerator.ts`）
+- **移行は spec のタスクとしてまとめて行う。** それ以外の作業で新しいファイルを置くときは、現状の構成の同じ役割の場所に置く（例：新しい画面は `pages/`、ビット判定は `logic/timetableGenerator.ts`）
 
 ## 依存の向き
 

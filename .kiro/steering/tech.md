@@ -1,7 +1,8 @@
 # Technology Steering
 
-> 2026-10-08 時点のコードから作成。`specs/02_architecture.md` を参考にし、食い違う箇所はコードを正とした。
-> 外部サービスの設定（Firebase の承認済みドメイン、Vercel の環境変数、トラブル対応）は `specs/02_architecture.md` の 8 章を参照。
+> updated_at: 2026-10-08（旧 `specs/` への参照をなくし、steering だけで読めるようにした）
+> 2026-10-08 時点のコードから作成。
+> 外部サービスの設定（Firebase の承認済みドメイン、Vercel の環境変数、トラブル対応）は `deployment.md`、型定義は `data-model.md` を参照。
 
 ## 技術スタック
 
@@ -39,7 +40,7 @@
 - 日本語プロンプト（キャラ設定・出力形式・文字数）と英語の `systemInstruction`（JSON のみを返す指示）
 - 返答は文字列からコードフェンスを除き、`{...}` を抜き出し、末尾カンマを除いて `JSON.parse`（構造化出力は使っていない）
 - 失敗時は 200 で定型の代替レスポンスを返す（`chatbot` だけは 500）
-- 認証なし（誰でも呼べる。`specs/04_tasks.md` T-30 で対応予定）
+- 認証なし（誰でも呼べる。Firebase ID トークンの検証を今後 spec で対応予定）
 - `consultation`・`chatbot` は `src/data/*.json` を `fs` で読む（`process.cwd()` と `__dirname` 基準の複数パスを試す）
 
 | エンドポイント | リクエスト | 使う画面 |
@@ -55,7 +56,7 @@
 - 科目単位の `target_bit` がなければクラス単位の `target_bit` を見る（`course.target_bit ?? course.classes[0]?.target_bit`）
 - `reviews_bit`（12ビット）：難易度・課題量・テスト・出席を各3ビット
 - コマ文字列は `"月-1"` 形式（最大 11 限）。集中講義には `"TBD"` や `"8/24(月)"` のような日付文字列も入る
-- 型の正は `specs/03_schema.md`。現在のコード上の型は `src/logic/types.ts`
+- 型の正は `data-model.md`。現在のコード上の型は `src/logic/types.ts`
 
 ## 環境変数
 
@@ -65,7 +66,7 @@
 | `VITE_FIREBASE_*`（6個） | `src/lib/firebase.ts` | ブラウザに公開される前提の値。`vite.config.ts` の `define` でも埋め込む |
 
 - 見本は `.env.example`。`.env` は commit しない
-- Vercel で環境変数を変えたら Redeploy が必要
+- 保存場所と Redeploy の注意は `deployment.md` を参照
 
 ## 開発コマンド
 
@@ -82,15 +83,15 @@ npm run build:reviews  # raw_reviews.json → reviews_bit.json / reviews_text.js
 
 - 秘密情報をコード・commit に入れない。Gemini は必ず `api/` から呼ぶ
 - 新しいコードで `any` を使わない（既存コードには多数残っている）
-- 型を変えるときは `specs/03_schema.md` を先に直す
-- `src/` から `specs/` を import しない
-- モデル名・SDK の変更（`@google/genai` への移行）は `specs/04_tasks.md` T-62 で扱う。個別に変えない
+- 型を変えるときは `data-model.md` を先に直す
+- `src/` からドキュメント（Markdown）を import しない
+- モデル名・SDK の変更（`@google/genai` への移行）は今後 spec で対応予定。個別に変えない
 
 ## 既知の技術的な注意点
 
 - 状態全体を変更のたびに Firestore に書く（1文字入力ごと）。`selectedCourses` にシラバス本文ごと入る
-- `merge: true` のため、Map のキーを消しても Firestore 側に残る可能性がある（B5）
-- ログイン直後、読み込み前に初期状態が書き込まれる可能性がある（B4）
-- Error Boundary がなく、例外で画面が真っ白になる（B1）
+- `merge: true` のため、Map のキーを消しても Firestore 側に残る可能性がある
+- ログイン直後、読み込み前に初期状態が書き込まれる可能性がある
+- Error Boundary がなく、例外で画面が真っ白になる（例：`OT03-001` の詳細モーダルを開いたとき）
 - `src/ui/styles/index.css` に Tailwind v4 の `@theme` 構文があるが、使っているのは v3。色の正は `tailwind.config.js`
 - デバッグ用 `console.log` が残っている（`firebase.ts` の API キー先頭6文字のログを含む）
