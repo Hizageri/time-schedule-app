@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
+import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
 
 dotenv.config();
 
@@ -119,7 +120,7 @@ ${courseDetails}
             model: "gemini-2.5-flash",
             systemInstruction: "You MUST return your response ONLY in strict JSON format: { \"overallFeedback\": \"overall feedback text\", \"courseFeedbacks\": [ { \"courseId\": \"course ID\", \"courseName\": \"course name\", \"comment\": \"feedback comment\" } ] }. Do NOT include trailing commas in arrays or objects under any circumstances. Persona: harsh, tsundere/hot-blooded senior with highly practical advice in Japanese. Length constraint: overallFeedback around 150 characters, and each course comment around 150 characters. Do not include any markdown blocks or text outside the JSON."
         });
-        const response = await model.generateContent(prompt);
+        const response = await withGeminiRetry(() => model.generateContent(prompt));
 
         if (!response.response.text) {
             throw new Error('No response text returned from Gemini API');
@@ -141,11 +142,11 @@ ${courseDetails}
         console.error('\x1b[31m[Consultation API Error Details]:\x1b[0m', error.stack || error.message || error);
         // Fallback response structure
         return res.status(200).json({
-            overallFeedback: "AI応答の解析に失敗しました。時間をおいて再度お試しください。",
+            overallFeedback: getGeminiErrorMessage(error),
             courseFeedbacks: courses.map((c: any) => ({
                 courseId: c.id_name,
                 courseName: c.id_name,
-                comment: "評価不能"
+                comment: "この科目は今回はノーコメントだ"
             }))
         });
     }

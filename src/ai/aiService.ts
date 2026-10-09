@@ -1,5 +1,9 @@
 import type { CourseData, AppState } from '../logic/types';
 
+// /api/* 自体が失敗したとき（タイムアウト・通信断など）のコマどり先輩の返答
+// api/_lib/geminiRetry.ts の GENERAL_ERROR_MESSAGE と同じ文言（api/ と src/ は互いに import しない）
+const API_ERROR_MESSAGE = 'なんか調子が悪いみてえだ。時間をおいて出直してこい';
+
 export interface ConsultationResponse {
     overallFeedback: string;
     courseFeedbacks: {
@@ -41,10 +45,12 @@ export const generateConsultation = async (
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userProfile, courses }),
+    }).catch(() => {
+        throw new Error(API_ERROR_MESSAGE);
     });
 
     if (!response.ok) {
-        throw new Error('AI consultation request failed');
+        throw new Error(API_ERROR_MESSAGE);
     }
 
     return response.json() as Promise<ConsultationResponse>;
@@ -58,10 +64,12 @@ export const generateTimetablePatterns = async (
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ courses, baseClass }),
+    }).catch(() => {
+        throw new Error(API_ERROR_MESSAGE);
     });
 
     if (!response.ok) {
-        throw new Error('AI timetable generation request failed');
+        throw new Error(API_ERROR_MESSAGE);
     }
 
     return response.json() as Promise<TimetablePatternsResponse>;
@@ -75,10 +83,12 @@ export const generateGradeReaction = async (
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userProfile, grades }),
+    }).catch(() => {
+        throw new Error(API_ERROR_MESSAGE);
     });
 
     if (!response.ok) {
-        throw new Error('AI grade reaction request failed');
+        throw new Error(API_ERROR_MESSAGE);
     }
 
     return response.json() as Promise<GradeReactionResponse>;

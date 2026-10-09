@@ -11,6 +11,7 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   timetable-patterns.ts    時間割5パターン生成
   grade-reaction.ts        成績へのリアクション
   chatbot.ts               コマどり先輩チャット（未使用）
+  _lib/geminiRetry.ts      Gemini 呼び出しの再試行とエラー文言（"_" 始まりなのでエンドポイントにならない）
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
 src/

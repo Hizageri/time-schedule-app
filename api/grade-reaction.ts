@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
+import { withGeminiRetry, isGeminiBusyError, getGeminiErrorMessage, GENERAL_ERROR_MESSAGE } from "./_lib/geminiRetry.js";
 
 dotenv.config();
 
@@ -75,7 +76,7 @@ export default async function handler(req: any, res: any) {
             model: "gemini-2.5-flash",
             systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"title\": \"称号\", \"message\": \"評価とアドバイスを統合した一続きのセリフ\" }. Persona: AI Senior in Japanese. Do not separate body and advice; integrate them into a single continuous natural spoken message from the persona. Do not include any markdown blocks or text outside the JSON."
         });
-        const response = await model.generateContent(prompt);
+        const response = await withGeminiRetry(() => model.generateContent(prompt));
         
         if (!response.response.text) {
             throw new Error('No response from AI');
@@ -88,7 +89,7 @@ export default async function handler(req: any, res: any) {
             const parsed = JSON.parse(cleanedResponse);
             return res.status(200).json({
                 title: parsed.title || "コマどり先輩の評価",
-                message: parsed.message || parsed.response || "AI応答の解析に失敗しました"
+                message: parsed.message || parsed.response || GENERAL_ERROR_MESSAGE
             });
         } catch (parseErr) {
             console.error("JSON Parse Error. Raw output from Gemini:", rawText);
@@ -97,8 +98,8 @@ export default async function handler(req: any, res: any) {
     } catch (error: any) {
         console.error('\x1b[31m[Grade Reaction API Error Details]:\x1b[0m', error.stack || error.message || error);
         return res.status(200).json({
-            title: "通信エラー",
-            message: "コマどり先輩は今忙しいようだ。後で出直してこい。"
+            title: isGeminiBusyError(error) ? "順番待ちの後輩" : "出直しの後輩",
+            message: getGeminiErrorMessage(error)
         });
     }
 }

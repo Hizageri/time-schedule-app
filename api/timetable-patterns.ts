@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
+import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
 
 dotenv.config();
 
@@ -85,7 +86,7 @@ ${JSON.stringify(courseClassMap, null, 2)}
             model: "gemini-2.5-flash",
             systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"patterns\": [ { \"id\": \"pattern id\", \"name\": \"pattern name\", \"description\": \"description text\", \"assignments\": [ { \"courseId\": \"course ID\", \"classId\": \"class ID\" } ] } ] }. Do not include any markdown blocks (like ```json) or extra text outside the JSON."
         });
-        const response = await model.generateContent(prompt);
+        const response = await withGeminiRetry(() => model.generateContent(prompt));
         
         if (!response.response.text) {
             throw new Error('No response from AI');
@@ -96,13 +97,14 @@ ${JSON.stringify(courseClassMap, null, 2)}
         return res.status(200).json(result);
     } catch (error: any) {
         console.error('\x1b[31m[Timetable Patterns API Error Details]:\x1b[0m', error.stack || error.message || error);
+        const errorMessage = getGeminiErrorMessage(error);
         return res.status(200).json({
             patterns: [
-                {id: "p1", name: "AIおすすめ", description: "生成エラー", assignments: []},
-                {id: "p2", name: "休日最大化", description: "生成エラー", assignments: []},
-                {id: "p3", name: "朝限回避", description: "生成エラー", assignments: []},
-                {id: "p4", name: "遅い時間回避", description: "生成エラー", assignments: []},
-                {id: "p5", name: "空きコマ削減", description: "生成エラー", assignments: []}
+                {id: "p1", name: "AIおすすめ", description: errorMessage, assignments: []},
+                {id: "p2", name: "休日最大化", description: errorMessage, assignments: []},
+                {id: "p3", name: "朝限回避", description: errorMessage, assignments: []},
+                {id: "p4", name: "遅い時間回避", description: errorMessage, assignments: []},
+                {id: "p5", name: "空きコマ削減", description: errorMessage, assignments: []}
             ]
         });
     }

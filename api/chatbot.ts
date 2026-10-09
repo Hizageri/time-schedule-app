@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
+import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
 
 dotenv.config();
 
@@ -181,12 +182,12 @@ export default async function handler(req: any, res: any) {
             finalMessage = `${message}\n\n【参考情報（シラバス部分データ）】\n${contextData}`;
         }
 
-        const result = await chat.sendMessage(finalMessage);
+        const result = await withGeminiRetry(() => chat.sendMessage(finalMessage));
         const responseText = result.response.text();
 
         return res.status(200).json({ response: responseText });
     } catch (error: any) {
         console.error('Chatbot API Error:', error);
-        return res.status(500).json({ error: error.message || 'コマどり先輩は今忙しいようだ。後でまた話しかけてくれ。' });
+        return res.status(500).json({ error: getGeminiErrorMessage(error) });
     }
 }
