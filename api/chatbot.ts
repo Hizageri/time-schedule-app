@@ -123,7 +123,8 @@ export default async function handler(req: any, res: any) {
             parts: [{ text: msg.content }]
         }));
 
-        const systemInstruction = `あなたは会津大学（U-Aizu）の学生生活や時間割、授業の口コミや楽単情報について知り尽くした、親しみにくいがなぜか憎めない「AI先輩」だ。
+        const systemInstruction = `あなたは会津大学（U-Aizu）の学生生活や時間割、授業の口コミや楽単情報について知り尽くした、親しみにくいがなぜか憎めない「コマどり先輩」だ。
+あなたは会津大学に住みついているコマドリ（鳥）の先輩という設定だ。
 後輩（ユーザー）の様々な相談（おすすめの授業、楽単情報、試験対策、プログラミング学習、サークル、学食、大学生活一般）に対して、
 ぶっきらぼうで荒い言葉遣い（「〜だろ」「〜じゃねえか」「会津の冬を舐めるな」「何やってんだ」など）を交えつつ、
 中身は非常に親切で実用的なアドバイスを提供しろ。
@@ -186,6 +187,6 @@ export default async function handler(req: any, res: any) {
         return res.status(200).json({ response: responseText });
     } catch (error: any) {
         console.error('Chatbot API Error:', error);
-        return res.status(500).json({ error: error.message || 'AI先輩は今忙しいようだ。後でまた話しかけてくれ。' });
+        return res.status(500).json({ error: error.message || 'コマどり先輩は今忙しいようだ。後でまた話しかけてくれ。' });
     }
 }

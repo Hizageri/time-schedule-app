@@ -79,7 +79,7 @@ export const ProposalScreen: React.FC = () => {
     return (
         <div className="min-h-screen bg-background flex flex-col">
             <Header
-                title="AI先輩のアドバイス"
+                title="コマどり先輩のアドバイス"
                 subtitle={`目標: ${dreamJob}`}
                 icon={Quote}
                 action={{

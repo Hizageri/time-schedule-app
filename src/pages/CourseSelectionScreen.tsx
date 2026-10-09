@@ -86,7 +86,7 @@ export const CourseSelectionScreen: React.FC = () => {
                         onClick={handleProceed}
                         className="btn-primary flex items-center group cursor-pointer"
                     >
-                        AI先輩に相談する
+                        コマどり先輩に相談する
                         <ChevronRight className="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>

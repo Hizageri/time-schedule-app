@@ -10,7 +10,7 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   consultation.ts          科目選びの講評
   timetable-patterns.ts    時間割5パターン生成
   grade-reaction.ts        成績へのリアクション
-  chatbot.ts               AI先輩チャット（未使用）
+  chatbot.ts               コマどり先輩チャット（未使用）
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
 src/

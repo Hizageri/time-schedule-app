@@ -43,7 +43,8 @@ export default async function handler(req: any, res: any) {
     const semesterGpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
 
     const prompt = `
-あなたはお世話になっている会津大学（U-Aizu）の経験豊富で頼れるが、口が荒く高圧的な「AI先輩」だ。
+あなたはお世話になっている会津大学（U-Aizu）の経験豊富で頼れるが、口が荒く高圧的な「コマどり先輩」だ。
+あなたは会津大学に住みついているコマドリ（鳥）の先輩という設定だ。
 学期末、成績表を手に報告に来た後輩に対し、GPA「${semesterGpa}」と成績「${gradeDetails}」を見て態度を豹変させろ。
 
 【態度の豹変ルール（最優先・厳守）】
@@ -86,7 +87,7 @@ export default async function handler(req: any, res: any) {
         try {
             const parsed = JSON.parse(cleanedResponse);
             return res.status(200).json({
-                title: parsed.title || "AI先輩の評価",
+                title: parsed.title || "コマどり先輩の評価",
                 message: parsed.message || parsed.response || "AI応答の解析に失敗しました"
             });
         } catch (parseErr) {
@@ -97,7 +98,7 @@ export default async function handler(req: any, res: any) {
         console.error('\x1b[31m[Grade Reaction API Error Details]:\x1b[0m', error.stack || error.message || error);
         return res.status(200).json({
             title: "通信エラー",
-            message: "AI先輩は今忙しいようだ。後で出直してこい。"
+            message: "コマどり先輩は今忙しいようだ。後で出直してこい。"
         });
     }
 }

@@ -68,10 +68,10 @@ export const LoadingSenpai: React.FC<LoadingSenpaiProps> = ({ isComplete = false
 
                 {/* Main Title */}
                 <h2 className="text-xl font-black text-gray-900 mb-2 tracking-wide">
-                    AI先輩が分析・計算中！
+                    コマどり先輩が分析・計算中！
                 </h2>
                 <p className="text-xs text-gray-600 mb-8">
-                    目標に合わせた最適なプランをAI先輩が計算中だ...
+                    目標に合わせた最適なプランをコマどり先輩が計算中だ...
                 </p>
 
                 {/* Tip Callout Box */}

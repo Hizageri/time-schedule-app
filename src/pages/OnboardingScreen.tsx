@@ -41,7 +41,7 @@ export const OnboardingScreen: React.FC = () => {
                     {/* Title */}
                     <div className="space-y-4">
                         <h1 className="text-6xl font-bold text-foreground tracking-tight">
-                            コマドリ
+                            コマどり
                         </h1>
                         <p className="text-xl text-muted font-light leading-relaxed max-w-lg mx-auto">
                             最適な時間割を数秒で生成します。

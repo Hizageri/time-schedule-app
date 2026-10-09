@@ -46,10 +46,10 @@ export const LoginScreen: React.FC = () => {
                     </div>
                     <div>
                         <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-                            コマドリ
+                            コマどり
                         </h1>
                         <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1.5">
-                            AI先輩と組む、最適な履修と時間割
+                            コマどり先輩と組む、最適な履修と時間割
                         </p>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ export const LoginScreen: React.FC = () => {
                             <Sparkles className="w-5 h-5" />
                         </div>
                         <div className="text-left">
-                            <div className="font-bold text-slate-900 text-sm">AI先輩による時間割フィードバック</div>
+                            <div className="font-bold text-slate-900 text-sm">コマどり先輩による時間割フィードバック</div>
                             <div className="text-[11px] text-slate-500">先輩のリアル口コミと夢に繋がる履修指導</div>
                         </div>
                     </div>

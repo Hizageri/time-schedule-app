@@ -126,7 +126,7 @@ export const GradeInputScreen: React.FC = () => {
     <div className="min-h-screen bg-background flex flex-col">
       <Header
         title="成績入力"
-        subtitle="取得した成績を入力して、AI先輩の判定とGPA算出を行いましょう"
+        subtitle="取得した成績を入力して、コマどり先輩の判定とGPA算出を行いましょう"
         icon={Award}
         action={{
           label: "ダッシュボードに戻る",
@@ -184,7 +184,7 @@ export const GradeInputScreen: React.FC = () => {
             className="flex items-center gap-2"
           >
             <AlertCircle className="w-5 h-5" />
-            {isGeneratingReaction ? 'AI先輩が評価中...' : 'AI先輩に評価してもらう'}
+            {isGeneratingReaction ? 'コマどり先輩が評価中...' : 'コマどり先輩に評価してもらう'}
           </Button>
         </div>
 
