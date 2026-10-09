@@ -78,7 +78,7 @@ export const LoadingSenpai: React.FC<LoadingSenpaiProps> = ({ isComplete = false
                 <div className="w-full bg-gray-50 border-2 border-gray-800 p-4 mb-8 min-h-[96px] flex flex-col justify-center items-center relative shadow-sm">
                     <div className="absolute -top-3 left-4 bg-gray-800 text-white px-2 py-0.5 text-[10px] font-bold flex items-center">
                         <MessageSquareQuote className="w-3 h-3 mr-1 text-emerald-300" />
-                        先輩からのアドバイス
+                        コマどり先輩からのアドバイス
                     </div>
                     <p
                         className={`text-xs text-gray-800 leading-relaxed font-bold transition-opacity duration-300 ${
