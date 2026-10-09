@@ -40,7 +40,7 @@
 - 日本語プロンプト（キャラ設定・出力形式・文字数）と英語の `systemInstruction`（JSON のみを返す指示）
 - 返答は文字列からコードフェンスを除き、`{...}` を抜き出し、末尾カンマを除いて `JSON.parse`（構造化出力は使っていない）
 - Gemini の呼び出しは `api/_lib/geminiRetry.ts` の `withGeminiRetry` で包む。503・429 のときだけ 1秒→2秒→4秒 待って最大3回再試行する（呼び出し開始から45秒を超える再試行はしない）。400・APIキーのエラー・JSON 解析の失敗は再試行しない
-- 再試行しても混雑が続いたら、軽量モデル（`FALLBACK_MODEL` = `gemini-3.1-flash-lite`）で1回だけ試す（開始から40秒を過ぎていたら試さない）。モデル名は `api/_lib/geminiRetry.ts` の `PRIMARY_MODEL`・`FALLBACK_MODEL` で一元管理する
+- 再試行しても混雑が続いたら、軽量モデル（`FALLBACK_MODEL` = `gemini-3.1-flash-lite`）で1回だけ試す（開始から40秒を過ぎていたら試さない）。メインのモデルが 404（見つからない・提供終了）を返したときは、再試行せずにすぐ予備モデルで1回だけ試す。モデル名は `api/_lib/geminiRetry.ts` の `PRIMARY_MODEL`・`FALLBACK_MODEL` で一元管理する
 - `vercel.json` で `api/*.ts` の `maxDuration` を 60 秒にしている
 - 失敗時は 200 で定型の代替レスポンスを返す（`chatbot` だけは 500）。文面はコマどり先輩の口調で、混雑（503・429）とそれ以外で `getGeminiErrorMessage` が切り替える
 - `api/_lib/` を import するときは `.js` 拡張子を付ける（`"type": "module"` のため）
