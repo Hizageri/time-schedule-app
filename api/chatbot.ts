@@ -156,15 +156,6 @@ export default async function handler(req: any, res: any) {
 3. 必要に応じてMarkdown（箇条書きなど）を使って分かりやすく伝えること。
 4. 会津大学特有のコンテキスト（コンピュータ理工学部のみの単科大学であること、英語教育、演習の多さ、過酷な冬など）に沿った内容にすること。`;
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-2.5-flash",
-            systemInstruction: systemInstruction
-        });
-
-        const chat = model.startChat({
-            history: formattedHistory,
-        });
-
         const relevantCourses = getRelevantCourses(message);
         let finalMessage = message;
 
@@ -182,7 +173,14 @@ export default async function handler(req: any, res: any) {
             finalMessage = `${message}\n\n【参考情報（シラバス部分データ）】\n${contextData}`;
         }
 
-        const result = await withGeminiRetry(() => chat.sendMessage(finalMessage));
+        const result = await withGeminiRetry((modelName) =>
+            genAI.getGenerativeModel({
+                model: modelName,
+                systemInstruction: systemInstruction
+            }).startChat({
+                history: formattedHistory,
+            }).sendMessage(finalMessage)
+        );
         const responseText = result.response.text();
 
         return res.status(200).json({ response: responseText });

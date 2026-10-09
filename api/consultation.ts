@@ -116,11 +116,12 @@ ${courseDetails}
 
     try {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.5-flash",
-            systemInstruction: "You MUST return your response ONLY in strict JSON format: { \"overallFeedback\": \"overall feedback text\", \"courseFeedbacks\": [ { \"courseId\": \"course ID\", \"courseName\": \"course name\", \"comment\": \"feedback comment\" } ] }. Do NOT include trailing commas in arrays or objects under any circumstances. Persona: harsh, tsundere/hot-blooded senior with highly practical advice in Japanese. Length constraint: overallFeedback around 150 characters, and each course comment around 150 characters. Do not include any markdown blocks or text outside the JSON."
-        });
-        const response = await withGeminiRetry(() => model.generateContent(prompt));
+        const response = await withGeminiRetry((modelName) =>
+            genAI.getGenerativeModel({
+                model: modelName,
+                systemInstruction: "You MUST return your response ONLY in strict JSON format: { \"overallFeedback\": \"overall feedback text\", \"courseFeedbacks\": [ { \"courseId\": \"course ID\", \"courseName\": \"course name\", \"comment\": \"feedback comment\" } ] }. Do NOT include trailing commas in arrays or objects under any circumstances. Persona: harsh, tsundere/hot-blooded senior with highly practical advice in Japanese. Length constraint: overallFeedback around 150 characters, and each course comment around 150 characters. Do not include any markdown blocks or text outside the JSON."
+            }).generateContent(prompt)
+        );
 
         if (!response.response.text) {
             throw new Error('No response text returned from Gemini API');
