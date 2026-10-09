@@ -46,7 +46,7 @@ export const LoginScreen: React.FC = () => {
                     </div>
                     <div>
                         <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
-                            AI TIME TABLE <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-emerald-600 text-sm font-extrabold bg-accent/10 px-3 py-1 rounded-full border border-accent/20 align-middle">v2.0</span>
+                            コマドリ
                         </h1>
                         <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1.5">
                             AI先輩と組む、最適な履修と時間割
