@@ -79,9 +79,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         if (!user) return; // Only persist when authenticated
 
         const userDocRef = doc(db, 'users', user.uid);
-        setDoc(userDocRef, state, { merge: true }).catch((err) => {
+        // setDoc はデータの検査エラーを同期的に投げるため、.catch() だけでなく try/catch でも受け止める
+        // （受け止めないと useEffect の外にエラーが漏れ、アプリ全体が真っ白になる）
+        try {
+            setDoc(userDocRef, state, { merge: true }).catch((err) => {
+                console.error("Failed to sync state to Firestore:", err);
+            });
+        } catch (err) {
             console.error("Failed to sync state to Firestore:", err);
-        });
+        }
     }, [state, user]);
 
     const loginWithGoogle = async () => {

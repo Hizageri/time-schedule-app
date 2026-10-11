@@ -1,6 +1,6 @@
 # Data Model Steering
 
-> updated_at: 2026-10-08
+> updated_at: 2026-10-11
 > 今実際に使われているデータの形（コードから確認済み）。コード上の型は `src/logic/types.ts` と `src/ai/aiService.ts` にある。
 > `[要確認]` = 作者に意図を確認したい箇所
 
@@ -197,3 +197,4 @@ export interface ChatbotResponse {
 - コード上の `TimeSlot` 型は `"月-1"` 〜 `"金-10"` のリテラルと `string` の合併型だが、実質は `string`
 - `reviews_bit.json`・`reviews_text.json` は生成物。直さずに `raw_reviews.json` を直して `npm run build:reviews`
 - 保存は `setDoc(..., { merge: true })` のため、Map（`grades` など）のキーを消しても Firestore 側に残る可能性がある
+- Firestore は `ignoreUndefinedProperties: true` で初期化している（`src/lib/firebase.ts`）。値が `undefined` の項目は保存されず、読み直すと項目ごとない状態になる（例：口コミ本文のない科目の `comment`）

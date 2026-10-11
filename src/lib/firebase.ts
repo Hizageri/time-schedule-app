@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 
 const getEnvValue = (key: string, fallback: string): string => {
     const val = (import.meta.env && import.meta.env[key]) as string | undefined;
@@ -23,5 +23,6 @@ console.log('[Firebase Config Audit] projectId:', firebaseConfig.projectId);
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+// undefined の項目は保存しない（口コミ本文のない科目の comment: undefined などで setDoc が失敗するのを防ぐ）
+export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
 export const googleProvider = new GoogleAuthProvider();
