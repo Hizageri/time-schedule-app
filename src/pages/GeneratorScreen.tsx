@@ -158,7 +158,7 @@ export const GeneratorScreen: React.FC = () => {
                     finalClasses.push({
                         courseId: course.id_name,
                         classId: classInfo.class_id,
-                        schedule: classInfo.schedule,
+                        schedule: classInfo.schedule ?? [],
                         targetBit: classInfo.target_bit ?? course.target_bit
                     });
                 }
@@ -212,7 +212,7 @@ export const GeneratorScreen: React.FC = () => {
             if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return;
             if (qType === 'intensive') return;
 
-            if (classInfo.schedule.includes(slotStr)) {
+            if ((classInfo.schedule ?? []).includes(slotStr)) {
                 activeClasses.push({
                     courseId: course.id_name,
                     classId: classInfo.class_id
@@ -478,7 +478,7 @@ export const GeneratorScreen: React.FC = () => {
                                                     <option value="" disabled>クラスを選択</option>
                                                     {course.classes.map(c => (
                                                         <option key={c.class_id} value={c.class_id}>
-                                                            {c.class_id} ({c.schedule.join(', ')})
+                                                            {c.class_id} ({(c.schedule ?? []).join(', ')})
                                                         </option>
                                                     ))}
                                                 </select>

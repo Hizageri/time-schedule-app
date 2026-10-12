@@ -96,6 +96,6 @@ npm run build:reviews  # raw_reviews.json → reviews_bit.json / reviews_text.js
 - 状態全体を変更のたびに Firestore に書く（1文字入力ごと）。`selectedCourses` にシラバス本文ごと入る
 - `merge: true` のため、Map のキーを消しても Firestore 側に残る可能性がある
 - ログイン直後、読み込み前に初期状態が書き込まれる可能性がある
-- Error Boundary がなく、例外で画面が真っ白になる（例：`OT03-001` の詳細モーダルを開いたとき）
+- 描画中の例外は `ErrorBoundary`（`src/components/ErrorBoundary.tsx`）が受け止めてエラー画面を出す。ただしイベントハンドラや非同期処理の中の例外は受け止めないので、そこは各処理で `try/catch` する
 - `src/ui/styles/index.css` に Tailwind v4 の `@theme` 構文があるが、使っているのは v3。色の正は `tailwind.config.js`
 - デバッグ用 `console.log` が残っている（`firebase.ts` の API キー先頭6文字のログを含む）

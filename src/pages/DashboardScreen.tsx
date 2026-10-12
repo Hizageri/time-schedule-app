@@ -60,7 +60,7 @@ export const DashboardScreen: React.FC = () => {
             // Match active quarter OR if it's "across" (通年/またぎ)
             if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return false;
             if (qType === 'intensive') return false; // Intensives go below
-            return c.schedule.includes(slotStr);
+            return (c.schedule ?? []).includes(slotStr);
         });
     };
 
@@ -72,7 +72,7 @@ export const DashboardScreen: React.FC = () => {
             const courseTerm = (bit >> 8) & 3;
             if (courseTerm !== 2 && courseTerm !== sessionTermBit) return false;
 
-            return getQuarterType(bit) === 'intensive' || c.schedule.includes('TBD') || !c.schedule.some(s => s.includes('-'));
+            return getQuarterType(bit) === 'intensive' || (c.schedule ?? []).includes('TBD') || !(c.schedule ?? []).some(s => s.includes('-'));
         });
     };
 

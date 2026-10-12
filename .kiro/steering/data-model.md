@@ -1,6 +1,6 @@
 # Data Model Steering
 
-> updated_at: 2026-10-11
+> updated_at: 2026-10-12
 > 今実際に使われているデータの形（コードから確認済み）。コード上の型は `src/logic/types.ts` と `src/ai/aiService.ts` にある。
 > `[要確認]` = 作者に意図を確認したい箇所
 
@@ -193,7 +193,9 @@ export interface ChatbotResponse {
 ## 扱いの注意
 
 - `target_bit` は科目単位にないことがある。読むときは `course.target_bit ?? course.classes[0]?.target_bit` の順で探す
-- `syllabus.json` の `OT03-001` は `classes` の中身の形が崩れていて `class_id` と `schedule` がない。読む側は `schedule` がない可能性を考える
+- `syllabus.json` の `OT03-001` は以前 `classes` の中に科目オブジェクトが入れ子になっていて、`class_id` と `schedule` がなかった（詳細モーダルが落ちる原因だった）。2026-10-12 に `月曜枠`（月-9, 月-10）・`木曜枠`（木-9, 木-10）の2クラスに直した。今は全204科目のクラスに `class_id` と `schedule` がある
+- それでも手で管理しているデータなので、`schedule` を読むときは `cls.schedule ?? []` のように、ない場合に備える（詳細モーダル・生成画面・ダッシュボード・`checkScheduleConflict` はそうしてある）
+- 画面の描画中にエラーが起きても真っ白にならないよう、`src/components/ErrorBoundary.tsx` で画面全体を囲んでいる。エラー時はコマどり先輩の口調のエラー画面と「戻る」ボタンを出す
 - コード上の `TimeSlot` 型は `"月-1"` 〜 `"金-10"` のリテラルと `string` の合併型だが、実質は `string`
 - `reviews_bit.json`・`reviews_text.json` は生成物。直さずに `raw_reviews.json` を直して `npm run build:reviews`
 - 保存は `setDoc(..., { merge: true })` のため、Map（`grades` など）のキーを消しても Firestore 側に残る可能性がある

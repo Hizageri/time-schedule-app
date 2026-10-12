@@ -23,6 +23,7 @@ src/
     CourseDetailModal.tsx  科目詳細モーダル
     MobileTimetableList.tsx
     LoadingSenpai.tsx      AI 待ちのローディング
+    ErrorBoundary.tsx      描画エラー時にコマどり先輩のエラー画面と「戻る」ボタンを出す（App.tsx で画面全体と ScreenManager を囲む）
   data/                    syllabus.json / raw_reviews.json / reviews_bit.json / reviews_text.json / course_list_for_prompt.md
   lib/firebase.ts          Firebase 初期化（auth, db, googleProvider を export）
   logic/
@@ -91,4 +92,4 @@ logic/AppContext ─▶ lib/firebase, firebase/*
 ## データファイルの扱い
 
 - `reviews_bit.json`・`reviews_text.json`・`course_list_for_prompt.md` は生成物。直接編集せず、`raw_reviews.json` を直して `npm run build:reviews`
-- `syllabus.json`（204科目）は手で管理されている。形の崩れたデータ（`OT03-001` の `classes`）があるので、読む側は `schedule` がない可能性を考える
+- `syllabus.json`（204科目）は手で管理されている。形の崩れていた `OT03-001` の `classes` は 2026-10-12 に直したが、読む側は引き続き `schedule` がない可能性を考える（`?? []`）

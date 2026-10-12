@@ -14,7 +14,7 @@ export const checkScheduleConflict = (
 ): boolean => {
     for (const existing of existingClasses) {
         // 1. まず時間のコマが被っているかチェック
-        const hasCommonSlot = existing.schedule.some(slot =>
+        const hasCommonSlot = (existing.schedule ?? []).some(slot =>
             slot !== "TBD" && slot.includes("-") && newSchedule.includes(slot)
         );
 

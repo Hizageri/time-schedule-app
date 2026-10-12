@@ -302,7 +302,7 @@ export const CourseDetailModal: React.FC<CourseDetailModalProps> = ({
                                         />
                                         <span className="ml-2 font-bold">{cls.class_id}</span>
                                     </div>
-                                    <span className="text-[11px] text-muted">{cls.schedule.join(', ')}</span>
+                                    <span className="text-[11px] text-muted">{(cls.schedule ?? []).join(', ')}</span>
                                 </label>
                             ))}
                         </div>

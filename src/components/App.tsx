@@ -9,6 +9,7 @@ import { DashboardScreen } from '../pages/DashboardScreen';
 import { GradeInputScreen } from '../pages/GradeInputScreen';
 import { ReflectionScreen } from '../pages/ReflectionScreen';
 import { LoginScreen } from '../pages/LoginScreen';
+import { ErrorBoundary } from './ErrorBoundary';
 import { LogOut, User } from 'lucide-react';
 
 const ScreenManager: React.FC = () => {
@@ -79,7 +80,7 @@ const FloatingUserBadge: React.FC = () => {
 };
 
 const AuthGate: React.FC = () => {
-  const { user, authLoading } = useAppContext();
+  const { user, authLoading, state } = useAppContext();
 
   if (authLoading) {
     return (
@@ -97,16 +98,22 @@ const AuthGate: React.FC = () => {
   return (
     <>
       <FloatingUserBadge />
-      <ScreenManager />
+      {/* 「戻る」でエラー表示を解除し、今の画面を描き直す（モーダルなど画面内の状態は閉じた状態に戻る） */}
+      <ErrorBoundary resetKey={state.currentScreen} onReset={() => {}}>
+        <ScreenManager />
+      </ErrorBoundary>
     </>
   );
 };
 
 const App: React.FC = () => {
   return (
-    <AppProvider>
-      <AuthGate />
-    </AppProvider>
+    // 画面の外（認証まわりなど）で起きたエラー用。「戻る」はページを再読み込みする
+    <ErrorBoundary>
+      <AppProvider>
+        <AuthGate />
+      </AppProvider>
+    </ErrorBoundary>
   );
 };
 
