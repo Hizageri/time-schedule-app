@@ -1,6 +1,6 @@
 # Structure Steering
 
-> updated_at: 2026-10-08（旧 `specs/` への参照をなくし、steering だけで読めるようにした）
+> updated_at: 2026-10-13（目標の構成を決定し、各フォルダのルールと依存の向きを追加）
 > 2026-10-08 時点のコードから作成。現状の構成と、移行先の構成を併記する。
 
 ## 現状のディレクトリ構成
@@ -49,22 +49,78 @@ src/
 
 画面を追加するときは `AppState['currentScreen']` の型、`ScreenManager` の `switch`、遷移元の `setScreen()` をそろえて変える。
 
-## 移行先の構成（今後 spec で対応予定）
+## 目標の構成（2026-10-13 決定）
+
+今後は次の構成に移行する。**移行そのものは専用の spec のタスクとして行い、それ以外の作業ではファイルを移さない。**
+
+```
+src/
+  main.tsx        エントリ
+  App.tsx         AppProvider・認証ゲート・画面切替
+  assets/         画像・アイコン・CSS などの静的素材
+  components/     アプリ全体で使う UI 部品
+  pages/          画面（*Screen.tsx）
+  hooks/          画面の裏側の処理（use〜）
+  context/        アプリ全体で共有する状態
+  services/       通信（/api/* の呼び出し。将来は DB からの読み込みも）
+  utils/          UI も通信もない純粋な関数
+  lib/            外部ライブラリの設定と export
+  types/          型
+  data/           シラバス・口コミの JSON と、その結合
+```
+
+### 各フォルダのルール
+
+| フォルダ | 置くもの | してはいけないこと |
+|----------|----------|--------------------|
+| `assets/` | 画像・アイコン・CSS | コードを置かない |
+| `components/` | 複数の画面で使う UI 部品。データは props で受け取る | `services/`・`firebase/*` を直接使わない |
+| `pages/` | 画面1つ＝1ファイル（`<名前>Screen.tsx`） | `services/`・`firebase/*` を直接使わない。計算や通信は `hooks/` に出す |
+| `hooks/` | 画面の裏側の処理（計算の組み合わせ、通信、状態の操作）。**ファイル名と関数名は `use` で始める**（例：`useCourseFilter.ts` の `useCourseFilter`）。1ファイル1フック | 見た目（JSX）を返さない |
+| `context/` | アプリ全体で共有する状態と、その更新関数（`AppContext`・`useAppContext`） | 通信や保存の処理を直接書かない（`hooks/` に出す） |
+| `services/` | 通信だけ（例：`aiApi.ts` で `fetch('/api/consultation')`）。戻り値に型を付ける | React を使わない。API キーなどの秘密情報を置かない（Gemini は必ずルートの `api/` から呼ぶ） |
+| `utils/` | 同じ入力なら必ず同じ結果を返す関数（ビット判定、GPA 計算、`cn()` など） | React・通信・Firebase を使わない |
+| `lib/` | 外部ライブラリをこのアプリ用に設定して export（例：`firebase.ts`） | アプリの処理を書かない |
+| `types/` | 型。中身は `data-model.md` と一致させる | 値（`defaultState` など）を置かない |
+| `data/` | JSON と、それを結合して科目一覧を作るファイル | 生成物の JSON を直接編集しない |
+
+### 依存の向き
+
+```
+pages/・components/（見た目）
+   │ 呼ぶ
+   ▼
+hooks/・context/（裏側の処理・共有する状態）
+   │ 呼ぶ
+   ▼
+services/（通信）・utils/（計算）・lib/（ライブラリ）・data/
+
+types/ はどこからでも import してよい
+```
+
+- 上から下へだけ呼ぶ。下から上（例：`utils/` から `hooks/`）は呼ばない
+- `firebase/*` を import してよいのは `lib/`・`hooks/`・`context/` だけ
+- ルートの `api/` は `src/` のコードを import しない
+
+### 現状からの対応
 
 | 現状 | 移行先 |
 |------|--------|
-| `logic/types.ts` | `types/` |
-| `logic/AppContext.tsx` | `context/`（Firestore 処理は `hooks/` へ） |
-| `logic/utils.ts`、`logic/timetableGenerator.ts` のビット判定 | `utils/` |
-| `ai/aiService.ts` | `lib/` |
-| `ui/*`、`components/*` | `components/` |
-| `components/App.tsx` | `src/App.tsx` |
-| `ui/styles/` | `assets/` |
+| `components/App.tsx` | `App.tsx` |
+| `logic/types.ts` の型 | `types/` |
+| `logic/types.ts` の `defaultState` | `context/` |
+| `logic/AppContext.tsx` | `context/AppContext.tsx`（Firestore との同期は `hooks/` に分ける） |
+| `logic/timetableGenerator.ts` のビット判定・絞り込み | `utils/` |
+| `logic/utils.ts` | `utils/` |
+| `ai/aiService.ts` | `services/aiApi.ts` |
+| `ui/Header.tsx`・`ui/Button.tsx`・`components/*` | `components/` |
+| `ui/styles/` | `assets/styles/` |
+| `data.ts` | `data/` |
 
-- 移行先の役割：`components/` 汎用 UI / `pages/` 画面 / `hooks/` ロジック / `context/` グローバル状態 / `utils/` UI のない純粋関数 / `lib/` 外部ライブラリの初期化 / `types/` 型 / `data/` 固定 JSON / `assets/` 静的素材
-- **移行は spec のタスクとしてまとめて行う。** それ以外の作業で新しいファイルを置くときは、現状の構成の同じ役割の場所に置く（例：新しい画面は `pages/`、ビット判定は `logic/timetableGenerator.ts`）
+- 未使用のコード（ビット計算関数、モック生成、`/api/chatbot` など）は、移行のついでに消さない。残すか消すかは別に決める（`product.md` の「現状の位置づけ」を参照）
+- **移行の spec が終わるまで**は、新しいファイルを現状の構成の同じ役割の場所に置く（例：新しい画面は `pages/`、ビット判定は `logic/timetableGenerator.ts`）
 
-## 依存の向き
+## 依存の向き（現状）
 
 ```
 pages/ ─▶ logic/AppContext（useAppContext）
