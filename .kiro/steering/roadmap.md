@@ -1,6 +1,6 @@
 # Roadmap
 
-> updated_at: 2026-10-22（`/kiro-discovery` で見直し。予選（10/31）は通過しなかったため、目標を「インターン先への提出」と「全国展開を前提にした設計」に変えた）
+> updated_at: 2026-10-22（`/kiro-discovery` で見直し。同日、ユーザーデータの持ち方（大学 ID・年度つきの科目 ID）を `university-data-model` に追記。予選（10/31）は通過しなかったため、目標を「インターン先への提出」と「全国展開を前提にした設計」に変えた）
 > 前の版（2026-10-13、予選に向けた計画）は git の履歴に残っている
 
 ## Overview
@@ -143,7 +143,7 @@
   - **`secure-and-stable` ↔ `src-structure-migration`**：第1段階で直した同期の処理・合格の判定・API の呼び出し（ID トークン付き）を、移行で目標の構成に移す。移行では動きを変えない
   - **`secure-and-stable` ↔ `university-data-model`**：第1段階で設定や引数に出した「大学ごとに変わる値」（時限の数、成績の段階、学期制など）を、大学ごとの設定に置きかえる
   - **`secure-and-stable` ↔ data-model.md**：ピンを AI に送ると `TimetablePatternsRequest` の形が変わる。API に ID トークンを送る形も決める。先に `data-model.md` を直す
-  - **`university-data-model` ↔ `syllabus-db`**：DB の形は、大学ごとの設定とシラバスの形（`data-model.md`）に従う
+  - **`university-data-model` ↔ `syllabus-db`**：DB の形は、大学ごとの設定とシラバスの形（`data-model.md`）に従う。科目 ID（大学・年度・科目コード）の付け方は `university-data-model` で決め、`syllabus-db` はその ID で科目を引けるようにする。過去の学期の科目も引けるよう、シラバスは年度ごとに残す
   - **移行で作る部品の形**：`utils/`（学期・クォーターの判定、セル探し、受講できる科目の絞り込み、合格の判定）、`hooks/`（Firestore 同期など）、`services/aiApi.ts` の形は、後続の spec が使う。名前と引数は移行の design で決める
   - **空きコマ検索 ↔ UI**：どちらも画面5（`GeneratorScreen`）を触る。空きコマ検索は「検索と追加の仕組みと、最低限の UI」を持つ。見た目の作り直しは UI の spec が持つ
   - **空きコマ検索 ↔ 時限の表示**：「空き」の判定は、`secure-and-stable` で直した時限の範囲と、クォーターの分け方に従う
@@ -157,7 +157,7 @@
 ### 第2段階（提出の後）
 
 - [ ] src-structure-migration -- `src/` を目標の構成へ移行する。必須はフォルダの移動と、後続の spec が使う部品（utils/・hooks/・services/aiApi.ts）の切り出し。余裕があれば lint ゼロと、それ以外の画面の整理。見た目と動きは変えない。Dependencies: secure-and-stable
-- [ ] university-data-model -- 学期制・時限の数・成績の段階・科目の条件（target_bit の意味）・大学名を、大学ごとの設定として持てるようにする。会津大学は設定の1つになる。Dependencies: src-structure-migration
+- [ ] university-data-model -- 学期制・時限の数・成績の段階・科目の条件（target_bit の意味）・大学名を、大学ごとの設定として持てるようにする。会津大学は設定の1つになる。あわせてユーザーデータを次の形にする：①大学は名前（`"会津大学"`）ではなく大学 ID（例：`universityId: "u-aizu"`）で持ち、名前は大学の設定から引く ②選んだ科目はシラバスの中身を丸ごとコピーせず、年度つきの科目 ID（例：`"u-aizu/2026/HS01"`）だけを持つ。中身は ID から引く（`syllabus-db` までは `src/data/*.json` から引く）。今のユーザーのデータの移し替えも行う。Dependencies: src-structure-migration
 - [ ] syllabus-db -- シラバスと口コミを `src/data/*.json` から DB に移し、大学ごとに持てるようにする。Dependencies: university-data-model
 - [ ] empty-slot-search -- 画面5のプレビューで、空いているコマに入れられる科目（学年・学期に合い、修得済みでないもの）を探して追加できるようにする。Dependencies: secure-and-stable, src-structure-migration, university-data-model
 - [ ] first-run-ux-refresh -- 画面の流れは保ったまま、画面3（科目選択）と画面5（生成）を初めての人でも迷わない形に作り直す。ほかの画面は説明文などの小さな改善にとどめる。Dependencies: src-structure-migration, empty-slot-search
