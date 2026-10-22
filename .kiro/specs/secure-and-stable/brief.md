@@ -41,6 +41,8 @@
   - `GeneratorScreen.tsx` → `aiService.ts` → `api/timetable-patterns.ts` のどこにも、ピンを渡す処理がない（`data-model.md` の `TimetablePatternsRequest` にも「pinnedClasses は送っていない」とある）
   - AI が失敗したときの代わりの時間割は、ピンを無視して `classes[0]` を選ぶ
 - **合格の判定**：`AppContext.tsx`（`startNewSemester`）、`timetableGenerator.ts`、`CourseSelectionScreen.tsx`（2か所）で、ルールが少しずつ違う
+  - 2026-10-22 に、科目選択の一覧に関わる部分だけ先に直した。`timetableGenerator.ts` に `isCoursePassed`・`isCourseFailed`（修得済みの一覧と成績の記録の両方を見て、成績の段階のポイントで決める）を作り、`filterByBit`・`isRetakeCandidate`・`CourseSelectionScreen.tsx` で使うようにした
+  - 残り：`AppContext.tsx` の `startNewSemester`（`'F'`・`'D'`・`'不可'` の直書き）、ダッシュボードの単位・GPA の計算などを `isCoursePassed` にそろえる
 
 ## Desired Outcome
 

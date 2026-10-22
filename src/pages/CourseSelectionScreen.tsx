@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../logic/types';
-import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate } from '../logic/timetableGenerator';
+import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate, isCoursePassed, isCourseFailed } from '../logic/timetableGenerator';
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../logic/utils';
 import { CourseDetailModal } from '../components/CourseDetailModal';
@@ -11,12 +11,14 @@ export const CourseSelectionScreen: React.FC = () => {
     const { state, setScreen, toggleSelectedCourse } = useAppContext();
     const [selectedCourseForModal, setSelectedCourseForModal] = useState<CourseData | null>(null);
 
-    const availableCourses = useMemo(() => {
+    // 今の学年の科目（currentCourses）と、下の学年でまだ合格していない科目（earlierCourses）に分けて出す
+    const { currentCourses, earlierCourses } = useMemo(() => {
         const baseFiltered = filterByBit(MOCK_COURSES, {
             selectedGrade: state.timetableConditions.targetGrade,
             term: state.timetableConditions.term,
             isReRegistrationOnly: state.timetableConditions.hasRetake,
             userGrades: state.grades,
+            earnedCredits: state.earnedCredits,
             gradingScale: state.userProfile.gradingScale
         });
 
@@ -31,6 +33,7 @@ export const CourseSelectionScreen: React.FC = () => {
             const isCandidate = isRetakeCandidate(
                 c,
                 state.grades,
+                state.earnedCredits,
                 state.userProfile.gradingScale,
                 state.timetableConditions.targetGrade
             );
@@ -46,9 +49,79 @@ export const CourseSelectionScreen: React.FC = () => {
             return checkTermMatch(c.target_bit) || c.classes.some(cls => checkTermMatch(cls.target_bit));
         });
 
-        // すべての候補を結合（既に合格済みのものは filterByBit や isRetakeCandidate 側で除外済み）
-        return [...baseFiltered, ...reRegistrationCourses];
-    }, [state.timetableConditions, state.grades, state.userProfile.gradingScale]);
+        // 既に合格済みのものは filterByBit や isRetakeCandidate 側で除外済み
+        return { currentCourses: baseFiltered, earlierCourses: reRegistrationCourses };
+    }, [state.timetableConditions, state.grades, state.earnedCredits, state.userProfile.gradingScale]);
+
+    const userYear = state.timetableConditions.targetGrade;
+    const termLabel = state.timetableConditions.term === 'second' ? '後期' : state.timetableConditions.term === 'full' ? '通年' : '前期';
+    const earlierYearsLabel = userYear - 1 <= 1 ? '1年' : `1〜${userYear - 1}年`;
+
+    const renderCourseCard = (course: CourseData) => {
+        const displayBit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
+        const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
+
+        const gradesArr = getTargetGrades(displayBit);
+        // 再履修：成績が不合格（ポイント 0）の科目。未履修：対象学年がすべて今の学年より下で、まだ合格していない科目
+        const failed = isCourseFailed(course.id_name, state.grades, state.userProfile.gradingScale);
+        const lowerYearOnly = gradesArr.length > 0 && Math.max(...gradesArr) < userYear;
+
+        const periodLabel = getPeriodLabel(displayBit);
+        const colorClass = getSubjectColor(course.id_name);
+        return (
+            <div key={course.id_name}
+                className={`rounded-xl shadow-sm border transition-all cursor-pointer ${colorClass} ${isSelected ? 'ring-2 ring-accent border-transparent scale-[1.02]' : 'hover:shadow-md hover:opacity-90'}`}
+                onClick={() => setSelectedCourseForModal(course)}
+            >
+                <div className="p-5 flex justify-between items-start">
+                    <div className="flex items-start">
+                        <input
+                            type="checkbox"
+                            className="w-5 h-5 mt-1 text-accent rounded border-border focus:ring-accent cursor-pointer"
+                            checked={isSelected}
+                            onChange={(e) => {
+                                e.stopPropagation();
+                                toggleSelectedCourse(course);
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                        <div className="ml-3">
+                            {failed ? (
+                                <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-600 border border-red-200 mb-1">
+                                    再履修
+                                </span>
+                            ) : lowerYearOnly && (
+                                <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 border border-amber-200 mb-1">
+                                    未履修（{gradesArr.join(',')}年の科目）
+                                </span>
+                            )}
+                            <h3 className="font-bold text-lg text-foreground leading-tight mb-1">{course.id_name}</h3>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                                <span className="bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
+                                    対象: {gradesArr.length === 6 ? '全学年' : `${gradesArr.join(',')}年`}
+                                </span>
+                                <span className="bg-green-50 text-green-700 border border-green-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
+                                    {periodLabel}
+                                </span>
+                            </div>
+                            <div className="text-xs text-muted mt-2">
+                                {course.classes.length}種類のクラスが開講
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-card/50 border-t border-border p-3 flex justify-between items-center text-sm">
+                    <span className="bg-background px-2 py-1 rounded-md text-muted font-medium text-xs">{course.credits} 単位</span>
+                    <button
+                        onClick={(e) => { e.stopPropagation(); setSelectedCourseForModal(course); }}
+                        className="flex items-center text-accent hover:text-accent/80 font-medium text-xs cursor-pointer"
+                    >
+                        <Info className="w-4 h-4 mr-1" /> 詳細・口コミを見る
+                    </button>
+                </div>
+            </div>
+        );
+    };
 
     const handleProceed = () => {
         if (state.selectedCourses.length === 0) {
@@ -75,8 +148,7 @@ export const CourseSelectionScreen: React.FC = () => {
                         <span className="text-muted">選択単位数: </span>
                         <span className="font-bold text-accent text-lg">
                             {state.selectedCourses.reduce((sum, c) => {
-                                const pastGrade = state.grades[c.id_name]?.grade;
-                                const isPassed = pastGrade && (state.userProfile.gradingScale.find(s => s.label === pastGrade)?.point ?? 0) > 0;
+                                const isPassed = isCoursePassed(c.id_name, state.grades, state.earnedCredits, state.userProfile.gradingScale);
                                 return sum + (isPassed ? 0 : c.credits);
                             }, 0)}
                         </span> <span className="text-muted">単位 (今期新規)</span>
@@ -95,79 +167,27 @@ export const CourseSelectionScreen: React.FC = () => {
             <main className="flex-1 max-w-6xl w-full mx-auto p-6">
                 <div className="animate-in fade-in">
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                        {availableCourses.map(course => {
-                            const displayBit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
-                            const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
+                        {currentCourses.map(renderCourseCard)}
 
-                            const gradesArr = getTargetGrades(displayBit);
-                            const minCourseYear = Math.min(...gradesArr);
-                            const userYear = state.timetableConditions.targetGrade;
-
-                            const pastGrade = state.grades[course.id_name]?.grade;
-                            const pastPoint = pastGrade ? state.userProfile.gradingScale.find(s => s.label === pastGrade)?.point : undefined;
-                            const isFailedOrUnregistered = !pastGrade || pastPoint === 0 || pastGrade === 'D' || pastGrade === 'F';
-                            const retake = minCourseYear < userYear && isFailedOrUnregistered;
-
-                            const periodLabel = getPeriodLabel(displayBit);
-                            const colorClass = getSubjectColor(course.id_name);
-                            return (
-                                <div key={course.id_name}
-                                    className={`rounded-xl shadow-sm border transition-all cursor-pointer ${colorClass} ${isSelected ? 'ring-2 ring-accent border-transparent scale-[1.02]' : 'hover:shadow-md hover:opacity-90'}`}
-                                    onClick={() => setSelectedCourseForModal(course)}
-                                >
-                                    <div className="p-5 flex justify-between items-start">
-                                        <div className="flex items-start">
-                                            <input
-                                                type="checkbox"
-                                                className="w-5 h-5 mt-1 text-accent rounded border-border focus:ring-accent cursor-pointer"
-                                                checked={isSelected}
-                                                onChange={(e) => {
-                                                    e.stopPropagation();
-                                                    toggleSelectedCourse(course);
-                                                }}
-                                                onClick={(e) => e.stopPropagation()}
-                                            />
-                                            <div className="ml-3">
-                                                {retake && (
-                                                    <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-600 border border-red-200 mb-1">
-                                                        再履修対象
-                                                    </span>
-                                                )}
-                                                <h3 className="font-bold text-lg text-foreground leading-tight mb-1">{course.id_name}</h3>
-                                                <div className="flex flex-wrap gap-1 mt-2">
-                                                    <span className="bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
-                                                        対象: {gradesArr.length === 6 ? '全学年' : `${gradesArr.join(',')}年`}
-                                                    </span>
-                                                    <span className="bg-green-50 text-green-700 border border-green-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
-                                                        {periodLabel}
-                                                    </span>
-                                                </div>
-                                                <div className="text-xs text-muted mt-2">
-                                                    {course.classes.length}種類のクラスが開講
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="bg-card/50 border-t border-border p-3 flex justify-between items-center text-sm">
-                                        <span className="bg-background px-2 py-1 rounded-md text-muted font-medium text-xs">{course.credits} 単位</span>
-                                        <button
-                                            onClick={(e) => { e.stopPropagation(); setSelectedCourseForModal(course); }}
-                                            className="flex items-center text-accent hover:text-accent/80 font-medium text-xs cursor-pointer"
-                                        >
-                                            <Info className="w-4 h-4 mr-1" /> 詳細・口コミを見る
-                                        </button>
-                                    </div>
-                                </div>
-                            )
-                        })}
-
-                        {availableCourses.length === 0 && (
+                        {currentCourses.length === 0 && earlierCourses.length === 0 && (
                             <div className="col-span-full text-center py-20 text-muted">
                                 <BookOpen className="w-12 h-12 mx-auto mb-4 text-muted/50" />
                                 <p>条件に一致する科目がありません。</p>
                             </div>
                         )}
                     </div>
+
+                    {earlierCourses.length > 0 && (
+                        <section className="mt-10">
+                            <h2 className="text-lg font-bold text-foreground">下の学年でまだ合格していない科目</h2>
+                            <p className="text-sm text-muted mt-1 mb-4">
+                                {earlierYearsLabel}が対象の{termLabel}・通年の科目のうち、まだ合格していないものです。今の学期の時間割に入れられます。
+                            </p>
+                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                {earlierCourses.map(renderCourseCard)}
+                            </div>
+                        </section>
+                    )}
 
                     <div className="mt-8">
                         <button

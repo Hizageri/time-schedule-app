@@ -107,33 +107,64 @@ export const isRetakeCourse = (bit: number): boolean => {
     return (bit & (1 << 10)) > 0;
 };
 
+// 成績のラベルから、成績の段階（gradingScale）でのポイントを引く。段階にないラベルは undefined
+const getGradePoint = (
+    courseId: string,
+    userGrades: AppState['grades'],
+    gradingScale: AppState['userProfile']['gradingScale']
+): number | undefined => {
+    const label = userGrades[courseId]?.grade;
+    if (!label) return undefined;
+    return gradingScale.find(s => s.label === label)?.point;
+};
+
+/**
+ * 科目に合格しているかを判定する。
+ * 修得済みの一覧（新学期へ進むときに合格科目が入る）と、今の成績の記録の両方を見る。
+ * 合否は大学ごとの成績の段階のポイントで決める（0 = 不合格）。成績のラベルは決め打ちにしない
+ */
+export const isCoursePassed = (
+    courseId: string,
+    userGrades: AppState['grades'],
+    earnedCredits: AppState['earnedCredits'],
+    gradingScale: AppState['userProfile']['gradingScale']
+): boolean => {
+    if ((earnedCredits ?? []).some(e => e.courseId === courseId)) return true;
+    const point = getGradePoint(courseId, userGrades, gradingScale);
+    return point !== undefined && point > 0;
+};
+
+/** 成績が記録されていて、不合格（ポイント 0）の科目かを判定する */
+export const isCourseFailed = (
+    courseId: string,
+    userGrades: AppState['grades'],
+    gradingScale: AppState['userProfile']['gradingScale']
+): boolean => getGradePoint(courseId, userGrades, gradingScale) === 0;
+
 /**
  * 判断科目が「再履修・未履修」の対象候補かどうかを判定する
  */
 export const isRetakeCandidate = (
     course: CourseData,
     userGrades: AppState['grades'],
+    earnedCredits: AppState['earnedCredits'],
     gradingScale: AppState['userProfile']['gradingScale'],
     currentGrade: number
 ): boolean => {
     // 1. 「OT」から始まる教養科目を完全に除外する
     if (course.id_name.startsWith('OT')) return false;
 
-    // 2. 成績が記録されており、かつ合格（ポイント > 0）している場合は除外
-    const gradeInfo = userGrades[course.id_name];
-    if (gradeInfo) {
-        const scale = gradingScale.find(s => s.label === gradeInfo.grade);
-        if (scale && scale.point > 0) return false;
-        if (scale && scale.point === 0) return true; // D, Fなどは確定で再履修対象
-    }
+    // 2. 合格済み（修得済みの一覧または成績の記録）なら除外。不合格なら確定で再履修対象
+    if (isCoursePassed(course.id_name, userGrades, earnedCredits, gradingScale)) return false;
+    if (isCourseFailed(course.id_name, userGrades, gradingScale)) return true;
 
     // 3. 履修年次を過ぎているか判定
     const bit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
     const targetGrades = getTargetGrades(bit);
     const maxGrade = Math.max(...targetGrades, 0);
 
-    // 未受講かつ、現在の学年が推奨学年の上限を超えている
-    return !gradeInfo && currentGrade > maxGrade;
+    // まだ合格しておらず、現在の学年が推奨学年の上限を超えている
+    return currentGrade > maxGrade;
 };
 
 export const filterByBit = (
@@ -143,10 +174,11 @@ export const filterByBit = (
         term: 'first' | 'second' | 'full',
         isReRegistrationOnly: boolean,
         userGrades: AppState['grades'],
+        earnedCredits: AppState['earnedCredits'],
         gradingScale: AppState['userProfile']['gradingScale']
     }
 ): CourseData[] => {
-    const { selectedGrade, term, isReRegistrationOnly, userGrades, gradingScale } = filters;
+    const { selectedGrade, term, isReRegistrationOnly, userGrades, earnedCredits, gradingScale } = filters;
 
     // 判定用のターゲットビットを作成
     let targetTermBit = 0;
@@ -154,6 +186,9 @@ export const filterByBit = (
     else if (term === 'full') targetTermBit = 2;
 
     return allCourses.filter(course => {
+        // 合格済みの科目は一覧に出さない
+        if (isCoursePassed(course.id_name, userGrades, earnedCredits, gradingScale)) return false;
+
         // --- 判定ロジック ---
         const checkMatch = (bit: number | undefined) => {
             if (bit === undefined) return false;
@@ -161,7 +196,7 @@ export const filterByBit = (
             // 通常：指定した学年が含まれているか
             // 再履修のみ：ユーザーの成績と年次を元に判定
             const gradeMatch = isReRegistrationOnly
-                ? isRetakeCandidate(course, userGrades, gradingScale, selectedGrade)
+                ? isRetakeCandidate(course, userGrades, earnedCredits, gradingScale, selectedGrade)
                 : (bit & (1 << (selectedGrade - 1))) > 0;
 
             const courseTerm = (bit >> 8) & 3;
