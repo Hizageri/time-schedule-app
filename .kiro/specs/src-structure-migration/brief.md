@@ -1,5 +1,7 @@
 # Brief: src-structure-migration
 
+> 2026-10-22 注：この brief は予選（10/31）に向けて書いたもの。予選の前提（審査員・日程）は古い。着手するときに `roadmap.md`（2026-10-22 版）に合わせて見直す。もとの `core-bug-fixes` は `secure-and-stable` に統合した
+
 ## Problem
 
 `src/` の構成が `structure.md` の「目標の構成（2026-10-13 決定）」と合っていない。そのため、次の問題が起きている。

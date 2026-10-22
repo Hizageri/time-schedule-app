@@ -90,6 +90,7 @@ npm run build:reviews  # raw_reviews.json → reviews_bit.json / reviews_text.js
 - 型を変えるときは `data-model.md` を先に直す
 - `src/` からドキュメント（Markdown）を import しない
 - モデル名・SDK の変更（`@google/genai` への移行）は今後 spec で対応予定。個別に変えない
+- PHP は使わない。サーバー側の処理は `api/*.ts`（Vercel の Node.js 関数）で書く（2026-10-22 決定）
 
 ## 既知の技術的な注意点
 
