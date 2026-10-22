@@ -166,6 +166,22 @@ export const CourseSelectionScreen: React.FC = () => {
 
             <main className="flex-1 max-w-6xl w-full mx-auto p-6">
                 <div className="animate-in fade-in">
+                    {/* 見落とされやすいので、下の学年でまだ合格していない科目を先に出す */}
+                    {earlierCourses.length > 0 && (
+                        <section className="mb-10">
+                            <h2 className="text-lg font-bold text-foreground">下の学年でまだ合格していない科目</h2>
+                            <p className="text-sm text-muted mt-1 mb-4">
+                                {earlierYearsLabel}が対象の{termLabel}・通年の科目のうち、まだ合格していないものです。今の学期の時間割に入れられます。
+                            </p>
+                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                {earlierCourses.map(renderCourseCard)}
+                            </div>
+                        </section>
+                    )}
+
+                    {earlierCourses.length > 0 && currentCourses.length > 0 && (
+                        <h2 className="text-lg font-bold text-foreground mb-4">{userYear}年{termLabel}の科目</h2>
+                    )}
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {currentCourses.map(renderCourseCard)}
 
@@ -176,18 +192,6 @@ export const CourseSelectionScreen: React.FC = () => {
                             </div>
                         )}
                     </div>
-
-                    {earlierCourses.length > 0 && (
-                        <section className="mt-10">
-                            <h2 className="text-lg font-bold text-foreground">下の学年でまだ合格していない科目</h2>
-                            <p className="text-sm text-muted mt-1 mb-4">
-                                {earlierYearsLabel}が対象の{termLabel}・通年の科目のうち、まだ合格していないものです。今の学期の時間割に入れられます。
-                            </p>
-                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                {earlierCourses.map(renderCourseCard)}
-                            </div>
-                        </section>
-                    )}
 
                     <div className="mt-8">
                         <button
