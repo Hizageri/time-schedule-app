@@ -1,0 +1,24 @@
+{
+  "feature_name": "secure-and-stable",
+  "created_at": "2026-10-22T08:03:53Z",
+  "updated_at": "2026-10-22T08:03:53Z",
+  "language": "ja",
+  "phase": "initialized",
+  "approvals": {
+    "requirements": {
+      "generated": false,
+      "approved": false
+    },
+    "design": {
+      "generated": false,
+      "approved": false
+    },
+    "tasks": {
+      "generated": false,
+      "approved": false
+    }
+  },
+  "ready_for_implementation": false
+}
+
+
