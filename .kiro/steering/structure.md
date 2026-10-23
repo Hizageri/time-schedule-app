@@ -15,6 +15,8 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   chatbot.ts               コマどり先輩チャット（未使用）
   _lib/geminiRetry.ts      Gemini 呼び出しの再試行とエラー文言（"_" 始まりなのでエンドポイントにならない）
   _lib/syllabus.ts         src/data のシラバスと口コミ本文を読み、科目 ID で科目を引く（AI 窓口がプロンプトに使う科目の中身はここから。送られた文章は使わない）
+  _lib/http.ts             AI 窓口の最小限のリクエスト・レスポンスの型と、エラー応答（{ error: コード }）の送り方
+  _lib/auth.ts             Firebase ID トークン（Authorization: Bearer）の検証。Google の公開鍵をキャッシュする
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
 src/

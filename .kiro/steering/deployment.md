@@ -67,6 +67,7 @@
 |------|:------:|:---------------:|------|
 | `GOOGLE_API_KEY` | ✅ Production / Preview / Development | ✅ | サーバー専用。`VITE_` を付けない。コードは `GEMINI_API_KEY` も代わりに読む |
 | `VITE_FIREBASE_*`（6個） | ✅ | ✅ | ブラウザに公開される前提の値 |
+| `FIREBASE_PROJECT_ID`（任意） | 任意 | 任意 | AI 窓口（`api/_lib/auth.ts`）が ID トークンを確かめるときのプロジェクト ID。**なければ `VITE_FIREBASE_PROJECT_ID` を使う**ので、ふだんは設定しなくてよい。秘密情報ではない。どちらもないと AI 窓口は 500 を返す |
 
 `VITE_FIREBASE_*` の6個：`API_KEY` / `AUTH_DOMAIN` / `PROJECT_ID` / `STORAGE_BUCKET` / `MESSAGING_SENDER_ID` / `APP_ID`
 
