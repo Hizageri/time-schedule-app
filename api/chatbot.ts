@@ -3,8 +3,13 @@ import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
+import { sendError } from "./_lib/http.js";
 
 dotenv.config();
+
+// チャットの窓口は止めている（2026-10-24）。使う画面がなく、外から直接呼ばれると AI の利用料を使われるため。
+// 再開するかどうかは後で決める（product.md の「現状の位置づけ」）。それまで以下のコードは消さずに残す
+const CHATBOT_ENABLED = false;
 
 // Helper to safely load JSON file with path fallbacks
 function safeLoadJSON(filename: string): any[] {
@@ -30,6 +35,11 @@ function safeLoadJSON(filename: string): any[] {
 }
 
 export default async function handler(req: any, res: any) {
+    // メソッド・ログインの有無・本文にかかわらず、AI を呼ばずに断る
+    if (!CHATBOT_ENABLED) {
+        return sendError(res, 410, 'chatbot_disabled');
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
