@@ -146,6 +146,7 @@
   - **`university-data-model` ↔ `syllabus-db`**：DB の形は、大学ごとの設定とシラバスの形（`data-model.md`）に従う。科目 ID（大学・年度・科目コード）の付け方は `university-data-model` で決め、`syllabus-db` はその ID で科目を引けるようにする。過去の学期の科目も引けるよう、シラバスは年度ごとに残す
   - **移行で作る部品の形**：`utils/`（学期・クォーターの判定、セル探し、受講できる科目の絞り込み、合格の判定）、`hooks/`（Firestore 同期など）、`services/aiApi.ts` の形は、後続の spec が使う。名前と引数は移行の design で決める
   - **`course-history` ↔ `university-data-model`**：取った科目の登録は、学期ごとの保存の形と年度つきの科目 ID の上に作る。先に形を決めてから作る
+  - **`ui-design-definition` ↔ UI を作る spec**：見た目の決まりは `ui-design-definition` が持つ。`empty-slot-search`・`first-run-ux-refresh` は動きと画面の中身を決め、見た目はデザイン定義書に従う
   - **空きコマ検索 ↔ UI**：どちらも画面5（`GeneratorScreen`）を触る。空きコマ検索は「検索と追加の仕組みと、最低限の UI」を持つ。見た目の作り直しは UI の spec が持つ
   - **空きコマ検索 ↔ 時限の表示**：「空き」の判定は、`secure-and-stable` で直した時限の範囲と、クォーターの分け方に従う
 
@@ -161,7 +162,8 @@
 - [ ] university-data-model -- 学期制・時限の数・成績の段階・科目の条件（target_bit の意味）・大学名を、大学ごとの設定として持てるようにする。会津大学は設定の1つになる。あわせてユーザーデータを次の形にする：①大学は名前（`"会津大学"`）ではなく大学 ID（例：`universityId: "u-aizu"`）で持ち、名前は大学の設定から引く ②選んだ科目はシラバスの中身を丸ごとコピーせず、年度つきの科目 ID（例：`"u-aizu/2026/HS01"`）だけを持つ。中身は ID から引く（`syllabus-db` までは `src/data/*.json` から引く）③学期ごとに保存する場所を分け（例：`users/{uid}/terms/{学期ID}`）、「新学期へ進む」で前の学期の時間割・成績を消さずに履歴として残す。今のユーザーのデータの移し替えも行う。Dependencies: src-structure-migration
 - [ ] syllabus-db -- シラバスと口コミを `src/data/*.json` から DB に移し、大学ごとに持てるようにする。Dependencies: university-data-model
 - [ ] course-history -- アプリを使う前に取った科目を、オンボーディング（あとからプロフィールでも）で登録できるようにする。登録した科目は合格済みとして扱い、科目選択にも時間割作成にも出さない。登録は「過去の学期の記録」として、`university-data-model` で決めた学期ごとの形で保存する。合格の判定は `isCoursePassed`（2026-10-22 に作成）を使う。Dependencies: university-data-model
-- [ ] empty-slot-search -- 画面5のプレビューで、空いているコマに入れられる科目（学年・学期に合い、修得済みでないもの）を探して追加できるようにする。Dependencies: secure-and-stable, src-structure-migration, university-data-model
-- [ ] first-run-ux-refresh -- 画面の流れは保ったまま、画面3（科目選択）と画面5（生成）を初めての人でも迷わない形に作り直す。ほかの画面は説明文などの小さな改善にとどめる。Dependencies: src-structure-migration, empty-slot-search
+- [ ] ui-design-definition -- アプリ全体の見た目の決まり（デザイン定義書）を作る。色・文字・部品（ボタン・カード・一覧・入力欄など）・画面のレイアウトの決まりを1つにまとめ、空きコマ検索と画面の作り直しはこれに沿って作る。Dependencies: src-structure-migration
+- [ ] empty-slot-search -- 画面5のプレビューで、空いているコマに入れられる科目を探して追加できるようにする。決まっていること（2026-10-23）：①入口は「時間割の空いたマスを押す」と「文章で聞く」の両方。文章は「月3,4」のような決まった言い方ならコードで読み取り、読み取れないときだけ AI に読み取らせる。候補の計算は必ずコードで行う ②候補にするのは、指定したコマのどれかを使い、そのクラスのほかのコマも今の時間割で空いている「科目＋クラス」（今見ているクォーターで判断）。今の学年の科目と、下の学年でまだ合格していない科目が対象で、合格済みは出さない ③候補が複数あれば一覧で全部出す（1行＝科目＋クラス、使うコマを全部見せる）。並び順は「指定したコマを全部埋められる → 一部だけ」、同じ中では「今の学年 → 下の学年」。「今の学年」「下の学年の未合格」で絞り込める。追加したら候補を計算し直す。見た目（レイアウト・色・部品）はここでは決めず、`ui-design-definition` で決める。Dependencies: ui-design-definition, secure-and-stable, src-structure-migration, university-data-model
+- [ ] first-run-ux-refresh -- 画面の流れは保ったまま、画面3（科目選択）と画面5（生成）を初めての人でも迷わない形に作り直す。ほかの画面は説明文などの小さな改善にとどめる。Dependencies: ui-design-definition, src-structure-migration, empty-slot-search
 
-`university-data-model`・`syllabus-db`・`course-history` の brief は、着手するときに作る。`src-structure-migration`・`empty-slot-search`・`first-run-ux-refresh` の brief は予選に向けて書いたものなので、着手するときにこのロードマップに合わせて見直す。
+`university-data-model`・`syllabus-db`・`course-history`・`ui-design-definition` の brief は、着手するときに作る。`src-structure-migration`・`empty-slot-search`・`first-run-ux-refresh` の brief は予選に向けて書いたものなので、着手するときにこのロードマップに合わせて見直す。
