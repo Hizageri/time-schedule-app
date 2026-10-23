@@ -41,6 +41,13 @@ Before applying judgment, verify these mechanically:
 - **File Structure Plan populated**: The File Structure Plan section must contain concrete file paths (not just "TBD" or empty). Scan for placeholder text in that section.
 - **Boundary ↔ file structure alignment**: The File Structure Plan must reflect the stated responsibility boundary. If files imply broader ownership than the boundary section claims, report a mismatch.
 - **No orphan components**: Every component mentioned in the design must appear in the File Structure Plan with a file path. Scan for component names that have no corresponding file entry.
+- **Steering Impact populated**: The `Steering Impact` section must list every file currently in `.kiro/steering/` (list the directory; do not rely on memory), each marked Yes or No.
+- **Steering Impact ↔ design alignment**: Apply the derivation rules from the template and report any row that must be "Yes" but is "No" or missing:
+  - File Structure Plan creates, moves, renames, or deletes a file → `structure.md` is Yes
+  - Data Models / Data Contracts / API contracts change a shape → `data-model.md` is Yes
+  - Environment variables, platform settings, or operational procedures change → `deployment.md` is Yes (and `tech.md` when a technical rule or pattern changes)
+  - User-visible behavior or business rules change → `product.md` is Yes
+  - Scope, ordering, or hand-offs to later specs change → `roadmap.md` is Yes
 
 ## Review Loop
 

@@ -121,6 +121,29 @@ src/
 > Each file should have one clear responsibility. Group files that change together. For repeated structures, describe the pattern once rather than listing every file.
 > Avoid duplicating what Components and Interfaces already describes — focus on the physical file layout that Components maps to.
 
+## Steering Impact
+
+**Required.** List **every** file in `.kiro/steering/` (one row each, even when nothing changes) and decide whether this spec changes it. Do not rely on memory: derive each row from the sections of this design.
+
+| Steering file | Changes? | What changes | When it is updated |
+|---------------|----------|--------------|--------------------|
+| `product.md` | Yes / No | | |
+| `tech.md` | Yes / No | | |
+| `structure.md` | Yes / No | | |
+| `data-model.md` | Yes / No | | |
+| `deployment.md` | Yes / No | | |
+| `roadmap.md` | Yes / No | | |
+| (any other file in `.kiro/steering/`) | Yes / No | | |
+
+Derivation rules (a row MUST be "Yes" when the condition holds):
+- File Structure Plan creates, moves, renames, or deletes a file → `structure.md`
+- A data shape, persisted document, or API request/response contract changes → `data-model.md` (updated **before** the code that depends on it)
+- Environment variables, platform settings (hosting, auth, database console), or operational procedures change → `deployment.md`, and `tech.md` when it changes a technical rule or pattern
+- User-visible behavior, business rules, or product priorities change → `product.md`
+- Scope, ordering, or hand-offs to later specs change → `roadmap.md`
+
+> Prefer updating a steering file in the same task that makes the change (e.g., the task that adds a file also adds it to `structure.md`). Reserve a final steering task only for cross-cutting summaries.
+
 ## System Flows
 
 Provide only the diagrams needed to explain non-trivial flows. Use pure Mermaid syntax. Common patterns:

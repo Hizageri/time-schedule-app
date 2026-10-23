@@ -161,7 +161,20 @@ firestore.rules              # 新規：Firestore のセキュリティルール
 - `vercel.json` — `functions` の `api/*.ts` に `includeFiles: "src/data/**"` を足す
 - `package.json`・`package-lock.json` — `npm audit fix` と `overrides`
 - `.kiro/steering/data-model.md` — AI 窓口の認証・`pinnedClasses`・エラーの形・サーバーがシラバスから引くことを、**コードより先に**書く
-- `.kiro/steering/tech.md`・`deployment.md`・`product.md`・`roadmap.md` — 実装後に、変わった仕様を反映する（下の「Integration & Migration Notes」）
+- `.kiro/steering/structure.md`・`tech.md`・`deployment.md`・`product.md`・`roadmap.md` — 変わった仕様を、変更を入れるタスクの中で反映する（「Steering Impact」の表）
+
+## Steering Impact
+
+`.kiro/steering/` の全ファイル（2026-10-23 時点の6つ）について、この spec で変わるかを、設計の各節から決めた。更新は、その変更を入れるタスクの中で行う（最後にまとめて直さない）。
+
+| Steering file | Changes? | What changes | When it is updated |
+|---------------|----------|--------------|--------------------|
+| `data-model.md` | Yes | AI 窓口の認証・`pinnedClasses`・エラーの形・410、科目の中身はサーバーのシラバスから引くこと、最大時限の範囲（5〜11）、保存の仕方（読み込み後だけ・丸ごと）（Data Contracts から） | タスク 1.1（コードより先） |
+| `structure.md` | Yes | 今の構成に新しいファイルを足す：`api/_lib/http.ts`・`auth.ts`・`validation.ts`・`syllabus.ts`、`src/logic/universityConfig.ts`・`inputLimits.ts`、ルートの `firestore.rules`（File Structure Plan から） | 各ファイルを作るタスク（1.2・1.3・1.4・2.1・2.2） |
+| `deployment.md` | Yes | Firestore のルールの反映と Rules Playground での確認の手順（3.5）。プロジェクト ID の環境変数の扱い（`FIREBASE_PROJECT_ID` があれば優先、なければ `VITE_FIREBASE_PROJECT_ID`） | ルールはタスク 1.4、環境変数はタスク 2.1 |
+| `tech.md` | Yes | AI 窓口の共通パターン（メソッド → 認証 → 入力の確認 → API キー、410、`includeFiles`）、`overrides` の理由、既知の注意点（`merge: true`・読み込み前の書き込み・デバッグ用ログの記述を今の状態に） | 窓口のパターンはタスク 3.1、`includeFiles` はタスク 1.2、`overrides` はタスク 7.2、保存とログの注意点はタスク 5.2・7.1 |
+| `product.md` | Yes | 最大時限をプロフィールで変えられる（5〜11）、チャットの窓口を止めた、科目は 40 まで、ログインが切れたらログイン画面に戻る、読み込みに失敗したときの画面 | 横断的なまとめとしてタスク 8.2 |
+| `roadmap.md` | Yes | `university-data-model` への申し送り：学期ごとの保存（`users/{uid}/terms/...`）に合わせて Firestore のルールも直す | タスク 1.4 |
 
 ## System Flows
 
@@ -773,4 +786,4 @@ export const PROFILE_TEXT_MAX_LENGTH = 100;  // 同 maxProfileText
 - **反映の手順（作者が行う）**：Firestore のルールは、リポジトリの `firestore.rules` と管理画面の内容が同じであることを確かめる（今回は内容を変えないので、貼り直しは不要）。手順と Rules Playground での確認方法を `deployment.md` に書く
 - **環境変数**：新しい必須の変数はない（`VITE_FIREBASE_PROJECT_ID` を使う）。`FIREBASE_PROJECT_ID` を入れた場合はそちらを優先する
 - **既存のデータ**：`AppState` の形は変わらないので、移し替えは要らない。初回の保存で `merge` なしになり、以前に消し残っていたキーがその時点で消える
-- **steering への反映（実装後）**：`tech.md`（AI 窓口の共通パターンに認証・入力の確認・410・`includeFiles`、`overrides` の理由、既知の注意点の更新）、`deployment.md`（ルールの手順、環境変数の注記）、`product.md`（最大時限を変えられる、チャットの窓口を止めた）、`roadmap.md`（`university-data-model` で学期ごとの保存に合わせて Firestore のルールも直す、と申し送る）
+- **steering への反映**：「Steering Impact」の表のとおり、変更を入れるタスクの中で行う。表には `.kiro/steering/` の6ファイルすべてを載せている

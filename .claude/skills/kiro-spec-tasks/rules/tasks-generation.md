@@ -117,6 +117,7 @@ Before writing `tasks.md`, review the draft task plan and repair local issues un
 
 - Every requirement ID from `requirements.md` must appear in at least one task.
 - Every design component, interface/contract, integration point, runtime prerequisite, and validation concern from `design.md` must be represented by at least one task.
+- Every steering file marked "Yes" in the design's `Steering Impact` section must be updated by at least one task. Prefer putting the update in the same task that makes the change (for example, the task that creates a file also adds it to `structure.md`); a final steering task may summarize cross-cutting changes. Scan the draft tasks for each "Yes" file name and report any file with no task.
 - If coverage is missing because the task plan is incomplete, repair the draft tasks and review again.
 - If coverage cannot be added cleanly because requirements or design are ambiguous, contradictory, or underspecified, stop and return to the requirements/design phase instead of papering over the gap in `tasks.md`.
 
