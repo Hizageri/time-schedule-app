@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useRef, useCallb
 import type { ReactNode } from 'react';
 import type { AppState } from './types';
 import { defaultState } from './types';
+import { isCoursePassed } from './timetableGenerator';
 import { auth, db, googleProvider } from '../lib/firebase';
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
@@ -221,9 +222,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             committedClasses: prev.committedClasses.filter(
                 c => !(c.courseId === courseId && c.classId === classId)
             ),
-            selectedCourses: prev.selectedCourses.filter(
-                c => c.id_name !== courseId && !courseId.includes(c.id_name) && !c.id_name.includes(courseId)
-            )
+            // 名前の一部が重なる別の科目を消さないよう、ID が一致するものだけを消す
+            selectedCourses: prev.selectedCourses.filter(c => c.id_name !== courseId)
         }));
     };
 
@@ -271,14 +271,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             const existingEarned = prev.earnedCredits || [];
             const newEarnedEntries: { courseId: string; courseName: string }[] = [...existingEarned];
 
-            Object.entries(prev.grades).forEach(([courseId, gradeInfo]) => {
-                const gradeLabel = gradeInfo.grade;
-                if (!gradeLabel) return;
-
-                const scale = prev.userProfile.gradingScale.find(s => s.label === gradeLabel);
-                const isFailed = scale ? scale.point === 0 : (gradeLabel === 'F' || gradeLabel === 'D' || gradeLabel === '不可');
-
-                if (!isFailed) {
+            Object.keys(prev.grades).forEach((courseId) => {
+                // 修得済みに加えるのは、共通の合否の判定で合格した科目だけ
+                if (isCoursePassed(courseId, prev.grades, existingEarned, prev.userProfile.gradingScale)) {
                     const alreadyExists = newEarnedEntries.some(e => e.courseId === courseId);
                     if (!alreadyExists) {
                         const courseObj = prev.selectedCourses.find(c => c.id_name === courseId);
