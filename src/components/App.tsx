@@ -36,8 +36,6 @@ const FloatingUserBadge: React.FC = () => {
   const handleLogoutClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("① ボタンがクリックされました");
-    console.log("② logout関数の実体:", logout);
     if (logout) {
       logout();
     }

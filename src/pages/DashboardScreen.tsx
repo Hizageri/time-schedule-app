@@ -498,7 +498,6 @@ export const DashboardScreen: React.FC = () => {
                                             type="button"
                                             onClick={(e) => {
                                                 e.stopPropagation();
-                                                console.log("[DashboardScreen Profile] ログアウトボタンがクリックされました");
                                                 if (logout) {
                                                     logout();
                                                 }

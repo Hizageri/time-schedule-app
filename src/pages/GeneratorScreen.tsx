@@ -34,7 +34,6 @@ export const GeneratorScreen: React.FC = () => {
 
     useEffect(() => {
         const fetchPatterns = async () => {
-            console.log("送る科目データ:", state.selectedCourses);
             setIsGenerating(true);
             setIsComplete(false);
             try {

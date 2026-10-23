@@ -102,7 +102,6 @@ npm run build:reviews  # raw_reviews.json → reviews_bit.json / reviews_text.js
 - 同じ利用者の複数のタブは、後から保存したほうが勝つ
 - 描画中の例外は `ErrorBoundary`（`src/components/ErrorBoundary.tsx`）が受け止めてエラー画面を出す。ただしイベントハンドラや非同期処理の中の例外は受け止めないので、そこは各処理で `try/catch` する
 - `src/ui/styles/index.css` に Tailwind v4 の `@theme` 構文があるが、使っているのは v3。色の正は `tailwind.config.js`
-- デバッグ用 `console.log` が残っている（`firebase.ts` の API キー先頭6文字のログを含む）
 
 ## 役割分担の原則
 ・答えが決まる計算（絞り込み、集計、コマの重なり、時間割の組み合わせ）はコードでやる
