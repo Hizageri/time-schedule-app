@@ -1,33 +1,14 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import fs from "fs";
-import path from "path";
 import dotenv from "dotenv";
 import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
+import { getHeader, sendError } from "./_lib/http.js";
+import type { ApiRequest, ApiResponse } from "./_lib/http.js";
+import { verifyIdToken, authFailureResponse } from "./_lib/auth.js";
+import { validateConsultationInput } from "./_lib/validation.js";
+import type { ConsultationInput, ValidationResult } from "./_lib/validation.js";
+import { SyllabusUnavailableError } from "./_lib/syllabus.js";
 
 dotenv.config();
-
-// Helper to safely load JSON file with path fallbacks
-function safeLoadJSON(filename: string): any[] {
-    const candidatePaths = [
-        path.join(process.cwd(), "src/data", filename)
-    ];
-
-    if (typeof __dirname !== 'undefined') {
-        candidatePaths.push(path.resolve(__dirname, "../src/data", filename));
-        candidatePaths.push(path.resolve(__dirname, "../../src/data", filename));
-    }
-
-    for (const p of candidatePaths) {
-        if (fs.existsSync(p)) {
-            try {
-                return JSON.parse(fs.readFileSync(p, "utf-8"));
-            } catch (err) {
-                console.error(`Error parsing JSON from ${p}:`, err);
-            }
-        }
-    }
-    return [];
-}
 
 const sanitizeJsonResponse = (responseText: string): string => {
     let cleaned = responseText.replace(/```json/gi, '').replace(/```/g, '');
@@ -41,43 +22,46 @@ const sanitizeJsonResponse = (responseText: string): string => {
     return cleaned;
 };
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: ApiRequest, res: ApiResponse) {
+    // 前処理：メソッド → 認証 → 入力の確認 → API キー。通らなければ Gemini を呼ばない
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return sendError(res, 405, 'method_not_allowed');
     }
 
-    console.log('\x1b[36m[Debug] CWD:\x1b[0m', process.cwd());
-    console.log('\x1b[36m[Debug] __dirname:\x1b[0m', typeof __dirname !== 'undefined' ? __dirname : 'undefined');
-    console.log('\x1b[36m[Debug] GOOGLE_API_KEY exists:\x1b[0m', !!process.env.GOOGLE_API_KEY);
-    console.log('\x1b[36m[Debug] GEMINI_API_KEY exists:\x1b[0m', !!process.env.GEMINI_API_KEY);
+    const auth = await verifyIdToken(getHeader(req, 'authorization'));
+    if (!auth.ok) {
+        console.warn(`[Consultation API] 認証で断りました: ${auth.reason}`);
+        const failure = authFailureResponse(auth.reason);
+        return sendError(res, failure.status, failure.code);
+    }
+
+    let validation: ValidationResult<ConsultationInput>;
+    try {
+        validation = validateConsultationInput(req.body);
+    } catch (err) {
+        if (err instanceof SyllabusUnavailableError) {
+            console.error('[Consultation API] シラバスを読み込めません:', err.message);
+            return sendError(res, 500, 'server_misconfigured');
+        }
+        throw err;
+    }
+    if (!validation.ok) {
+        console.warn(`[Consultation API] 入力で断りました: ${validation.issue}`);
+        return sendError(res, 400, 'invalid_input');
+    }
+    const { profile: userProfile, courses } = validation.value;
 
     const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
 
     if (!apiKey || apiKey === 'ここにAPIキーを入力してください') {
         console.error('\x1b[31m[Consultation API Error]: API Key is missing. Please set GOOGLE_API_KEY in .env file.\x1b[0m');
-        return res.status(500).json({ error: 'API Key is missing. Please set GOOGLE_API_KEY in .env file.' });
+        return sendError(res, 500, 'server_misconfigured');
     }
 
-    const { userProfile, courses } = req.body || {};
-
-    if (!courses || !Array.isArray(courses)) {
-        console.error('\x1b[31m[Consultation API Error]: Invalid or missing courses array in request body.\x1b[0m');
-        return res.status(400).json({ error: 'Invalid courses input' });
-    }
-
-    // Load extra review texts for RAG enhancement if available
-    const reviewsTextData = safeLoadJSON("reviews_text.json");
-    const reviewsTextMap = new Map<string, string>();
-    reviewsTextData.forEach((item: any) => {
-        if (item.id && item.comment) {
-            reviewsTextMap.set(item.id, item.comment);
-        }
-    });
-
-    const courseDetails = courses.map((c: any) => {
-        const review = reviewsTextMap.get(c.id_name);
-        const reviewStr = review ? ` (Review: "${review}")` : '';
-        return `- ${c.id_name}: (${c.credits} credits). Overview: ${c.outline || ''}${reviewStr}`;
+    // 科目の中身（概要・単位・口コミ本文）はサーバーのシラバスから引いた値を使う
+    const courseDetails = courses.map(c => {
+        const reviewStr = c.reviewComment ? ` (Review: "${c.reviewComment}")` : '';
+        return `- ${c.id}: (${c.credits} credits). Overview: ${c.outline}${reviewStr}`;
     }).join('\n');
 
     const prompt = `
@@ -90,15 +74,15 @@ export default async function handler(req: any, res: any) {
 - 先輩のリアルな口コミ（「課題が多い」など）を基に、それをどう攻略し将来の夢に直結させるのかを具体的に指導しろ。
 
 【学生情報】
-名前: ${userProfile?.nickname || '後輩'}
-大学: ${userProfile?.university || '会津大学'}
-将来の夢・目標: ${userProfile?.dreamJob || '未設定'}
+名前: ${userProfile.nickname || '後輩'}
+大学: ${userProfile.university || '会津大学'}
+将来の夢・目標: ${userProfile.dreamJob || '未設定'}
 
 【選択科目および先輩のリアル口コミ】:
 ${courseDetails}
 
 【必須要件・文字数制限（厳密遵守）】
-1. **overallFeedback (全体評価と夢)**: 選択科目の構成が、後輩の夢（${userProfile?.dreamJob || '未設定'}）にどう繋がるか。文字数は【約150文字】。
+1. **overallFeedback (全体評価と夢)**: 選択科目の構成が、後輩の夢（${userProfile.dreamJob || '未設定'}）にどう繋がるか。文字数は【約150文字】。
 2. **各科目の comment (口コミ対策)**: 該当科目の口コミ懸念点をどう攻略し自分の力にするか。各科目ごとに【約150文字】。
 
 【レスポンスJSONフォーマット】
@@ -144,9 +128,9 @@ ${courseDetails}
         // Fallback response structure
         return res.status(200).json({
             overallFeedback: getGeminiErrorMessage(error),
-            courseFeedbacks: courses.map((c: any) => ({
-                courseId: c.id_name,
-                courseName: c.id_name,
+            courseFeedbacks: courses.map(c => ({
+                courseId: c.id,
+                courseName: c.id,
                 comment: "この科目は今回はノーコメントだ"
             }))
         });

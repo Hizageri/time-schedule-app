@@ -35,17 +35,19 @@
 
 ## API（`api/*.ts`）の共通パターン
 
-- `export default async function handler(req, res)`。POST 以外は 405
-- `process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY` を使う。ない場合は 500
+- `export default async function handler(req: ApiRequest, res: ApiResponse)`（型は `api/_lib/http.ts`）
+- **前処理の順番**：メソッド（POST 以外は 405）→ 認証（`api/_lib/auth.ts` の `verifyIdToken`。`Authorization: Bearer <Firebase ID トークン>` がない・無効なら 401、Google の公開鍵が取れなければ 503）→ 入力の確認（`api/_lib/validation.ts`。上限を超える・形が違う・知らない科目 ID なら 400）→ API キー（`process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY`。ない場合は 500）。前処理で断るときは Gemini を呼ばない
+- 前処理で断るときの応答は `{ error: コード }`（`sendError`）だけ。理由の詳細はトークンや入力の中身を出さずに `console.warn` でログに残す
+- AI に渡す科目の中身（概要・単位・クラスとコマ・口コミ本文）は、送られた科目 ID からサーバーのシラバス（`api/_lib/syllabus.ts`）で引く。送られた文章は使わない。シラバスを読めなければ 500
 - 日本語プロンプト（キャラ設定・出力形式・文字数）と英語の `systemInstruction`（JSON のみを返す指示）
 - 返答は文字列からコードフェンスを除き、`{...}` を抜き出し、末尾カンマを除いて `JSON.parse`（構造化出力は使っていない）
 - Gemini の呼び出しは `api/_lib/geminiRetry.ts` の `withGeminiRetry` で包む。503・429 のときだけ 1秒→2秒→4秒 待って最大3回再試行する（呼び出し開始から45秒を超える再試行はしない）。400・APIキーのエラー・JSON 解析の失敗は再試行しない
 - 再試行しても混雑が続いたら、軽量モデル（`FALLBACK_MODEL` = `gemini-3.1-flash-lite`）で1回だけ試す（開始から40秒を過ぎていたら試さない）。メインのモデルが 404（見つからない・提供終了）を返したときは、再試行せずにすぐ予備モデルで1回だけ試す。モデル名は `api/_lib/geminiRetry.ts` の `PRIMARY_MODEL`・`FALLBACK_MODEL` で一元管理する
 - `vercel.json` で `api/*.ts` の `maxDuration` を 60 秒にし、`includeFiles: "src/data/**"` でシラバスと口コミの JSON を関数に同梱している（`api/_lib/syllabus.ts` が `fs` で読むため。ファイル名が変数だと自動で同梱されない可能性がある）
-- 失敗時は 200 で定型の代替レスポンスを返す（`chatbot` だけは 500）。文面はコマどり先輩の口調で、混雑（503・429）とそれ以外で `getGeminiErrorMessage` が切り替える
+- Gemini の失敗時は 200 で定型の代替レスポンスを返す。文面はコマどり先輩の口調で、混雑（503・429）とそれ以外で `getGeminiErrorMessage` が切り替える
 - `api/_lib/` を import するときは `.js` 拡張子を付ける（`"type": "module"` のため）
-- 認証なし（誰でも呼べる。Firebase ID トークンの検証を今後 spec で対応予定）
-- `consultation`・`chatbot` は `src/data/*.json` を `fs` で読む（`process.cwd()` と `__dirname` 基準の複数パスを試す）
+- `chatbot` は止めている（2026-10-24）。どんな依頼にも 410 `chatbot_disabled` を返す（コードは残している）
+- `src/data/*.json` は `api/_lib/syllabus.ts` が `fs` で読む（`process.cwd()` と `__dirname` 基準の複数パスを試す。`chatbot` の中にも古い読み込みが残っている）
 
 | エンドポイント | リクエスト | 使う画面 |
 |---------------|-----------|----------|

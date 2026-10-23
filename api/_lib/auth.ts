@@ -123,3 +123,12 @@ export async function verifyIdToken(authorizationHeader: string | string[] | und
 
     return { ok: true, uid: sub };
 }
+
+/** 認証に失敗したときの応答（401：トークンの問題、503：公開鍵が取れない、500：設定の問題） */
+export function authFailureResponse(
+    reason: Extract<AuthResult, { ok: false }>['reason']
+): { status: 401 | 500 | 503; code: 'unauthenticated' | 'server_misconfigured' | 'auth_unavailable' } {
+    if (reason === 'keys_unavailable') return { status: 503, code: 'auth_unavailable' };
+    if (reason === 'misconfigured') return { status: 500, code: 'server_misconfigured' };
+    return { status: 401, code: 'unauthenticated' };
+}

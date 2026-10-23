@@ -1,6 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import { withGeminiRetry, isGeminiBusyError, getGeminiErrorMessage, GENERAL_ERROR_MESSAGE } from "./_lib/geminiRetry.js";
+import { getHeader, sendError } from "./_lib/http.js";
+import type { ApiRequest, ApiResponse } from "./_lib/http.js";
+import { verifyIdToken, authFailureResponse } from "./_lib/auth.js";
+import { validateGradeReactionInput } from "./_lib/validation.js";
+import type { GradeReactionInput, ValidationResult } from "./_lib/validation.js";
+import { SyllabusUnavailableError } from "./_lib/syllabus.js";
 
 dotenv.config();
 
@@ -16,31 +22,53 @@ const sanitizeJsonResponse = (responseText: string): string => {
     return cleaned;
 };
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: ApiRequest, res: ApiResponse) {
+    // 前処理：メソッド → 認証 → 入力の確認 → API キー。通らなければ Gemini を呼ばない
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return sendError(res, 405, 'method_not_allowed');
     }
+
+    const auth = await verifyIdToken(getHeader(req, 'authorization'));
+    if (!auth.ok) {
+        console.warn(`[Grade Reaction API] 認証で断りました: ${auth.reason}`);
+        const failure = authFailureResponse(auth.reason);
+        return sendError(res, failure.status, failure.code);
+    }
+
+    let validation: ValidationResult<GradeReactionInput>;
+    try {
+        validation = validateGradeReactionInput(req.body);
+    } catch (err) {
+        if (err instanceof SyllabusUnavailableError) {
+            console.error('[Grade Reaction API] シラバスを読み込めません:', err.message);
+            return sendError(res, 500, 'server_misconfigured');
+        }
+        throw err;
+    }
+    if (!validation.ok) {
+        console.warn(`[Grade Reaction API] 入力で断りました: ${validation.issue}`);
+        return sendError(res, 400, 'invalid_input');
+    }
+    // 成績が空のものは確認の段階で除いてある。科目名・単位はサーバーのシラバスから引いた値
+    const { gradingScale, grades: enteredGrades } = validation.value;
 
     const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
 
     if (!apiKey || apiKey === 'ここにAPIキーを入力してください') {
         console.error('\x1b[31m[Grade Reaction API Error]: API Key is missing.\x1b[0m');
-        return res.status(500).json({ error: 'API Key is missing.' });
+        return sendError(res, 500, 'server_misconfigured');
     }
 
-    const { userProfile, grades } = req.body || {};
-
-    const enteredGrades = (grades || []).filter((g: any) => g.grade && g.grade.trim() !== '');
     if (enteredGrades.length === 0) {
         return res.status(200).json({ title: "未評価", message: "成績入力してから来いよ！評価不能だ。" });
     }
 
-    const gradeDetails = enteredGrades.map((g: any) => `- ${g.courseName}: ${g.grade}`).join('\n');
-    const totalPoints = enteredGrades.reduce((sum: number, g: any) => {
-        const gradePoint = userProfile?.gradingScale?.find((s: any) => s.label === g.grade)?.point || 0;
-        return sum + (gradePoint * g.credits);
+    const gradeDetails = enteredGrades.map(g => `- ${g.course.id}: ${g.grade}`).join('\n');
+    const totalPoints = enteredGrades.reduce((sum, g) => {
+        const gradePoint = gradingScale.find(s => s.label === g.grade)?.point || 0;
+        return sum + (gradePoint * g.course.credits);
     }, 0);
-    const totalCredits = enteredGrades.reduce((sum: number, g: any) => sum + g.credits, 0);
+    const totalCredits = enteredGrades.reduce((sum, g) => sum + g.course.credits, 0);
     const semesterGpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
 
     const prompt = `
