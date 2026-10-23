@@ -1,6 +1,6 @@
 # Technology Steering
 
-> updated_at: 2026-10-08（旧 `specs/` への参照をなくし、steering だけで読めるようにした）
+> updated_at: 2026-10-24（secure-and-stable：AI 窓口の前処理、保存の流れ）
 > 2026-10-08 時点のコードから作成。
 > 外部サービスの設定（Firebase の承認済みドメイン、Vercel の環境変数、トラブル対応）は `deployment.md`、型定義は `data-model.md` を参照。
 
@@ -29,7 +29,7 @@
 ```
 
 - **グローバル状態**：`AppContext` の `AppState` 1つ。画面は `useAppContext()` で読み書きする
-- **永続化**：ログイン時に `users/{uid}` を読み `defaultState` とマージ。以後、状態が変わるたびに `setDoc(..., state, { merge: true })` で状態全体を書く
+- **永続化**：ログイン時に `users/{uid}` を読み `defaultState` に重ねる（なければ `defaultState` で作る）。読み込みの状態（`loadStatus`：`signedOut`・`loading`・`ready`・`error`）が `ready` のときだけ保存する。保存は最後の変更から 3 秒後（`SAVE_DEBOUNCE_MS`）に1回、`setDoc(..., state)` を `merge` なしで書く。ページが隠れる・閉じられる・ログアウトの前・利用者が切り替わる前は、待っている保存をすぐ行う（予約した時点の利用者の分として書く）。読み込みに失敗したら保存せず、再読み込みの画面を出す
 - **マスターデータ**：`src/data.ts` が `syllabus.json` に `reviews_bit.json`・`reviews_text.json` を結合して `MOCK_COURSES` を作る
 - **AI 呼び出し**：画面 → `src/ai/aiService.ts` → `POST /api/*` → Gemini。ブラウザから Gemini を直接呼ばない
 
@@ -96,9 +96,10 @@ npm run build:reviews  # raw_reviews.json → reviews_bit.json / reviews_text.js
 
 ## 既知の技術的な注意点
 
-- 状態全体を変更のたびに Firestore に書く（1文字入力ごと）。`selectedCourses` にシラバス本文ごと入る
-- `merge: true` のため、Map のキーを消しても Firestore 側に残る可能性がある
-- ログイン直後、読み込み前に初期状態が書き込まれる可能性がある
+- 保存は状態全体を `merge` なしで書く。`selectedCourses` にシラバス本文ごと入る（第2段階で ID だけにする予定）
+- 保存は 3 秒まとめるので、ページが強制終了したときは最後の 3 秒の変更が失われることがある。保存に失敗しても画面は止めず、`console.error` に記録するだけ
+- AI 窓口の 401 でログアウトさせたとき（`signOutCurrentUser`）は、ログアウトの後に待っている保存を書くので断られることがある（画面のログアウトボタンは先に保存を待つ）
+- 同じ利用者の複数のタブは、後から保存したほうが勝つ
 - 描画中の例外は `ErrorBoundary`（`src/components/ErrorBoundary.tsx`）が受け止めてエラー画面を出す。ただしイベントハンドラや非同期処理の中の例外は受け止めないので、そこは各処理で `try/catch` する
 - `src/ui/styles/index.css` に Tailwind v4 の `@theme` 構文があるが、使っているのは v3。色の正は `tailwind.config.js`
 - デバッグ用 `console.log` が残っている（`firebase.ts` の API キー先頭6文字のログを含む）
