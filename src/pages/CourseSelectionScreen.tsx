@@ -6,6 +6,7 @@ import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate, isCour
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../logic/utils';
 import { CourseDetailModal } from '../components/CourseDetailModal';
+import { MAX_SELECTED_COURSES } from '../logic/inputLimits';
 
 export const CourseSelectionScreen: React.FC = () => {
     const { state, setScreen, toggleSelectedCourse } = useAppContext();
@@ -81,7 +82,7 @@ export const CourseSelectionScreen: React.FC = () => {
                             checked={isSelected}
                             onChange={(e) => {
                                 e.stopPropagation();
-                                toggleSelectedCourse(course);
+                                handleToggleCourse(course);
                             }}
                             onClick={(e) => e.stopPropagation()}
                         />
@@ -121,6 +122,16 @@ export const CourseSelectionScreen: React.FC = () => {
                 </div>
             </div>
         );
+    };
+
+    // まだ選んでいない科目を選ぼうとして、すでに上限まで選んでいるときは、選ばずに知らせる（カードのチェックと詳細モーダルで共通）
+    const handleToggleCourse = (course: CourseData) => {
+        const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
+        if (!isSelected && state.selectedCourses.length >= MAX_SELECTED_COURSES) {
+            alert(`一度に選べるのは ${MAX_SELECTED_COURSES} 科目までです`);
+            return;
+        }
+        toggleSelectedCourse(course);
     };
 
     const handleProceed = () => {
@@ -211,9 +222,7 @@ export const CourseSelectionScreen: React.FC = () => {
                 isOpen={!!selectedCourseForModal}
                 color={selectedCourseForModal ? getSubjectColor(selectedCourseForModal.id_name) : ''}
                 onClose={() => setSelectedCourseForModal(null)}
-                onSelect={(courseToSelect) => {
-                    toggleSelectedCourse(courseToSelect);
-                }}
+                onSelect={handleToggleCourse}
                 isSelected={selectedCourseForModal ? state.selectedCourses.some(c => c.id_name === selectedCourseForModal.id_name) : false}
             />
         </div>
