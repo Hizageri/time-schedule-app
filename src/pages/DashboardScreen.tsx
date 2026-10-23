@@ -3,9 +3,12 @@ import { useAppContext } from '../logic/AppContext';
 import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
+import { isPassingGradePoint } from '../logic/timetableGenerator';
+import { getSelectablePeriods } from '../logic/universityConfig';
+import { PROFILE_TEXT_MAX_LENGTH } from '../logic/inputLimits';
 
 export const DashboardScreen: React.FC = () => {
-    const { state, setScreen, updateProfile, removeCommittedClass, startNewSemester, user, logout } = useAppContext();
+    const { state, setScreen, updateProfile, updateSettings, removeCommittedClass, startNewSemester, user, logout } = useAppContext();
     const [activeTab, setActiveTab] = useState<'timetable' | 'grades' | 'profile'>('timetable');
 
     const handleRemoveClass = (courseId: string, classId: string) => {
@@ -29,9 +32,18 @@ export const DashboardScreen: React.FC = () => {
     const [isEditingProfile, setIsEditingProfile] = useState(false);
     const [editNickname, setEditNickname] = useState(state.userProfile.nickname);
     const [editDreamJob, setEditDreamJob] = useState(state.userProfile.dreamJob);
+    const [editMaxPeriods, setEditMaxPeriods] = useState(state.timetableSettings.maxPeriods);
+
+    const handleStartEditProfile = () => {
+        setEditNickname(state.userProfile.nickname);
+        setEditDreamJob(state.userProfile.dreamJob);
+        setEditMaxPeriods(state.timetableSettings.maxPeriods);
+        setIsEditingProfile(true);
+    };
 
     const handleSaveProfile = () => {
         updateProfile({ nickname: editNickname, dreamJob: editDreamJob });
+        updateSettings({ maxPeriods: editMaxPeriods });
         setIsEditingProfile(false);
     };
 
@@ -110,7 +122,7 @@ export const DashboardScreen: React.FC = () => {
             details[s.label] = count;
             totalCredits += count;
             totalPoints += count * s.point;
-            if (s.point > 0) {
+            if (isPassingGradePoint(s.point)) {
                 totalEarnedCredits += count;
             }
         });
@@ -390,7 +402,7 @@ export const DashboardScreen: React.FC = () => {
                                 </h2>
                                 {!isEditingProfile ? (
                                     <button
-                                        onClick={() => setIsEditingProfile(true)}
+                                        onClick={handleStartEditProfile}
                                         className="text-indigo-600 hover:text-indigo-800 text-sm font-medium flex items-center transition-colors"
                                     >
                                         <Edit3 className="w-4 h-4 mr-1" /> 編集する
@@ -414,6 +426,7 @@ export const DashboardScreen: React.FC = () => {
                                                 type="text"
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
                                                 value={editNickname}
+                                                maxLength={PROFILE_TEXT_MAX_LENGTH}
                                                 onChange={(e) => setEditNickname(e.target.value)}
                                             />
                                         ) : (
@@ -429,10 +442,29 @@ export const DashboardScreen: React.FC = () => {
                                                 type="text"
                                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none"
                                                 value={editDreamJob}
+                                                maxLength={PROFILE_TEXT_MAX_LENGTH}
                                                 onChange={(e) => setEditDreamJob(e.target.value)}
                                             />
                                         ) : (
                                             <span className="font-medium text-gray-800">{state.userProfile.dreamJob || '未設定'}</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                    <div className="text-gray-500 text-sm">最大時限</div>
+                                    <div className="col-span-2">
+                                        {isEditingProfile ? (
+                                            <select
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none bg-white"
+                                                value={editMaxPeriods}
+                                                onChange={(e) => setEditMaxPeriods(Number(e.target.value))}
+                                            >
+                                                {getSelectablePeriods().map(p => (
+                                                    <option key={p} value={p}>{p}限まで</option>
+                                                ))}
+                                            </select>
+                                        ) : (
+                                            <span className="font-medium text-gray-800">{state.timetableSettings.maxPeriods}限まで</span>
                                         )}
                                     </div>
                                 </div>

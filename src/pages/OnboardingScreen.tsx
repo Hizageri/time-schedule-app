@@ -1,6 +1,8 @@
 import React from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { ChevronRight } from 'lucide-react';
+import { getSelectablePeriods } from '../logic/universityConfig';
+import { PROFILE_TEXT_MAX_LENGTH } from '../logic/inputLimits';
 
 export const OnboardingScreen: React.FC = () => {
     const { state, updateProfile, updateSettings, setScreen } = useAppContext();
@@ -57,6 +59,7 @@ export const OnboardingScreen: React.FC = () => {
                                 className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card placeholder:text-muted/60"
                                 placeholder="例: 会津 太郎"
                                 value={state.userProfile.nickname}
+                                maxLength={PROFILE_TEXT_MAX_LENGTH}
                                 onChange={(e) => updateProfile({ nickname: e.target.value })}
                             />
                         </div>
@@ -88,6 +91,7 @@ export const OnboardingScreen: React.FC = () => {
                                 className="w-full px-6 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card placeholder:text-muted/60"
                                 placeholder="例: AIエンジニア、データサイエンティスト"
                                 value={state.userProfile.dreamJob}
+                                maxLength={PROFILE_TEXT_MAX_LENGTH}
                                 onChange={(e) => updateProfile({ dreamJob: e.target.value })}
                             />
                         </div>
@@ -111,7 +115,7 @@ export const OnboardingScreen: React.FC = () => {
                                     value={state.timetableSettings.maxPeriods}
                                     onChange={(e) => updateSettings({ maxPeriods: Number(e.target.value) })}
                                 >
-                                    {[5, 6, 7, 8, 9, 10].map(p => (
+                                    {getSelectablePeriods().map(p => (
                                         <option key={p} value={p}>{p}限まで</option>
                                     ))}
                                 </select>
