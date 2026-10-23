@@ -1,5 +1,5 @@
 // src/timetableGenerator.ts
-import type { AppState, CourseData } from './types';
+import type { AppState, CourseData, TimeSlot } from './types';
 
 export type PatternType = 'balance' | 'full-day-off' | 'zero-first-period' | 'night-shift' | 'zero-gaps';
 
@@ -284,4 +284,16 @@ export const getPeriodLabel = (bit: number): string => {
     }
 
     return '不明'; // 万が一のエラー用
+};
+
+/** 「曜日-時限」の形のコマのうち、いちばん遅い時限。なければ 0（"TBD" や日付の形のコマは無視する） */
+export const getLatestPeriod = (schedules: TimeSlot[][]): number => {
+    let latest = 0;
+    schedules.forEach(schedule => {
+        schedule.forEach(slot => {
+            const match = /^[月火水木金土日]-(\d+)$/.exec(slot);
+            if (match) latest = Math.max(latest, Number(match[1]));
+        });
+    });
+    return latest;
 };

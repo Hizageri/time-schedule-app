@@ -3,7 +3,7 @@ import { useAppContext } from '../logic/AppContext';
 import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
-import { isPassingGradePoint } from '../logic/timetableGenerator';
+import { isPassingGradePoint, getLatestPeriod } from '../logic/timetableGenerator';
 import { getSelectablePeriods } from '../logic/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../logic/inputLimits';
 
@@ -49,6 +49,8 @@ export const DashboardScreen: React.FC = () => {
 
     const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
     const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
+    // 確定した授業のいちばん遅い時限（表示の範囲の外にあれば知らせる）
+    const latestCommittedPeriod = getLatestPeriod(state.committedClasses.map(c => c.schedule ?? []));
 
     // Helper to decipher quarter from target_bit (Bits 6-7)
     const getQuarterType = (bit: number): 'odd' | 'even' | 'across' | 'intensive' => {
@@ -203,6 +205,12 @@ export const DashboardScreen: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            {latestCommittedPeriod > state.timetableSettings.maxPeriods && (
+                                <div className="mx-2 mt-2 px-3 py-2 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 text-xs font-medium">
+                                    {latestCommittedPeriod}限の授業が表示の範囲（{state.timetableSettings.maxPeriods}限まで）の外にあります。プロフィールで最大時限を変えられます
+                                </div>
+                            )}
 
                             {/* Timetable Grid View (Forced Grid on all devices with horizontal scroll on mobile) */}
                             <div className="w-full overflow-x-auto overflow-y-auto custom-scrollbar p-2 max-h-[70vh]">

@@ -7,7 +7,7 @@ import { getSubjectColor } from '../logic/utils';
 import { generateTimetablePatterns } from '../ai/aiService';
 import type { TimetablePatternsResponse } from '../ai/aiService';
 import { MobileTimetableList } from '../components/MobileTimetableList';
-import { resolveClassAssignments } from '../logic/timetableGenerator';
+import { resolveClassAssignments, getLatestPeriod } from '../logic/timetableGenerator';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const GeneratorScreen: React.FC = () => {
@@ -156,6 +156,13 @@ export const GeneratorScreen: React.FC = () => {
     const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
     const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
 
+    // プレビュー中の授業のいちばん遅い時限（表示の範囲の外にあれば知らせる）
+    const latestPreviewPeriod = getLatestPeriod(
+        state.selectedCourses
+            .filter(course => !hiddenCourseIds.includes(course.id_name))
+            .map(course => course.classes.find(c => c.class_id === editableAssignments[course.id_name])?.schedule ?? [])
+    );
+
     const getPreviewCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
         const activeClasses: any[] = [];
@@ -273,6 +280,12 @@ export const GeneratorScreen: React.FC = () => {
                                 ))}
                             </div>
                         </div>
+
+                        {latestPreviewPeriod > state.timetableSettings.maxPeriods && (
+                            <div className="mx-2 mt-2 px-3 py-2 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 text-xs font-medium">
+                                {latestPreviewPeriod}限の授業が表示の範囲（{state.timetableSettings.maxPeriods}限まで）の外にあります。プロフィールで最大時限を変えられます
+                            </div>
+                        )}
 
                         {/* PC / Tablet Timetable Grid View */}
                         <div className="hidden md:block flex-1 overflow-auto custom-scrollbar p-2">
