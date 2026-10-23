@@ -1,6 +1,6 @@
 # Structure Steering
 
-> updated_at: 2026-10-13（目標の構成を決定し、各フォルダのルールと依存の向きを追加）
+> updated_at: 2026-10-24（secure-and-stable で増えたファイルと、ファイルの役割の変化を反映）
 > 2026-10-08 時点のコードから作成。現状の構成と、移行先の構成を併記する。
 
 ## 現状のディレクトリ構成
@@ -12,7 +12,7 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   consultation.ts          科目選びの講評
   timetable-patterns.ts    時間割5パターン生成
   grade-reaction.ts        成績へのリアクション
-  chatbot.ts               コマどり先輩チャット（未使用）
+  chatbot.ts               コマどり先輩チャット（止めている。どんな依頼にも 410 を返す）
   _lib/geminiRetry.ts      Gemini 呼び出しの再試行とエラー文言（"_" 始まりなのでエンドポイントにならない）
   _lib/syllabus.ts         src/data のシラバスと口コミ本文を読み、科目 ID で科目を引く（AI 窓口がプロンプトに使う科目の中身はここから。送られた文章は使わない）
   _lib/http.ts             AI 窓口の最小限のリクエスト・レスポンスの型と、エラー応答（{ error: コード }）の送り方
@@ -23,20 +23,20 @@ scripts/
 src/
   main.tsx                 エントリ。index.css を読み込み App を描画
   data.ts                  JSON を結合して MOCK_COURSES を作る
-  ai/aiService.ts          /api/* を呼ぶクライアント関数とレスポンス型
+  ai/aiService.ts          /api/* を ID トークン付きで呼ぶクライアント関数とレスポンス型（401 ならログアウト）
   components/
-    App.tsx                AppProvider・認証ゲート・画面切替（ScreenManager）
+    App.tsx                AppProvider・認証ゲート（保存データの読み込みに失敗したときの画面を含む）・画面切替（ScreenManager）
     CourseDetailModal.tsx  科目詳細モーダル
     MobileTimetableList.tsx
     LoadingSenpai.tsx      AI 待ちのローディング
     ErrorBoundary.tsx      描画エラー時にコマどり先輩のエラー画面と「戻る」ボタンを出す（App.tsx で画面全体と ScreenManager を囲む）
   data/                    syllabus.json / raw_reviews.json / reviews_bit.json / reviews_text.json / course_list_for_prompt.md
-  lib/firebase.ts          Firebase 初期化（auth, db, googleProvider を export）
+  lib/firebase.ts          Firebase 初期化（auth, db, googleProvider を export）と、ID トークンの取得・ログアウト（getCurrentIdToken・signOutCurrentUser）
   logic/
-    AppContext.tsx         グローバル状態・更新関数・Firestore 同期
+    AppContext.tsx         グローバル状態・更新関数・Firestore 同期（読み込みの状態 loadStatus、3 秒まとめた保存）
     types.ts               型・defaultState・未使用のビット計算関数
     utils.ts               cn()、科目コード→色（getSubjectColor）、未使用の重なり判定
-    timetableGenerator.ts  ビットの判定・ラベル化・絞り込み（filterByBit 等）、未使用のモック生成
+    timetableGenerator.ts  ビットの判定・ラベル化・絞り込み（filterByBit 等）、合否の判定（isPassingGradePoint・isCoursePassed 等）、ピンを守るクラスの決め方（resolveClassAssignments）、いちばん遅い時限（getLatestPeriod）、未使用のモック生成
     universityConfig.ts    今の大学（会津大学）の、大学ごとに変わる値（最後の時限・最大時限の下限）と、最大時限の選択肢
     inputLimits.ts         ブラウザ側の入力の上限（選べる科目数・プロフィールの文字数）。api/_lib/validation.ts の値と同じにする
   pages/                   画面（*Screen.tsx）

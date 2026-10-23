@@ -31,7 +31,7 @@
 - **グローバル状態**：`AppContext` の `AppState` 1つ。画面は `useAppContext()` で読み書きする
 - **永続化**：ログイン時に `users/{uid}` を読み `defaultState` に重ねる（なければ `defaultState` で作る）。読み込みの状態（`loadStatus`：`signedOut`・`loading`・`ready`・`error`）が `ready` のときだけ保存する。保存は最後の変更から 3 秒後（`SAVE_DEBOUNCE_MS`）に1回、`setDoc(..., state)` を `merge` なしで書く。ページが隠れる・閉じられる・ログアウトの前・利用者が切り替わる前は、待っている保存をすぐ行う（予約した時点の利用者の分として書く）。読み込みに失敗したら保存せず、再読み込みの画面を出す
 - **マスターデータ**：`src/data.ts` が `syllabus.json` に `reviews_bit.json`・`reviews_text.json` を結合して `MOCK_COURSES` を作る
-- **AI 呼び出し**：画面 → `src/ai/aiService.ts` → `POST /api/*` → Gemini。ブラウザから Gemini を直接呼ばない
+- **AI 呼び出し**：画面 → `src/ai/aiService.ts`（`postToApi` が Firebase の ID トークンを `Authorization` に付ける。401 ならログアウトしてログイン画面へ、それ以外の失敗はコマどり先輩の口調の文面）→ `POST /api/*` → Gemini。ブラウザから Gemini を直接呼ばない
 
 ## API（`api/*.ts`）の共通パターン
 
@@ -52,9 +52,9 @@
 | エンドポイント | リクエスト | 使う画面 |
 |---------------|-----------|----------|
 | `/api/consultation` | `{ userProfile, courses }` | 4 |
-| `/api/timetable-patterns` | `{ courses, baseClass }` | 5 |
+| `/api/timetable-patterns` | `{ courses, baseClass, pinnedClasses }` | 5 |
 | `/api/grade-reaction` | `{ userProfile, grades }` | 7 |
-| `/api/chatbot` | `{ message, history }` | なし（未使用） |
+| `/api/chatbot` | `{ message, history }` | なし（止めている。常に 410） |
 
 ## データ表現の要点
 
