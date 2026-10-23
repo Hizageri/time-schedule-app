@@ -1,6 +1,6 @@
 # Data Model Steering
 
-> updated_at: 2026-10-12
+> updated_at: 2026-10-24（`secure-and-stable`：AI 窓口の認証・ピン・エラーの形、最大時限の範囲、保存の仕方）
 > 今実際に使われているデータの形（コードから確認済み）。コード上の型は `src/logic/types.ts` と `src/ai/aiService.ts` にある。
 > `[要確認]` = 作者に意図を確認したい箇所
 
@@ -8,7 +8,7 @@
 
 - **データの形を変えるときは、先にこのファイルを直してからコードの型に反映する**（UI 専用の型は例外）
 - マスターデータ（シラバス・口コミ）は `src/data/*.json` をバンドルする。DB には入れない
-- ユーザーデータは Firestore の `users/{uid}` 1ドキュメントに `AppState` を丸ごと保存する
+- ユーザーデータは Firestore の `users/{uid}` 1ドキュメントに `AppState` を丸ごと保存する（読み込みが終わってから、`merge` なしで丸ごと書き直す。下の「扱いの注意」）
 - マスターデータのキーは snake_case（`id_name`, `target_bit`）、アプリ側の状態は camelCase（`courseId`, `targetBit`）
 - 科目の識別子は `CourseData.id_name`。ユーザーデータの `courseId` やマップのキーにはこの値が入る
 
@@ -117,7 +117,7 @@ export interface AppState {
   };
   timetableSettings: {
     workingDays: number;     // 5 or 6
-    maxPeriods: number;      // 5〜10（初期値 5）
+    maxPeriods: number;      // 5〜大学の最後の時限（会津大学は 11）。初期値 5。範囲は src/logic/universityConfig.ts から作る
   };
   timetableConditions: {
     targetGrade: number;     // 1〜6
@@ -142,9 +142,28 @@ export interface AppState {
 // 4. API（/api/*）
 // ─────────────────────────────────────────────
 
+/**
+ * 共通：3つの AI 窓口（consultation・timetable-patterns・grade-reaction）は
+ * - ヘッダー `Authorization: Bearer <Firebase ID トークン>` が必須（ログイン中の本人だけ）
+ * - 送られた科目は `id_name`（成績は `courseId`）だけを使い、概要・クラス・単位・口コミ本文はサーバーのシラバス（src/data）から引く。
+ *   リクエストの形は互換のため下のとおりだが、それ以外の項目は使わない。知らない科目 ID は 400
+ * - 入力の上限：科目 40・成績 40 件・ニックネーム／なりたい職業／大学名 100 文字（値は api/_lib/validation.ts の INPUT_LIMITS だけで管理）
+ * - 成功時と Gemini の失敗時は今までどおり 200（失敗時は代わりの文面）。前処理で断るときは下の ApiErrorResponse
+ */
+export type ApiErrorCode =
+  | 'method_not_allowed'   // 405
+  | 'invalid_input'        // 400 入力の上限を超える・形が違う・知らない科目 ID
+  | 'unauthenticated'      // 401 ID トークンがない・無効・期限切れ・別プロジェクト
+  | 'chatbot_disabled'     // 410 チャットの窓口（常に）
+  | 'server_misconfigured' // 500 API キー・プロジェクト ID がない、シラバスが読めない
+  | 'auth_unavailable';    // 503 Google の公開鍵が取れない
+export interface ApiErrorResponse {
+  error: ApiErrorCode;     // 詳しい理由は返さない（サーバーのログにだけ残す）
+}
+
 export interface ConsultationRequest {
-  userProfile: AppState['userProfile'];
-  courses: CourseData[];
+  userProfile: AppState['userProfile'];   // 使うのは nickname・dreamJob・university
+  courses: CourseData[];                  // 使うのは id_name だけ
 }
 export interface ConsultationResponse {
   overallFeedback: string;
@@ -152,9 +171,11 @@ export interface ConsultationResponse {
 }
 
 export interface TimetablePatternsRequest {
-  courses: CourseData[];
+  courses: CourseData[];                  // 使うのは id_name だけ
   baseClass: string;
-  // pinnedClasses / timetableSettings は送っていない
+  /** key = 科目 ID（id_name）、value = クラス ID。送った科目にない・開講クラスにないピンはサーバーで捨てる */
+  pinnedClasses: Record<string, string>;
+  // timetableSettings は送っていない
 }
 export interface TimetablePatternsResponse {
   patterns: {
@@ -164,16 +185,18 @@ export interface TimetablePatternsResponse {
     assignments: { courseId: string; classId: string }[];
   }[];
 }
+// ブラウザは、返ってきた割り当てを「有効なピン → パターンの割り当て → 最初のクラス」の順で補って表示する（ピンは必ず守る）
 
 export interface GradeReactionRequest {
-  userProfile: AppState['userProfile'];
-  grades: { courseId: string; courseName: string; grade: string; credits: number }[];
+  userProfile: AppState['userProfile'];   // 使うのは nickname・dreamJob・university・gradingScale
+  grades: { courseId: string; courseName: string; grade: string; credits: number }[]; // courseName・credits はシラバスから引き直す
 }
 export interface GradeReactionResponse {
   title: string;
   message: string;
 }
 
+/** チャットの窓口（/api/chatbot）は 2026-10-24 から止めている。どんな依頼にも 410 `chatbot_disabled` を返す。下の形は止める前のもの */
 export interface ChatbotRequest {
   message: string;
   history: { role: 'user' | 'model'; content: string; timestamp: string }[];
@@ -198,5 +221,5 @@ export interface ChatbotResponse {
 - 画面の描画中にエラーが起きても真っ白にならないよう、`src/components/ErrorBoundary.tsx` で画面全体を囲んでいる。エラー時はコマどり先輩の口調のエラー画面と「戻る」ボタンを出す
 - コード上の `TimeSlot` 型は `"月-1"` 〜 `"金-10"` のリテラルと `string` の合併型だが、実質は `string`
 - `reviews_bit.json`・`reviews_text.json` は生成物。直さずに `raw_reviews.json` を直して `npm run build:reviews`
-- 保存は `setDoc(..., { merge: true })` のため、Map（`grades` など）のキーを消しても Firestore 側に残る可能性がある
+- 保存は、保存データの読み込みが終わってから行う（読み込み中・読み込みに失敗したときは保存しない）。最後の変更から 3 秒後に1回、`setDoc` を `merge` なしで呼び、`AppState` そのもので丸ごと書き直す。消した Map のキー（ピン・成績など）は保存データからも消える。ページを隠す・閉じるとき、ログアウトの前、利用者が切り替わる前は、待っている保存をすぐ行う
 - Firestore は `ignoreUndefinedProperties: true` で初期化している（`src/lib/firebase.ts`）。値が `undefined` の項目は保存されず、読み直すと項目ごとない状態になる（例：口コミ本文のない科目の `comment`）
