@@ -1,6 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
+import { getHeader, sendError } from "./_lib/http.js";
+import type { ApiRequest, ApiResponse } from "./_lib/http.js";
+import { verifyIdToken, authFailureResponse } from "./_lib/auth.js";
+import { validateTimetablePatternsInput } from "./_lib/validation.js";
+import type { TimetablePatternsInput, ValidationResult } from "./_lib/validation.js";
+import { SyllabusUnavailableError } from "./_lib/syllabus.js";
 
 dotenv.config();
 
@@ -14,35 +20,58 @@ const sanitizeJsonResponse = (responseText: string): string => {
     return cleaned;
 };
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: ApiRequest, res: ApiResponse) {
+    // 前処理：メソッド → 認証 → 入力の確認 → API キー。通らなければ Gemini を呼ばない
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return sendError(res, 405, 'method_not_allowed');
     }
+
+    const auth = await verifyIdToken(getHeader(req, 'authorization'));
+    if (!auth.ok) {
+        console.warn(`[Timetable Patterns API] 認証で断りました: ${auth.reason}`);
+        const failure = authFailureResponse(auth.reason);
+        return sendError(res, failure.status, failure.code);
+    }
+
+    let validation: ValidationResult<TimetablePatternsInput>;
+    try {
+        validation = validateTimetablePatternsInput(req.body);
+    } catch (err) {
+        if (err instanceof SyllabusUnavailableError) {
+            console.error('[Timetable Patterns API] シラバスを読み込めません:', err.message);
+            return sendError(res, 500, 'server_misconfigured');
+        }
+        throw err;
+    }
+    if (!validation.ok) {
+        console.warn(`[Timetable Patterns API] 入力で断りました: ${validation.issue}`);
+        return sendError(res, 400, 'invalid_input');
+    }
+    // ピンは、送られた科目の開講クラスにあるものだけが残っている
+    const { courses, baseClass, pinnedClasses } = validation.value;
 
     const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
 
     if (!apiKey || apiKey === 'ここにAPIキーを入力してください') {
         console.error('\x1b[31m[Timetable Patterns API Error]: API Key is missing.\x1b[0m');
-        return res.status(500).json({ error: 'API Key is missing.' });
+        return sendError(res, 500, 'server_misconfigured');
     }
 
-    const { courses, baseClass } = req.body || {};
+    // クラスとコマはサーバーのシラバスから引いた値を使う
+    const courseClassMap = courses.map(course => ({
+        courseId: course.id,
+        courseTitle: course.id,
+        availableClasses: course.classes.map(c => ({
+            classId: c.classId,
+            schedule: c.schedule // array like ["月-1", "木-2"]
+        }))
+    }));
 
-    if (!courses || !Array.isArray(courses)) {
-        console.error('\x1b[31m[Timetable Patterns API Error]: Invalid or missing courses array.\x1b[0m');
-        return res.status(400).json({ error: 'Invalid courses input' });
-    }
-
-    const courseClassMap = courses.map((course: any) => {
-        return {
-            courseId: course.id_name,
-            courseTitle: course.id_name,
-            availableClasses: (course.classes || []).map((c: any) => ({
-                classId: c.class_id,
-                schedule: c.schedule // array like ["月-1", "木-2"]
-            }))
-        };
-    });
+    // ピン留めしたクラスは、すべてのパターンで必ず選ばせる（返ってきた結果はブラウザ側でもピンに合わせる）
+    const pinnedEntries = Object.entries(pinnedClasses);
+    const pinnedRule = pinnedEntries.length > 0
+        ? `- **ピン留め（固定）**: 次の科目は、5つのパターンすべてで指定のクラスを必ず選んでください。ほかの科目は、固定したクラスと重ならないように選んでください。\n${pinnedEntries.map(([courseId, classId]) => `  - ${courseId} → ${classId}`).join('\n')}\n`
+        : '';
 
     const prompt = `
 あなたは超高性能な時間割スケジューリングAIです。
@@ -53,7 +82,7 @@ ${JSON.stringify(courseClassMap, null, 2)}
 各科目から必ず1つのクラスを選び、5パターンの時間割を作成してください。
 【重要ルール】
 - **最優先事項**: **「コマの重複（重なり）」を可能な限りゼロにすること。** 重複がないスケジュールを出すことが、パターンの特徴よりも重要です。
-- **必ず日本語で回答すること**。
+${pinnedRule}- **必ず日本語で回答すること**。
 - **「作成不可能」という回答は禁止。
 - **ベースクラスの活用**: 学生は「${baseClass || ''}」をベースのクラスとして選択しています。科目の中に「${baseClass || ''}」という名前のクラスがある(または名前を含むクラスがある)場合は、それを最優先で選択してください。
 - **パターンの説明**: 'description' は、なぜそのパターンがその名前にふさわしいか、簡潔な定型文で回答してください。AIからの余計な挨拶や長文の解説は不要です。
