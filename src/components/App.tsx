@@ -10,7 +10,7 @@ import { GradeInputScreen } from '../pages/GradeInputScreen';
 import { ReflectionScreen } from '../pages/ReflectionScreen';
 import { LoginScreen } from '../pages/LoginScreen';
 import { ErrorBoundary } from './ErrorBoundary';
-import { LogOut, User } from 'lucide-react';
+import { AlertCircle, LogOut, User } from 'lucide-react';
 
 const ScreenManager: React.FC = () => {
   const { state } = useAppContext();
@@ -80,7 +80,7 @@ const FloatingUserBadge: React.FC = () => {
 };
 
 const AuthGate: React.FC = () => {
-  const { user, authLoading, state } = useAppContext();
+  const { user, authLoading, loadStatus, state } = useAppContext();
 
   if (authLoading) {
     return (
@@ -93,6 +93,23 @@ const AuthGate: React.FC = () => {
 
   if (!user) {
     return <LoginScreen />;
+  }
+
+  // 保存データを読み込めなかった：上書きしないよう画面は出さず、再読み込みだけを出す
+  if (loadStatus === 'error') {
+    return (
+      <>
+        <FloatingUserBadge />
+        <div className="min-h-screen bg-background flex flex-col items-center justify-center p-12">
+          <AlertCircle className="w-16 h-16 text-red-500 mb-6" />
+          <h2 className="text-2xl font-bold text-red-600 mb-4">保存データを読み込めなかった</h2>
+          <p className="text-muted mb-8 max-w-lg text-center leading-relaxed bg-red-50 p-4 rounded-lg">
+            通信の調子が悪いのかもな。お前のデータは消してねえから安心しろ。少し待ってから読み込み直してみな。
+          </p>
+          <button type="button" onClick={() => window.location.reload()} className="btn-secondary">再読み込み</button>
+        </div>
+      </>
+    );
   }
 
   return (

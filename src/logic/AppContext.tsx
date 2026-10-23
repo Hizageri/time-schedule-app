@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import type { AppState } from './types';
 import { defaultState } from './types';
@@ -7,9 +7,13 @@ import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
+/** 保存データの読み込みの状態。'ready' のときだけ保存する */
+export type LoadStatus = 'signedOut' | 'loading' | 'ready' | 'error';
+
 interface AppContextType {
     user: User | null;
     authLoading: boolean;
+    loadStatus: LoadStatus;
     loginWithGoogle: () => Promise<void>;
     logout: () => Promise<void>;
     state: AppState;
@@ -33,40 +37,64 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [authLoading, setAuthLoading] = useState<boolean>(true);
+    const [loadStatus, setLoadStatus] = useState<LoadStatus>('signedOut');
     const [state, setState] = useState<AppState>(defaultState);
+    // 保存してよい利用者（読み込みが終わった利用者）の uid。ログアウトや利用者の切り替えで、描画を待たずにすぐ null にする
+    const readyUidRef = useRef<string | null>(null);
+    // 読み込みで入れた状態。これと同じ状態は保存しない（ログイン直後に保存が走らないように）
+    const loadedStateRef = useRef<AppState | null>(null);
+    // 読み込みの番号。読み込み中に利用者が変わったら、古い読み込みの結果を捨てる
+    const loadSeqRef = useRef(0);
 
     // Listen to Firebase Auth state
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            const seq = ++loadSeqRef.current;
+            // 前の利用者の状態を、後の利用者の保存データに書かない
+            readyUidRef.current = null;
+            loadedStateRef.current = null;
             setUser(currentUser);
-            if (currentUser) {
-                try {
-                    // Sync from Firestore when user logs in
-                    const userDocRef = doc(db, 'users', currentUser.uid);
-                    const docSnap = await getDoc(userDocRef);
-                    if (docSnap.exists()) {
-                        const remoteData = docSnap.data();
-                        const mergedState: AppState = {
-                            ...defaultState,
-                            ...remoteData,
-                            userProfile: { ...defaultState.userProfile, ...(remoteData.userProfile || {}) },
-                            timetableSettings: { ...defaultState.timetableSettings, ...(remoteData.timetableSettings || {}) },
-                            timetableConditions: { ...defaultState.timetableConditions, ...(remoteData.timetableConditions || {}) },
-                        };
-                        if (mergedState.committedClasses && mergedState.committedClasses.length > 0 && (mergedState.currentScreen === 1 || mergedState.currentScreen === 5)) {
-                            mergedState.currentScreen = 6;
-                        }
-                        setState(mergedState);
-                    } else {
-                        // Document doesn't exist yet, seed with initial state
-                        await setDoc(userDocRef, state);
+            setState(defaultState);
+
+            if (!currentUser) {
+                setLoadStatus('signedOut');
+                setAuthLoading(false);
+                return;
+            }
+
+            setLoadStatus('loading');
+            setAuthLoading(true);
+            try {
+                const userDocRef = doc(db, 'users', currentUser.uid);
+                const docSnap = await getDoc(userDocRef);
+                let loadedState: AppState;
+                if (docSnap.exists()) {
+                    const remoteData = docSnap.data();
+                    loadedState = {
+                        ...defaultState,
+                        ...remoteData,
+                        userProfile: { ...defaultState.userProfile, ...(remoteData.userProfile || {}) },
+                        timetableSettings: { ...defaultState.timetableSettings, ...(remoteData.timetableSettings || {}) },
+                        timetableConditions: { ...defaultState.timetableConditions, ...(remoteData.timetableConditions || {}) },
+                    };
+                    if (loadedState.committedClasses && loadedState.committedClasses.length > 0 && (loadedState.currentScreen === 1 || loadedState.currentScreen === 5)) {
+                        loadedState.currentScreen = 6;
                     }
-                } catch (err) {
-                    console.error("Failed to sync state from Firestore:", err);
+                } else {
+                    // 保存データがまだない：初期値で作る（オンボーディングから始まる）
+                    loadedState = defaultState;
+                    await setDoc(userDocRef, defaultState);
                 }
-            } else {
-                // Logged out: reset in-memory state to defaultState
-                setState(defaultState);
+                if (seq !== loadSeqRef.current) return;
+                loadedStateRef.current = loadedState;
+                readyUidRef.current = currentUser.uid;
+                setState(loadedState);
+                setLoadStatus('ready');
+            } catch (err) {
+                if (seq !== loadSeqRef.current) return;
+                // 読み込めなかったときは保存しない（初期値で上書きしないため）
+                console.error("Failed to load state from Firestore:", err);
+                setLoadStatus('error');
             }
             setAuthLoading(false);
         });
@@ -74,9 +102,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         return () => unsubscribe();
     }, []);
 
-    // Synchronize State with Firestore whenever state changes
+    // 読み込みが終わった利用者の状態だけを保存する
     useEffect(() => {
-        if (!user) return; // Only persist when authenticated
+        if (loadStatus !== 'ready' || !user || readyUidRef.current !== user.uid) return;
+        if (state === loadedStateRef.current) return; // 読み込んだままの状態は保存しない
 
         const userDocRef = doc(db, 'users', user.uid);
         // setDoc はデータの検査エラーを同期的に投げるため、.catch() だけでなく try/catch でも受け止める
@@ -88,7 +117,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         } catch (err) {
             console.error("Failed to sync state to Firestore:", err);
         }
-    }, [state, user]);
+    }, [state, user, loadStatus]);
 
     const loginWithGoogle = async () => {
         try {
@@ -100,11 +129,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     };
 
     const logout = async () => {
+        // ログアウト後の初期状態を、この利用者の保存データに書かない（失敗したら元に戻す）
+        const readyUid = readyUidRef.current;
+        readyUidRef.current = null;
         try {
             await signOut(auth);
             setUser(null);
             setState(defaultState);
         } catch (err) {
+            readyUidRef.current = readyUid;
             console.error("Sign-out error:", err);
             throw err;
         }
@@ -239,6 +272,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         <AppContext.Provider value={{
             user,
             authLoading,
+            loadStatus,
             loginWithGoogle,
             logout,
             state,
