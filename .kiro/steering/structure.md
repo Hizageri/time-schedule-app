@@ -17,6 +17,7 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   _lib/syllabus.ts         src/data のシラバスと口コミ本文を読み、科目 ID で科目を引く（AI 窓口がプロンプトに使う科目の中身はここから。送られた文章は使わない）
   _lib/http.ts             AI 窓口の最小限のリクエスト・レスポンスの型と、エラー応答（{ error: コード }）の送り方
   _lib/auth.ts             Firebase ID トークン（Authorization: Bearer）の検証。Google の公開鍵をキャッシュする
+  _lib/validation.ts       AI 窓口の入力の上限（INPUT_LIMITS。値はここだけで管理）と、窓口ごとの入力の確認。科目はシラバスから引き直す
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
 src/
