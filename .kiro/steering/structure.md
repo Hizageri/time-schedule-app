@@ -6,6 +6,8 @@
 ## 現状のディレクトリ構成
 
 ```
+firestore.rules            Firestore のセキュリティルール（本人の users/{uid} だけ読み書きできる）。反映の手順は deployment.md
+vercel.json                Vercel の関数の設定（maxDuration、src/data の同梱）
 api/                       Vercel Functions（Gemini 呼び出し。1ファイル＝1エンドポイント）
   consultation.ts          科目選びの講評
   timetable-patterns.ts    時間割5パターン生成

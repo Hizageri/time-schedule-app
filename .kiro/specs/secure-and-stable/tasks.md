@@ -29,7 +29,7 @@
   - _Boundary: UniversityConfig, InputLimits, Timetable logic_
   - _Requirements: 2.6, 2.7, 8.2, 10.1, 10.4, 10.5_
 
-- [ ] 1.4 (P) Firestore のセキュリティルールをリポジトリで管理する
+- [x] 1.4 (P) Firestore のセキュリティルールをリポジトリで管理する
   - 管理画面の今のルール（自分の `users/{uid}` だけ読み書きできる）と同じ内容のファイルをリポジトリに置く
   - 本番への反映の手順と、Rules Playground で「ログインしていない人・別の利用者は読み書きできない」「本人は読み書きできる」を確かめる手順を、`deployment.md` に書く
   - steering：`structure.md` の今の構成に、ルートのルールのファイルを書き足す。`roadmap.md` の `university-data-model` に、学期ごとの保存に合わせて Firestore のルールも直すことを申し送る
