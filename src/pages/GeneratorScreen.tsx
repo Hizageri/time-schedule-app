@@ -7,6 +7,7 @@ import { getSubjectColor } from '../logic/utils';
 import { generateTimetablePatterns } from '../ai/aiService';
 import type { TimetablePatternsResponse } from '../ai/aiService';
 import { MobileTimetableList } from '../components/MobileTimetableList';
+import { resolveClassAssignments } from '../logic/timetableGenerator';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const GeneratorScreen: React.FC = () => {
@@ -62,24 +63,8 @@ export const GeneratorScreen: React.FC = () => {
                 setPatternsData(res);
 
                 if (res && res.patterns && res.patterns.length > 0) {
-                    const initialAssignments: Record<string, string> = {};
-                    
-                    if (res.patterns[0].assignments) {
-                        res.patterns[0].assignments.forEach(a => {
-                            initialAssignments[a.courseId] = a.classId;
-                        });
-                    }
-
-                    // 防御ロジック: 割り当て漏れ・ID不一致があればデフォルトクラス(classes[0])で安全補填
-                    state.selectedCourses.forEach(course => {
-                        const assigned = initialAssignments[course.id_name];
-                        const exists = course.classes.some(c => c.class_id === assigned);
-                        if (!assigned || !exists) {
-                            initialAssignments[course.id_name] = course.classes[0]?.class_id || '';
-                        }
-                    });
-
-                    setEditableAssignments(initialAssignments);
+                    // ピン → パターンの割り当て → 最初のクラス の順で決める（AI の結果でも代わりの時間割でも同じ）
+                    setEditableAssignments(resolveClassAssignments(state.selectedCourses, res.patterns[0].assignments ?? [], state.pinnedClasses));
                 }
 
                 // 強制的に100%にしてから画面切り替え
@@ -101,23 +86,8 @@ export const GeneratorScreen: React.FC = () => {
     const handleTabChange = (index: number) => {
         setActivePatternIndex(index);
         if (patternsData?.patterns[index]) {
-            const newAssignments: Record<string, string> = {};
-            if (patternsData.patterns[index].assignments) {
-                patternsData.patterns[index].assignments.forEach(a => {
-                    newAssignments[a.courseId] = a.classId;
-                });
-            }
-
-            // 防御ロジック: タブ切り替え時も安全補填
-            state.selectedCourses.forEach(course => {
-                const assigned = newAssignments[course.id_name];
-                const exists = course.classes.some(c => c.class_id === assigned);
-                if (!assigned || !exists) {
-                    newAssignments[course.id_name] = course.classes[0]?.class_id || '';
-                }
-            });
-
-            setEditableAssignments(newAssignments);
+            // タブ切り替え時も同じ順で決める（手で変えたクラスは、別のパターンに切り替えるとそのパターンの割り当てに戻る）
+            setEditableAssignments(resolveClassAssignments(state.selectedCourses, patternsData.patterns[index].assignments ?? [], state.pinnedClasses));
         }
     };
 

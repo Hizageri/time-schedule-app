@@ -137,6 +137,39 @@ export const isCoursePassed = (
     return point !== undefined && isPassingGradePoint(point);
 };
 
+/**
+ * 科目ごとのクラスを決める。優先順位：
+ * 1. 有効なピン（その科目の開講クラスにあるとき）
+ * 2. パターンの割り当て（その科目の開講クラスにあるとき）
+ * 3. 最初のクラス（なければ空文字）
+ */
+export const resolveClassAssignments = (
+    courses: CourseData[],
+    patternAssignments: { courseId: string; classId: string }[],
+    pinnedClasses: AppState['pinnedClasses']
+): Record<string, string> => {
+    const fromPattern: Record<string, string> = {};
+    patternAssignments.forEach(a => {
+        fromPattern[a.courseId] = a.classId;
+    });
+
+    const result: Record<string, string> = {};
+    courses.forEach(course => {
+        const isOffered = (classId: string | undefined) =>
+            classId !== undefined && course.classes.some(c => c.class_id === classId);
+        const pinned = pinnedClasses[course.id_name];
+        const assigned = fromPattern[course.id_name];
+        if (isOffered(pinned)) {
+            result[course.id_name] = pinned;
+        } else if (isOffered(assigned)) {
+            result[course.id_name] = assigned;
+        } else {
+            result[course.id_name] = course.classes[0]?.class_id || '';
+        }
+    });
+    return result;
+};
+
 /** 成績が記録されていて、不合格（ポイント 0）の科目かを判定する */
 export const isCourseFailed = (
     courseId: string,
