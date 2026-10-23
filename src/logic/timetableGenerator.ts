@@ -107,6 +107,9 @@ export const isRetakeCourse = (bit: number): boolean => {
     return (bit & (1 << 10)) > 0;
 };
 
+/** 成績の段階のポイントが合格かどうか（0 は不合格、0 より大きければ合格） */
+export const isPassingGradePoint = (point: number): boolean => point > 0;
+
 // 成績のラベルから、成績の段階（gradingScale）でのポイントを引く。段階にないラベルは undefined
 const getGradePoint = (
     courseId: string,
@@ -131,7 +134,7 @@ export const isCoursePassed = (
 ): boolean => {
     if ((earnedCredits ?? []).some(e => e.courseId === courseId)) return true;
     const point = getGradePoint(courseId, userGrades, gradingScale);
-    return point !== undefined && point > 0;
+    return point !== undefined && isPassingGradePoint(point);
 };
 
 /** 成績が記録されていて、不合格（ポイント 0）の科目かを判定する */
@@ -139,7 +142,10 @@ export const isCourseFailed = (
     courseId: string,
     userGrades: AppState['grades'],
     gradingScale: AppState['userProfile']['gradingScale']
-): boolean => getGradePoint(courseId, userGrades, gradingScale) === 0;
+): boolean => {
+    const point = getGradePoint(courseId, userGrades, gradingScale);
+    return point !== undefined && !isPassingGradePoint(point);
+};
 
 /**
  * 判断科目が「再履修・未履修」の対象候補かどうかを判定する

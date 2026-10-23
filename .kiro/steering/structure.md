@@ -32,6 +32,8 @@ src/
     types.ts               型・defaultState・未使用のビット計算関数
     utils.ts               cn()、科目コード→色（getSubjectColor）、未使用の重なり判定
     timetableGenerator.ts  ビットの判定・ラベル化・絞り込み（filterByBit 等）、未使用のモック生成
+    universityConfig.ts    今の大学（会津大学）の、大学ごとに変わる値（最後の時限・最大時限の下限）と、最大時限の選択肢
+    inputLimits.ts         ブラウザ側の入力の上限（選べる科目数・プロフィールの文字数）。api/_lib/validation.ts の値と同じにする
   pages/                   画面（*Screen.tsx）
   ui/
     Header.tsx, Button.tsx 汎用 UI
