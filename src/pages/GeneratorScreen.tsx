@@ -45,7 +45,7 @@ export const GeneratorScreen: React.FC = () => {
                 
                 let res: TimetablePatternsResponse;
                 try {
-                    res = await generateTimetablePatterns(state.selectedCourses, state.timetableConditions.baseClass);
+                    res = await generateTimetablePatterns(state.selectedCourses, state.timetableConditions.baseClass, state.pinnedClasses);
                 } catch (apiErr) {
                     console.warn("API呼び出し失敗。デフォルトパターンへ切り替えます:", apiErr);
                     res = {
