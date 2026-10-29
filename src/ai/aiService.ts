@@ -38,6 +38,16 @@ export interface GradeReactionResponse {
     message: string;
 }
 
+/** AI 窓口に送るプロフィール。サーバーが使う項目だけ（入学・卒業予定年月などは送らない） */
+type ApiProfile = Pick<AppState['userProfile'], 'nickname' | 'dreamJob' | 'university'>;
+type ApiProfileWithScale = ApiProfile & Pick<AppState['userProfile'], 'gradingScale'>;
+
+const toApiProfile = ({ nickname, dreamJob, university }: AppState['userProfile']): ApiProfile =>
+    ({ nickname, dreamJob, university });
+
+const toApiProfileWithScale = (profile: AppState['userProfile']): ApiProfileWithScale =>
+    ({ ...toApiProfile(profile), gradingScale: profile.gradingScale });
+
 /** ログインが切れていて AI 窓口に断られた（ログアウト済み。ログイン画面に戻る） */
 export class AuthRequiredError extends Error {}
 
@@ -79,7 +89,7 @@ export const generateConsultation = (
     userProfile: AppState['userProfile'],
     courses: CourseData[]
 ): Promise<ConsultationResponse> =>
-    postToApi<ConsultationResponse>('/api/consultation', { userProfile, courses });
+    postToApi<ConsultationResponse>('/api/consultation', { userProfile: toApiProfile(userProfile), courses });
 
 export const generateTimetablePatterns = (
     courses: CourseData[],
@@ -92,4 +102,4 @@ export const generateGradeReaction = (
     userProfile: AppState['userProfile'],
     grades: GradeInput[]
 ): Promise<GradeReactionResponse> =>
-    postToApi<GradeReactionResponse>('/api/grade-reaction', { userProfile, grades });
+    postToApi<GradeReactionResponse>('/api/grade-reaction', { userProfile: toApiProfileWithScale(userProfile), grades });
