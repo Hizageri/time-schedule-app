@@ -35,7 +35,7 @@ src/
   logic/
     AppContext.tsx         グローバル状態・更新関数・Firestore 同期（読み込みの状態 loadStatus、3 秒まとめた保存）
     types.ts               型・defaultState・未使用のビット計算関数
-    utils.ts               cn()、科目コード→色（getSubjectColor）、未使用の重なり判定
+    utils.ts               cn()、科目コード→色（getSubjectColor）、入学・卒業予定年月の確かめと表示（validateStudentPeriod 等）、未使用の重なり判定
     timetableGenerator.ts  ビットの判定・ラベル化・絞り込み（filterByBit 等）、合否の判定（isPassingGradePoint・isCoursePassed 等）、ピンを守るクラスの決め方（resolveClassAssignments）、いちばん遅い時限（getLatestPeriod）、未使用のモック生成
     universityConfig.ts    今の大学（会津大学）の、大学ごとに変わる値（最後の時限・最大時限の下限）と、最大時限の選択肢
     inputLimits.ts         ブラウザ側の入力の上限（選べる科目数・プロフィールの文字数）。api/_lib/validation.ts の値と同じにする
