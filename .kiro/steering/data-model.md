@@ -1,6 +1,6 @@
 # Data Model Steering
 
-> updated_at: 2026-10-24（`secure-and-stable`：AI 窓口の認証・ピン・エラーの形、最大時限の範囲、保存の仕方）
+> updated_at: 2026-10-29（`student-period`：入学・卒業予定年月、AI に送るプロフィールの項目）
 > 今実際に使われているデータの形（コードから確認済み）。コード上の型は `src/logic/types.ts` と `src/ai/aiService.ts` にある。
 > `[要確認]` = 作者に意図を確認したい箇所
 
@@ -114,6 +114,10 @@ export interface AppState {
     dreamJob: string;
     gradingScale: GradingScale[];
     termSystem: string;      // "4学期制" で固定
+    /** 入学年月。"YYYY-MM"（例 "2025-04"）。未設定は ''。任意 */
+    enrollmentYearMonth: string;
+    /** 卒業予定年月。"YYYY-MM"。未設定は ''。任意。両方入っているときは入学より後 */
+    expectedGraduationYearMonth: string;
   };
   timetableSettings: {
     workingDays: number;     // 5 or 6
@@ -162,7 +166,8 @@ export interface ApiErrorResponse {
 }
 
 export interface ConsultationRequest {
-  userProfile: AppState['userProfile'];   // 使うのは nickname・dreamJob・university
+  /** サーバーが使う項目だけを送る（入学・卒業予定年月などは送らない） */
+  userProfile: Pick<AppState['userProfile'], 'nickname' | 'dreamJob' | 'university'>;
   courses: CourseData[];                  // 使うのは id_name だけ
 }
 export interface ConsultationResponse {
@@ -188,7 +193,8 @@ export interface TimetablePatternsResponse {
 // ブラウザは、返ってきた割り当てを「有効なピン → パターンの割り当て → 最初のクラス」の順で補って表示する（ピンは必ず守る）
 
 export interface GradeReactionRequest {
-  userProfile: AppState['userProfile'];   // 使うのは nickname・dreamJob・university・gradingScale
+  /** サーバーが使う項目だけを送る（入学・卒業予定年月などは送らない） */
+  userProfile: Pick<AppState['userProfile'], 'nickname' | 'dreamJob' | 'university' | 'gradingScale'>;
   grades: { courseId: string; courseName: string; grade: string; credits: number }[]; // courseName・credits はシラバスから引き直す
 }
 export interface GradeReactionResponse {
@@ -209,6 +215,7 @@ export interface ChatbotResponse {
 ## 初期値（`defaultState`）
 
 - `gradingScale`：A=4, B=3, C=2, D=0, F=0
+- `enrollmentYearMonth`・`expectedGraduationYearMonth`：どちらも `''`（未設定）
 - `timetableSettings`：`workingDays: 5`, `maxPeriods: 5`
 - `timetableConditions`：`targetGrade: 1`, `term: 'first'`, `hasRetake: false`, `baseClass: 'C1'`
 - ログイン時は Firestore のデータを `defaultState` に重ねる。`userProfile`・`timetableSettings`・`timetableConditions` は1段深くマージする
@@ -222,4 +229,5 @@ export interface ChatbotResponse {
 - コード上の `TimeSlot` 型は `"月-1"` 〜 `"金-10"` のリテラルと `string` の合併型だが、実質は `string`
 - `reviews_bit.json`・`reviews_text.json` は生成物。直さずに `raw_reviews.json` を直して `npm run build:reviews`
 - 保存は、保存データの読み込みが終わってから行う（読み込み中・読み込みに失敗したときは保存しない）。最後の変更から 3 秒後に1回、`setDoc` を `merge` なしで呼び、`AppState` そのもので丸ごと書き直す。消した Map のキー（ピン・成績など）は保存データからも消える。ページを隠す・閉じるとき、ログアウトの前、利用者が切り替わる前は、待っている保存をすぐ行う
+- 入学年月・卒業予定年月（2026-10-29〜）：保存されるのは `"YYYY-MM"`（月は2桁）か `''` だけで、年だけ・月だけの途中の状態は保存しない。両方が `"YYYY-MM"` のときは `expectedGraduationYearMonth > enrollmentYearMonth`（文字列の比較で前後が正しく決まる）。この項目ができる前の保存データには項目がなく、読み込み時に `defaultState` と重ねるので `''` になる（移し替えは要らない）。AI の依頼にも、企業やほかのサービスにも送らない
 - Firestore は `ignoreUndefinedProperties: true` で初期化している（`src/lib/firebase.ts`）。値が `undefined` の項目は保存されず、読み直すと項目ごとない状態になる（例：口コミ本文のない科目の `comment`）
