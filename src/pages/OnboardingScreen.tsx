@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { ChevronRight } from 'lucide-react';
 import { getSelectablePeriods } from '../logic/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../logic/inputLimits';
+import { MONTH_OPTIONS, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../logic/utils';
+import type { YearMonthDraft } from '../logic/utils';
 
 export const OnboardingScreen: React.FC = () => {
     const { state, updateProfile, updateSettings, setScreen } = useAppContext();
+    // 入学・卒業予定年月は「年だけ」の途中の状態があるので、下書きに持ち、「次へ」で確かめてから書く
+    const [enrollmentDraft, setEnrollmentDraft] = useState<YearMonthDraft>(() => toYearMonthDraft(state.userProfile.enrollmentYearMonth));
+    const [graduationDraft, setGraduationDraft] = useState<YearMonthDraft>(() => toYearMonthDraft(state.userProfile.expectedGraduationYearMonth));
+    const [showPeriodErrors, setShowPeriodErrors] = useState(false);
+    const periodResult = validateStudentPeriod(enrollmentDraft, graduationDraft);
+    const yearOptions = getYearOptions(new Date().getFullYear());
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -13,8 +21,21 @@ export const OnboardingScreen: React.FC = () => {
             alert('ニックネームを入力してください');
             return;
         }
+        if (!periodResult.ok) {
+            setShowPeriodErrors(true);
+            return;
+        }
+        updateProfile({
+            enrollmentYearMonth: periodResult.enrollmentYearMonth,
+            expectedGraduationYearMonth: periodResult.expectedGraduationYearMonth
+        });
         setScreen(2);
     };
+
+    const periodFields: { label: string; draft: YearMonthDraft; setDraft: (draft: YearMonthDraft) => void; error?: string }[] = [
+        { label: '入学年月', draft: enrollmentDraft, setDraft: setEnrollmentDraft, error: periodResult.ok ? undefined : periodResult.enrollmentError },
+        { label: '卒業予定年月', draft: graduationDraft, setDraft: setGraduationDraft, error: periodResult.ok ? undefined : periodResult.graduationError },
+    ];
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-background p-12">
@@ -120,6 +141,41 @@ export const OnboardingScreen: React.FC = () => {
                                     ))}
                                 </select>
                             </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {periodFields.map(({ label, draft, setDraft, error }) => (
+                                <div key={label}>
+                                    <label className="block text-sm font-medium text-foreground mb-2">{label}（任意）</label>
+                                    <div className="flex gap-2">
+                                        <select
+                                            aria-label={`${label}の年`}
+                                            className="flex-1 min-w-0 px-3 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
+                                            value={draft.year}
+                                            onChange={(e) => setDraft({ ...draft, year: e.target.value })}
+                                        >
+                                            <option value="">年</option>
+                                            {yearOptions.map(y => (
+                                                <option key={y} value={y}>{y}年</option>
+                                            ))}
+                                        </select>
+                                        <select
+                                            aria-label={`${label}の月`}
+                                            className="flex-1 min-w-0 px-3 py-4 rounded-xl border border-border focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-sm outline-none text-lg bg-card"
+                                            value={draft.month}
+                                            onChange={(e) => setDraft({ ...draft, month: e.target.value })}
+                                        >
+                                            <option value="">月</option>
+                                            {MONTH_OPTIONS.map(m => (
+                                                <option key={m} value={m}>{m}月</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    {showPeriodErrors && error && (
+                                        <p className="mt-2 text-sm text-red-600">{error}</p>
+                                    )}
+                                </div>
+                            ))}
                         </div>
 
                         <button
