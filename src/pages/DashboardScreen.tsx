@@ -6,6 +6,8 @@ import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint, getLatestPeriod } from '../logic/timetableGenerator';
 import { getSelectablePeriods } from '../logic/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../logic/inputLimits';
+import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../logic/utils';
+import type { YearMonthDraft } from '../logic/utils';
 
 export const DashboardScreen: React.FC = () => {
     const { state, setScreen, updateProfile, updateSettings, removeCommittedClass, startNewSemester, user, logout } = useAppContext();
@@ -33,19 +35,42 @@ export const DashboardScreen: React.FC = () => {
     const [editNickname, setEditNickname] = useState(state.userProfile.nickname);
     const [editDreamJob, setEditDreamJob] = useState(state.userProfile.dreamJob);
     const [editMaxPeriods, setEditMaxPeriods] = useState(state.timetableSettings.maxPeriods);
+    const [editEnrollment, setEditEnrollment] = useState<YearMonthDraft>(toYearMonthDraft(state.userProfile.enrollmentYearMonth));
+    const [editGraduation, setEditGraduation] = useState<YearMonthDraft>(toYearMonthDraft(state.userProfile.expectedGraduationYearMonth));
+    const [showPeriodErrors, setShowPeriodErrors] = useState(false);
+    const periodResult = validateStudentPeriod(editEnrollment, editGraduation);
+    const currentYear = new Date().getFullYear();
 
     const handleStartEditProfile = () => {
         setEditNickname(state.userProfile.nickname);
         setEditDreamJob(state.userProfile.dreamJob);
         setEditMaxPeriods(state.timetableSettings.maxPeriods);
+        setEditEnrollment(toYearMonthDraft(state.userProfile.enrollmentYearMonth));
+        setEditGraduation(toYearMonthDraft(state.userProfile.expectedGraduationYearMonth));
+        setShowPeriodErrors(false);
         setIsEditingProfile(true);
     };
 
     const handleSaveProfile = () => {
-        updateProfile({ nickname: editNickname, dreamJob: editDreamJob });
+        // 年月が通らないときは、ほかの項目も含めて何も保存せずに編集を続ける
+        if (!periodResult.ok) {
+            setShowPeriodErrors(true);
+            return;
+        }
+        updateProfile({
+            nickname: editNickname,
+            dreamJob: editDreamJob,
+            enrollmentYearMonth: periodResult.enrollmentYearMonth,
+            expectedGraduationYearMonth: periodResult.expectedGraduationYearMonth
+        });
         updateSettings({ maxPeriods: editMaxPeriods });
         setIsEditingProfile(false);
     };
+
+    const periodRows: { label: string; value: string; draft: YearMonthDraft; setDraft: (draft: YearMonthDraft) => void; error?: string }[] = [
+        { label: '入学年月', value: state.userProfile.enrollmentYearMonth, draft: editEnrollment, setDraft: setEditEnrollment, error: periodResult.ok ? undefined : periodResult.enrollmentError },
+        { label: '卒業予定年月', value: state.userProfile.expectedGraduationYearMonth, draft: editGraduation, setDraft: setEditGraduation, error: periodResult.ok ? undefined : periodResult.graduationError },
+    ];
 
     const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
     const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
@@ -476,6 +501,46 @@ export const DashboardScreen: React.FC = () => {
                                         )}
                                     </div>
                                 </div>
+                                {periodRows.map(({ label, value, draft, setDraft, error }) => (
+                                    <div key={label} className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
+                                        <div className="text-gray-500 text-sm">{label}</div>
+                                        <div className="col-span-2">
+                                            {isEditingProfile ? (
+                                                <>
+                                                    <div className="flex gap-2">
+                                                        <select
+                                                            aria-label={`${label}の年`}
+                                                            className="flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none bg-white"
+                                                            value={draft.year}
+                                                            onChange={(e) => setDraft({ ...draft, year: e.target.value })}
+                                                        >
+                                                            <option value="">年</option>
+                                                            {getYearOptions(currentYear, draft.year).map(y => (
+                                                                <option key={y} value={y}>{y}年</option>
+                                                            ))}
+                                                        </select>
+                                                        <select
+                                                            aria-label={`${label}の月`}
+                                                            className="flex-1 min-w-0 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none bg-white"
+                                                            value={draft.month}
+                                                            onChange={(e) => setDraft({ ...draft, month: e.target.value })}
+                                                        >
+                                                            <option value="">月</option>
+                                                            {MONTH_OPTIONS.map(m => (
+                                                                <option key={m} value={m}>{m}月</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                    {showPeriodErrors && error && (
+                                                        <p className="mt-1 text-xs text-red-600">{error}</p>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <span className="font-medium text-gray-800">{formatYearMonth(value)}</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
                                 <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
                                     <div className="text-gray-500 text-sm">大学</div>
                                     <div className="col-span-2 font-medium text-gray-500">{state.userProfile.university} (変更不可)</div>
