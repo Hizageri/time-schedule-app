@@ -72,6 +72,8 @@ export interface AppState {
         dreamJob: string;
         gradingScale: GradingScale[];
         termSystem: string;
+        enrollmentYearMonth: string; // 入学年月 "YYYY-MM"。未設定は ''
+        expectedGraduationYearMonth: string; // 卒業予定年月 "YYYY-MM"。未設定は ''
     };
     timetableSettings: {
         workingDays: number; // 5 (Mon-Fri) or 6 (Mon-Sat)
@@ -110,7 +112,9 @@ export const defaultState: AppState = {
             { label: 'D', point: 0 },
             { label: 'F', point: 0 }
         ],
-        termSystem: '4学期制'
+        termSystem: '4学期制',
+        enrollmentYearMonth: '',
+        expectedGraduationYearMonth: ''
     },
     timetableSettings: {
         workingDays: 5,
