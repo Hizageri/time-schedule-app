@@ -32,7 +32,8 @@ const open = async ({ docs, uid, viewport, routes } = {}) => {
     const errors = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('console', m => { if (m.type() === 'error' && !m.text().startsWith('Failed to load resource')) errors.push(m.text()); });
-    page.on('dialog', d => d.accept());
+    const dialogs = [];
+    page.on('dialog', d => { dialogs.push(d.message()); d.accept(); });
     await page.route('**/*', route => {
         const url = route.request().url();
         if (!url.startsWith(base)) return route.abort();
@@ -50,6 +51,7 @@ const open = async ({ docs, uid, viewport, routes } = {}) => {
         await page.waitForTimeout(700);
     }
     page.errors = errors;
+    page.dialogs = dialogs;
     return page;
 };
 

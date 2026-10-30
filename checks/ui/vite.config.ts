@@ -27,6 +27,6 @@ export default defineConfig({
         },
         react(),
     ],
-    server: { strictPort: false },
+    server: { strictPort: false, forwardConsole: false },
     logLevel: 'error',
 });
