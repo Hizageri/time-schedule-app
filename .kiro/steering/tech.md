@@ -15,7 +15,7 @@
 | AI | Gemini API（`@google/generative-ai`、モデル `gemini-2.5-flash`、混雑時の予備 `gemini-3.1-flash-lite`） |
 | サーバー | Vercel Serverless Functions（`api/*.ts`） |
 | ルーティング | なし（`state.currentScreen` の数字 1〜8 で画面を切り替え） |
-| テスト | なし |
+| テスト | 試しの画面（`checks/ui/`。Firebase と AI 窓口を偽物にして本物の画面を Playwright で動かす）。単体テストの仕組みはない |
 
 ## アーキテクチャ
 
@@ -81,7 +81,16 @@ npm run dev            # Vite + 自作ミドルウェアで /api/* も動く（h
 npm run build          # tsc -b && vite build（型チェックを兼ねる）
 npm run lint           # ESLint（typescript-eslint, react-hooks, react-refresh）
 npm run build:reviews  # raw_reviews.json → reviews_bit.json / reviews_text.json / course_list_for_prompt.md
+npm run check:ui       # 試しの画面ですべての確認を流す（-- --only <名前の一部> で一部だけ）
 ```
+
+### 試しの画面（`checks/ui/`、2026-10-30〜）
+
+- 何を確かめるか：本物の画面（`src/main.tsx` から）を開き、Firebase（ログイン・保存データ）と AI 窓口（`/api/*`）を偽物に差し替えて、保存・AI の呼び出し・ピン・最大時限・科目の上限・入学と卒業予定年月・ログインなどの動きと、画面の HTML が基準（`checks/ui/snapshots/`）と同じかを確かめる
+- 本物の Firebase・Gemini・本番の URL には接続しない（`localhost` 以外への通信は止める）。`.env` も読まない。本番のビルドには入らない（`src/` の外にある）
+- 最初に1回だけ、Playwright のブラウザを入れる：`npx playwright install chromium`
+- 確認の追加：`checks/ui/scenarios/` に `*.mjs` を足す（`run.mjs` の `open`・`flush`・`ok` を使う）
+- 画面の HTML の基準の作り直し：`npm run check:ui -- --update-snapshots`（見た目を変える spec で、変えたことを確かめてから使う）
 
 - 開発時は `vite.config.ts` の `local-api-handler` が `/api/<name>` を `api/<name>.ts` に振り分け、Vercel の `req.body` / `res.status().json()` を真似る
 

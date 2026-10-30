@@ -30,3 +30,5 @@ dist-ssr
 .vercel/
 # Google Cloud Service Account Key
 service-account.json
+# 試しの画面（checks/ui）の一時ファイル
+checks/ui/.output/

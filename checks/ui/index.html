@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>試しの画面</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- 偽物の Firebase を先に用意し、本物の入口を読み込む（移行で App の場所が変わっても同じ） -->
+    <script type="module" src="/checks/ui/setup.ts"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

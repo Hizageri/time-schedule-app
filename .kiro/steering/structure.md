@@ -73,8 +73,11 @@ src/
   services/       通信（/api/* の呼び出し。将来は DB からの読み込みも）
   utils/          UI も通信もない純粋な関数
   lib/            外部ライブラリの設定と export
+  config/         大学ごとに変わる値・入力の上限などの設定の値（2026-10-30 追加）
   types/          型
   data/           シラバス・口コミの JSON と、その結合
+
+checks/ui/        試しの画面（src の外。本番のビルドに入らない。2026-10-30 追加）
 ```
 
 ### 各フォルダのルール
@@ -89,6 +92,7 @@ src/
 | `services/` | 通信だけ（例：`aiApi.ts` で `fetch('/api/consultation')`）。戻り値に型を付ける | React を使わない。API キーなどの秘密情報を置かない（Gemini は必ずルートの `api/` から呼ぶ） |
 | `utils/` | 同じ入力なら必ず同じ結果を返す関数（ビット判定、GPA 計算、`cn()` など） | React・通信・Firebase を使わない |
 | `lib/` | 外部ライブラリをこのアプリ用に設定して export（例：`firebase.ts`） | アプリの処理を書かない |
+| `config/` | 設定の値と、値から選択肢を作る程度の小さな関数（例：`universityConfig.ts`・`inputLimits.ts`） | React・通信・Firebase を使わない。秘密情報を置かない（ブラウザに送られる） |
 | `types/` | 型。中身は `data-model.md` と一致させる | 値（`defaultState` など）を置かない |
 | `data/` | JSON と、それを結合して科目一覧を作るファイル | 生成物の JSON を直接編集しない |
 
@@ -101,7 +105,7 @@ pages/・components/（見た目）
 hooks/・context/（裏側の処理・共有する状態）
    │ 呼ぶ
    ▼
-services/（通信）・utils/（計算）・lib/（ライブラリ）・data/
+services/（通信）・utils/（計算）・config/（設定）・lib/（ライブラリ）・data/
 
 types/ はどこからでも import してよい
 ```
@@ -109,6 +113,7 @@ types/ はどこからでも import してよい
 - 上から下へだけ呼ぶ。下から上（例：`utils/` から `hooks/`）は呼ばない
 - `firebase/*` を import してよいのは `lib/`・`hooks/`・`context/` だけ
 - ルートの `api/` は `src/` のコードを import しない
+- `checks/ui/`（試しの画面）は `src/` を読み込んでよい。`src/` は `checks/` を読み込まない
 
 ### 現状からの対応
 

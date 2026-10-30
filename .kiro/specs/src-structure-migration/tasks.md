@@ -5,7 +5,7 @@
 > 移す途中で不具合を見つけても直さず、この下の Implementation Notes に記録する（要件 3.4）。
 
 - [ ] 1. 段階0：試しの画面を入れる（移行の前のコードで）
-- [ ] 1.1 試しの画面の土台をリポジトリに入れる
+- [x] 1.1 試しの画面の土台をリポジトリに入れる
   - `checks/ui/` に、Firebase（`firebase/auth`・`firebase/firestore`・`src/lib/firebase`）を偽物に差し替える Vite の設定、偽物の準備（`window.__h`）、本物の入口（`/src/main.tsx`）を読み込むページを置く
   - 確認を流す道具を作る：開発サーバーをプロジェクトのフォルダから立て、`localhost` 以外への通信を止め、確認ごとに PASS/FAIL を出し、最後に通った数と通らなかった確認の名前を出す。1つでも通らなければ終了コード 1
   - `package.json` の開発用の部品に Playwright を、コマンドに `check:ui` を足す。一時ファイルは `.gitignore` に入れる
@@ -130,3 +130,5 @@
   - _Requirements: 1.1, 1.2, 1.3, 1.4_
 
 ## Implementation Notes
+- 1.1：試しの画面は Vite の root をプロジェクトのフォルダにし、`checks/ui/index.html` を `/checks/ui/index.html` で開く（`/src/main.tsx` をそのまま読めるため）。`envDir` を `checks/ui/` にして本物の `.env` を読まない。本番のビルドに入っていないかは `setDocCalls`・`popupErrorCode` など偽物だけにある文字で確かめる（`__h` は React の `__html` と重なるので使えない）
+- 1.1（範囲外・記録）：`npm audit --omit=dev` に新しく `re2js`（高、`firebase` → `@firebase/firestore` の中）が出た。10/23 の確認のあとに公表された指摘で、この spec の変更が原因ではない。`npm audit fix` で直るとの表示。移行とは別に扱う
