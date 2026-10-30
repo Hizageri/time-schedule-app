@@ -121,7 +121,7 @@ export interface AppState {
   };
   timetableSettings: {
     workingDays: number;     // 5 or 6
-    maxPeriods: number;      // 5〜大学の最後の時限（会津大学は 11）。初期値 5。範囲は src/logic/universityConfig.ts から作る
+    maxPeriods: number;      // 5〜大学の最後の時限（会津大学は 11）。初期値 5。範囲は src/config/universityConfig.ts から作る
   };
   timetableConditions: {
     targetGrade: number;     // 1〜6

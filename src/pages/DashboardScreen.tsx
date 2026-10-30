@@ -4,8 +4,8 @@ import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info,
 import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint, getLatestPeriod } from '../logic/timetableGenerator';
-import { getSelectablePeriods } from '../logic/universityConfig';
-import { PROFILE_TEXT_MAX_LENGTH } from '../logic/inputLimits';
+import { getSelectablePeriods } from '../config/universityConfig';
+import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../logic/utils';
 import type { YearMonthDraft } from '../logic/utils';
 

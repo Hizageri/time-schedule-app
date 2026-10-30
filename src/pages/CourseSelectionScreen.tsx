@@ -6,7 +6,7 @@ import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate, isCour
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../logic/utils';
 import { CourseDetailModal } from '../components/CourseDetailModal';
-import { MAX_SELECTED_COURSES } from '../logic/inputLimits';
+import { MAX_SELECTED_COURSES } from '../config/inputLimits';
 
 export const CourseSelectionScreen: React.FC = () => {
     const { state, setScreen, toggleSelectedCourse } = useAppContext();

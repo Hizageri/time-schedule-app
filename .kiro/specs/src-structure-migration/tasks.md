@@ -30,7 +30,7 @@
   - ビルドと `npm run check:ui` がすべて通る
   - _Requirements: 2.1, 6.2_
 
-- [ ] 2.2 設定を `config/` に移す
+- [x] 2.2 設定を `config/` に移す
   - `logic/universityConfig.ts`・`logic/inputLimits.ts` を `config/` に移す。入力の上限は、サーバー側（`api/_lib/validation.ts`）にも同じ値があることをコメントで残す
   - steering：`product.md` の `universityConfig.ts` の場所を合わせる
   - ビルドと `npm run check:ui` がすべて通る

@@ -4,7 +4,7 @@ import type { CatalogCourse } from "./syllabus.js";
 // AI 窓口に届いた入力の上限と形を確かめ、AI に渡す値を作る。
 // 科目は ID だけを信じ、中身はサーバーのシラバスから引き直す（送られた文章はプロンプトに使わない）
 
-/** 入力の上限。値を変えるときはここだけを直し、src/logic/inputLimits.ts もそろえる */
+/** 入力の上限。値を変えるときはここだけを直し、src/config/inputLimits.ts もそろえる */
 export const INPUT_LIMITS = {
     maxCourses: 40,             // 1回の依頼の科目数
     maxGrades: 40,              // 1回の依頼の成績の件数

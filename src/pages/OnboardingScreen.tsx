@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { ChevronRight } from 'lucide-react';
-import { getSelectablePeriods } from '../logic/universityConfig';
-import { PROFILE_TEXT_MAX_LENGTH } from '../logic/inputLimits';
+import { getSelectablePeriods } from '../config/universityConfig';
+import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../logic/utils';
 import type { YearMonthDraft } from '../logic/utils';
 
