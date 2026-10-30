@@ -84,7 +84,7 @@
   - _Boundary: useConsultation, useGradeReaction, ProposalScreen, GradeInputScreen_
   - _Requirements: 1.3, 2.3_
 
-- [ ] 3.6 画面5（生成）の裏側の処理を hook に出す
+- [x] 3.6 画面5（生成）の裏側の処理を hook に出す
   - パターンの取得（AI と代わりの時間割）、ピンを守る割り当て、パターンの切り替え、手での変更、退避と戻し、クォーターの切り替え、プレビューのセル、表示の範囲の外の時限、確定を `hooks/useTimetablePatterns.ts` に移し、画面は返り値で描画する
   - 生成画面の HTML が一致し、ピン・表示の範囲の外・全体の流れの確認が通る
   - _Depends: 3.2_
