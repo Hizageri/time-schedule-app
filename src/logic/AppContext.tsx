@@ -167,6 +167,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         try {
             await signInWithPopup(auth, googleProvider);
         } catch (err) {
+            // 利用者が Google のポップアップを自分で閉じた（または二重に開こうとした）だけなら、失敗として扱わない
+            const code = (err as { code?: unknown }).code;
+            if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') return;
             console.error("Google sign-in error:", err);
             throw err;
         }
