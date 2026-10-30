@@ -117,7 +117,7 @@
   - _Requirements: 1.1, 1.5, 2.6, 2.7, 5.5_
 
 - [ ] 5. steering への反映と最後の確認
-- [ ] 5.1 `structure.md` とほかの steering を移行後の内容に合わせる
+- [x] 5.1 `structure.md` とほかの steering を移行後の内容に合わせる
   - `structure.md` の「現状のディレクトリ構成」「現状からの対応」（移し終えたこと）「依存の向き（現状）」を書き直し、画面に残っている計算（GPA シミュレーター・プロフィールの編集・成績入力の一覧など）を書く
   - 設計書の「Steering Impact」の表の「Yes」の行（`product.md`・`tech.md`・`structure.md`・`data-model.md`）の更新がすべて入っていることと、steering の中に古いファイルの場所（`src/logic/`・`src/ai/`・`src/ui/`・`src/data.ts`）が残っていないことを確かめてある
   - _Depends: 4.2_

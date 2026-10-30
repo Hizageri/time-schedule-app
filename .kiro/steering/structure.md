@@ -1,7 +1,7 @@
 # Structure Steering
 
-> updated_at: 2026-10-24（secure-and-stable で増えたファイルと、ファイルの役割の変化を反映）
-> 2026-10-08 時点のコードから作成。現状の構成と、移行先の構成を併記する。
+> updated_at: 2026-10-30（src-structure-migration で目標の構成への移行が終わった。現状の構成・依存の向き・画面に残っている計算を書き直した）
+> 2026-10-08 時点のコードから作成。
 
 ## 現状のディレクトリ構成
 
@@ -21,28 +21,45 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
 src/
-  main.tsx                 エントリ。index.css を読み込み App を描画
-  data.ts                  JSON を結合して MOCK_COURSES を作る
-  ai/aiService.ts          /api/* を ID トークン付きで呼ぶクライアント関数とレスポンス型（401 ならログアウト）
+  main.tsx                 エントリ。assets/styles/index.css を読み込み App を描画
+  App.tsx                  AppProvider・認証ゲート（保存データの読み込みに失敗したときの画面を含む）・画面切替（ScreenManager）
+  assets/styles/           index.css（Tailwind）、App.css（未使用）
   components/
-    App.tsx                AppProvider・認証ゲート（保存データの読み込みに失敗したときの画面を含む）・画面切替（ScreenManager）
+    Header.tsx, Button.tsx 汎用 UI
     CourseDetailModal.tsx  科目詳細モーダル
     MobileTimetableList.tsx
     LoadingSenpai.tsx      AI 待ちのローディング
     ErrorBoundary.tsx      描画エラー時にコマどり先輩のエラー画面と「戻る」ボタンを出す（App.tsx で画面全体と ScreenManager を囲む）
-  data/                    syllabus.json / raw_reviews.json / reviews_bit.json / reviews_text.json / course_list_for_prompt.md
+  pages/                   画面（*Screen.tsx）
+  hooks/
+    useUserDataSync.ts     保存データの同期：認証の監視・読み込みの状態（loadStatus）・3 秒まとめた保存・すぐ書く保存・ログアウトの前の保存
+    useAvailableCourses.ts 画面3：受講できる科目の一覧・選択単位数・上限つきの選択
+    useConsultation.ts     画面4：AI 相談の呼び出し・残す科目の選択と確定
+    useTimetablePatterns.ts 画面5：パターンの取得（AI と代わりの時間割）・ピンを守る割り当て・手での変更・退避と戻し・プレビューのセル・確定
+    useTimetableGrid.ts    画面6：クォーターの切り替え・時間割のセル・集中講義・表示の範囲の外の時限
+    useGradeReaction.ts    画面7：成績へのリアクションの AI 呼び出し
+  context/
+    AppContext.tsx         共有する状態と更新関数（AppProvider・useAppContext）。同期は useUserDataSync に任せる。Google ログイン
+    defaultState.ts        状態の初期値
+  services/aiApi.ts        /api/* を ID トークン付きで呼ぶクライアント関数とレスポンス型（401 ならログアウト）
+  utils/
+    targetBit.ts           target_bit の読み取り（学期・クォーター・学年・再履修）とラベル。学期・クォーターの判定はここだけ
+    courseFilter.ts        科目の絞り込み（filterByBit・isRetakeCandidate）
+    grades.ts              合否の判定（isPassingGradePoint・isCoursePassed・isCourseFailed）
+    timetable.ts           ピンを守るクラスの決め方（resolveClassAssignments）、いちばん遅い時限、コマ表のセル探し（findClassesInSlot・findIntensiveEntries）、未使用の重なり判定
+    timetableMock.ts       AI が使えないときの代わりの時間割の生成
+    studentPeriod.ts       入学・卒業予定年月の確かめと表示（validateStudentPeriod 等）
+    subjectColor.ts        科目コード→色（getSubjectColor）
+    classNames.ts          cn()
   lib/firebase.ts          Firebase 初期化（auth, db, googleProvider を export）と、ID トークンの取得・ログアウト（getCurrentIdToken・signOutCurrentUser）
-  logic/
-    AppContext.tsx         グローバル状態・更新関数・Firestore 同期（読み込みの状態 loadStatus、3 秒まとめた保存）
-    types.ts               型・defaultState・未使用のビット計算関数
-    utils.ts               cn()、科目コード→色（getSubjectColor）、入学・卒業予定年月の確かめと表示（validateStudentPeriod 等）、未使用の重なり判定
-    timetableGenerator.ts  ビットの判定・ラベル化・絞り込み（filterByBit 等）、合否の判定（isPassingGradePoint・isCoursePassed 等）、ピンを守るクラスの決め方（resolveClassAssignments）、いちばん遅い時限（getLatestPeriod）、未使用のモック生成
+  config/
     universityConfig.ts    今の大学（会津大学）の、大学ごとに変わる値（最後の時限・最大時限の下限）と、最大時限の選択肢
     inputLimits.ts         ブラウザ側の入力の上限（選べる科目数・プロフィールの文字数）。api/_lib/validation.ts の値と同じにする
-  pages/                   画面（*Screen.tsx）
-  ui/
-    Header.tsx, Button.tsx 汎用 UI
-    styles/                index.css（Tailwind）、App.css
+  types/index.ts           型（中身は data-model.md と一致させる）
+  data/
+    index.ts               JSON を結合して MOCK_COURSES を作る
+    *.json, *.md           syllabus.json / raw_reviews.json / reviews_bit.json / reviews_text.json / course_list_for_prompt.md
+checks/ui/                 試しの画面（npm run check:ui。使い方は tech.md）
 ```
 
 ### 画面ファイルと `currentScreen`
@@ -57,9 +74,9 @@ src/
 
 画面を追加するときは `AppState['currentScreen']` の型、`ScreenManager` の `switch`、遷移元の `setScreen()` をそろえて変える。
 
-## 目標の構成（2026-10-13 決定）
+## 目標の構成（2026-10-13 決定、2026-10-30 移行済み）
 
-今後は次の構成に移行する。**移行そのものは専用の spec のタスクとして行い、それ以外の作業ではファイルを移さない。**
+2026-10-30 に src-structure-migration で移行した。新しいファイルはこの構成とルールに従って置く。
 
 ```
 src/
@@ -115,37 +132,51 @@ types/ はどこからでも import してよい
 - ルートの `api/` は `src/` のコードを import しない
 - `checks/ui/`（試しの画面）は `src/` を読み込んでよい。`src/` は `checks/` を読み込まない
 
-### 現状からの対応
+### 移行の記録（2026-10-30 に移し終えた）
 
-| 現状 | 移行先 |
+| 移行の前 | 移行の後 |
 |------|--------|
 | `components/App.tsx` | `App.tsx` |
-| `logic/types.ts` の型 | `types/` |
-| `logic/types.ts` の `defaultState` | `context/` |
-| `logic/AppContext.tsx` | `context/AppContext.tsx`（Firestore との同期は `hooks/` に分ける） |
-| `logic/timetableGenerator.ts` のビット判定・絞り込み | `utils/` |
-| `logic/utils.ts` | `utils/` |
+| `logic/types.ts` の型 | `types/index.ts` |
+| `logic/types.ts` の `defaultState` | `context/defaultState.ts` |
+| `logic/AppContext.tsx` | `context/AppContext.tsx`（Firestore との同期は `hooks/useUserDataSync.ts`） |
+| `logic/timetableGenerator.ts`・`logic/utils.ts` | `utils/` の役割ごとのファイル（上の構成を参照） |
+| `logic/universityConfig.ts`・`logic/inputLimits.ts` | `config/` |
 | `ai/aiService.ts` | `services/aiApi.ts` |
-| `ui/Header.tsx`・`ui/Button.tsx`・`components/*` | `components/` |
+| `ui/Header.tsx`・`ui/Button.tsx` | `components/` |
 | `ui/styles/` | `assets/styles/` |
-| `data.ts` | `data/` |
+| `data.ts` | `data/index.ts` |
+| 各画面の裏側の処理 | `hooks/use〜.ts`（上の構成を参照） |
 
-- 未使用のコード（ビット計算関数、モック生成、`/api/chatbot` など）は、移行のついでに消さない。残すか消すかは別に決める（`product.md` の「現状の位置づけ」を参照）
-- **移行の spec が終わるまで**は、新しいファイルを現状の構成の同じ役割の場所に置く（例：新しい画面は `pages/`、ビット判定は `logic/timetableGenerator.ts`）
+- 未使用のコード（ビット計算関数、モック生成の一部、`checkScheduleConflict`、`/api/chatbot` など）は、移行のついでに消していない。残すか消すかは別に決める（`product.md` の「現状の位置づけ」を参照）
 
 ## 依存の向き（現状）
 
 ```
-pages/ ─▶ logic/AppContext（useAppContext）
-       ─▶ logic/timetableGenerator, logic/utils
-       ─▶ ai/aiService ─▶ /api/*
-       ─▶ data.ts（MOCK_COURSES）
-       ─▶ components/, ui/
-logic/AppContext ─▶ lib/firebase, firebase/*
+App.tsx ─▶ context/AppContext, pages/, components/ErrorBoundary
+pages/ ─▶ context/AppContext（useAppContext）, hooks/use〜
+       ─▶ utils/, config/, data/（下の「画面に残っている計算」で使う分）
+       ─▶ components/
+components/ ─▶ utils/, context/AppContext（CourseDetailModal）
+hooks/ ─▶ context/AppContext, services/aiApi, utils/, config/, data/, lib/firebase, firebase/*（useUserDataSync）
+context/AppContext ─▶ hooks/useUserDataSync, lib/firebase, firebase/auth（ログイン）
+services/aiApi ─▶ lib/firebase（ID トークン）─▶ /api/*
 ```
 
-- 画面・コンポーネントから `firebase/*` を直接 import しない（現状は `AppContext` だけが使う。この形を保つ）
+- `firebase/*` を import しているのは `lib/`・`hooks/useUserDataSync.ts`・`context/AppContext.tsx` だけ。画面・コンポーネントは `firebase/*` と `services/` を直接 import しない（この形を保つ）
 - `api/` は `src/` のコードを import しない。データが必要なら `src/data/*.json` を `fs` で読む
+
+### 画面に残っている計算（この移行では hook に出していない）
+
+| 画面 | 残っている処理 |
+|------|----------------|
+| `DashboardScreen.tsx` | GPA シミュレーター（`MOCK_COURSES` で単位数を数え、`isPassingGradePoint` で修得単位を出す）、プロフィールの編集（入力中の値・`validateStudentPeriod`・保存）、新学期の確認 |
+| `GradeInputScreen.tsx` | 成績入力の一覧（`selectedCourses` か `committedClasses` から作る）、成績の保存、新学期の確認 |
+| `OnboardingScreen.tsx` | 入力中の値と入学・卒業予定年月の確かめ（`validateStudentPeriod`） |
+| `CourseSelectionScreen.tsx` | 表示用のラベル・色（`getTargetGrades`・`getPeriodLabel`・`getSubjectColor`）、不合格の印（`isCourseFailed`） |
+| `ConditionScreen.tsx`・`ReflectionScreen.tsx`・`LoginScreen.tsx` | 入力中の値と画面の切り替えだけ |
+
+- これらは別の spec で hook に出すかを決める。出すときも、見た目と動きは `npm run check:ui` で変わらないことを確かめる
 
 ## 命名とコードの書き方（既存コードの慣習）
 
@@ -156,7 +187,7 @@ logic/AppContext ─▶ lib/firebase, firebase/*
 - 科目の識別子は `id_name`（"HS01 哲学" のような「コード 名前」）。表示名も兼ねている
 - スタイルは Tailwind のユーティリティクラスを直接書く。色は `tailwind.config.js` のトークン（`background` / `foreground` / `card` / `accent` / `border` / `muted`）を使う。共通ボタンは `btn-primary` / `btn-secondary` / `btn-ghost`
 - UI の文言・コメントは日本語
-- インデントは 4 スペースが多いが、2 スペースのファイルもある（`App.tsx`、`GradeInputScreen.tsx`、`ui/*`）。編集するファイルの書き方に合わせる
+- インデントは 4 スペースが多いが、2 スペースのファイルもある（`App.tsx`、`GradeInputScreen.tsx`、`components/Header.tsx`・`components/Button.tsx`）。編集するファイルの書き方に合わせる
 
 ## データファイルの扱い
 
