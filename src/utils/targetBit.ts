@@ -1,4 +1,29 @@
 // target_bit（科目・クラスの対象条件のビット）の読み取りとラベル
+import type { AppState } from '../types';
+
+export type QuarterType = 'odd' | 'even' | 'across' | 'intensive';
+export type Term = AppState['timetableConditions']['term'];
+
+/** 学期のビット（bit 8-9）。0=前期 1=後期 2=通年 */
+export const getTermBit = (bit: number): number => (bit >> 8) & 3;
+
+/** 今の学期の値（'first'→0、'second'→1、'full'→2） */
+export const toSessionTermBit = (term: Term): number => (term === 'second' ? 1 : term === 'full' ? 2 : 0);
+
+/** 通年（2）なら常に、それ以外は今の学期と一致すれば true */
+export const isInSessionTerm = (bit: number, term: Term): boolean => {
+    const courseTerm = getTermBit(bit);
+    return courseTerm === 2 || courseTerm === toSessionTermBit(term);
+};
+
+/** クォーター（bit 6-7）。0=odd（奇数Q） 1=even（偶数Q） 2=across（またぎ） 3=intensive（集中講義など） */
+export const getQuarterType = (bit: number): QuarterType => {
+    const qVal = (bit >> 6) & 3;
+    if (qVal === 0) return 'odd';
+    if (qVal === 1) return 'even';
+    if (qVal === 2) return 'across';
+    return 'intensive';
+};
 
 export const getTargetGrades = (bit: number): number[] => {
     const grades: number[] = [];
@@ -9,7 +34,7 @@ export const getTargetGrades = (bit: number): number[] => {
 };
 
 export const getTermLabel = (bit: number): string => {
-    const termVal = (bit >> 8) & 3;
+    const termVal = getTermBit(bit);
     if (termVal === 0) return '前期';
     if (termVal === 1) return '後期';
     if (termVal === 2) return '通年';
@@ -17,12 +42,11 @@ export const getTermLabel = (bit: number): string => {
 };
 
 export const getQuarterLabel = (bit: number): string => {
-    const qVal = (bit >> 6) & 3;
-    if (qVal === 0) return '奇数Q';
-    if (qVal === 1) return '偶数Q';
-    if (qVal === 2) return 'またぎ';
-    if (qVal === 3) return '集中等';
-    return '不明';
+    const quarter = getQuarterType(bit);
+    if (quarter === 'odd') return '奇数Q';
+    if (quarter === 'even') return '偶数Q';
+    if (quarter === 'across') return 'またぎ';
+    return '集中等';
 };
 
 export const isRetakeCourse = (bit: number): boolean => {

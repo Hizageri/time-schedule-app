@@ -4,7 +4,7 @@ import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../types';
 import { filterByBit, isRetakeCandidate } from '../utils/courseFilter';
 import { isCoursePassed, isCourseFailed } from '../utils/grades';
-import { getTargetGrades, getPeriodLabel } from '../utils/targetBit';
+import { getTargetGrades, getPeriodLabel, isInSessionTerm } from '../utils/targetBit';
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../utils/subjectColor';
 import { CourseDetailModal } from '../components/CourseDetailModal';
@@ -26,7 +26,6 @@ export const CourseSelectionScreen: React.FC = () => {
         });
 
         // 再履修・未履修の自動抽出
-        const targetTermBit = state.timetableConditions.term === 'second' ? 1 : state.timetableConditions.term === 'full' ? 2 : 0;
 
         const reRegistrationCourses = MOCK_COURSES.filter(c => {
             // 既に基本フィルターに含まれているならスキップ
@@ -45,8 +44,7 @@ export const CourseSelectionScreen: React.FC = () => {
             // 学期（前期／後期など）が一致しているか判定
             const checkTermMatch = (b: number | undefined) => {
                 if (b === undefined) return false;
-                const courseTerm = (b >> 8) & 3;
-                return (courseTerm === targetTermBit) || (courseTerm === 2);
+                return isInSessionTerm(b, state.timetableConditions.term);
             };
 
             return checkTermMatch(c.target_bit) || c.classes.some(cls => checkTermMatch(cls.target_bit));

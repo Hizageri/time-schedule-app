@@ -1,5 +1,5 @@
 import type { AppState, CourseData } from '../types';
-import { getTargetGrades, isRetakeCourse } from './targetBit';
+import { getTargetGrades, isInSessionTerm, isRetakeCourse } from './targetBit';
 import { isCourseFailed, isCoursePassed } from './grades';
 
 /**
@@ -41,11 +41,6 @@ export const filterByBit = (
 ): CourseData[] => {
     const { selectedGrade, term, isReRegistrationOnly, userGrades, earnedCredits, gradingScale } = filters;
 
-    // 判定用のターゲットビットを作成
-    let targetTermBit = 0;
-    if (term === 'second') targetTermBit = 1;
-    else if (term === 'full') targetTermBit = 2;
-
     return allCourses.filter(course => {
         // 合格済みの科目は一覧に出さない
         if (isCoursePassed(course.id_name, userGrades, earnedCredits, gradingScale)) return false;
@@ -60,9 +55,7 @@ export const filterByBit = (
                 ? isRetakeCandidate(course, userGrades, earnedCredits, gradingScale, selectedGrade)
                 : (bit & (1 << (selectedGrade - 1))) > 0;
 
-            const courseTerm = (bit >> 8) & 3;
-            const termMatch = (courseTerm === targetTermBit) || (courseTerm === 2);
-            return gradeMatch && termMatch;
+            return gradeMatch && isInSessionTerm(bit, term);
         };
 
         // 1. コース直下にビットがあるかチェック

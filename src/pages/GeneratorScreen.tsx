@@ -8,6 +8,7 @@ import { generateTimetablePatterns } from '../services/aiApi';
 import type { TimetablePatternsResponse } from '../services/aiApi';
 import { MobileTimetableList } from '../components/MobileTimetableList';
 import { resolveClassAssignments, getLatestPeriod } from '../utils/timetable';
+import { getQuarterType, isInSessionTerm } from '../utils/targetBit';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const GeneratorScreen: React.FC = () => {
@@ -144,14 +145,6 @@ export const GeneratorScreen: React.FC = () => {
         setScreen(6); // Dashboard
     };
 
-    const getQuarterType = (bit: number): 'odd' | 'even' | 'across' | 'intensive' => {
-        const qVal = (bit >> 6) & 3;
-        if (qVal === 0) return 'odd';
-        if (qVal === 1) return 'even';
-        if (qVal === 2) return 'across';
-        return 'intensive';
-    };
-
     const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
     const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
 
@@ -165,7 +158,6 @@ export const GeneratorScreen: React.FC = () => {
     const getPreviewCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
         const activeClasses: any[] = [];
-        const sessionTermBit = state.timetableConditions.term === 'second' ? 1 : (state.timetableConditions.term === 'full' ? 2 : 0);
 
         state.selectedCourses.forEach(course => {
             // 仮削除（退避）されている科目は表示対象外
@@ -180,8 +172,7 @@ export const GeneratorScreen: React.FC = () => {
             const bit = classInfo.target_bit ?? course.target_bit ?? 0;
 
             // Check Term (bits 9-8)
-            const courseTerm = (bit >> 8) & 3;
-            if (courseTerm !== 2 && courseTerm !== sessionTermBit) return;
+            if (!isInSessionTerm(bit, state.timetableConditions.term)) return;
 
             // Check Quarter (bits 7-6)
             const qType = getQuarterType(bit);

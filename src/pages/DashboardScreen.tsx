@@ -5,6 +5,7 @@ import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint } from '../utils/grades';
 import { getLatestPeriod } from '../utils/timetable';
+import { getQuarterType, isInSessionTerm } from '../utils/targetBit';
 import { getSelectablePeriods } from '../config/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
@@ -78,23 +79,12 @@ export const DashboardScreen: React.FC = () => {
     // 確定した授業のいちばん遅い時限（表示の範囲の外にあれば知らせる）
     const latestCommittedPeriod = getLatestPeriod(state.committedClasses.map(c => c.schedule ?? []));
 
-    // Helper to decipher quarter from target_bit (Bits 6-7)
-    const getQuarterType = (bit: number): 'odd' | 'even' | 'across' | 'intensive' => {
-        const qVal = (bit >> 6) & 3; // 00, 01, 10, 11
-        if (qVal === 0) return 'odd';
-        if (qVal === 1) return 'even';
-        if (qVal === 2) return 'across';
-        return 'intensive';
-    };
-
     const getCellClasses = (day: string, period: number) => {
         const slotStr = `${day}-${period}`;
-        const sessionTermBit = state.timetableConditions.term === 'second' ? 1 : (state.timetableConditions.term === 'full' ? 2 : 0);
 
         return state.committedClasses.filter(c => {
             const bit = c.targetBit ?? 0;
-            const courseTerm = (bit >> 8) & 3;
-            if (courseTerm !== 2 && courseTerm !== sessionTermBit) return false;
+            if (!isInSessionTerm(bit, state.timetableConditions.term)) return false;
 
             const qType = getQuarterType(bit);
             // Match active quarter OR if it's "across" (通年/またぎ)
@@ -105,12 +95,10 @@ export const DashboardScreen: React.FC = () => {
     };
 
     const getIntensiveClasses = () => {
-        const sessionTermBit = state.timetableConditions.term === 'second' ? 1 : (state.timetableConditions.term === 'full' ? 2 : 0);
 
         return state.committedClasses.filter(c => {
             const bit = c.targetBit ?? 0;
-            const courseTerm = (bit >> 8) & 3;
-            if (courseTerm !== 2 && courseTerm !== sessionTermBit) return false;
+            if (!isInSessionTerm(bit, state.timetableConditions.term)) return false;
 
             return getQuarterType(bit) === 'intensive' || (c.schedule ?? []).includes('TBD') || !(c.schedule ?? []).some(s => s.includes('-'));
         });
