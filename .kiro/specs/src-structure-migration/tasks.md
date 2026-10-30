@@ -102,14 +102,14 @@
   - _Depends: 3.3, 3.4, 3.5, 3.6, 3.7_
   - _Requirements: 1.5, 2.3, 2.4, 2.5_
 
-- [ ] 4. 段階3：UI 部品・CSS・App を移す
+- [x] 4. 段階3：UI 部品・CSS・App を移す
 - [x] 4.1 UI 部品と CSS と `App.tsx` を移し、古いフォルダをなくす
   - `ui/Header.tsx`・`ui/Button.tsx` を `components/` に、`ui/styles/` を `assets/styles/` に（未使用の `App.css` も）、`components/App.tsx` を `src/App.tsx` に移し、`main.tsx` の読み込み先を合わせる
   - steering：`tech.md` の CSS・`ErrorBoundary`・`App.tsx` の場所の記述を合わせる
   - `src/logic`・`src/ai`・`src/ui`・`src/data.ts`・`src/components/App.tsx` がなくなっている
   - _Requirements: 2.1, 2.7, 6.2_
 
-- [ ] 4.2 段階3をまとめて確かめる
+- [x] 4.2 段階3をまとめて確かめる
   - ビルドと `npm run check:ui`（画面の HTML の比較を含む）がすべて通る
   - lint の指摘が移行の前（35件）から増えておらず、移行で書いたコードに `any` がない
   - 本番のビルドの出力に `window.__h`・`checks/` の文字がない
