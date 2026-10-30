@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { Header } from '../ui/Header';
 import { Button } from '../ui/Button';
 import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star, RefreshCcw } from 'lucide-react';

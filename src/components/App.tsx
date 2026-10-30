@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppProvider, useAppContext } from '../logic/AppContext';
+import { AppProvider, useAppContext } from '../context/AppContext';
 import { OnboardingScreen } from '../pages/OnboardingScreen';
 import { ConditionScreen } from '../pages/ConditionScreen';
 import { CourseSelectionScreen } from '../pages/CourseSelectionScreen';

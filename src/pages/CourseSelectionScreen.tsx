@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../types';
 import { filterByBit, isRetakeCandidate } from '../utils/courseFilter';

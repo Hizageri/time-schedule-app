@@ -1,6 +1,6 @@
 import React from 'react';
 import type { CourseData } from '../types';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { X, BookOpen, Star, MessageSquare, BarChart2, CheckCircle2, PlusCircle, AlertCircle, Clock } from 'lucide-react';
 
 export interface CourseDetailModalProps {

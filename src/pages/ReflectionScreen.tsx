@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { CheckCircle, Save, ChevronLeft } from 'lucide-react';
 
 export const ReflectionScreen: React.FC = () => {

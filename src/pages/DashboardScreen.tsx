@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';

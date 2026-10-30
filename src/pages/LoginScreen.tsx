@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { GraduationCap, Calculator, Sparkles, Smartphone, ShieldCheck } from 'lucide-react';
 
 export const LoginScreen: React.FC = () => {

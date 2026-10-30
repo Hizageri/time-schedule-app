@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type { AppState } from '../types';
-import { defaultState } from '../context/defaultState';
+import { defaultState } from './defaultState';
 import { isCoursePassed } from '../utils/grades';
 import { auth, db, googleProvider } from '../lib/firebase';
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';

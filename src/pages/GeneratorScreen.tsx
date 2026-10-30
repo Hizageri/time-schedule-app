@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { Sparkles, AlertCircle, Save, Calendar as CalendarIcon, Edit3, Settings2, EyeOff, RotateCcw, Archive } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { getSubjectColor } from '../utils/subjectColor';

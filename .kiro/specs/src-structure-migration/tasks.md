@@ -23,7 +23,7 @@
   - 移行の前のコードで基準を作り、もう一度流すとすべて一致することを確かめてある
   - _Requirements: 1.1_
 
-- [ ] 2. 段階1：型・設定・計算・通信・データ・状態を移す
+- [x] 2. 段階1：型・設定・計算・通信・データ・状態を移す
 - [x] 2.1 型を `types/` に、初期値を `context/` に移す
   - 型は `types/index.ts` に、`defaultState` は `context/defaultState.ts` に移す。`logic/types.ts` にある未使用の関数（`calculateStudentBit`・`canTakeClass`）は `utils/targetBit.ts` に移す（消さない）
   - steering：`data-model.md` の型の場所の記述を新しい場所に合わせる
@@ -48,7 +48,7 @@
   - ビルドと `npm run check:ui` がすべて通る
   - _Requirements: 2.1, 4.1, 6.2_
 
-- [ ] 2.5 状態を `context/` に移し、段階1をまとめて確かめる
+- [x] 2.5 状態を `context/` に移し、段階1をまとめて確かめる
   - `logic/AppContext.tsx` を `context/AppContext.tsx` に移す（この時点では保存の処理も中に残す）。`logic/` が空になる
   - 段階1のまとめ：ビルド、`npm run check:ui`（画面の HTML の比較を含む）がすべて通り、`utils/`・`services/`・`config/` が `hooks/`・`context/`・`pages/` を import していないことを確かめてある
   - _Depends: 2.1, 2.2, 2.3, 2.4_

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { Quote, CheckSquare, Square, AlertCircle } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { generateConsultation } from '../services/aiApi';

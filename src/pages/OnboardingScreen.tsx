@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../logic/AppContext';
+import { useAppContext } from '../context/AppContext';
 import { ChevronRight } from 'lucide-react';
 import { getSelectablePeriods } from '../config/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
