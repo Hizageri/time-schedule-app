@@ -111,7 +111,7 @@ npm run check:ui       # 試しの画面ですべての確認を流す（-- --on
 - AI 窓口の 401 でログアウトさせたとき（`signOutCurrentUser`）は、ログアウトの後に待っている保存を書くので断られることがある（画面のログアウトボタンは先に保存を待つ）
 - 同じ利用者の複数のタブは、後から保存したほうが勝つ
 - 描画中の例外は `ErrorBoundary`（`src/components/ErrorBoundary.tsx`）が受け止めてエラー画面を出す。ただしイベントハンドラや非同期処理の中の例外は受け止めないので、そこは各処理で `try/catch` する
-- `src/ui/styles/index.css` に Tailwind v4 の `@theme` 構文があるが、使っているのは v3。色の正は `tailwind.config.js`
+- `src/assets/styles/index.css` に Tailwind v4 の `@theme` 構文があるが、使っているのは v3。色の正は `tailwind.config.js`
 
 ## 役割分担の原則
 ・答えが決まる計算（絞り込み、集計、コマの重なり、時間割の組み合わせ）はコードでやる

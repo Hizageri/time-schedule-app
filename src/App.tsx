@@ -1,15 +1,15 @@
 import React from 'react';
-import { AppProvider, useAppContext } from '../context/AppContext';
-import { OnboardingScreen } from '../pages/OnboardingScreen';
-import { ConditionScreen } from '../pages/ConditionScreen';
-import { CourseSelectionScreen } from '../pages/CourseSelectionScreen';
-import { ProposalScreen } from '../pages/ProposalScreen';
-import { GeneratorScreen } from '../pages/GeneratorScreen';
-import { DashboardScreen } from '../pages/DashboardScreen';
-import { GradeInputScreen } from '../pages/GradeInputScreen';
-import { ReflectionScreen } from '../pages/ReflectionScreen';
-import { LoginScreen } from '../pages/LoginScreen';
-import { ErrorBoundary } from './ErrorBoundary';
+import { AppProvider, useAppContext } from './context/AppContext';
+import { OnboardingScreen } from './pages/OnboardingScreen';
+import { ConditionScreen } from './pages/ConditionScreen';
+import { CourseSelectionScreen } from './pages/CourseSelectionScreen';
+import { ProposalScreen } from './pages/ProposalScreen';
+import { GeneratorScreen } from './pages/GeneratorScreen';
+import { DashboardScreen } from './pages/DashboardScreen';
+import { GradeInputScreen } from './pages/GradeInputScreen';
+import { ReflectionScreen } from './pages/ReflectionScreen';
+import { LoginScreen } from './pages/LoginScreen';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { AlertCircle, LogOut, User } from 'lucide-react';
 
 const ScreenManager: React.FC = () => {

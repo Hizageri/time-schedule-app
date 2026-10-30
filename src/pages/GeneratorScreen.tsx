@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../context/AppContext';
 import { Sparkles, AlertCircle, Save, Calendar as CalendarIcon, Edit3, Settings2, EyeOff, RotateCcw, Archive } from 'lucide-react';
-import { Header } from '../ui/Header';
+import { Header } from '../components/Header';
 import { getSubjectColor } from '../utils/subjectColor';
 import { MobileTimetableList } from '../components/MobileTimetableList';
 import { LoadingSenpai } from '../components/LoadingSenpai';

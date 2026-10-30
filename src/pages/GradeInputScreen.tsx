@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { Header } from '../ui/Header';
-import { Button } from '../ui/Button';
+import { Header } from '../components/Header';
+import { Button } from '../components/Button';
 import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star, RefreshCcw } from 'lucide-react';
 import { useGradeReaction } from '../hooks/useGradeReaction';
 

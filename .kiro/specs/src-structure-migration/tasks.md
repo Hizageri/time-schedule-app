@@ -103,7 +103,7 @@
   - _Requirements: 1.5, 2.3, 2.4, 2.5_
 
 - [ ] 4. 段階3：UI 部品・CSS・App を移す
-- [ ] 4.1 UI 部品と CSS と `App.tsx` を移し、古いフォルダをなくす
+- [x] 4.1 UI 部品と CSS と `App.tsx` を移し、古いフォルダをなくす
   - `ui/Header.tsx`・`ui/Button.tsx` を `components/` に、`ui/styles/` を `assets/styles/` に（未使用の `App.css` も）、`components/App.tsx` を `src/App.tsx` に移し、`main.tsx` の読み込み先を合わせる
   - steering：`tech.md` の CSS・`ErrorBoundary`・`App.tsx` の場所の記述を合わせる
   - `src/logic`・`src/ai`・`src/ui`・`src/data.ts`・`src/components/App.tsx` がなくなっている

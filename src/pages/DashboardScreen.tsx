@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
-import { Header } from '../ui/Header';
+import { Header } from '../components/Header';
 import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint } from '../utils/grades';
 import { useTimetableGrid } from '../hooks/useTimetableGrid';

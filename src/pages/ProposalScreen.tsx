@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Quote, CheckSquare, Square, AlertCircle } from 'lucide-react';
-import { Header } from '../ui/Header';
+import { Header } from '../components/Header';
 import { useConsultation } from '../hooks/useConsultation';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
