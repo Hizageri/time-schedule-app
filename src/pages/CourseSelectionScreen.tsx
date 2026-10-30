@@ -1,58 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../types';
-import { filterByBit, isRetakeCandidate } from '../utils/courseFilter';
-import { isCoursePassed, isCourseFailed } from '../utils/grades';
-import { getTargetGrades, getPeriodLabel, isInSessionTerm } from '../utils/targetBit';
+import { isCourseFailed } from '../utils/grades';
+import { getTargetGrades, getPeriodLabel } from '../utils/targetBit';
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../utils/subjectColor';
 import { CourseDetailModal } from '../components/CourseDetailModal';
-import { MAX_SELECTED_COURSES } from '../config/inputLimits';
+import { useAvailableCourses } from '../hooks/useAvailableCourses';
 
 export const CourseSelectionScreen: React.FC = () => {
-    const { state, setScreen, toggleSelectedCourse } = useAppContext();
+    const { state, setScreen } = useAppContext();
     const [selectedCourseForModal, setSelectedCourseForModal] = useState<CourseData | null>(null);
 
-    // 今の学年の科目（currentCourses）と、下の学年でまだ合格していない科目（earlierCourses）に分けて出す
-    const { currentCourses, earlierCourses } = useMemo(() => {
-        const baseFiltered = filterByBit(MOCK_COURSES, {
-            selectedGrade: state.timetableConditions.targetGrade,
-            term: state.timetableConditions.term,
-            isReRegistrationOnly: state.timetableConditions.hasRetake,
-            userGrades: state.grades,
-            earnedCredits: state.earnedCredits,
-            gradingScale: state.userProfile.gradingScale
-        });
-
-        // 再履修・未履修の自動抽出
-
-        const reRegistrationCourses = MOCK_COURSES.filter(c => {
-            // 既に基本フィルターに含まれているならスキップ
-            if (baseFiltered.some(bc => bc.id_name === c.id_name)) return false;
-
-            // 共通ユーティリティで判定
-            const isCandidate = isRetakeCandidate(
-                c,
-                state.grades,
-                state.earnedCredits,
-                state.userProfile.gradingScale,
-                state.timetableConditions.targetGrade
-            );
-            if (!isCandidate) return false;
-
-            // 学期（前期／後期など）が一致しているか判定
-            const checkTermMatch = (b: number | undefined) => {
-                if (b === undefined) return false;
-                return isInSessionTerm(b, state.timetableConditions.term);
-            };
-
-            return checkTermMatch(c.target_bit) || c.classes.some(cls => checkTermMatch(cls.target_bit));
-        });
-
-        // 既に合格済みのものは filterByBit や isRetakeCandidate 側で除外済み
-        return { currentCourses: baseFiltered, earlierCourses: reRegistrationCourses };
-    }, [state.timetableConditions, state.grades, state.earnedCredits, state.userProfile.gradingScale]);
+    const { currentCourses, earlierCourses, selectedCredits, toggleCourse } = useAvailableCourses();
 
     const userYear = state.timetableConditions.targetGrade;
     const termLabel = state.timetableConditions.term === 'second' ? '後期' : state.timetableConditions.term === 'full' ? '通年' : '前期';
@@ -126,12 +86,8 @@ export const CourseSelectionScreen: React.FC = () => {
 
     // まだ選んでいない科目を選ぼうとして、すでに上限まで選んでいるときは、選ばずに知らせる（カードのチェックと詳細モーダルで共通）
     const handleToggleCourse = (course: CourseData) => {
-        const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
-        if (!isSelected && state.selectedCourses.length >= MAX_SELECTED_COURSES) {
-            alert(`一度に選べるのは ${MAX_SELECTED_COURSES} 科目までです`);
-            return;
-        }
-        toggleSelectedCourse(course);
+        const result = toggleCourse(course);
+        if (!result.ok) alert(result.message);
     };
 
     const handleProceed = () => {
@@ -158,10 +114,7 @@ export const CourseSelectionScreen: React.FC = () => {
                     <div className="text-right mr-4 text-sm">
                         <span className="text-muted">選択単位数: </span>
                         <span className="font-bold text-accent text-lg">
-                            {state.selectedCourses.reduce((sum, c) => {
-                                const isPassed = isCoursePassed(c.id_name, state.grades, state.earnedCredits, state.userProfile.gradingScale);
-                                return sum + (isPassed ? 0 : c.credits);
-                            }, 0)}
+                            {selectedCredits}
                         </span> <span className="text-muted">単位 (今期新規)</span>
                     </div>
 
