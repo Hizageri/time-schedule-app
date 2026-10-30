@@ -154,7 +154,7 @@
 
 ### 第1段階（〜2026-10-29）
 
-- [ ] secure-and-stable -- `api/*` の認証と入力チェック、Firestore のルール、依存パッケージとログの整理（安全性）と、Firestore 同期・6限より後の表示・ピン留めの反映・合格の判定の統一（不具合修正）。今の構成のまま直す。Dependencies: none
+- [x] secure-and-stable -- `api/*` の認証と入力チェック、Firestore のルール、依存パッケージとログの整理（安全性）と、Firestore 同期・6限より後の表示・ピン留めの反映・合格の判定の統一（不具合修正）。今の構成のまま直す。Dependencies: none
 
 ### 第2段階（提出の後）
 
