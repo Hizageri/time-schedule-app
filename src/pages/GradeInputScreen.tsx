@@ -3,8 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import { Header } from '../ui/Header';
 import { Button } from '../ui/Button';
 import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star, RefreshCcw } from 'lucide-react';
-import { generateGradeReaction } from '../services/aiApi';
-import type { GradeReactionResponse } from '../services/aiApi';
+import { useGradeReaction } from '../hooks/useGradeReaction';
 
 interface GradeInput {
   courseId: string;
@@ -32,8 +31,7 @@ export const GradeInputScreen: React.FC = () => {
       credits: 2
     }));
   });
-  const [aiReaction, setAiReaction] = useState<GradeReactionResponse | null>(null);
-  const [isGeneratingReaction, setIsGeneratingReaction] = useState(false);
+  const { aiReaction, isGeneratingReaction, generateReaction } = useGradeReaction();
 
   const handleGradeChange = (courseId: string, grade: string) => {
     setGradeInputs(prev => 
@@ -43,30 +41,7 @@ export const GradeInputScreen: React.FC = () => {
     );
   };
 
-  const handleGenerateReaction = async () => {
-    const validGrades = gradeInputs.filter(input => input.grade);
-    
-    if (validGrades.length === 0) {
-      setAiReaction({
-        title: '未評価',
-        message: '成績を入力してからにしろよ！何も評価できるものがないじゃねえか。'
-      });
-      return;
-    }
-
-    setIsGeneratingReaction(true);
-    try {
-      const reaction = await generateGradeReaction(state.userProfile, validGrades);
-      setAiReaction(reaction);
-    } catch (error) {
-      setAiReaction({
-        title: 'エラー',
-        message: 'なんだかエラーが出たな。もう一回試してみろ。'
-      });
-    } finally {
-      setIsGeneratingReaction(false);
-    }
-  };
+  const handleGenerateReaction = () => generateReaction(gradeInputs);
 
   const handleSaveAndReturnToDashboard = () => {
     gradeInputs.forEach(input => {

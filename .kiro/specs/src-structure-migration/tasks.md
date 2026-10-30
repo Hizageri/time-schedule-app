@@ -78,7 +78,7 @@
   - _Depends: 3.1_
   - _Requirements: 1.4, 4.4_
 
-- [ ] 3.5 (P) 画面4（相談）と画面7（成績入力）の AI の呼び出しを hook に出す
+- [x] 3.5 (P) 画面4（相談）と画面7（成績入力）の AI の呼び出しを hook に出す
   - 相談の呼び出し・残す科目の選択・確定を `hooks/useConsultation.ts` に、成績のリアクションの呼び出しを `hooks/useGradeReaction.ts` に移す。画面の中の表示のための計算（成績入力の一覧など）はこの spec では画面に残す
   - 相談・成績のリアクションの表示、送るプロフィールの項目、401・400 の扱いの確認が通る
   - _Boundary: useConsultation, useGradeReaction, ProposalScreen, GradeInputScreen_

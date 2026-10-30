@@ -1,62 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useAppContext } from '../context/AppContext';
 import { Quote, CheckSquare, Square, AlertCircle } from 'lucide-react';
 import { Header } from '../ui/Header';
-import { generateConsultation } from '../services/aiApi';
-import type { ConsultationResponse } from '../services/aiApi';
+import { useConsultation } from '../hooks/useConsultation';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const ProposalScreen: React.FC = () => {
-    const { state, setState, setScreen } = useAppContext();
-
-    const [loading, setLoading] = useState(true);
-    const [isComplete, setIsComplete] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [consultation, setConsultation] = useState<ConsultationResponse | null>(null);
-    const [selectedToKeep, setSelectedToKeep] = useState<Record<string, boolean>>({});
+    const { state, setScreen } = useAppContext();
 
     const dreamJob = state.userProfile.dreamJob || '未設定';
 
-    useEffect(() => {
-        const fetchAI = async () => {
-            try {
-                if (state.selectedCourses.length === 0) {
-                    setLoading(false);
-                    return;
-                }
-                const res = await generateConsultation(state.userProfile, state.selectedCourses);
-                setConsultation(res);
-
-                const initialChecks: Record<string, boolean> = {};
-                res.courseFeedbacks.forEach(c => initialChecks[c.courseId] = true);
-                setSelectedToKeep(initialChecks);
-
-                setIsComplete(true);
-                setTimeout(() => {
-                    setLoading(false);
-                }, 400);
-            } catch (err: any) {
-                console.error(err);
-                setError(err.message || 'AIからの応答の取得に失敗しました。APIキーが設定されているか確認してください。');
-                setLoading(false);
-            }
-        };
-
-        fetchAI();
-    }, []);
-
-    const toggleCourse = (courseId: string) => {
-        setSelectedToKeep(prev => ({ ...prev, [courseId]: !prev[courseId] }));
-    };
-
-    const handleFinalize = () => {
-        const finalized = state.selectedCourses.filter(c => {
-            const matchingKey = Object.keys(selectedToKeep).find(key => c.id_name.includes(key) || key.includes(c.id_name));
-            return matchingKey ? selectedToKeep[matchingKey] : true;
-        });
-        setState(prev => ({ ...prev, selectedCourses: finalized }));
-        setScreen(5); // GeneratorScreen
-    };
+    const { loading, isComplete, error, consultation, selectedToKeep, toggleCourse, handleFinalize } = useConsultation();
 
     if (loading) {
         return <LoadingSenpai isComplete={isComplete} />;
