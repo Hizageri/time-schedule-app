@@ -4,7 +4,7 @@ import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info,
 import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint } from '../utils/grades';
-import { findClassesInSlot, findIntensiveEntries, getLatestPeriod } from '../utils/timetable';
+import { useTimetableGrid } from '../hooks/useTimetableGrid';
 import { getSelectablePeriods } from '../config/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
@@ -13,6 +13,7 @@ import type { YearMonthDraft } from '../utils/studentPeriod';
 export const DashboardScreen: React.FC = () => {
     const { state, setScreen, updateProfile, updateSettings, removeCommittedClass, startNewSemester, user, logout } = useAppContext();
     const [activeTab, setActiveTab] = useState<'timetable' | 'grades' | 'profile'>('timetable');
+    const { termQuarters, activeQuarter, setActiveQuarter, days, periods, latestCommittedPeriod, getCellClasses, getIntensiveClasses } = useTimetableGrid();
 
     const handleRemoveClass = (courseId: string, classId: string) => {
         removeCommittedClass(courseId, classId);
@@ -24,12 +25,6 @@ export const DashboardScreen: React.FC = () => {
             startNewSemester();
         }
     };
-
-    // Quarter Toggle State
-    const termQuarters = state.timetableConditions.term === 'first'
-        ? [{ val: 'odd', label: 'Q1' }, { val: 'even', label: 'Q2' }]
-        : [{ val: 'odd', label: 'Q3' }, { val: 'even', label: 'Q4' }];
-    const [activeQuarter, setActiveQuarter] = useState<'odd' | 'even'>('odd');
 
     // Profile Edit State
     const [isEditingProfile, setIsEditingProfile] = useState(false);
@@ -72,16 +67,6 @@ export const DashboardScreen: React.FC = () => {
         { label: '入学年月', value: state.userProfile.enrollmentYearMonth, draft: editEnrollment, setDraft: setEditEnrollment, error: periodResult.ok ? undefined : periodResult.enrollmentError },
         { label: '卒業予定年月', value: state.userProfile.expectedGraduationYearMonth, draft: editGraduation, setDraft: setEditGraduation, error: periodResult.ok ? undefined : periodResult.graduationError },
     ];
-
-    const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
-    const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
-    // 確定した授業のいちばん遅い時限（表示の範囲の外にあれば知らせる）
-    const latestCommittedPeriod = getLatestPeriod(state.committedClasses.map(c => c.schedule ?? []));
-
-    const getCellClasses = (day: string, period: number) =>
-        findClassesInSlot(state.committedClasses, `${day}-${period}`, state.timetableConditions.term, activeQuarter);
-
-    const getIntensiveClasses = () => findIntensiveEntries(state.committedClasses, state.timetableConditions.term);
 
     // Manual GPA State
     const [calcGpaData, setCalcGpaData] = useState<{ gpa: string, details: Record<string, number>, totalCredits: number, earnedCredits: number } | null>(null);
