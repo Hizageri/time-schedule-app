@@ -54,7 +54,7 @@
   - _Depends: 2.1, 2.2, 2.3, 2.4_
   - _Requirements: 1.5, 2.1, 2.4_
 
-- [ ] 3. 段階2：重複をまとめ、裏側の処理を hooks に出す
+- [x] 3. 段階2：重複をまとめ、裏側の処理を hooks に出す
 - [x] 3.1 学期・クォーターの判定を1か所にまとめる
   - `utils/targetBit.ts` に学期のビット・今の学期の値・今の学期に入るか・クォーターの種類を返す関数を作り、9か所の判定（`courseFilter`・ラベル・科目選択・生成・ダッシュボード）をすべてこれに置きかえる。返す結果は変えない
   - `(bit >> 8) & 3`・`(bit >> 6) & 3` が `utils/targetBit.ts` 以外にないこと、ビルドと `npm run check:ui` がすべて通ることを確かめてある
@@ -96,7 +96,7 @@
   - _Depends: 3.2_
   - _Requirements: 1.4, 4.4_
 
-- [ ] 3.8 段階2をまとめて確かめる
+- [x] 3.8 段階2をまとめて確かめる
   - ビルドと `npm run check:ui` がすべて通る
   - `src/pages`・`src/components` が `firebase/*` と `services/` を import していないこと、`firebase/*` を import しているのが `lib/`・`hooks/`・`context/` だけであることを確かめてある
   - _Depends: 3.3, 3.4, 3.5, 3.6, 3.7_
