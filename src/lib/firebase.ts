@@ -21,6 +21,8 @@ export const auth = getAuth(app);
 // undefined の項目は保存しない（口コミ本文のない科目の comment: undefined などで setDoc が失敗するのを防ぐ）
 export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
 export const googleProvider = new GoogleAuthProvider();
+// ログインのたびにアカウントの選択画面を出す（アプリからログアウトしても Google のログインは残るので、指定しないと同じアカウントで自動的に入ってしまう）
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 /** ログイン中の利用者の ID トークン。ログインしていなければ null（期限が近ければ firebase が更新する） */
 export const getCurrentIdToken = async (): Promise<string | null> => {
