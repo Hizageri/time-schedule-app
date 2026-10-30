@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '../logic/utils';
+import { cn } from '../utils/classNames';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';

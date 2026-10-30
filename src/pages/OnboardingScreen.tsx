@@ -3,8 +3,8 @@ import { useAppContext } from '../logic/AppContext';
 import { ChevronRight } from 'lucide-react';
 import { getSelectablePeriods } from '../config/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
-import { MONTH_OPTIONS, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../logic/utils';
-import type { YearMonthDraft } from '../logic/utils';
+import { MONTH_OPTIONS, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
+import type { YearMonthDraft } from '../utils/studentPeriod';
 
 export const OnboardingScreen: React.FC = () => {
     const { state, updateProfile, updateSettings, setScreen } = useAppContext();

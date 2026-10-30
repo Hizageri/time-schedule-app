@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useRef, useCallb
 import type { ReactNode } from 'react';
 import type { AppState } from '../types';
 import { defaultState } from '../context/defaultState';
-import { isCoursePassed } from './timetableGenerator';
+import { isCoursePassed } from '../utils/grades';
 import { auth, db, googleProvider } from '../lib/firebase';
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';

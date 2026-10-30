@@ -1,5 +1,5 @@
 import React from 'react';
-import { getSubjectColor } from '../logic/utils';
+import { getSubjectColor } from '../utils/subjectColor';
 import { EyeOff } from 'lucide-react';
 
 export interface MobileTimetableListProps {

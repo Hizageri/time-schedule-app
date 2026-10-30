@@ -36,7 +36,7 @@
   - ビルドと `npm run check:ui` がすべて通る
   - _Requirements: 2.1, 2.2, 6.2_
 
-- [ ] 2.3 計算を `utils/` の役割ごとのファイルに移す
+- [x] 2.3 計算を `utils/` の役割ごとのファイルに移す
   - `logic/timetableGenerator.ts`・`logic/utils.ts` の関数を、中身を変えずに `utils/targetBit.ts`・`courseFilter.ts`・`grades.ts`・`timetable.ts`・`timetableMock.ts`・`studentPeriod.ts`・`subjectColor.ts`・`classNames.ts` に分けて移す（未使用のものも移す）
   - steering：`product.md` の `isCoursePassed` の場所を合わせる
   - `utils/` が React・通信・Firebase を import していないこと、ビルドと `npm run check:ui` がすべて通ることを確かめてある
@@ -134,3 +134,4 @@
 - 1.1（範囲外・記録）：`npm audit --omit=dev` に新しく `re2js`（高、`firebase` → `@firebase/firestore` の中）が出た。10/23 の確認のあとに公表された指摘で、この spec の変更が原因ではない。`npm audit fix` で直るとの表示。移行とは別に扱う
 - 1.2：移行の前のコード（本物の入口・`StrictMode` あり）で、確認 100 件がすべて通った（2〜3分かかる）。AI の 401・400 の扱いは、第1段階ではコードを直接呼んで確かめていたものを、画面からの確認（401 → ログイン画面、400・500 → 先輩の文面）に置きかえた。詳細モーダルは Escape では閉じないので「閉じる」ボタンを押す
 - 1.3：画面の HTML の基準は 11 画面 × パソコンとスマートフォンの幅 = 22 件。生成画面は、確定済みの授業があるとダッシュボードが出る（今までの決まり）ので、確定済みの授業なしで開く。タブは名前と完全に一致するボタンを押す（「成績」で探すと「成績を入力して次学期へ」に当たる）。基準の1か所を書き換えると、その画面だけが通らなくなることを確かめた
+- 2.3：分けるときに一度、ファイルを書き込み用に開いてから読んだため、新しいファイル5つが空になった。元のファイルは git にあるので戻し、すべての中身を作り終えてから書き込むやり方でやり直した（移した名前が新しいファイルに全部あることを1つずつ確かめた）。`timetableMock.ts` に残る lint の指摘4件は、元の `timetableGenerator.ts` から持ってきた既存のもの

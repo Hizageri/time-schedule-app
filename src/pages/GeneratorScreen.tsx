@@ -3,11 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppContext } from '../logic/AppContext';
 import { Sparkles, AlertCircle, Save, Calendar as CalendarIcon, Edit3, Settings2, EyeOff, RotateCcw, Archive } from 'lucide-react';
 import { Header } from '../ui/Header';
-import { getSubjectColor } from '../logic/utils';
+import { getSubjectColor } from '../utils/subjectColor';
 import { generateTimetablePatterns } from '../ai/aiService';
 import type { TimetablePatternsResponse } from '../ai/aiService';
 import { MobileTimetableList } from '../components/MobileTimetableList';
-import { resolveClassAssignments, getLatestPeriod } from '../logic/timetableGenerator';
+import { resolveClassAssignments, getLatestPeriod } from '../utils/timetable';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const GeneratorScreen: React.FC = () => {

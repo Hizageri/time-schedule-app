@@ -2,9 +2,11 @@ import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { MOCK_COURSES } from '../data';
 import type { CourseData } from '../types';
-import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate, isCoursePassed, isCourseFailed } from '../logic/timetableGenerator';
+import { filterByBit, isRetakeCandidate } from '../utils/courseFilter';
+import { isCoursePassed, isCourseFailed } from '../utils/grades';
+import { getTargetGrades, getPeriodLabel } from '../utils/targetBit';
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
-import { getSubjectColor } from '../logic/utils';
+import { getSubjectColor } from '../utils/subjectColor';
 import { CourseDetailModal } from '../components/CourseDetailModal';
 import { MAX_SELECTED_COURSES } from '../config/inputLimits';
 

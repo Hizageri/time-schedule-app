@@ -3,11 +3,12 @@ import { useAppContext } from '../logic/AppContext';
 import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
 import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
-import { isPassingGradePoint, getLatestPeriod } from '../logic/timetableGenerator';
+import { isPassingGradePoint } from '../utils/grades';
+import { getLatestPeriod } from '../utils/timetable';
 import { getSelectablePeriods } from '../config/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
-import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../logic/utils';
-import type { YearMonthDraft } from '../logic/utils';
+import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
+import type { YearMonthDraft } from '../utils/studentPeriod';
 
 export const DashboardScreen: React.FC = () => {
     const { state, setScreen, updateProfile, updateSettings, removeCommittedClass, startNewSemester, user, logout } = useAppContext();
