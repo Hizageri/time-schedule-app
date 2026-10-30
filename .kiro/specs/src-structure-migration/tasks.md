@@ -116,14 +116,14 @@
   - _Depends: 4.1_
   - _Requirements: 1.1, 1.5, 2.6, 2.7, 5.5_
 
-- [ ] 5. steering への反映と最後の確認
+- [x] 5. steering への反映と最後の確認
 - [x] 5.1 `structure.md` とほかの steering を移行後の内容に合わせる
   - `structure.md` の「現状のディレクトリ構成」「現状からの対応」（移し終えたこと）「依存の向き（現状）」を書き直し、画面に残っている計算（GPA シミュレーター・プロフィールの編集・成績入力の一覧など）を書く
   - 設計書の「Steering Impact」の表の「Yes」の行（`product.md`・`tech.md`・`structure.md`・`data-model.md`）の更新がすべて入っていることと、steering の中に古いファイルの場所（`src/logic/`・`src/ai/`・`src/ui/`・`src/data.ts`）が残っていないことを確かめてある
   - _Depends: 4.2_
   - _Requirements: 6.1, 6.2_
 
-- [ ] 5.2 全体を確かめ、本番での確認の手順をまとめる
+- [x] 5.2 全体を確かめ、本番での確認の手順をまとめる
   - `npm run check:ui` とビルドを最後にもう一度流し、すべて通る
   - 作者が本番 URL で行う確認（共通の確認 1〜6、ログイン・保存・AI・年月）の手順を、作者に渡せる形にまとめてある
   - _Depends: 5.1_
