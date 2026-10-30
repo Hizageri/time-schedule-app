@@ -158,7 +158,7 @@
 
 ### 第2段階（提出の後）
 
-- [ ] student-period -- 利用者が入学年月と卒業予定年月（`"YYYY-MM"`）をプロフィールに任意で入力・保存できるようにする（オンボーディングとダッシュボードのプロフィール）。卒業予定が入学より前なら保存させない。初期値の自動入力・学年の自動計算・企業に渡す仕組みは作らない（将来の企業との連携の土台。2026-10-28 追加。小さいので第2段階の最初に作る）。Dependencies: secure-and-stable
+- [x] student-period -- 利用者が入学年月と卒業予定年月（`"YYYY-MM"`）をプロフィールに任意で入力・保存できるようにする（オンボーディングとダッシュボードのプロフィール）。卒業予定が入学より前なら保存させない。初期値の自動入力・学年の自動計算・企業に渡す仕組みは作らない（将来の企業との連携の土台。2026-10-28 追加。小さいので第2段階の最初に作る）。Dependencies: secure-and-stable
 - [ ] src-structure-migration -- `src/` を目標の構成へ移行する。必須はフォルダの移動と、後続の spec が使う部品（utils/・hooks/・services/aiApi.ts）の切り出し。余裕があれば lint ゼロと、それ以外の画面の整理。見た目と動きは変えない。Dependencies: secure-and-stable
 - [ ] university-data-model -- 学期制・時限の数・成績の段階・科目の条件（target_bit の意味）・大学名を、大学ごとの設定として持てるようにする。会津大学は設定の1つになる。あわせてユーザーデータを次の形にする：①大学は名前（`"会津大学"`）ではなく大学 ID（例：`universityId: "u-aizu"`）で持ち、名前は大学の設定から引く ②選んだ科目はシラバスの中身を丸ごとコピーせず、年度つきの科目 ID（例：`"u-aizu/2026/HS01"`）だけを持つ。中身は ID から引く（`syllabus-db` までは `src/data/*.json` から引く）③学期ごとに保存する場所を分け（例：`users/{uid}/terms/{学期ID}`）、「新学期へ進む」で前の学期の時間割・成績を消さずに履歴として残す。今のユーザーのデータの移し替えも行う。保存の場所を学期ごとに分けると今の Firestore のルール（`firestore.rules`。本人の `users/{uid}` だけ）では下の階層が拒否されるので、ルールも一緒に直して Rules Playground で確かめる（`secure-and-stable` からの申し送り）。Dependencies: src-structure-migration
 - [ ] syllabus-db -- シラバスと口コミを `src/data/*.json` から DB に移し、大学ごとに持てるようにする。Dependencies: university-data-model
