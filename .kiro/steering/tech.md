@@ -62,7 +62,7 @@
 - 科目単位の `target_bit` がなければクラス単位の `target_bit` を見る（`course.target_bit ?? course.classes[0]?.target_bit`）
 - `reviews_bit`（12ビット）：難易度・課題量・テスト・出席を各3ビット
 - コマ文字列は `"月-1"` 形式（最大 11 限）。集中講義には `"TBD"` や `"8/24(月)"` のような日付文字列も入る
-- 型の正は `data-model.md`。現在のコード上の型は `src/logic/types.ts`
+- 型の正は `data-model.md`。現在のコード上の型は `src/types/index.ts`、初期値は `src/context/defaultState.ts`
 
 ## 環境変数
 

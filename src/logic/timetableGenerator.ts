@@ -1,5 +1,5 @@
 // src/timetableGenerator.ts
-import type { AppState, CourseData, TimeSlot } from './types';
+import type { AppState, CourseData, TimeSlot } from '../types';
 
 export type PatternType = 'balance' | 'full-day-off' | 'zero-first-period' | 'night-shift' | 'zero-gaps';
 

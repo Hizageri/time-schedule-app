@@ -1,4 +1,4 @@
-import type { TimeSlot } from "./types";
+import type { TimeSlot } from "../types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

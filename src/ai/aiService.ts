@@ -1,4 +1,4 @@
-import type { CourseData, AppState } from '../logic/types';
+import type { CourseData, AppState } from '../types';
 import { getCurrentIdToken, signOutCurrentUser } from '../lib/firebase';
 
 // /api/* 自体が失敗したとき（タイムアウト・通信断など）のコマどり先輩の返答

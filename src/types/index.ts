@@ -25,40 +25,6 @@ export interface CourseData {
     comment?: string;
 }
 
-// 11-bit filtering logic calculation
-export const calculateStudentBit = (
-    targetGrade: number,
-    term: 'first' | 'second' | 'full',
-    isRetake: boolean
-): number => {
-    let bit = 0;
-    // Bit 5-0: Target grade
-    if (targetGrade >= 1 && targetGrade <= 6) {
-        bit |= (1 << (targetGrade - 1));
-    }
-
-    // Bit 7-6: Quarter (00: odd, 01: even, 10: across, 11: intensive)
-    // For V2, term registration implies you can see all quarter classes.
-    bit |= (3 << 6); // 11 in binary to match any quarter bit mask (since target checks AND > 0)
-
-    // Bit 9-8: Term (00: 1st, 01: 2nd, 10: full)
-    let tBit = 0;
-    if (term === 'second') tBit = 1;
-    else if (term === 'full') tBit = 2;
-    bit |= (tBit << 8);
-
-    // Bit 10: Retake (1: retake, 0: normal)
-    if (isRetake) {
-        bit |= (1 << 10);
-    }
-
-    return bit;
-};
-
-export const canTakeClass = (targetBit: number, studentBit: number): boolean => {
-    return (targetBit & studentBit) > 0;
-};
-
 export interface GradingScale {
     label: string;
     point: number;
@@ -98,42 +64,6 @@ export interface AppState {
     pinnedClasses: Record<string, string>; // courseId -> classId
     classroomNames: Record<string, string>; // slotKey (e.g. "月-1") -> classroom name
 }
-
-export const defaultState: AppState = {
-    currentScreen: 1,
-    userProfile: {
-        nickname: '',
-        university: '会津大学',
-        dreamJob: '',
-        gradingScale: [
-            { label: 'A', point: 4 },
-            { label: 'B', point: 3 },
-            { label: 'C', point: 2 },
-            { label: 'D', point: 0 },
-            { label: 'F', point: 0 }
-        ],
-        termSystem: '4学期制',
-        enrollmentYearMonth: '',
-        expectedGraduationYearMonth: ''
-    },
-    timetableSettings: {
-        workingDays: 5,
-        maxPeriods: 5
-    },
-    timetableConditions: {
-        targetGrade: 1,
-        term: 'first',
-        hasRetake: false,
-        retakeClasses: [],
-        baseClass: 'C1'
-    },
-    selectedCourses: [],
-    committedClasses: [],
-    grades: {},
-    earnedCredits: [],
-    pinnedClasses: {},
-    classroomNames: {}
-};
 
 export interface ChatMessage {
     role: 'user' | 'model';

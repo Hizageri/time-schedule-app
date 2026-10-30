@@ -1,4 +1,4 @@
-import type { CourseData } from "./logic/types";
+import type { CourseData } from "./types";
 import syllabusData from "./data/syllabus.json";
 import reviewsBitData from "./data/reviews_bit.json";
 import reviewsTextData from "./data/reviews_text.json";

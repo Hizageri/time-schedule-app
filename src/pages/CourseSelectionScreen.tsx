@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { MOCK_COURSES } from '../data';
-import type { CourseData } from '../logic/types';
+import type { CourseData } from '../types';
 import { filterByBit, getTargetGrades, getPeriodLabel, isRetakeCandidate, isCoursePassed, isCourseFailed } from '../logic/timetableGenerator';
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../logic/utils';

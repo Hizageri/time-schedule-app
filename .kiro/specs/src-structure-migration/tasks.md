@@ -24,7 +24,7 @@
   - _Requirements: 1.1_
 
 - [ ] 2. 段階1：型・設定・計算・通信・データ・状態を移す
-- [ ] 2.1 型を `types/` に、初期値を `context/` に移す
+- [x] 2.1 型を `types/` に、初期値を `context/` に移す
   - 型は `types/index.ts` に、`defaultState` は `context/defaultState.ts` に移す。`logic/types.ts` にある未使用の関数（`calculateStudentBit`・`canTakeClass`）は `utils/targetBit.ts` に移す（消さない）
   - steering：`data-model.md` の型の場所の記述を新しい場所に合わせる
   - ビルドと `npm run check:ui` がすべて通る

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { CourseData } from '../logic/types';
+import type { CourseData } from '../types';
 import { useAppContext } from '../logic/AppContext';
 import { X, BookOpen, Star, MessageSquare, BarChart2, CheckCircle2, PlusCircle, AlertCircle, Clock } from 'lucide-react';
 
