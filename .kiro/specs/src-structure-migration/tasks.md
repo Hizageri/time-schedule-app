@@ -42,7 +42,7 @@
   - `utils/` が React・通信・Firebase を import していないこと、ビルドと `npm run check:ui` がすべて通ることを確かめてある
   - _Requirements: 2.1, 4.2_
 
-- [ ] 2.4 通信を `services/`、科目データを `data/` に移す
+- [x] 2.4 通信を `services/`、科目データを `data/` に移す
   - `ai/aiService.ts` を `services/aiApi.ts` に、`data.ts` を `data/index.ts` に、中身を変えずに移す
   - steering：`tech.md` のファイルの場所（`aiService`・`data.ts`）を合わせる
   - ビルドと `npm run check:ui` がすべて通る

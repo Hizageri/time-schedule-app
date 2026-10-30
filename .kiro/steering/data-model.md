@@ -1,7 +1,7 @@
 # Data Model Steering
 
 > updated_at: 2026-10-29（`student-period`：入学・卒業予定年月、AI に送るプロフィールの項目）
-> 今実際に使われているデータの形（コードから確認済み）。コード上の型は `src/types/index.ts`（初期値は `src/context/defaultState.ts`） と `src/ai/aiService.ts` にある。
+> 今実際に使われているデータの形（コードから確認済み）。コード上の型は `src/types/index.ts`（初期値は `src/context/defaultState.ts`） と `src/services/aiApi.ts` にある。
 > `[要確認]` = 作者に意図を確認したい箇所
 
 ## 方針
@@ -67,9 +67,9 @@ export interface CourseData {
   outline: string;
   grading?: { exam: number; report: number; others: number }; // 割合（%）
   classes: ClassInfo[];
-  /** data.ts で reviews_bit.json から付け足される */
+  /** `src/data/index.ts` で reviews_bit.json から付け足される */
   reviews_bit?: ReviewBit;
-  /** data.ts で reviews_text.json から付け足される */
+  /** `src/data/index.ts` で reviews_text.json から付け足される */
   comment?: string;
 }
 
