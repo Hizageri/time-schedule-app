@@ -3,8 +3,8 @@ import { useAppContext } from '../logic/AppContext';
 import { Header } from '../ui/Header';
 import { Button } from '../ui/Button';
 import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star, RefreshCcw } from 'lucide-react';
-import { generateGradeReaction } from '../ai/aiService';
-import type { GradeReactionResponse } from '../ai/aiService';
+import { generateGradeReaction } from '../services/aiApi';
+import type { GradeReactionResponse } from '../services/aiApi';
 
 interface GradeInput {
   courseId: string;

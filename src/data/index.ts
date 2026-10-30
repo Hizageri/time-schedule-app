@@ -1,7 +1,7 @@
-import type { CourseData } from "./types";
-import syllabusData from "./data/syllabus.json";
-import reviewsBitData from "./data/reviews_bit.json";
-import reviewsTextData from "./data/reviews_text.json";
+import type { CourseData } from "../types";
+import syllabusData from "./syllabus.json";
+import reviewsBitData from "./reviews_bit.json";
+import reviewsTextData from "./reviews_text.json";
 
 const bitMap = new Map<string, number>(
     (reviewsBitData as { id: string; rb: number }[]).map(r => [r.id, r.rb])

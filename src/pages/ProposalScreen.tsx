@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../logic/AppContext';
 import { Quote, CheckSquare, Square, AlertCircle } from 'lucide-react';
 import { Header } from '../ui/Header';
-import { generateConsultation } from '../ai/aiService';
-import type { ConsultationResponse } from '../ai/aiService';
+import { generateConsultation } from '../services/aiApi';
+import type { ConsultationResponse } from '../services/aiApi';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const ProposalScreen: React.FC = () => {
