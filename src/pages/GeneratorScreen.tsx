@@ -7,8 +7,8 @@ import { getSubjectColor } from '../utils/subjectColor';
 import { generateTimetablePatterns } from '../services/aiApi';
 import type { TimetablePatternsResponse } from '../services/aiApi';
 import { MobileTimetableList } from '../components/MobileTimetableList';
-import { resolveClassAssignments, getLatestPeriod } from '../utils/timetable';
-import { getQuarterType, isInSessionTerm } from '../utils/targetBit';
+import { resolveClassAssignments, getLatestPeriod, findClassesInSlot } from '../utils/timetable';
+import type { TimetableEntry } from '../utils/timetable';
 import { LoadingSenpai } from '../components/LoadingSenpai';
 
 export const GeneratorScreen: React.FC = () => {
@@ -155,39 +155,19 @@ export const GeneratorScreen: React.FC = () => {
             .map(course => course.classes.find(c => c.class_id === editableAssignments[course.id_name])?.schedule ?? [])
     );
 
-    const getPreviewCellClasses = (day: string, period: number) => {
-        const slotStr = `${day}-${period}`;
-        const activeClasses: any[] = [];
+    // プレビューの材料：退避していない科目 × 割り当てたクラス（ビットはクラス → 科目の順に探す）
+    const previewEntries: TimetableEntry[] = state.selectedCourses.flatMap(course => {
+        if (hiddenCourseIds.includes(course.id_name)) return [];
+        const assignedClassId = editableAssignments[course.id_name];
+        if (!assignedClassId) return [];
+        const classInfo = course.classes.find(c => c.class_id === assignedClassId);
+        if (!classInfo) return [];
+        return [{ courseId: course.id_name, classId: classInfo.class_id, schedule: classInfo.schedule ?? [], targetBit: classInfo.target_bit ?? course.target_bit ?? 0 }];
+    });
 
-        state.selectedCourses.forEach(course => {
-            // 仮削除（退避）されている科目は表示対象外
-            if (hiddenCourseIds.includes(course.id_name)) return;
-
-            const assignedClassId = editableAssignments[course.id_name];
-            if (!assignedClassId) return;
-
-            const classInfo = course.classes.find(c => c.class_id === assignedClassId);
-            if (!classInfo) return;
-
-            const bit = classInfo.target_bit ?? course.target_bit ?? 0;
-
-            // Check Term (bits 9-8)
-            if (!isInSessionTerm(bit, state.timetableConditions.term)) return;
-
-            // Check Quarter (bits 7-6)
-            const qType = getQuarterType(bit);
-            if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return;
-            if (qType === 'intensive') return;
-
-            if ((classInfo.schedule ?? []).includes(slotStr)) {
-                activeClasses.push({
-                    courseId: course.id_name,
-                    classId: classInfo.class_id
-                });
-            }
-        });
-        return activeClasses;
-    };
+    const getPreviewCellClasses = (day: string, period: number) =>
+        findClassesInSlot(previewEntries, `${day}-${period}`, state.timetableConditions.term, activeQuarter)
+            .map(entry => ({ courseId: entry.courseId, classId: entry.classId }));
 
     if (isGenerating) {
         return <LoadingSenpai isComplete={isComplete} />;

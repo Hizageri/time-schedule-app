@@ -1,4 +1,6 @@
 import type { AppState, CourseData, TimeSlot } from '../types';
+import { getQuarterType, isInSessionTerm } from './targetBit';
+import type { Term } from './targetBit';
 
 /**
  * 科目ごとのクラスを決める。優先順位：
@@ -81,3 +83,31 @@ export const parseTimeSlot = (slot: string) => {
 export const DAYS = ["月", "火", "水", "木", "金"];
 
 export const PERIODS = [1, 2, 3, 4, 5];
+
+/** コマ表のセル探しの材料になる授業。コマがなければ空、ビットがなければ 0 として扱う */
+export interface TimetableEntry {
+    courseId: string;
+    classId: string;
+    schedule?: TimeSlot[];
+    targetBit?: number;
+}
+
+/** その曜日・時限（"月-1" の形）に入る授業。学期が合わない・今のクォーターでない（またぎは常に対象）・集中講義は除く */
+export const findClassesInSlot = <T extends TimetableEntry>(entries: T[], slot: string, term: Term, activeQuarter: 'odd' | 'even'): T[] =>
+    entries.filter(entry => {
+        const bit = entry.targetBit ?? 0;
+        if (!isInSessionTerm(bit, term)) return false;
+        const quarter = getQuarterType(bit);
+        if (quarter !== 'across' && quarter !== 'intensive' && quarter !== activeQuarter) return false;
+        if (quarter === 'intensive') return false;
+        return (entry.schedule ?? []).includes(slot);
+    });
+
+/** 集中講義などの欄に出す授業（学期が合い、集中講義か、"TBD" か、"曜日-時限" の形のコマがない） */
+export const findIntensiveEntries = <T extends TimetableEntry>(entries: T[], term: Term): T[] =>
+    entries.filter(entry => {
+        const bit = entry.targetBit ?? 0;
+        if (!isInSessionTerm(bit, term)) return false;
+        const schedule = entry.schedule ?? [];
+        return getQuarterType(bit) === 'intensive' || schedule.includes('TBD') || !schedule.some(s => s.includes('-'));
+    });

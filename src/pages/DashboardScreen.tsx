@@ -4,8 +4,7 @@ import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info,
 import { Header } from '../ui/Header';
 import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint } from '../utils/grades';
-import { getLatestPeriod } from '../utils/timetable';
-import { getQuarterType, isInSessionTerm } from '../utils/targetBit';
+import { findClassesInSlot, findIntensiveEntries, getLatestPeriod } from '../utils/timetable';
 import { getSelectablePeriods } from '../config/universityConfig';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
@@ -79,30 +78,10 @@ export const DashboardScreen: React.FC = () => {
     // 確定した授業のいちばん遅い時限（表示の範囲の外にあれば知らせる）
     const latestCommittedPeriod = getLatestPeriod(state.committedClasses.map(c => c.schedule ?? []));
 
-    const getCellClasses = (day: string, period: number) => {
-        const slotStr = `${day}-${period}`;
+    const getCellClasses = (day: string, period: number) =>
+        findClassesInSlot(state.committedClasses, `${day}-${period}`, state.timetableConditions.term, activeQuarter);
 
-        return state.committedClasses.filter(c => {
-            const bit = c.targetBit ?? 0;
-            if (!isInSessionTerm(bit, state.timetableConditions.term)) return false;
-
-            const qType = getQuarterType(bit);
-            // Match active quarter OR if it's "across" (通年/またぎ)
-            if (qType !== 'across' && qType !== 'intensive' && qType !== activeQuarter) return false;
-            if (qType === 'intensive') return false; // Intensives go below
-            return (c.schedule ?? []).includes(slotStr);
-        });
-    };
-
-    const getIntensiveClasses = () => {
-
-        return state.committedClasses.filter(c => {
-            const bit = c.targetBit ?? 0;
-            if (!isInSessionTerm(bit, state.timetableConditions.term)) return false;
-
-            return getQuarterType(bit) === 'intensive' || (c.schedule ?? []).includes('TBD') || !(c.schedule ?? []).some(s => s.includes('-'));
-        });
-    };
+    const getIntensiveClasses = () => findIntensiveEntries(state.committedClasses, state.timetableConditions.term);
 
     // Manual GPA State
     const [calcGpaData, setCalcGpaData] = useState<{ gpa: string, details: Record<string, number>, totalCredits: number, earnedCredits: number } | null>(null);
