@@ -1,6 +1,7 @@
 # Structure Steering
 
-> updated_at: 2026-10-30（src-structure-migration で目標の構成への移行が終わった。現状の構成・依存の向き・画面に残っている計算を書き直した）
+> updated_at: 2026-11-05（docs/adr/ を追加）
+> 2026-10-30：src-structure-migration で目標の構成への移行が終わった。現状の構成・依存の向き・画面に残っている計算を書き直した
 > 2026-10-08 時点のコードから作成。
 
 ## 現状のディレクトリ構成
@@ -18,6 +19,9 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   _lib/http.ts             AI 窓口の最小限のリクエスト・レスポンスの型と、エラー応答（{ error: コード }）の送り方
   _lib/auth.ts             Firebase ID トークン（Authorization: Bearer）の検証。Google の公開鍵をキャッシュする
   _lib/validation.ts       AI 窓口の入力の上限（INPUT_LIMITS。値はここだけで管理）と、窓口ごとの入力の確認。科目はシラバスから引き直す
+docs/
+  adr/                     ADR（設計・技術・アーキテクチャを選んだ理由と、選ばなかった案）。README.md が一覧、0000-template.md がひな形。steering は「今どうなっているか」、ADR は「なぜそうしたか」。毎回は読まず、必要なときに読む
+  archive/                 cc-sdd に切り替える前の設計書（もう更新しない）
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
 src/
