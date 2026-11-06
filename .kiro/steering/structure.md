@@ -1,6 +1,7 @@
 # Structure Steering
 
-> updated_at: 2026-11-05（docs/adr/ を追加）
+> updated_at: 2026-11-06（docs/用語集.md を追加）
+> 2026-11-05：docs/adr/ を追加
 > 2026-10-30：src-structure-migration で目標の構成への移行が終わった。現状の構成・依存の向き・画面に残っている計算を書き直した
 > 2026-10-08 時点のコードから作成。
 
@@ -22,6 +23,7 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
 docs/
   adr/                     ADR（設計・技術・アーキテクチャを選んだ理由と、選ばなかった案）。README.md が一覧、0000-template.md がひな形。steering は「今どうなっているか」、ADR は「なぜそうしたか」。毎回は読まず、必要なときに読む
   archive/                 cc-sdd に切り替える前の設計書（もう更新しない）
+  用語集.md                作者の言葉で書いた用語の説明
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
 src/
