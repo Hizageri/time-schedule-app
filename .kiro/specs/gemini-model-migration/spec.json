@@ -1,13 +1,13 @@
 {
   "feature_name": "gemini-model-migration",
   "created_at": "2026-11-13T07:24:28Z",
-  "updated_at": "2026-11-13T08:00:00Z",
+  "updated_at": "2026-11-13T08:30:00Z",
   "language": "ja",
   "phase": "requirements-generated",
   "approvals": {
     "requirements": {
       "generated": true,
-      "approved": false
+      "approved": true
     },
     "design": {
       "generated": false,
