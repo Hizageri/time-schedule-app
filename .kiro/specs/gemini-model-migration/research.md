@@ -47,12 +47,17 @@
 - **作るか使うか**：やり直しと予備のモデルへの切りかえは、今の `withGeminiRetry` をそのまま使い、エラーの判定だけ新しい SDK の `ApiError` に合わせる
 - **単純化**：チャットの窓口は動かさないので、呼び出しを新しい SDK に合わせるだけにする
 
-## 作者に選んでもらうこと（設計の前）
+## Design Decisions（作者が決定、2026-11-13）
 
-1. メインのモデル
-2. 予備のモデル
-3. AI の返答の JSON の受け取り方（今の指示＋取り出しのまま、か、structured outputs）
-4. SDK の呼び方（`generateContent`、か、Interactions API）
+- **メインのモデル**：`gemini-3.5-flash-lite`（推奨どおり）。比べたもの：`gemini-3.8-flash`、`gemini-2.5-flash-lite`
+- **予備のモデル**：`gemini-2.5-flash-lite`（推奨どおり）。比べたもの：`gemini-3.8-flash`、予備を持たない
+- **返答の JSON の受け取り方**：structured outputs（推奨どおり）。比べたもの：今のまま（指示＋取り出し）
+- **SDK の呼び方**：Interactions API。比べたもの：`generateContent`
+  - 公式の説明で、Interactions API は 2026-06 に正式版になり、新しいプロジェクトに推奨。`generateContent` は legacy（サポートは続く）
+  - 既定で依頼を Google 側に保存する（無料の枠は1日、有料の枠は55日）。利用者のプロフィールや成績を残さないよう、`store: false` を付ける
+  - JS の SDK（3.3.0）は `ai.interactions.create({ model, input, system_instruction, response_format, store })` → `output_text`。`response_format` の JSON Schema では `minLength`・`maxLength` などは守られない
+  - Interactions API のエラーは、`generateContent` の `ApiError` とは別の種類のクラス（`APIError` 系・`GoogleGenAiError` 系）で投げられ、status の持ち方（`status`・`statusCode`）が違う。status を読む関数を1つ作って吸収する
+  - SDK 自身にもやり直しの仕組みがあるので、`withGeminiRetry` の時間の予算を守るために切る
 
 ## Risks & Mitigations
 
@@ -67,3 +72,4 @@
 - [What's new in Gemini 3.6 Flash and 3.5 Flash-Lite](https://aistudio.google.com/docs/whats-new-gemini-3.6)
 - [Gemini 3.5 Flash-Lite](https://aistudio.google.com/docs/models/gemini-3.5-flash-lite)
 - [`@google/genai`（npm）](https://www.npmjs.com/package/@google/genai)
+- [Interactions API](https://aistudio.google.com/docs/interactions-overview)
