@@ -33,7 +33,7 @@
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.6, 4.1, 4.2_
 
 - [ ] 3. 窓口を新しい部品に置きかえる
-- [ ] 3.1 相談の窓口を置きかえる
+- [x] 3.1 相談の窓口を置きかえる
   - `api/consultation.ts` の Gemini の呼び出しを `withGeminiRetry` ＋ `generateJson`（相談の形）に置きかえ、`sanitizeJsonResponse` を外して `JSON.parse` と型ガードで読む。どちらかが失敗したら今までと同じ代わりの返答を返す。書きかえる `catch` は `unknown` にする。プロンプトと `systemInstruction` の中身は変えない
   - ビルドが通り、`api/consultation.ts` が古い SDK を import していない
   - _Depends: 2.1, 2.2, 2.3_
