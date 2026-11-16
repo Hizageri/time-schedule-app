@@ -13,7 +13,7 @@
   - _Requirements: 3.1_
 
 - [ ] 2. サーバー側の部品
-- [ ] 2.1 Gemini を1回呼ぶ部品を作る
+- [x] 2.1 Gemini を1回呼ぶ部品を作る
   - `api/_lib/geminiClient.ts` に `generateJson({ apiKey, model, systemInstruction, prompt, responseSchema })` を作る。Interactions API を1回だけ呼び、`store: false` と JSON Schema の `response_format` を付け、SDK 自身のやり直しを切る。返答の文字列が空ならエラーを投げる
   - `fetch` を差しかえた使い捨てのスクリプトで、送った依頼に `store: false`・モデル名・`response_format` が入っていること、503 が返ったときに SDK が自分でやり直さず、エラーがそのまま投げられることを確かめてある
   - _Depends: 1.1_
