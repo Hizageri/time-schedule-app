@@ -1,8 +1,9 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
 import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
+import { generateText } from "./_lib/geminiClient.js";
+import type { ChatTurn } from "./_lib/geminiClient.js";
 import { sendError } from "./_lib/http.js";
 
 dotenv.config();
@@ -127,11 +128,9 @@ export default async function handler(req: any, res: any) {
     }
 
     try {
-        const genAI = new GoogleGenerativeAI(apiKey);
-        
-        const formattedHistory = (history || []).map((msg: any) => ({
-            role: msg.role === 'user' ? 'user' : 'model',
-            parts: [{ text: msg.content }]
+        const formattedHistory: ChatTurn[] = (history || []).map((msg: { role?: unknown; content?: unknown }) => ({
+            role: msg.role === 'user' ? 'user' as const : 'model' as const,
+            text: String(msg.content ?? '')
         }));
 
         const systemInstruction = `あなたは会津大学（U-Aizu）の学生生活や時間割、授業の口コミや楽単情報について知り尽くした、親しみにくいがなぜか憎めない「コマどり先輩」だ。
@@ -183,18 +182,17 @@ export default async function handler(req: any, res: any) {
             finalMessage = `${message}\n\n【参考情報（シラバス部分データ）】\n${contextData}`;
         }
 
-        const result = await withGeminiRetry((modelName) =>
-            genAI.getGenerativeModel({
+        const responseText = await withGeminiRetry((modelName) =>
+            generateText({
+                apiKey,
                 model: modelName,
-                systemInstruction: systemInstruction
-            }).startChat({
-                history: formattedHistory,
-            }).sendMessage(finalMessage)
+                systemInstruction,
+                turns: [...formattedHistory, { role: 'user', text: finalMessage }],
+            })
         );
-        const responseText = result.response.text();
 
         return res.status(200).json({ response: responseText });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Chatbot API Error:', error);
         return res.status(500).json({ error: getGeminiErrorMessage(error) });
     }

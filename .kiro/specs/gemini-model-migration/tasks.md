@@ -32,7 +32,7 @@
   - _Boundary: geminiRetry_
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.6, 4.1, 4.2_
 
-- [ ] 3. 窓口を新しい部品に置きかえる
+- [x] 3. 窓口を新しい部品に置きかえる
 - [x] 3.1 相談の窓口を置きかえる
   - `api/consultation.ts` の Gemini の呼び出しを `withGeminiRetry` ＋ `generateJson`（相談の形）に置きかえ、`sanitizeJsonResponse` を外して `JSON.parse` と型ガードで読む。どちらかが失敗したら今までと同じ代わりの返答を返す。書きかえる `catch` は `unknown` にする。プロンプトと `systemInstruction` の中身は変えない
   - ビルドが通り、`api/consultation.ts` が古い SDK を import していない
@@ -53,7 +53,7 @@
   - _Depends: 2.1, 2.2, 2.3_
   - _Requirements: 1.3, 1.4, 2.5, 3.2, 3.3_
 
-- [ ] 3.4 チャットの窓口を合わせ、古い SDK を外す
+- [x] 3.4 チャットの窓口を合わせ、古い SDK を外す
   - `api/chatbot.ts` の Gemini の呼び出しを新しい SDK（Interactions API、`store: false`、会話の履歴は依頼に含めて送る）に合わせる。前処理で 410 を返す動きは変えない
   - `package.json` から `@google/generative-ai` を外す
   - `api/` と `src/` のどこにも `@google/generative-ai` の import がなく、ビルドが通る
@@ -95,3 +95,4 @@
   - エラー：503 は `InternalServerError`、429 は `RateLimitError`、404 は `NotFoundError`、400 は `BadRequestError`。どれも `status` と `statusCode` の両方に数値の HTTP の status を持つ
   - この環境では、リポジトリの Playwright（1.56.1）が求める Chromium の版がなかったので、作業用のフォルダのラッパー（`chromium.launch` に `executablePath: '/opt/pw-browsers/chromium'` を足して `checks/ui/run.mjs` を読む）で `check:ui` を流した。リポジトリの試しの画面は変えていない。移行の前の基準：122 / 122、lint 32 件
 - 3.3：成績のリアクションは、今までも「項目が足りないときは `title` を「コマどり先輩の評価」、`message` を `response` か「調子が悪い」の文面で補う」動きだったので、型ガードに通らないときもこの補い方を残した（形が崩れたら代わりの返答に切りかえるのは相談・時間割の生成の2つ）。窓口の確認は、テスト用の鍵で署名した ID トークンと偽物の Gemini の応答で、3つの窓口それぞれ10項目（成功・送る依頼・形が違う・JSON でない・混雑・404・ログインなし・入力が違う）を流して通った
+- 3.4：チャットの窓口は文章を返し、会話の履歴も送るので、`geminiClient.ts` に `generateText`（履歴を `user_input`・`model_output` の step にして送る。`store: false`、JSON の形は指定しない）を足した。SDK を触るのは引き続き `geminiClient.ts` だけ。`api/` の型の確認（`tsc --strict`）では、`api/chatbot.ts` の `getRelevantCourses` の `part` の暗黙の `any` が、この spec の前から1件ある（チャットは止めていて、この spec では直していない）。lint の指摘は 32 件から 27 件に減った

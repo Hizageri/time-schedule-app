@@ -32,3 +32,38 @@ export async function generateJson(params: GenerateJsonParams): Promise<string> 
     }
     return text;
 }
+
+export interface ChatTurn {
+    role: "user" | "model";
+    text: string;
+}
+
+export interface GenerateTextParams {
+    apiKey: string;
+    model: string;
+    systemInstruction: string;
+    /** これまでの会話と、最後に利用者の新しい発言（最後は必ず "user"） */
+    turns: ChatTurn[];
+}
+
+/** 会話を送ってモデルを1回呼び、返答の文章を返す（チャットの窓口用。今は止めている） */
+export async function generateText(params: GenerateTextParams): Promise<string> {
+    const ai = new GoogleGenAI({ apiKey: params.apiKey });
+    const interaction = await ai.interactions.create(
+        {
+            model: params.model,
+            input: params.turns.map(turn => ({
+                type: turn.role === "user" ? "user_input" as const : "model_output" as const,
+                content: [{ type: "text" as const, text: turn.text }],
+            })),
+            system_instruction: params.systemInstruction,
+            store: false,
+        },
+        { retries: { strategy: "none" } },
+    );
+    const text = interaction.output_text;
+    if (!text) {
+        throw new Error("Gemini の返答に文章がない");
+    }
+    return text;
+}
