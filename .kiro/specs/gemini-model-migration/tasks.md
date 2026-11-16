@@ -68,7 +68,7 @@
   - _Depends: 3.4_
   - _Requirements: 1.5, 3.1, 3.2, 4.2, 5.1_
 
-- [ ] 4.2 steering を合わせる
+- [x] 4.2 steering を合わせる
   - `tech.md`：技術スタックの AI の行（SDK・モデル名）、API の共通パターン（Interactions API・`store: false`・structured outputs と型ガード・`getGeminiErrorStatus`・SDK のやり直しを切ること）、Node.js 22 以上。`structure.md`：`api/_lib/` の2つの新しいファイル。`roadmap.md`：第2段階の一覧にこの spec を足す
   - steering の中に `@google/generative-ai`・`gemini-2.5-flash`（予備の `gemini-2.5-flash-lite` を除く）・`sanitizeJsonResponse` の古い記述が残っていない
   - _Depends: 4.1_

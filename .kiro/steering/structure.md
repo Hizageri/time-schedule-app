@@ -1,6 +1,7 @@
 # Structure Steering
 
-> updated_at: 2026-11-06（docs/用語集.md を追加）
+> updated_at: 2026-11-16（api/_lib/geminiClient.ts・responseSchemas.ts を追加）
+> 2026-11-06：docs/用語集.md を追加
 > 2026-11-05：docs/adr/ を追加
 > 2026-10-30：src-structure-migration で目標の構成への移行が終わった。現状の構成・依存の向き・画面に残っている計算を書き直した
 > 2026-10-08 時点のコードから作成。
@@ -15,7 +16,9 @@ api/                       Vercel Functions（Gemini 呼び出し。1ファイ�
   timetable-patterns.ts    時間割5パターン生成
   grade-reaction.ts        成績へのリアクション
   chatbot.ts               コマどり先輩チャット（止めている。どんな依頼にも 410 を返す）
-  _lib/geminiRetry.ts      Gemini 呼び出しの再試行とエラー文言（"_" 始まりなのでエンドポイントにならない）
+  _lib/geminiRetry.ts      Gemini 呼び出しの再試行とエラー文言、モデル名（"_" 始まりなのでエンドポイントにならない）
+  _lib/geminiClient.ts     Gemini を Interactions API で1回呼ぶ（SDK を触るのはここだけ。store: false）
+  _lib/responseSchemas.ts  3つの AI 窓口が返させる JSON の形（JSON Schema）と、受け取った値の型ガード
   _lib/syllabus.ts         src/data のシラバスと口コミ本文を読み、科目 ID で科目を引く（AI 窓口がプロンプトに使う科目の中身はここから。送られた文章は使わない）
   _lib/http.ts             AI 窓口の最小限のリクエスト・レスポンスの型と、エラー応答（{ error: コード }）の送り方
   _lib/auth.ts             Firebase ID トークン（Authorization: Bearer）の検証。Google の公開鍵をキャッシュする

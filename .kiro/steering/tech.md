@@ -1,6 +1,7 @@
 # Technology Steering
 
-> updated_at: 2026-10-24（secure-and-stable：AI 窓口の前処理、保存の流れ）
+> updated_at: 2026-11-16（gemini-model-migration：AI の SDK・モデル・返答の受け取り方）
+> 2026-10-24：secure-and-stable：AI 窓口の前処理、保存の流れ
 > 2026-10-08 時点のコードから作成。
 > 外部サービスの設定（Firebase の承認済みドメイン、Vercel の環境変数、トラブル対応）は `deployment.md`、型定義は `data-model.md` を参照。
 
@@ -12,7 +13,7 @@
 | スタイル | Tailwind CSS 3、`cn()`（clsx + tailwind-merge）、framer-motion、lucide-react |
 | 認証 | Firebase Authentication（Google、`signInWithPopup`） |
 | DB | Cloud Firestore（`users/{uid}` の1ドキュメントのみ） |
-| AI | Gemini API（`@google/generative-ai`、モデル `gemini-2.5-flash`、混雑時の予備 `gemini-3.1-flash-lite`） |
+| AI | Gemini API（`@google/genai` 3.3 系の Interactions API、モデル `gemini-3.5-flash-lite`、混雑時の予備 `gemini-2.5-flash-lite`。Node.js 22 以上が必要。Vercel は 24.x） |
 | サーバー | Vercel Serverless Functions（`api/*.ts`） |
 | ルーティング | なし（`state.currentScreen` の数字 1〜8 で画面を切り替え） |
 | テスト | 試しの画面（`checks/ui/`。Firebase と AI 窓口を偽物にして本物の画面を Playwright で動かす）。単体テストの仕組みはない |
@@ -40,9 +41,10 @@
 - 前処理で断るときの応答は `{ error: コード }`（`sendError`）だけ。理由の詳細はトークンや入力の中身を出さずに `console.warn` でログに残す
 - AI に渡す科目の中身（概要・単位・クラスとコマ・口コミ本文）は、送られた科目 ID からサーバーのシラバス（`api/_lib/syllabus.ts`）で引く。送られた文章は使わない。シラバスを読めなければ 500
 - 日本語プロンプト（キャラ設定・出力形式・文字数）と英語の `systemInstruction`（JSON のみを返す指示）
-- 返答は文字列からコードフェンスを除き、`{...}` を抜き出し、末尾カンマを除いて `JSON.parse`（構造化出力は使っていない）
-- Gemini の呼び出しは `api/_lib/geminiRetry.ts` の `withGeminiRetry` で包む。503・429 のときだけ 1秒→2秒→4秒 待って最大3回再試行する（呼び出し開始から45秒を超える再試行はしない）。400・APIキーのエラー・JSON 解析の失敗は再試行しない
-- 再試行しても混雑が続いたら、軽量モデル（`FALLBACK_MODEL` = `gemini-3.1-flash-lite`）で1回だけ試す（開始から40秒を過ぎていたら試さない）。メインのモデルが 404（見つからない・提供終了）を返したときは、再試行せずにすぐ予備モデルで1回だけ試す。モデル名は `api/_lib/geminiRetry.ts` の `PRIMARY_MODEL`・`FALLBACK_MODEL` で一元管理する
+- Gemini は `api/_lib/geminiClient.ts` だけが SDK で呼ぶ（`generateJson`、止めているチャット用の `generateText`）。Interactions API（`interactions.create`）を1回だけ呼び、すべての依頼に `store: false` を付けて依頼の内容を Google 側に残さない（既定では保存される）。SDK 自身のやり直しは `{ retries: { strategy: 'none' } }` で切る（既定では 503 で何回も送り、下の時間の予算を超えるため）
+- 返答は structured outputs で受け取る。返させる JSON の形（JSON Schema）は `api/_lib/responseSchemas.ts` に置き、`JSON.parse` したあとに同じファイルの型ガードで形を確かめる。形が違えば代わりの返答（成績のリアクションだけは、今までどおり足りない項目を決まった文面で補う）。文字数の上限・下限は JSON Schema では守られないので、プロンプトで伝える
+- Gemini の呼び出しは `api/_lib/geminiRetry.ts` の `withGeminiRetry` で包む。503・429 のときだけ 1秒→2秒→4秒 待って最大3回再試行する（呼び出し開始から45秒を超える再試行はしない）。400・APIキーのエラー・JSON 解析の失敗は再試行しない。エラーの status は `getGeminiErrorStatus`（`status` か `statusCode` の数値を読む）で読む
+- 再試行しても混雑が続いたら、軽量モデル（`FALLBACK_MODEL` = `gemini-2.5-flash-lite`）で1回だけ試す（開始から40秒を過ぎていたら試さない）。メインのモデルが 404（見つからない・提供終了）を返したときは、再試行せずにすぐ予備モデルで1回だけ試す。モデル名は `api/_lib/geminiRetry.ts` の `PRIMARY_MODEL`・`FALLBACK_MODEL` で一元管理する
 - `vercel.json` で `api/*.ts` の `maxDuration` を 60 秒にし、`includeFiles: "src/data/**"` でシラバスと口コミの JSON を関数に同梱している（`api/_lib/syllabus.ts` が `fs` で読むため。ファイル名が変数だと自動で同梱されない可能性がある）
 - Gemini の失敗時は 200 で定型の代替レスポンスを返す。文面はコマどり先輩の口調で、混雑（503・429）とそれ以外で `getGeminiErrorMessage` が切り替える
 - `api/_lib/` を import するときは `.js` 拡張子を付ける（`"type": "module"` のため）
@@ -100,7 +102,7 @@ npm run check:ui       # 試しの画面ですべての確認を流す（-- --on
 - 新しいコードで `any` を使わない（既存コードには多数残っている）
 - 型を変えるときは `data-model.md` を先に直す
 - `src/` からドキュメント（Markdown）を import しない
-- モデル名・SDK の変更（`@google/genai` への移行）は今後 spec で対応予定。個別に変えない
+- モデル名・SDK を変えるときは spec で行う。個別に変えない（2026-11-16 に `gemini-model-migration` で `@google/genai`・`gemini-3.5-flash-lite` に移した）。使っているモデルの終了日が Gemini API の Deprecations に出たら、同じ手順で入れかえる
 - PHP は使わない。サーバー側の処理は `api/*.ts`（Vercel の Node.js 関数）で書く（2026-10-22 決定）
 - 依存パッケージの脆弱性は `npm audit fix`（`--force` は使わない）で直す。`package.json` の `overrides` で `@grpc/grpc-js` を `^1.13.6` にそろえている。`@firebase/firestore` が `~1.9.0` に固定していて `npm audit fix` だけでは直らないため。ブラウザ用のビルド（`dist/`）と `api/` では grpc を使っていない（2026-10-24）。`firebase` を上げたときは、この指定が要るかを見直す
 
