@@ -47,3 +47,4 @@
 | [0019](0019-文章の生成に-gemini-api-を使う.md) | 文章の生成に Gemini API を使う | 採用 | 2026-10 以前 |
 | [0020](0020-画面を-react-で作り-vite-でビルドする.md) | 画面を React で作り、Vite でビルドする（Next.js は使わない） | 採用 | 2026-11-12 |
 | [0021](0021-画面のスタイルに-tailwind-css-を使う.md) | 画面のスタイルに Tailwind CSS を使う | 採用 | 2026-11-12 |
+| [0022](0022-gemini-の呼び方に-interactions-api-を使う.md) | Gemini の呼び方に Interactions API を使う | 採用 | 2026-11-13 |
