@@ -5,8 +5,8 @@
 > テストの仕組みがないので、サーバー側の部品は、作業用のフォルダに置く使い捨てのスクリプトで確かめる（リポジトリには入れない）。
 > 期限：2026-12-01 より前に本番に出す。
 
-- [ ] 1. 準備
-- [ ] 1.1 新しい SDK を入れる
+- [x] 1. 準備
+- [x] 1.1 新しい SDK を入れる
   - Node.js が 22 以上であることを確かめ、`@google/genai` の 3.3 系を `package.json` の依存に足す。古い `@google/generative-ai` は、使っているコードを書きかえるまで残す（タスク 3.4 で外す）
   - SDK の型で、`interactions.create` の引数（`model`・`input`・`system_instruction`・`response_format`・`store`）、返り値の `output_text`、SDK 自身のやり直しを切るリクエストのオプションの名前、投げるエラーの種類と status の持ち方を確かめ、下の Implementation Notes に書く
   - `npm ls @google/genai` が 3.3 系を表示し、ビルドが通る
@@ -88,3 +88,9 @@
   - _Requirements: 1.4, 5.3_
 
 ## Implementation Notes
+- 1.1（SDK の確認。`@google/genai` 3.3.0、`fetch` を差しかえて確かめた）：
+  - 呼び方：`new GoogleGenAI({ apiKey }).interactions.create({ model, input, system_instruction, store, response_format: { type: 'text', mime_type: 'application/json', schema } }, { retries: { strategy: 'none' } })`。送り先は `POST https://generativelanguage.googleapis.com/v1/interactions`。送った本文に `store: false`・モデル名・`response_format` がそのまま入る
+  - 返り値の `output_text` は、応答の `steps` の最後の `model_output` の `text` を SDK がつないだもの。文章がなければ `output_text` は付かない（`undefined`）
+  - SDK 自身のやり直し：何も指定しないと 503 で5回送る。2つ目の引数に `{ retries: { strategy: 'none' } }` を渡すと1回だけ
+  - エラー：503 は `InternalServerError`、429 は `RateLimitError`、404 は `NotFoundError`、400 は `BadRequestError`。どれも `status` と `statusCode` の両方に数値の HTTP の status を持つ
+  - この環境では、リポジトリの Playwright（1.56.1）が求める Chromium の版がなかったので、作業用のフォルダのラッパー（`chromium.launch` に `executablePath: '/opt/pw-browsers/chromium'` を足して `checks/ui/run.mjs` を読む）で `check:ui` を流した。リポジトリの試しの画面は変えていない。移行の前の基準：122 / 122、lint 32 件
