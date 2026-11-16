@@ -12,7 +12,7 @@
   - `npm ls @google/genai` が 3.3 系を表示し、ビルドが通る
   - _Requirements: 3.1_
 
-- [ ] 2. サーバー側の部品
+- [x] 2. サーバー側の部品
 - [x] 2.1 Gemini を1回呼ぶ部品を作る
   - `api/_lib/geminiClient.ts` に `generateJson({ apiKey, model, systemInstruction, prompt, responseSchema })` を作る。Interactions API を1回だけ呼び、`store: false` と JSON Schema の `response_format` を付け、SDK 自身のやり直しを切る。返答の文字列が空ならエラーを投げる
   - `fetch` を差しかえた使い捨てのスクリプトで、送った依頼に `store: false`・モデル名・`response_format` が入っていること、503 が返ったときに SDK が自分でやり直さず、エラーがそのまま投げられることを確かめてある
@@ -25,7 +25,7 @@
   - _Boundary: responseSchemas_
   - _Requirements: 1.1, 1.2, 1.3, 2.5_
 
-- [ ] 2.3 (P) やり直しの部品を新しいモデルとエラーに合わせる
+- [x] 2.3 (P) やり直しの部品を新しいモデルとエラーに合わせる
   - `api/_lib/geminiRetry.ts` のモデル名を `PRIMARY_MODEL = "gemini-3.5-flash-lite"`・`FALLBACK_MODEL = "gemini-2.5-flash-lite"` にする。古い SDK のエラーのクラスを使っている判定を、新しい関数 `getGeminiErrorStatus(error: unknown): number | undefined`（`status` か `statusCode` の数値を読む）に置きかえる。やり直しの回数・待ち時間・時間の予算・404 のときの動きは変えない
   - 使い捨てのスクリプトで、`getGeminiErrorStatus` が `status` を持つエラー・`statusCode` を持つエラー・どちらもないエラーで正しい値を返すこと、`withGeminiRetry` が 503 で待ってやり直し、続けば予備のモデルで1回だけ試し、404 ではすぐ予備で試し、400 ではやり直さないことを確かめてある（待ち時間は短くして流す）
   - `geminiRetry.ts` が古い SDK を import していない

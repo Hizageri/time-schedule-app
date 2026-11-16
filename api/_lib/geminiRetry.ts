@@ -1,5 +1,3 @@
-import { GoogleGenerativeAIFetchError } from "@google/generative-ai";
-
 // api/ の共通処理（"_" で始まるため Vercel のエンドポイントにはならない）
 
 // Gemini が混雑しているとき（503・429）のコマどり先輩の返答
@@ -8,8 +6,9 @@ export const BUSY_MESSAGE = "今は相談が殺到してて手が回らねえ。
 export const GENERAL_ERROR_MESSAGE = "なんか調子が悪いみてえだ。時間をおいて出直してこい";
 
 // メインのモデルと、混雑で再試行を使い切ったとき・メインが 404 のときに1回だけ試す軽量モデル
-export const PRIMARY_MODEL = "gemini-2.5-flash";
-export const FALLBACK_MODEL = "gemini-3.1-flash-lite";
+// （どちらも 2026-11-13 時点で提供の終了日が発表されていない。モデル名はここだけで管理する）
+export const PRIMARY_MODEL = "gemini-3.5-flash-lite";
+export const FALLBACK_MODEL = "gemini-2.5-flash-lite";
 
 const RETRYABLE_STATUSES = [503, 429];
 // メインのモデルが見つからない・提供終了のとき
@@ -23,13 +22,24 @@ const FALLBACK_DEADLINE_MS = 40_000;
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-export const isGeminiBusyError = (error: unknown): boolean =>
-    error instanceof GoogleGenerativeAIFetchError &&
-    error.status !== undefined &&
-    RETRYABLE_STATUSES.includes(error.status);
+// SDK が投げたエラーから HTTP の status を読む。読めなければ undefined。
+// @google/genai はエラーの種類によって status を `status` か `statusCode` に持つので、両方を数値として確かめる
+export function getGeminiErrorStatus(error: unknown): number | undefined {
+    if (typeof error !== "object" || error === null) return undefined;
+    for (const key of ["status", "statusCode"]) {
+        const value: unknown = Reflect.get(error, key);
+        if (typeof value === "number") return value;
+    }
+    return undefined;
+}
+
+export const isGeminiBusyError = (error: unknown): boolean => {
+    const status = getGeminiErrorStatus(error);
+    return status !== undefined && RETRYABLE_STATUSES.includes(status);
+};
 
 const isModelNotFoundError = (error: unknown): boolean =>
-    error instanceof GoogleGenerativeAIFetchError && error.status === MODEL_NOT_FOUND_STATUS;
+    getGeminiErrorStatus(error) === MODEL_NOT_FOUND_STATUS;
 
 export const getGeminiErrorMessage = (error: unknown): string =>
     isGeminiBusyError(error) ? BUSY_MESSAGE : GENERAL_ERROR_MESSAGE;
@@ -60,8 +70,7 @@ export async function withGeminiRetry<T>(call: (modelName: string) => Promise<T>
                 lastPrimaryError = error;
                 break;
             }
-            const status = error instanceof GoogleGenerativeAIFetchError ? error.status : undefined;
-            console.warn(`[Gemini Retry] status ${status}. ${delay}ms 待って再試行します (${attempt + 1}/${RETRY_DELAYS_MS.length})`);
+            console.warn(`[Gemini Retry] status ${getGeminiErrorStatus(error)}. ${delay}ms 待って再試行します (${attempt + 1}/${RETRY_DELAYS_MS.length})`);
             await sleep(delay);
         }
     }
