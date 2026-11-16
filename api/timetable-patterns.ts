@@ -1,6 +1,7 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import { withGeminiRetry, getGeminiErrorMessage } from "./_lib/geminiRetry.js";
+import { generateJson } from "./_lib/geminiClient.js";
+import { timetablePatternsSchema, isTimetablePatternsResult } from "./_lib/responseSchemas.js";
 import { getHeader, sendError } from "./_lib/http.js";
 import type { ApiRequest, ApiResponse } from "./_lib/http.js";
 import { verifyIdToken, authFailureResponse } from "./_lib/auth.js";
@@ -9,16 +10,6 @@ import type { TimetablePatternsInput, ValidationResult } from "./_lib/validation
 import { SyllabusUnavailableError } from "./_lib/syllabus.js";
 
 dotenv.config();
-
-const sanitizeJsonResponse = (responseText: string): string => {
-    let cleaned = responseText.replace(/```json/gi, '').replace(/```/g, '');
-    cleaned = cleaned.trim();
-    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-        cleaned = jsonMatch[0];
-    }
-    return cleaned;
-};
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
     // 前処理：メソッド → 認証 → 入力の確認 → API キー。通らなければ Gemini を呼ばない
@@ -110,23 +101,25 @@ ${pinnedRule}- **必ず日本語で回答すること**。
 `;
 
     try {
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const response = await withGeminiRetry((modelName) =>
-            genAI.getGenerativeModel({
+        const responseText = await withGeminiRetry((modelName) =>
+            generateJson({
+                apiKey,
                 model: modelName,
-                systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"patterns\": [ { \"id\": \"pattern id\", \"name\": \"pattern name\", \"description\": \"description text\", \"assignments\": [ { \"courseId\": \"course ID\", \"classId\": \"class ID\" } ] } ] }. Do not include any markdown blocks (like ```json) or extra text outside the JSON."
-            }).generateContent(prompt)
+                systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"patterns\": [ { \"id\": \"pattern id\", \"name\": \"pattern name\", \"description\": \"description text\", \"assignments\": [ { \"courseId\": \"course ID\", \"classId\": \"class ID\" } ] } ] }. Do not include any markdown blocks (like ```json) or extra text outside the JSON.",
+                prompt,
+                responseSchema: timetablePatternsSchema,
+            })
         );
-        
-        if (!response.response.text) {
-            throw new Error('No response from AI');
-        }
 
-        const cleanedResponse = sanitizeJsonResponse(response.response.text());
-        const result = JSON.parse(cleanedResponse);
-        return res.status(200).json(result);
-    } catch (error: any) {
-        console.error('\x1b[31m[Timetable Patterns API Error Details]:\x1b[0m', error.stack || error.message || error);
+        // 返す形は structured outputs で守らせているが、念のため形を確かめてから返す
+        const parsed: unknown = JSON.parse(responseText);
+        if (!isTimetablePatternsResult(parsed)) {
+            console.error("JSON の形が違います. Raw output from Gemini:", responseText);
+            throw new Error('Gemini の返答の形が違う');
+        }
+        return res.status(200).json(parsed);
+    } catch (error: unknown) {
+        console.error('\x1b[31m[Timetable Patterns API Error Details]:\x1b[0m', error instanceof Error ? (error.stack ?? error.message) : error);
         const errorMessage = getGeminiErrorMessage(error);
         return res.status(200).json({
             patterns: [

@@ -39,7 +39,7 @@
   - _Depends: 2.1, 2.2, 2.3_
   - _Requirements: 1.1, 1.4, 2.5, 3.2, 3.3_
 
-- [ ] 3.2 (P) 時間割の生成の窓口を置きかえる
+- [x] 3.2 (P) 時間割の生成の窓口を置きかえる
   - `api/timetable-patterns.ts` を 3.1 と同じ形に置きかえる（時間割の生成の形）。ピンの指示はプロンプトのまま残す
   - ビルドが通り、`api/timetable-patterns.ts` が古い SDK を import していない
   - _Boundary: timetable-patterns_
