@@ -46,7 +46,7 @@
   - _Depends: 2.1, 2.2, 2.3_
   - _Requirements: 1.2, 1.4, 2.5, 3.2, 3.3_
 
-- [ ] 3.3 (P) 成績のリアクションの窓口を置きかえる
+- [x] 3.3 (P) 成績のリアクションの窓口を置きかえる
   - `api/grade-reaction.ts` を 3.1 と同じ形に置きかえる（成績のリアクションの形）。成績が1つも入っていないときの「未評価」の返答は今のまま
   - ビルドが通り、`api/grade-reaction.ts` が古い SDK を import していない
   - _Boundary: grade-reaction_
@@ -94,3 +94,4 @@
   - SDK 自身のやり直し：何も指定しないと 503 で5回送る。2つ目の引数に `{ retries: { strategy: 'none' } }` を渡すと1回だけ
   - エラー：503 は `InternalServerError`、429 は `RateLimitError`、404 は `NotFoundError`、400 は `BadRequestError`。どれも `status` と `statusCode` の両方に数値の HTTP の status を持つ
   - この環境では、リポジトリの Playwright（1.56.1）が求める Chromium の版がなかったので、作業用のフォルダのラッパー（`chromium.launch` に `executablePath: '/opt/pw-browsers/chromium'` を足して `checks/ui/run.mjs` を読む）で `check:ui` を流した。リポジトリの試しの画面は変えていない。移行の前の基準：122 / 122、lint 32 件
+- 3.3：成績のリアクションは、今までも「項目が足りないときは `title` を「コマどり先輩の評価」、`message` を `response` か「調子が悪い」の文面で補う」動きだったので、型ガードに通らないときもこの補い方を残した（形が崩れたら代わりの返答に切りかえるのは相談・時間割の生成の2つ）。窓口の確認は、テスト用の鍵で署名した ID トークンと偽物の Gemini の応答で、3つの窓口それぞれ10項目（成功・送る依頼・形が違う・JSON でない・混雑・404・ログインなし・入力が違う）を流して通った

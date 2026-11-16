@@ -1,6 +1,7 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 import { withGeminiRetry, isGeminiBusyError, getGeminiErrorMessage, GENERAL_ERROR_MESSAGE } from "./_lib/geminiRetry.js";
+import { generateJson } from "./_lib/geminiClient.js";
+import { gradeReactionSchema, isGradeReactionResult } from "./_lib/responseSchemas.js";
 import { getHeader, sendError } from "./_lib/http.js";
 import type { ApiRequest, ApiResponse } from "./_lib/http.js";
 import { verifyIdToken, authFailureResponse } from "./_lib/auth.js";
@@ -9,18 +10,6 @@ import type { GradeReactionInput, ValidationResult } from "./_lib/validation.js"
 import { SyllabusUnavailableError } from "./_lib/syllabus.js";
 
 dotenv.config();
-
-const sanitizeJsonResponse = (responseText: string): string => {
-    let cleaned = responseText.replace(/```json/gi, '').replace(/```/g, '');
-    cleaned = cleaned.trim();
-    const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-        cleaned = jsonMatch[0];
-    }
-    // 末尾のカンマ（Trailing Comma）を削除
-    cleaned = cleaned.replace(/,\s*([\]}])/g, '$1');
-    return cleaned;
-};
 
 export default async function handler(req: ApiRequest, res: ApiResponse) {
     // 前処理：メソッド → 認証 → 入力の確認 → API キー。通らなければ Gemini を呼ばない
@@ -99,33 +88,32 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 `;
 
     try {
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const response = await withGeminiRetry((modelName) =>
-            genAI.getGenerativeModel({
+        const responseText = await withGeminiRetry((modelName) =>
+            generateJson({
+                apiKey,
                 model: modelName,
-                systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"title\": \"称号\", \"message\": \"評価とアドバイスを統合した一続きのセリフ\" }. Persona: AI Senior in Japanese. Do not separate body and advice; integrate them into a single continuous natural spoken message from the persona. Do not include any markdown blocks or text outside the JSON."
-            }).generateContent(prompt)
+                systemInstruction: "You MUST return your response ONLY in the following JSON format: { \"title\": \"称号\", \"message\": \"評価とアドバイスを統合した一続きのセリフ\" }. Persona: AI Senior in Japanese. Do not separate body and advice; integrate them into a single continuous natural spoken message from the persona. Do not include any markdown blocks or text outside the JSON.",
+                prompt,
+                responseSchema: gradeReactionSchema,
+            })
         );
-        
-        if (!response.response.text) {
-            throw new Error('No response from AI');
-        }
 
-        const rawText = response.response.text();
-        const cleanedResponse = sanitizeJsonResponse(rawText);
-
-        try {
-            const parsed = JSON.parse(cleanedResponse);
-            return res.status(200).json({
-                title: parsed.title || "コマどり先輩の評価",
-                message: parsed.message || parsed.response || GENERAL_ERROR_MESSAGE
-            });
-        } catch (parseErr) {
-            console.error("JSON Parse Error. Raw output from Gemini:", rawText);
-            throw parseErr;
+        const parsed: unknown = JSON.parse(responseText);
+        if (isGradeReactionResult(parsed) && parsed.title && parsed.message) {
+            return res.status(200).json(parsed);
         }
-    } catch (error: any) {
-        console.error('\x1b[31m[Grade Reaction API Error Details]:\x1b[0m', error.stack || error.message || error);
+        // 項目が足りないときは、今までと同じ決まった文面で補う
+        console.error("JSON の形が違います. Raw output from Gemini:", responseText);
+        const field = (name: string): string => {
+            const value: unknown = typeof parsed === "object" && parsed !== null ? Reflect.get(parsed, name) : undefined;
+            return typeof value === "string" ? value : "";
+        };
+        return res.status(200).json({
+            title: field("title") || "コマどり先輩の評価",
+            message: field("message") || field("response") || GENERAL_ERROR_MESSAGE
+        });
+    } catch (error: unknown) {
+        console.error('\x1b[31m[Grade Reaction API Error Details]:\x1b[0m', error instanceof Error ? (error.stack ?? error.message) : error);
         return res.status(200).json({
             title: isGeminiBusyError(error) ? "順番待ちの後輩" : "出直しの後輩",
             message: getGeminiErrorMessage(error)
