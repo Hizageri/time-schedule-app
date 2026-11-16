@@ -61,7 +61,7 @@
   - _Requirements: 3.4_
 
 - [ ] 4. 確かめて、文書を合わせて、本番に出す
-- [ ] 4.1 全体を確かめる
+- [x] 4.1 全体を確かめる
   - `npm run build` と `npm run check:ui` がすべて通る。lint の指摘がこの spec の前から増えておらず、この spec で書いたコードに `any` がない
   - 本番のビルドの出力（`dist/`）に、新しい SDK と API キーの変数名が入っていない（Gemini はサーバー側だけ）
   - モデル名が `api/_lib/geminiRetry.ts` の1か所にだけ書かれている
@@ -96,3 +96,4 @@
   - この環境では、リポジトリの Playwright（1.56.1）が求める Chromium の版がなかったので、作業用のフォルダのラッパー（`chromium.launch` に `executablePath: '/opt/pw-browsers/chromium'` を足して `checks/ui/run.mjs` を読む）で `check:ui` を流した。リポジトリの試しの画面は変えていない。移行の前の基準：122 / 122、lint 32 件
 - 3.3：成績のリアクションは、今までも「項目が足りないときは `title` を「コマどり先輩の評価」、`message` を `response` か「調子が悪い」の文面で補う」動きだったので、型ガードに通らないときもこの補い方を残した（形が崩れたら代わりの返答に切りかえるのは相談・時間割の生成の2つ）。窓口の確認は、テスト用の鍵で署名した ID トークンと偽物の Gemini の応答で、3つの窓口それぞれ10項目（成功・送る依頼・形が違う・JSON でない・混雑・404・ログインなし・入力が違う）を流して通った
 - 3.4：チャットの窓口は文章を返し、会話の履歴も送るので、`geminiClient.ts` に `generateText`（履歴を `user_input`・`model_output` の step にして送る。`store: false`、JSON の形は指定しない）を足した。SDK を触るのは引き続き `geminiClient.ts` だけ。`api/` の型の確認（`tsc --strict`）では、`api/chatbot.ts` の `getRelevantCourses` の `part` の暗黙の `any` が、この spec の前から1件ある（チャットは止めていて、この spec では直していない）。lint の指摘は 32 件から 27 件に減った
+- 4.1：ビルド・`check:ui`（122 / 122）が通った。lint は 27 件（前は 32 件）。この spec で足した行に `any` はない。`dist/` に SDK・Gemini の URL・API キーの変数名は入っていない。モデル名は `api/_lib/geminiRetry.ts` だけ。開発サーバー（`local-api-handler`）でも4つの窓口が読み込まれ、今までどおり 410・401 を返した
