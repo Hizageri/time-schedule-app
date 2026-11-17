@@ -61,19 +61,25 @@
   - _Depends: 3.1, 3.2, 3.3, 3.4_
   - _Requirements: 3.4, 5.2, 5.3_
 
-- [ ] 4.2 全体を確かめる
+- [ ] 4.2 会津大学の科目の条件を、本物のシラバスと見比べる（作者）
+  - 変換で作った `course_conditions.json` から、科目ごとに学年・学期・クォーター・再履修が並んだ見比べやすい一覧を作って作者に渡す。作者が全科目（すべてのクラスを含む）を本物のシラバスと見比べる。違う科目があれば、作者の確認のうえで元の `syllabus.json` を直し、変換をやり直して、直した科目と理由を Implementation Notes に記録する
+  - 作者が全科目の見比べを終え、違っていた科目があれば直してある
+  - _Depends: 2.1_
+  - _Requirements: 7.1, 7.2, 7.3_
+
+- [ ] 4.3 全体を確かめる
   - ビルドと `npm run check:ui` がすべて通る。lint の指摘が増えておらず、この spec で書いたコードに `any` がない。`dist/` に試しの大学の設定が入っていない。保存データの型（`AppState`）が変わっていない
-  - _Depends: 4.1_
+  - _Depends: 4.1, 4.2_
   - _Requirements: 4.2, 4.3, 6.1_
 
-- [ ] 4.3 steering と本番での確認の手順をまとめる
+- [ ] 4.4 steering と本番での確認の手順をまとめる
   - `data-model.md`・`product.md`（成績の段階）・`tech.md`（大学ごとの設定・変換のスクリプト・`VITE_UNIVERSITY`）・`structure.md`（新しいファイル）を合わせる。`production-check.md` に、作者が本番で確かめる手順（共通の確認 1〜6、成績の選択肢が A・B・C・F だけ）を書く
-  - _Depends: 4.2_
+  - _Depends: 4.3_
   - _Requirements: 6.2, 6.3_
 
-- [ ] 4.4 本番に出し、作者が確かめる
+- [ ] 4.5 本番に出し、作者が確かめる
   - 作者の「マージして」の指示で `main` に入れ、作者が `production-check.md` の手順で確かめる。確認が終わったら、`roadmap.md` のこの spec を完了にする
-  - _Depends: 4.3_
+  - _Depends: 4.4_
   - _Requirements: 6.2_
 
 ## Implementation Notes
