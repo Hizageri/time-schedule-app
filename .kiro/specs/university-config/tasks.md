@@ -6,7 +6,7 @@
 
 - [ ] 1. 準備：データの形と大学ごとの設定
 - [ ] 1.1 `data-model.md` に新しい形を書く
-  - `UniversityConfig`（大学名・学期制の名前・学期とクォーター・通年の有無・曜日・時限・学年の範囲・ベースクラス・成績の段階・成績の読みかえ）と、科目の条件の読める形 `CourseFields`（学年・学期・学期の中のどこか・再履修）、大学ごとの読める形とビットのファイルの形、どの大学も同じビットの決まり（`target_bit`）を書く。保存データ（`AppState`）の型は変えないこと、`userProfile.gradingScale`・`termSystem`・`university` を計算と表示に使わなくなることも書く
+  - `UniversityConfig`（大学名・学期制の名前・学期とクォーター・通年の有無・曜日・時限・学年の範囲・ベースクラス・成績の段階・成績の読みかえ）と、`CourseConditions`（学年・学期・学期の中のどこか・再履修）、`CourseData.conditions`・`ClassInfo.conditions` を書く。保存データ（`AppState`）の型は変えないこと、`userProfile.gradingScale`・`termSystem`・`university` を計算と表示に使わなくなることも書く
   - `data-model.md` が設計の型と一致している
   - _Requirements: 1.1, 2.1, 4.2_
 
@@ -16,28 +16,28 @@
   - _Depends: 1.1_
   - _Requirements: 1.1, 1.2, 1.3, 5.1_
 
-- [ ] 2. 科目の条件を大学ごとのビットで持つ
-- [ ] 2.1 読める形とビットを行き来する変換のスクリプトを作る
-  - `scripts/build_course_bits.ts` を作り、`npm run build:course-bits` で動かす（Node.js の型を取り除いて動かす仕組みで、`utils/targetBit.ts` をそのまま読み込めるかを最初に確かめる）。①読める形（`course_fields.json`）→ ビット（`course_bits.json`。`reviews_bit.json` と同じく10進数）：詰めたビットを `targetBit.ts` で読み戻して元と一致するか、値の範囲、読み取れない値を確かめる。②会津大学の `syllabus.json` の `target_bit` → 読める形（`universities/u-aizu/course_fields.json`）：書き出した読める形を詰め直すと元の `target_bit` と一致するか、数を確かめる。元の `syllabus.json` は書きかえない
-  - 会津大学の読める形のファイルができ、全科目・全クラスで詰め直しが元と一致する。わざとおかしな値を入れた読める形で流すと、ファイルを書かずに止まり、科目の名前と理由が出る
+- [ ] 2. 科目の条件を共通の形にする
+- [ ] 2.1 シラバスの変換のスクリプトを作る
+  - `scripts/build_syllabus.ts` を作り、`npm run build:syllabus` で動かす（Node.js の型を取り除いて動かす仕組みで、`utils/targetBit.ts` をそのまま読み込めるかを最初に確かめる）。会津大学の `target_bit` から共通の形の条件を作り、照らし合わせ（全科目・全クラスで `targetBit.ts` の読み取りと一致）・数・値の範囲・読み取れない値を確かめてから、`src/data/course_conditions.json` に書き出す。元の `syllabus.json` は書きかえない
+  - スクリプトを流して生成物ができる。わざとおかしな値を入れた写しで流すと、ファイルを書かずに止まり、科目の名前と理由が出る
   - _Depends: 1.1_
   - _Requirements: 2.1, 4.1_
 
-- [ ] 2.2 試しの大学のデータを作り、今の大学の科目データを選ぶ
-  - 試しの大学の小さな科目データ（`universities/test/courses.json`）と、科目の条件の読める形（`course_fields.json`。2学期制・クォーターなしなので、すべて「学期を通して」）を書き、スクリプトでビット（`course_bits.json`）を作る。`data/index.ts` で、今の大学が会津大学なら今までどおり、試しの大学なら試しのデータにビットを結合したものを使う
-  - 会津大学では科目データが今までと同じ（試しの画面がすべて通る）。開発サーバーで `VITE_UNIVERSITY=test` のときに、試しの大学の科目データになる
+- [ ] 2.2 共通の形の条件を科目に付け、判定の関数を作る
+  - `utils/courseConditions.ts` に、共通の形の条件で判定する関数（学年・学期・クォーター・再履修）を作る。`data/index.ts` で、今の大学の科目データに共通の形の条件を結合する（会津大学は `syllabus.json` ＋ `course_conditions.json`、試しの大学は `test_university/courses.json`）
+  - 使い捨てのスクリプトで、会津大学の全科目について、新しい判定の関数と `targetBit.ts` の関数の結果が一致することを確かめてある
   - _Depends: 1.2, 2.1_
   - _Requirements: 2.1, 5.1_
 
-- [ ] 3. 計算と表示が設定を読むようにする
-- [ ] 3.1 科目の絞り込みの表示を大学の設定にする
-  - 科目の絞り込みの判定は今のまま（`targetBit.ts`）。科目選択の画面の学期のラベル（前期・後期など）を、大学の設定から出す
+- [ ] 3. 計算と表示が設定と共通の形を読むようにする
+- [ ] 3.1 科目の絞り込みを共通の形の条件にする
+  - `utils/courseFilter.ts`・`hooks/useAvailableCourses.ts`・科目選択の画面（学年のラベル・学期のラベル）を、共通の形の条件と大学の設定で動くようにする
   - ビルドと `npm run check:ui` がすべて通る
   - _Depends: 2.2_
   - _Requirements: 2.1, 2.4, 4.1_
 
-- [ ] 3.2 時間割の表示を大学の設定にする
-  - `utils/timetable.ts`・`hooks/useTimetableGrid.ts`・`hooks/useTimetablePatterns.ts` で、曜日・時限・クォーターの名前（Q1〜Q4。クォーターがない大学では切りかえを出さない）を大学の設定から読む。コマの判定は今のまま（`targetBit.ts`）
+- [ ] 3.2 時間割の表示を設定と共通の形の条件にする
+  - `utils/timetable.ts`・`hooks/useTimetableGrid.ts`・`hooks/useTimetablePatterns.ts` で、曜日・時限・クォーターの名前を大学の設定から読み、生成のプレビューは共通の形の条件で判定する。確定した時間割（保存データの `targetBit`）は、今の会津大学のビットの読み取りのまま
   - ビルドと `npm run check:ui` がすべて通る
   - _Depends: 2.2_
   - _Requirements: 2.2, 4.1, 4.2_
