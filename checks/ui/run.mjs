@@ -13,7 +13,8 @@ const args = process.argv.slice(2);
 const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : null;
 const updateSnapshots = args.includes('--update-snapshots');
 
-const server = await createServer({ configFile: path.join(here, 'vite.config.ts'), server: { port: 5199 } });
+const configFile = path.join(here, 'vite.config.ts');
+const server = await createServer({ configFile, server: { port: 5199 } });
 await server.listen();
 const base = server.resolvedUrls.local[0].replace(/\/$/, '');
 const browser = await chromium.launch();
@@ -26,7 +27,7 @@ const ok = (cond, message) => {
 };
 
 /** 偽物の準備ができた試しの画面を開く。外への通信は止める。docs を渡すと保存データに入れ、uid を渡すとログインする */
-const open = async ({ docs, uid, viewport, routes } = {}) => {
+const makeOpen = base => async ({ docs, uid, viewport, routes } = {}) => {
     const context = await browser.newContext({ viewport: viewport ?? { width: 1280, height: 900 } });
     const page = await context.newPage();
     const errors = [];
@@ -54,6 +55,24 @@ const open = async ({ docs, uid, viewport, routes } = {}) => {
     page.dialogs = dialogs;
     return page;
 };
+const open = makeOpen(base);
+
+/** 試しの大学（環境変数 VITE_UNIVERSITY=test）で動く開発サーバーを別に立て、その画面を開く関数を fn に渡す */
+const withTestUniversity = async fn => {
+    process.env.VITE_UNIVERSITY = 'test';
+    let testServer;
+    try {
+        testServer = await createServer({ configFile, server: { port: 5198 } });
+        await testServer.listen();
+    } finally {
+        delete process.env.VITE_UNIVERSITY;
+    }
+    try {
+        await fn(makeOpen(testServer.resolvedUrls.local[0].replace(/\/$/, '')));
+    } finally {
+        await testServer.close();
+    }
+};
 
 /** 待っている保存をすぐ書かせ、保存データを返す（ページを閉じるときの保存の仕組みを使う） */
 const flush = async page => {
@@ -67,7 +86,7 @@ const syllabus = JSON.parse(fs.readFileSync(path.resolve(here, '../../src/data/s
 const courses = Array.isArray(syllabus) ? syllabus : Object.values(syllabus);
 const course = id => courses.find(c => c.id_name === id);
 
-const t = { ok, open, flush, course, courses, base, updateSnapshots, snapshotsDir: path.join(here, 'snapshots') };
+const t = { ok, open, flush, course, courses, base, updateSnapshots, snapshotsDir: path.join(here, 'snapshots'), withTestUniversity };
 
 const files = fs.readdirSync(path.join(here, 'scenarios')).filter(f => f.endsWith('.mjs')).sort();
 for (const file of files) {
