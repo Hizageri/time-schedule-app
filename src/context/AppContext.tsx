@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
-import type { AppState } from '../types';
+import type { AppState, CourseData } from '../types';
 import { isCoursePassed } from '../utils/grades';
 import { currentUniversity } from '../config/currentUniversity';
 import { auth, googleProvider } from '../lib/firebase';
@@ -22,7 +22,7 @@ interface AppContextType {
     updateProfile: (profile: Partial<AppState['userProfile']>) => void;
     updateSettings: (settings: Partial<AppState['timetableSettings']>) => void;
     updateConditions: (conditions: Partial<AppState['timetableConditions']>) => void;
-    toggleSelectedCourse: (course: any) => void;
+    toggleSelectedCourse: (course: CourseData) => void;
     setCommittedClasses: (classes: AppState['committedClasses']) => void;
     removeCommittedClass: (courseId: string, classId: string) => void;
     setScreen: (screen: AppState['currentScreen']) => void;
@@ -34,6 +34,16 @@ interface AppContextType {
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
+
+/**
+ * 選んだ科目に入れる複製から、共通の形の条件（conditions）を外す。保存データと AI 窓口に送る中身を今までと同じ形に保つため。
+ * 条件は使うときに科目 ID で科目データから引き直す（選んだ科目を科目 ID だけで持つ形には university-data-model で移す）
+ */
+const toSelectedCourse = (course: CourseData): CourseData => {
+    const copy: CourseData = { ...course, classes: course.classes.map(cls => { const c = { ...cls }; delete c.conditions; return c; }) };
+    delete copy.conditions;
+    return copy;
+};
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const { user, authLoading, loadStatus, state, setState, signOutAfterSaving } = useUserDataSync();
@@ -64,13 +74,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setState(prev => ({ ...prev, timetableConditions: { ...prev.timetableConditions, ...conditions } }));
     };
 
-    const toggleSelectedCourse = (course: any) => {
+    const toggleSelectedCourse = (course: CourseData) => {
         setState(prev => {
             const isSelected = prev.selectedCourses.some(c => c.id_name === course.id_name);
             if (isSelected) {
                 return { ...prev, selectedCourses: prev.selectedCourses.filter(c => c.id_name !== course.id_name) };
             } else {
-                return { ...prev, selectedCourses: [...prev.selectedCourses, course] };
+                return { ...prev, selectedCourses: [...prev.selectedCourses, toSelectedCourse(course)] };
             }
         });
     };

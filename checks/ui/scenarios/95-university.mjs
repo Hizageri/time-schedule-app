@@ -13,7 +13,7 @@ const cardNames = page => page.locator('div.cursor-pointer h3').allTextContents(
 
 export default {
     name: '大学ごとの設定',
-    async run({ ok, open, course, withTestUniversity }) {
+    async run({ ok, open, flush, course, withTestUniversity }) {
         await withTestUniversity(async openTest => {
             const profile = { nickname: 'ため', dreamJob: '', university: '試し' };
 
@@ -80,11 +80,18 @@ export default {
             await page.context().close();
         });
 
-        // 会津大学：D が入った保存データは F と同じ（0 ポイントの不合格）
+        // 会津大学：選んだ科目の保存データには、共通の形の条件（conditions）を入れない（保存の形を今までと同じに保つ）
         const profile = { nickname: 'でぃー', dreamJob: '', university: '会津大学' };
         let page = await open({ uid: 'd', docs: { 'users/d': { currentScreen: 3, userProfile: profile } } });
         const [first] = await cardNames(page);
+        await page.locator('div.cursor-pointer input[type="checkbox"]').first().click();
+        await page.waitForTimeout(200);
+        const savedSelected = (await flush(page))['users/d'].selectedCourses;
+        ok(savedSelected.length === 1 && savedSelected[0].id_name === first && !('conditions' in savedSelected[0]) && savedSelected[0].classes.every(c => !('conditions' in c)),
+            '会津大学：選んだ科目の保存データに conditions が入らない（科目にもクラスにも）');
         await page.context().close();
+
+        // 会津大学：D が入った保存データは F と同じ（0 ポイントの不合格）
         const dCourse = course(first);
         const aCourse = course('NS01 力学');
         const savedGrades = { [dCourse.id_name]: { grade: 'D', classDifficulty: 3, testDifficulty: 3 }, [aCourse.id_name]: { grade: 'A', classDifficulty: 3, testDifficulty: 3 } };

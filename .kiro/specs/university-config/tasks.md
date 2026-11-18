@@ -83,3 +83,5 @@
   - _Requirements: 6.2_
 
 ## Implementation Notes
+
+- 2026-11-18 作者の決定：科目を選ぶとき、選んだ科目の複製から `conditions` を外して入れる（保存データと AI 窓口に送る中身を今までと同じ形に保つ。要件 4.2・4.3）。`selectedCourses` を科目 ID だけにする変更は `university-data-model` で行う

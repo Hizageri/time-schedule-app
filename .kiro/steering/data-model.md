@@ -204,7 +204,7 @@ export interface AppState {
     retakeClasses: string[]; // 値を入れる処理がない [要確認]
     baseClass: string;       // 大学の設定のベースクラスの選択肢から
   };
-  /** 選んだ科目。CourseData をオブジェクトごと保存（シラバス本文も複製される。2026-11-18 からは conditions も入るが、読むときは科目データから引き直す） */
+  /** 選んだ科目。CourseData をオブジェクトごと保存（シラバス本文も複製される）。conditions は外して入れる（保存の形を変えないため）。科目 ID だけで持つ形には university-data-model で移す */
   selectedCourses: CourseData[];
   committedClasses: CommittedClass[];
   /** key = CourseData.id_name */
@@ -298,7 +298,7 @@ export interface ChatbotResponse {
 ## 扱いの注意
 
 - 科目の条件（`conditions`・`target_bit`）は科目単位にないことがある。読むときは `course.conditions ?? course.classes[0]?.conditions` の順で探す（クラスの条件は クラス → 科目 の順）
-- `selectedCourses` は保存データの複製なので、2026-11-18 より前に選んだ科目には `conditions` がない。条件は `id_name`・`class_id` で科目データ（`src/data/index.ts`）から引き直す
+- `selectedCourses` には `conditions` を入れない（科目を選ぶときに外す。保存データと AI 窓口に送る中身を今までと同じ形に保つため）。条件は `id_name`・`class_id` で科目データ（`src/data/index.ts` の `findCourse`）から引き直す
 - 成績の段階は保存データの `gradingScale` ではなく、大学の設定から読む。成績のラベルは `gradeAliases` で読みかえてから段階を引く（会津大学：D → F。どちらも 0 ポイントの不合格）。保存データの値は書きかえない
 - `course_conditions.json` は生成物。直さずに `syllabus.json` を直して `npm run build:syllabus`
 - `syllabus.json` の `OT03-001` は以前 `classes` の中に科目オブジェクトが入れ子になっていて、`class_id` と `schedule` がなかった（詳細モーダルが落ちる原因だった）。2026-10-12 に `月曜枠`（月-9, 月-10）・`木曜枠`（木-9, 木-10）の2クラスに直した。今は全204科目のクラスに `class_id` と `schedule` がある
