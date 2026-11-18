@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:reviews": "node scripts/build_reviews.js",
+    "build:syllabus": "node scripts/build_syllabus.ts",
     "lint": "eslint .",
     "preview": "vite preview",
     "check:ui": "node checks/ui/run.mjs"

@@ -11,6 +11,8 @@ export interface ClassInfo {
     schedule: TimeSlot[];
     // 追加: クラスごとにターゲットビットを持てるようにする（?をつけて任意にする）
     target_bit?: number;
+    /** 共通の形の条件。src/data/index.ts で course_conditions.json から付ける（target_bit があるクラスだけ） */
+    conditions?: CourseConditions;
 }
 
 export interface CourseData {
@@ -23,7 +25,27 @@ export interface CourseData {
     classes: ClassInfo[];
     reviews_bit?: number;
     comment?: string;
+    /** 共通の形の条件。src/data/index.ts で course_conditions.json から付ける（target_bit がある科目だけ） */
+    conditions?: CourseConditions;
 }
+
+/** 共通の形の科目の条件（学年・学期・学期の中のどこか・再履修）。アプリの計算と表示はこれだけを読む */
+export interface CourseConditions {
+    /** 対象の学年 */
+    grades: number[];
+    /** 学期（通年は 'full'） */
+    term: 'first' | 'second' | 'full';
+    /** 学期の中のどこか：クォーターの番号（0 始まり）、学期を通して、集中講義など */
+    slot: { type: 'quarter'; index: number } | { type: 'whole' } | { type: 'intensive' };
+    /** 再履修向けか */
+    isRetake: boolean;
+}
+
+/** course_conditions.json（生成物）の形。key = CourseData.id_name。科目にビットがあれば course、クラスにあれば classes（key = class_id） */
+export type CourseConditionsFile = Record<string, {
+    course?: CourseConditions;
+    classes?: Record<string, CourseConditions>;
+}>;
 
 export interface GradingScale {
     label: string;

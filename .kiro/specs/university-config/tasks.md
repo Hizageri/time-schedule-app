@@ -17,7 +17,7 @@
   - _Requirements: 1.1, 1.2, 1.3, 5.1_
 
 - [ ] 2. 科目の条件を共通の形にする
-- [ ] 2.1 シラバスの変換のスクリプトを作る
+- [x] 2.1 シラバスの変換のスクリプトを作る
   - `scripts/build_syllabus.ts` を作り、`npm run build:syllabus` で動かす（Node.js の型を取り除いて動かす仕組みで、`utils/targetBit.ts` をそのまま読み込めるかを最初に確かめる）。会津大学の `target_bit` から共通の形の条件を作り、照らし合わせ（全科目・全クラスで `targetBit.ts` の読み取りと一致）・数・値の範囲・読み取れない値を確かめてから、`src/data/course_conditions.json` に書き出す。元の `syllabus.json` は書きかえない
   - スクリプトを流して生成物ができる。わざとおかしな値を入れた写しで流すと、ファイルを書かずに止まり、科目の名前と理由が出る
   - _Depends: 1.1_

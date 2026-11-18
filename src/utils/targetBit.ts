@@ -1,5 +1,7 @@
-// target_bit（科目・クラスの対象条件のビット）の読み取りとラベル
-import type { AppState } from '../types';
+// 会津大学の target_bit（科目・クラスの対象条件のビット）の読み取り。
+// アプリの中で使うのは、変換のスクリプト（scripts/build_syllabus.ts）と、保存データの committedClasses[].targetBit を読むところだけ。
+// ほかは共通の形の条件（CourseConditions、utils/courseConditions.ts）を読む
+import type { AppState, CourseConditions } from '../types';
 
 export type QuarterType = 'odd' | 'even' | 'across' | 'intensive';
 export type Term = AppState['timetableConditions']['term'];
@@ -106,4 +108,23 @@ export const calculateStudentBit = (
 
 export const canTakeClass = (targetBit: number, studentBit: number): boolean => {
     return (targetBit & studentBit) > 0;
+};
+
+/**
+ * 会津大学の target_bit を共通の形の条件にする。学期のビットが決まりにない値（3）なら null。
+ * クォーター：奇数Q → 0、偶数Q → 1、またぎ → 学期を通して、集中講義など → 集中
+ */
+export const toCourseConditions = (bit: number): CourseConditions | null => {
+    const termBit = getTermBit(bit);
+    if (termBit === 3) return null;
+    const quarter = getQuarterType(bit);
+    return {
+        grades: getTargetGrades(bit),
+        term: termBit === 0 ? 'first' : termBit === 1 ? 'second' : 'full',
+        slot: quarter === 'odd' ? { type: 'quarter', index: 0 }
+            : quarter === 'even' ? { type: 'quarter', index: 1 }
+            : quarter === 'across' ? { type: 'whole' }
+            : { type: 'intensive' },
+        isRetake: isRetakeCourse(bit),
+    };
 };

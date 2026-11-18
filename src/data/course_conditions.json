@@ -1,0 +1,2799 @@
+{
+  "HS01 哲学": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS05 文学": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "HS06 芸術学": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS07 ジェンダー・セクシュアリティ論": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "HS10 経済学": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS11 社会学": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS12 日本国憲法": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "HS13 国際関係論": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "HS16 健康教育論": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS17 科学史": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS20 アカデミックスキル１": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "HS21 アカデミックスキル２": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "HS22 地域社会学": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS23 経済発展論": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS27 心理言語学概論": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "HS28 精神保健学": {
+    "course": {
+      "grades": [
+        1,
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SS01 健康・スポーツ科学実習1": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "SS02 健康・スポーツ科学実習2": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "SS03 健康・スポーツ科学実習3": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "SS04 生涯スポーツ科学実習（水泳）": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "SS04 生涯スポーツ科学実習（動きの科学）": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "SS04 生涯スポーツ科学実習（バレーボール）": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "SS04 生涯スポーツ科学実習（ヨガ・コンディショニング）": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "SS04 生涯スポーツ科学実習（スキー）": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "SS04 生涯スポーツ科学実習（スノーボード）": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "EN01 Introductory English 1": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EN02 Introductory English 2": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EN03 Bridge 1 to Intermediate English": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EN04 Bridge 2 to Intermediate English": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EN05 Intermediate English 1": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EN06 Intermediate English 2": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EN07 Advanced English": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EN08 Thesis Writing and Presentation": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "EG101 Global Experience Gateway (RHIT)": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "EG102 Global Experience Gateway (Waikato)": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "EG103 Global Experience Gateway (USM)": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "EL102 Design of Human Languages": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL115 Analysis of English Sentence Structure": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL131 Language and Linguistics": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL144 Conversation Analysis and the Pragmatics of Spoken Interaction": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL146 Corpus Linguistics for Language Learners": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL152 Reading Fluency": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL154 SDGs で学ぶ英語ディスカッション": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL157 Networking Skills in International Industry Environment": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL160 Language Education in the Age of AI": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL161 Machine Learning for Linguistics": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL162 A Conceptual Approach to Understanding English": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL163 Cognitive Linguistics for Computer Science English": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL164 App-Based Language Learning": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL165 Words in the Mind: Vocabulary Learning and Morphology": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL218 English Speaking and Presentation Skills": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL244 An Introduction to Cross-cultural Communication": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL249 Introduction to Company Presentations in English": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL315 Content Management for IT Business": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL318 ICT in Education": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "EL321 Pronunciation: Acoustic Analysis Using Software": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL329 Critical Thinking": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "EL330 Computer Science Vocabulary": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "MA01 線形代数 I(C1/C2)": {
+    "classes": {
+      "C1/C2": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 0
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA01 線形代数 I(C3/C4)": {
+    "classes": {
+      "C3/C4": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 1
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA01 線形代数 I(C5/C6)": {
+    "classes": {
+      "C5/C6": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 0
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA02 線形代数 II(C1/C2)": {
+    "classes": {
+      "C1/C2": {
+        "grades": [
+          1
+        ],
+        "term": "second",
+        "slot": {
+          "type": "quarter",
+          "index": 0
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA02 線形代数 II(C3/C4)": {
+    "classes": {
+      "C3/C4": {
+        "grades": [
+          1
+        ],
+        "term": "second",
+        "slot": {
+          "type": "whole"
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA02 線形代数 II(C5/C6)": {
+    "classes": {
+      "C5/C6": {
+        "grades": [
+          1
+        ],
+        "term": "second",
+        "slot": {
+          "type": "quarter",
+          "index": 0
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA03 微積分 I(C1/C2)": {
+    "classes": {
+      "C1/C2": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 1
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA03 微積分 I(C3/C4)": {
+    "classes": {
+      "C3/C4": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 0
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA03 微積分 I(C5/C6)": {
+    "classes": {
+      "C5/C6": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 1
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA04 微積分 II(C1/C2)": {
+    "classes": {
+      "C1/C2": {
+        "grades": [
+          1
+        ],
+        "term": "second",
+        "slot": {
+          "type": "whole"
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA04 微積分 II(C3/C4)": {
+    "classes": {
+      "C3/C4": {
+        "grades": [
+          1
+        ],
+        "term": "second",
+        "slot": {
+          "type": "quarter",
+          "index": 0
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA04 微積分 II(C5/C6)": {
+    "classes": {
+      "C5/C6": {
+        "grades": [
+          1
+        ],
+        "term": "second",
+        "slot": {
+          "type": "whole"
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "MA05 フーリエ解析": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "MA06 複素関数論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "MA07 確率統計学": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "MA08 応用代数": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "MA09 数理論理学": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "MA10 位相幾何学概論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "MA11 応用幾何とトポロジー": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "NS01 力学": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    },
+    "classes": {
+      "C1/C2": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 1
+        },
+        "isRetake": false
+      },
+      "C3/C4": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 1
+        },
+        "isRetake": false
+      },
+      "C5/C6": {
+        "grades": [
+          1
+        ],
+        "term": "first",
+        "slot": {
+          "type": "quarter",
+          "index": 1
+        },
+        "isRetake": false
+      }
+    }
+  },
+  "NS02 電磁気学": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "NS03 量子力学": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "NS04 半導体デバイス": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "NS05 熱・統計力学": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "LI01 コンピュータリテラシー": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "LI03 コンピュータ理工学のすすめ": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "LI04 コンピュータシステム概論": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "LI06 情報セキュリティ": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "LI07 情報と職業": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "LI08 情報倫理": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "LI09 システム開発とプロジェクトマネジメントの基礎": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "LI10 マルチメディアシステム概論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "LI11 コンピュータネットワーク概論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "LI12 創造力開発スタジオ": {
+    "course": {
+      "grades": [
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "LI13 コンピュータ理工学演習 I": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "LI14 コンピュータ理工学演習 II": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "PL01 プログラミング入門": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "PL02 プログラミングC": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "PL03 プログラミングJAVA I": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "PL04 プログラミングC++": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "PL05 コンピュータ言語論": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "PL06 プログラミングJAVA II": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "FU01 アルゴリズムとデータ構造 I": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "FU02 情報理論と圧縮": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "FU03 離散系論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "FU04 論理回路設計論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "FU05 コンピュータアーキテクチャ論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "FU06 オペレーティングシステム論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "FU08 オートマトンと言語理論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "FU09 アルゴリズムとデータ構造 II": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "FU10 言語処理系論": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "FU11 数値解析": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "FU14 ソフトウェア工学概論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "FU15 データマネジメント概論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SY02 電子回路": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SY04 組込みシステム": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SY05 並列コンピュータシステム": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "SY06 VLSI設計技術": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SY07 論理回路設計特論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "CN02 ネットワークセキュリティ": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "CN03 ネットワークプログラミング": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "CN04 ワイヤレスネットワーク": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "CN05 コンピュータネットワークシステムのモデリングとシミュレーション": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "IT01 人工知能": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "IT02 コンピュータグラフィックス論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "IT03 画像処理論": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "IT05 ロボット工学と自動制御": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "IT06 ヒューマンインターフェイスと仮想現実": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "IT08 信号処理と線形システム": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "IT09 音響音声処理論": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "IT10 ビジュアルコンピューティングのための幾何学": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "IT11 情報検索と自然言語処理": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SE01 ウェブエンジニアリング": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SE04 ソフトウェア工学特論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SE05 ソフトウェアスタジオ": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "SE06 並列分散コンピューティング": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SE07 Pythonによるデータサイエンス概論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "SE08 ビッグデータ分析概論": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "OT01-I ベンチャー基本コース各論 I": {
+    "course": {
+      "grades": [
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "OT01-II ベンチャー基本コース各論 II": {
+    "course": {
+      "grades": [
+        2,
+        3,
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "OT02-1 ベンチャー体験工房 1": {
+    "course": {
+      "grades": [
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT02-2 ベンチャー体験工房 2": {
+    "course": {
+      "grades": [
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT02-6 ベンチャー体験工房 6": {
+    "course": {
+      "grades": [
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT02-9 ベンチャー体験工房 9": {
+    "course": {
+      "grades": [
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT05 キャリアデザインI": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT06 キャリアデザインII": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT08 TOEIC準備コース(Level A)": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT08 TOEIC準備コース(Level B)": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT10 課外活動コース II＜インターンシップIII（大連）＞": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "OT10 課外活動コースII＜インターンシップII（国内A）＞": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "OT10 課外活動コースII＜インターンシップII（国内C）＞": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "OT10 課外活動コースII＜インターンシップII（国内D）＞": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "OT10 課外活動コース II＜インターンシップIII（シリコンバレーA）＞": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "OT10 課外活動コース II＜インターンシップIII（ダナン）＞": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "OT11 ICTベンチャー起業と経営": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE01 教師入門": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "TE02 教育入門": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE03 教育心理学": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE04 教育課程論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "TE05 教育方法": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE06 数学科教育法１": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE07 数学科教育法２": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE08 数学科教育法３": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE09 数学科教育法４": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "TE10 情報科教育法１": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "TE11 情報科教育法２": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE12 道徳教育": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE13 特別活動": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE14 生徒指導・教育相談": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": false
+    }
+  },
+  "TE15 キャリア教育": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "TE16 教育実習１": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "TE17 教育実習２": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "TE18 教育実習事前事後指導": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "TE19 教育制度論": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "TE20 教職実践演習（中・高）": {
+    "course": {
+      "grades": [
+        4
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": false
+    }
+  },
+  "TE21 特別支援教育入門": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "TE22 総合的な学習の時間の指導法": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "second",
+      "slot": {
+        "type": "intensive"
+      },
+      "isRetake": false
+    }
+  },
+  "TE23 情報機器の活用に関する理論と方法": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "IE01 システム総合演習 I": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "IE02 システム総合演習 II": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "IE03 ソフトウェア総合演習 I": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "IE04 ソフトウェア総合演習 II": {
+    "course": {
+      "grades": [
+        3
+      ],
+      "term": "second",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-001 大規模分散Webインフラ構築入門": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-002 学内生活を便利にするサービスを作ろう": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-003 月惑星データ解析＋宇宙生物学": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-004 教師になろう！": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-005 社会美容科学　〜データで考えるジェンダー社会学〜": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-006 会津デジタルアート＆クラフト＆ゲームプロジェクト": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-007 異文化リーダーシップトレーニング―異文化理解の実践": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-008 会津ならではのスポーツ活動": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-009 AIモデルを作ってラズベリーパイで動かそう！！": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-010 Advanced Pattern Recognition using AI": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-011 自己啓発研究会": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-012 FPGAボードを使って手のひらサイズPCを作ってみよう": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "first",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-013 競技プログラミング": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-014 実践的プログラミング": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-015 論理的思考・批判的思考をしてみよう": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-016 心理学統計法 (基礎)": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-017 アントレプレナーシップ育成プログラム": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-018 音楽で学ぶPythonプログラミング": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-019 電子工作プロジェクト": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "NS01 力学（再履修）": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": true
+    },
+    "classes": {
+      "再履修": {
+        "grades": [
+          1
+        ],
+        "term": "second",
+        "slot": {
+          "type": "quarter",
+          "index": 1
+        },
+        "isRetake": true
+      }
+    }
+  },
+  "MA01 線形代数 I（再履修）": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": true
+    }
+  },
+  "MA02 線形代数 II（再履修）": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 0
+      },
+      "isRetake": true
+    }
+  },
+  "MA03 微積分 I（再履修）": {
+    "course": {
+      "grades": [
+        1
+      ],
+      "term": "second",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": true
+    }
+  },
+  "MA04 微積分 II（再履修）": {
+    "course": {
+      "grades": [
+        2
+      ],
+      "term": "first",
+      "slot": {
+        "type": "quarter",
+        "index": 1
+      },
+      "isRetake": true
+    }
+  }
+}
