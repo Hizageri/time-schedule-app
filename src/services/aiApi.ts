@@ -1,5 +1,6 @@
 import type { CourseData, AppState } from '../types';
 import { getCurrentIdToken, signOutCurrentUser } from '../lib/firebase';
+import { getGradingScale, toScaleLabel } from '../utils/grades';
 
 // /api/* 自体が失敗したとき（タイムアウト・通信断など）のコマどり先輩の返答
 // api/_lib/geminiRetry.ts の GENERAL_ERROR_MESSAGE と同じ文言（api/ と src/ は互いに import しない）
@@ -45,8 +46,9 @@ type ApiProfileWithScale = ApiProfile & Pick<AppState['userProfile'], 'gradingSc
 const toApiProfile = ({ nickname, dreamJob, university }: AppState['userProfile']): ApiProfile =>
     ({ nickname, dreamJob, university });
 
+// 成績の段階は、保存データの値ではなく今の大学の設定のもの
 const toApiProfileWithScale = (profile: AppState['userProfile']): ApiProfileWithScale =>
-    ({ ...toApiProfile(profile), gradingScale: profile.gradingScale });
+    ({ ...toApiProfile(profile), gradingScale: getGradingScale() });
 
 /** ログインが切れていて AI 窓口に断られた（ログアウト済み。ログイン画面に戻る） */
 export class AuthRequiredError extends Error {}
@@ -102,4 +104,8 @@ export const generateGradeReaction = (
     userProfile: AppState['userProfile'],
     grades: GradeInput[]
 ): Promise<GradeReactionResponse> =>
-    postToApi<GradeReactionResponse>('/api/grade-reaction', { userProfile: toApiProfileWithScale(userProfile), grades });
+    postToApi<GradeReactionResponse>('/api/grade-reaction', {
+        userProfile: toApiProfileWithScale(userProfile),
+        // 段階にない保存データの成績は、大学の段階のラベルに読みかえて送る（会津大学：D → F）
+        grades: grades.map(g => ({ ...g, grade: toScaleLabel(g.grade) })),
+    });

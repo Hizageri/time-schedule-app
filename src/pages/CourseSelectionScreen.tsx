@@ -26,7 +26,7 @@ export const CourseSelectionScreen: React.FC = () => {
 
         const gradesArr = displayConditions?.grades ?? [];
         // 再履修：成績が不合格（ポイント 0）の科目。未履修：対象学年がすべて今の学年より下で、まだ合格していない科目
-        const failed = isCourseFailed(course.id_name, state.grades, state.userProfile.gradingScale);
+        const failed = isCourseFailed(course.id_name, state.grades);
         const lowerYearOnly = gradesArr.length > 0 && Math.max(...gradesArr) < userYear;
 
         const periodLabel = getPeriodLabel(currentUniversity, displayConditions);

@@ -11,15 +11,14 @@ export const isRetakeCandidate = (
     course: CourseData,
     userGrades: AppState['grades'],
     earnedCredits: AppState['earnedCredits'],
-    gradingScale: AppState['userProfile']['gradingScale'],
     currentGrade: number
 ): boolean => {
     // 1. 「OT」から始まる教養科目を完全に除外する
     if (course.id_name.startsWith('OT')) return false;
 
     // 2. 合格済み（修得済みの一覧または成績の記録）なら除外。不合格なら確定で再履修対象
-    if (isCoursePassed(course.id_name, userGrades, earnedCredits, gradingScale)) return false;
-    if (isCourseFailed(course.id_name, userGrades, gradingScale)) return true;
+    if (isCoursePassed(course.id_name, userGrades, earnedCredits)) return false;
+    if (isCourseFailed(course.id_name, userGrades)) return true;
 
     // 3. 履修年次を過ぎているか判定
     const targetGrades = getCourseConditions(course)?.grades ?? [];
@@ -37,15 +36,14 @@ export const filterAvailableCourses = (
         term: Term,
         isReRegistrationOnly: boolean,
         userGrades: AppState['grades'],
-        earnedCredits: AppState['earnedCredits'],
-        gradingScale: AppState['userProfile']['gradingScale']
+        earnedCredits: AppState['earnedCredits']
     }
 ): CourseData[] => {
-    const { selectedGrade, term, isReRegistrationOnly, userGrades, earnedCredits, gradingScale } = filters;
+    const { selectedGrade, term, isReRegistrationOnly, userGrades, earnedCredits } = filters;
 
     return allCourses.filter(course => {
         // 合格済みの科目は一覧に出さない
-        if (isCoursePassed(course.id_name, userGrades, earnedCredits, gradingScale)) return false;
+        if (isCoursePassed(course.id_name, userGrades, earnedCredits)) return false;
 
         // --- 判定ロジック ---
         const checkMatch = (conditions: CourseConditions | undefined) => {
@@ -54,7 +52,7 @@ export const filterAvailableCourses = (
             // 通常：指定した学年が含まれているか
             // 再履修のみ：ユーザーの成績と年次を元に判定
             const gradeMatch = isReRegistrationOnly
-                ? isRetakeCandidate(course, userGrades, earnedCredits, gradingScale, selectedGrade)
+                ? isRetakeCandidate(course, userGrades, earnedCredits, selectedGrade)
                 : includesGrade(conditions, selectedGrade);
 
             return gradeMatch && matchesTerm(conditions, term);

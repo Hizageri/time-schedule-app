@@ -3,7 +3,7 @@ import { useAppContext } from '../context/AppContext';
 import { CalendarIcon, Award, Settings2, Save, X, User, RefreshCcw, Edit3, Info, Flame } from 'lucide-react';
 import { Header } from '../components/Header';
 import { MOCK_COURSES } from '../data';
-import { isPassingGradePoint } from '../utils/grades';
+import { getGradingScale, isPassingGradePoint, toScaleLabel } from '../utils/grades';
 import { useTimetableGrid } from '../hooks/useTimetableGrid';
 import { getSelectablePeriods, getTermDef } from '../config/universityConfig';
 import { currentUniversity } from '../config/currentUniversity';
@@ -76,14 +76,16 @@ export const DashboardScreen: React.FC = () => {
 
     const handleOpenGpaSimulator = () => {
         const initialCounts: Record<string, number> = {};
-        state.userProfile.gradingScale.forEach(s => initialCounts[s.label] = 0);
+        getGradingScale().forEach(s => initialCounts[s.label] = 0);
 
         Object.entries(state.grades).forEach(([courseId, gradeInfo]) => {
             const course = MOCK_COURSES.find(c => c.id_name === courseId);
             if (!course) return;
             const credits = course.credits;
-            if (initialCounts[gradeInfo.grade] !== undefined) {
-                initialCounts[gradeInfo.grade] += credits;
+            // 段階にない保存データの成績は読みかえてから数える（会津大学：D → F）
+            const label = toScaleLabel(gradeInfo.grade);
+            if (initialCounts[label] !== undefined) {
+                initialCounts[label] += credits;
             }
         });
 
@@ -98,7 +100,7 @@ export const DashboardScreen: React.FC = () => {
         let totalPoints = 0;
         const details: Record<string, number> = {};
 
-        state.userProfile.gradingScale.forEach(s => {
+        getGradingScale().forEach(s => {
             const count = simulatedCreditCounts[s.label] || 0;
             details[s.label] = count;
             totalCredits += count;
@@ -303,7 +305,7 @@ export const DashboardScreen: React.FC = () => {
                                 <h3 className="font-bold text-foreground mb-4 border-b border-border pb-2">GPAシミュレーター</h3>
                                 <p className="text-sm text-muted mb-4">現在の成績データから算出した各評価の単位数です。数値を変更してシミュレーションできます。</p>
                                 <div className="space-y-3 mb-4">
-                                    {state.userProfile.gradingScale.map((g) => (
+                                    {getGradingScale().map((g) => (
                                         <div key={g.label} className="flex justify-between items-center bg-card p-3 rounded-lg border border-border">
                                             <div className="flex flex-col">
                                                 <span className="font-bold text-foreground text-sm">{g.label}</span>

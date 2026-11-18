@@ -1,17 +1,25 @@
+// 成績の段階と合否。成績の段階は保存データ（userProfile.gradingScale）ではなく、今の大学の設定から読む
 import type { AppState } from '../types';
+import { currentUniversity } from '../config/currentUniversity';
 
 /** 成績の段階のポイントが合格かどうか（0 は不合格、0 より大きければ合格） */
 export const isPassingGradePoint = (point: number): boolean => point > 0;
 
-// 成績のラベルから、成績の段階（gradingScale）でのポイントを引く。段階にないラベルは undefined
-const getGradePoint = (
-    courseId: string,
-    userGrades: AppState['grades'],
-    gradingScale: AppState['userProfile']['gradingScale']
-): number | undefined => {
+/** 今の大学の成績の段階 */
+export const getGradingScale = (): AppState['userProfile']['gradingScale'] => currentUniversity.gradingScale;
+
+/** 保存データの成績のラベルを、今の大学の段階のラベルに読みかえる（会津大学：D → F）。読みかえがなければそのまま */
+export const toScaleLabel = (label: string): string => currentUniversity.gradeAliases[label] ?? label;
+
+/** 成績のラベルのポイント（読みかえてから段階を引く）。段階にないラベルは undefined */
+export const getGradeLabelPoint = (label: string): number | undefined =>
+    currentUniversity.gradingScale.find(s => s.label === toScaleLabel(label))?.point;
+
+// 科目の成績のポイント。成績がない・段階にないラベルは undefined
+const getGradePoint = (courseId: string, userGrades: AppState['grades']): number | undefined => {
     const label = userGrades[courseId]?.grade;
     if (!label) return undefined;
-    return gradingScale.find(s => s.label === label)?.point;
+    return getGradeLabelPoint(label);
 };
 
 /**
@@ -22,20 +30,15 @@ const getGradePoint = (
 export const isCoursePassed = (
     courseId: string,
     userGrades: AppState['grades'],
-    earnedCredits: AppState['earnedCredits'],
-    gradingScale: AppState['userProfile']['gradingScale']
+    earnedCredits: AppState['earnedCredits']
 ): boolean => {
     if ((earnedCredits ?? []).some(e => e.courseId === courseId)) return true;
-    const point = getGradePoint(courseId, userGrades, gradingScale);
+    const point = getGradePoint(courseId, userGrades);
     return point !== undefined && isPassingGradePoint(point);
 };
 
 /** 成績が記録されていて、不合格（ポイント 0）の科目かを判定する */
-export const isCourseFailed = (
-    courseId: string,
-    userGrades: AppState['grades'],
-    gradingScale: AppState['userProfile']['gradingScale']
-): boolean => {
-    const point = getGradePoint(courseId, userGrades, gradingScale);
+export const isCourseFailed = (courseId: string, userGrades: AppState['grades']): boolean => {
+    const point = getGradePoint(courseId, userGrades);
     return point !== undefined && !isPassingGradePoint(point);
 };

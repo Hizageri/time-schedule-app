@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { Button } from '../components/Button';
 import { Award, AlertCircle, TrendingUp, TrendingDown, Meh, Flame, Star, RefreshCcw } from 'lucide-react';
 import { useGradeReaction } from '../hooks/useGradeReaction';
+import { getGradingScale, toScaleLabel } from '../utils/grades';
 
 interface GradeInput {
   courseId: string;
@@ -134,12 +135,12 @@ export const GradeInputScreen: React.FC = () => {
                 </div>
                 
                 <select
-                  value={input.grade}
+                  value={toScaleLabel(input.grade)}
                   onChange={(e) => handleGradeChange(input.courseId, e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-border bg-background focus:ring-2 focus:ring-accent focus:border-accent outline-none"
                 >
                   <option value="">-- 成績を選択 --</option>
-                  {state.userProfile.gradingScale.map(scale => (
+                  {getGradingScale().map(scale => (
                     <option key={scale.label} value={scale.label}>
                       {scale.label} ({scale.point} 点)
                     </option>

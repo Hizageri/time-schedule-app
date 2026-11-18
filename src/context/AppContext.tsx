@@ -135,7 +135,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
             Object.keys(prev.grades).forEach((courseId) => {
                 // 修得済みに加えるのは、共通の合否の判定で合格した科目だけ
-                if (isCoursePassed(courseId, prev.grades, existingEarned, prev.userProfile.gradingScale)) {
+                if (isCoursePassed(courseId, prev.grades, existingEarned)) {
                     const alreadyExists = newEarnedEntries.some(e => e.courseId === courseId);
                     if (!alreadyExists) {
                         const courseObj = prev.selectedCourses.find(c => c.id_name === courseId);

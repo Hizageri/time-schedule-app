@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
 import { CheckCircle, Save, ChevronLeft } from 'lucide-react';
+import { getGradingScale, toScaleLabel } from '../utils/grades';
 
 export const ReflectionScreen: React.FC = () => {
     const { state, saveGrade, setScreen, updateConditions, resetTermData } = useAppContext();
@@ -59,11 +60,11 @@ export const ReflectionScreen: React.FC = () => {
                                                 <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">成績</label>
                                                 <select
                                                     className="w-full px-3 py-2 rounded-md border border-border focus:ring-1 focus:ring-accent outline-none bg-card"
-                                                    value={currentGrade.grade}
+                                                    value={toScaleLabel(currentGrade.grade)}
                                                     onChange={(e) => saveGrade(courseId, { ...currentGrade, grade: e.target.value })}
                                                 >
                                                     <option value="" disabled>選択してください</option>
-                                                    {state.userProfile.gradingScale.map((g, idx) => (
+                                                    {getGradingScale().map((g, idx) => (
                                                         <option key={idx} value={g.label}>{g.label}</option>
                                                     ))}
                                                 </select>

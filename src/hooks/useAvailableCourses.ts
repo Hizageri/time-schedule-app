@@ -25,8 +25,7 @@ export function useAvailableCourses(): {
             term: state.timetableConditions.term,
             isReRegistrationOnly: state.timetableConditions.hasRetake,
             userGrades: state.grades,
-            earnedCredits: state.earnedCredits,
-            gradingScale: state.userProfile.gradingScale
+            earnedCredits: state.earnedCredits
         });
 
         // 再履修・未履修の自動抽出
@@ -40,7 +39,6 @@ export function useAvailableCourses(): {
                 c,
                 state.grades,
                 state.earnedCredits,
-                state.userProfile.gradingScale,
                 state.timetableConditions.targetGrade
             );
             if (!isCandidate) return false;
@@ -56,10 +54,10 @@ export function useAvailableCourses(): {
 
         // 既に合格済みのものは filterByBit や isRetakeCandidate 側で除外済み
         return { currentCourses: baseFiltered, earlierCourses: reRegistrationCourses };
-    }, [state.timetableConditions, state.grades, state.earnedCredits, state.userProfile.gradingScale]);
+    }, [state.timetableConditions, state.grades, state.earnedCredits]);
 
     const selectedCredits = state.selectedCourses.reduce((sum, c) => {
-        const isPassed = isCoursePassed(c.id_name, state.grades, state.earnedCredits, state.userProfile.gradingScale);
+        const isPassed = isCoursePassed(c.id_name, state.grades, state.earnedCredits);
         return sum + (isPassed ? 0 : c.credits);
     }, 0);
 
