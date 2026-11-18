@@ -5,7 +5,7 @@ import { Header } from '../components/Header';
 import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint } from '../utils/grades';
 import { useTimetableGrid } from '../hooks/useTimetableGrid';
-import { getSelectablePeriods } from '../config/universityConfig';
+import { getSelectablePeriods, getTermDef } from '../config/universityConfig';
 import { currentUniversity } from '../config/currentUniversity';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
@@ -167,22 +167,22 @@ export const DashboardScreen: React.FC = () => {
                                 <h2 className="font-bold text-foreground flex items-center">
                                     時間割グリッド
                                     <span className="ml-3 text-xs bg-accent/10 text-accent px-2 py-1 rounded font-semibold">
-                                        {state.timetableConditions.term === 'first' ? '前期' : '後期'}
+                                        {getTermDef(currentUniversity, state.timetableConditions.term).label}
                                     </span>
                                 </h2>
 
-                                {/* Quarter Toggle Controls */}
-                                <div className="flex bg-muted/60 p-1 rounded-lg">
+                                {/* Quarter Toggle Controls（クォーターのない大学は出さない） */}
+                                {termQuarters.length > 0 && <div className="flex bg-muted/60 p-1 rounded-lg">
                                     {termQuarters.map(q => (
                                         <button
-                                            key={q.val}
-                                            onClick={() => setActiveQuarter(q.val as 'odd' | 'even')}
-                                            className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${activeQuarter === q.val ? 'bg-card text-accent shadow-sm' : 'text-muted hover:text-foreground'}`}
+                                            key={q.index}
+                                            onClick={() => setActiveQuarter(q.index)}
+                                            className={`px-4 py-1.5 text-sm font-semibold rounded-md transition-colors ${activeQuarter === q.index ? 'bg-card text-accent shadow-sm' : 'text-muted hover:text-foreground'}`}
                                         >
                                             {q.label}
                                         </button>
                                     ))}
-                                </div>
+                                </div>}
                             </div>
 
                             {latestCommittedPeriod > state.timetableSettings.maxPeriods && (

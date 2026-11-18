@@ -36,7 +36,7 @@
   - _Depends: 2.2_
   - _Requirements: 2.1, 2.4, 4.1_
 
-- [ ] 3.2 時間割の表示を設定と共通の形の条件にする
+- [x] 3.2 時間割の表示を設定と共通の形の条件にする
   - `utils/timetable.ts`・`hooks/useTimetableGrid.ts`・`hooks/useTimetablePatterns.ts` で、曜日・時限・クォーターの名前を大学の設定から読み、生成のプレビューは共通の形の条件で判定する。確定した時間割（保存データの `targetBit`）は、今の会津大学のビットの読み取りのまま
   - ビルドと `npm run check:ui` がすべて通る
   - _Depends: 2.2_

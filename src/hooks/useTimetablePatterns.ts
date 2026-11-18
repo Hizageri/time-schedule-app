@@ -6,6 +6,10 @@ import { generateTimetablePatterns } from '../services/aiApi';
 import type { TimetablePatternsResponse } from '../services/aiApi';
 import { resolveClassAssignments, getLatestPeriod, findClassesInSlot } from '../utils/timetable';
 import type { TimetableEntry } from '../utils/timetable';
+import { getClassConditions } from '../utils/courseConditions';
+import { findCourse } from '../data';
+import { currentUniversity } from '../config/currentUniversity';
+import { getTermDef } from '../config/universityConfig';
 
 export function useTimetablePatterns() {
     const { state, setState, setScreen } = useAppContext();
@@ -24,10 +28,10 @@ export function useTimetablePatterns() {
 
     const activePattern = patternsData?.patterns[activePatternIndex];
 
-    const termQuarters = state.timetableConditions.term === 'first'
-        ? [{ val: 'odd', label: 'Q1' }, { val: 'even', label: 'Q2' }]
-        : [{ val: 'odd', label: 'Q3' }, { val: 'even', label: 'Q4' }];
-    const [activeQuarter, setActiveQuarter] = useState<'odd' | 'even'>('odd');
+    // クォーターの切り替え（大学の設定の、今の学期のクォーター。クォーターのない大学は空）
+    const termQuarters = getTermDef(currentUniversity, state.timetableConditions.term).quarters
+        .map((q, index) => ({ index, label: q.label }));
+    const [activeQuarter, setActiveQuarter] = useState<number>(0);
 
     useEffect(() => {
         const fetchPatterns = async () => {
@@ -141,7 +145,7 @@ export function useTimetablePatterns() {
         setScreen(6); // Dashboard
     };
 
-    const days = ['月', '火', '水', '木', '金', '土'].slice(0, state.timetableSettings.workingDays);
+    const days = currentUniversity.days.slice(0, state.timetableSettings.workingDays);
     const periods = Array.from({ length: state.timetableSettings.maxPeriods }, (_, i) => i + 1);
 
     // プレビュー中の授業のいちばん遅い時限（表示の範囲の外にあれば知らせる）
@@ -151,14 +155,18 @@ export function useTimetablePatterns() {
             .map(course => course.classes.find(c => c.class_id === editableAssignments[course.id_name])?.schedule ?? [])
     );
 
-    // プレビューの材料：退避していない科目 × 割り当てたクラス（ビットはクラス → 科目の順に探す）
+    // プレビューの材料：退避していない科目 × 割り当てたクラス（条件はクラス → 科目の順に探す）。
+    // 保存データの選んだ科目の複製には条件がないことがあるので、条件は今の科目データから引き直す
     const previewEntries: TimetableEntry[] = state.selectedCourses.flatMap(course => {
         if (hiddenCourseIds.includes(course.id_name)) return [];
         const assignedClassId = editableAssignments[course.id_name];
         if (!assignedClassId) return [];
         const classInfo = course.classes.find(c => c.class_id === assignedClassId);
         if (!classInfo) return [];
-        return [{ courseId: course.id_name, classId: classInfo.class_id, schedule: classInfo.schedule ?? [], targetBit: classInfo.target_bit ?? course.target_bit ?? 0 }];
+        const catalogCourse = findCourse(course.id_name) ?? course;
+        const catalogClass = catalogCourse.classes.find(c => c.class_id === assignedClassId) ?? classInfo;
+        const conditions = getClassConditions(catalogCourse, catalogClass) ?? null;
+        return [{ courseId: course.id_name, classId: classInfo.class_id, schedule: classInfo.schedule ?? [], conditions }];
     });
 
     const getPreviewCellClasses = (day: string, period: number) =>

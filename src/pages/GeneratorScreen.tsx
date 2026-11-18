@@ -103,17 +103,17 @@ export const GeneratorScreen: React.FC = () => {
                                 <CalendarIcon className="w-4 h-4 mr-2 text-accent" />
                                 プレビュー: {activePattern?.name}
                             </h2>
-                            <div className="flex bg-muted/50 p-1 rounded-md">
+                            {termQuarters.length > 0 && <div className="flex bg-muted/50 p-1 rounded-md">
                                 {termQuarters.map(q => (
                                     <button
-                                        key={q.val}
-                                        onClick={() => setActiveQuarter(q.val as 'odd' | 'even')}
-                                        className={`px-3 py-1 text-xs font-bold rounded transition-colors ${activeQuarter === q.val ? 'bg-background text-foreground shadow-sm border border-border/50' : 'text-muted hover:text-foreground'}`}
+                                        key={q.index}
+                                        onClick={() => setActiveQuarter(q.index)}
+                                        className={`px-3 py-1 text-xs font-bold rounded transition-colors ${activeQuarter === q.index ? 'bg-background text-foreground shadow-sm border border-border/50' : 'text-muted hover:text-foreground'}`}
                                     >
                                         {q.label}表示
                                     </button>
                                 ))}
-                            </div>
+                            </div>}
                         </div>
 
                         {latestPreviewPeriod > state.timetableSettings.maxPeriods && (
