@@ -1,9 +1,14 @@
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
 import { ChevronRight, ChevronLeft, CalendarClock } from 'lucide-react';
+import type { AppState } from '../types';
+import { currentUniversity } from '../config/currentUniversity';
+import { getBaseClassGroup, getSelectableGrades } from '../config/universityConfig';
 
 export const ConditionScreen: React.FC = () => {
     const { state, updateConditions, setScreen } = useAppContext();
+    // 学年の範囲・学期・ベースクラスの選択肢は、今の大学の設定から作る
+    const baseClassGroup = getBaseClassGroup(currentUniversity, state.timetableConditions.targetGrade);
 
     return (
         <div className="min-h-screen bg-background p-12 flex items-center justify-center">
@@ -26,7 +31,7 @@ export const ConditionScreen: React.FC = () => {
                                 value={state.timetableConditions.targetGrade}
                                 onChange={(e) => updateConditions({ targetGrade: parseInt(e.target.value, 10) })}
                             >
-                                {[1, 2, 3, 4, 5, 6].map(g => (
+                                {getSelectableGrades(currentUniversity).map(g => (
                                     <option key={g} value={g}>{g}年生</option>
                                 ))}
                             </select>
@@ -37,10 +42,11 @@ export const ConditionScreen: React.FC = () => {
                             <select
                                 className="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent focus:border-accent shadow-sm outline-none bg-card"
                                 value={state.timetableConditions.term}
-                                onChange={(e) => updateConditions({ term: e.target.value as any })}
+                                onChange={(e) => updateConditions({ term: e.target.value as AppState['timetableConditions']['term'] })}
                             >
-                                <option value="first">前期</option>
-                                <option value="second">後期</option>
+                                {currentUniversity.terms.map(t => (
+                                    <option key={t.id} value={t.id}>{t.label}</option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -52,20 +58,12 @@ export const ConditionScreen: React.FC = () => {
                             value={state.timetableConditions.baseClass}
                             onChange={(e) => updateConditions({ baseClass: e.target.value })}
                         >
-                            {state.timetableConditions.targetGrade <= 2 ? (
-                                ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'].map(c => (
-                                    <option key={c} value={c}>{c}</option>
-                                ))
-                            ) : (
-                                ['CS', 'IT-SPR', 'SY', 'CN', 'IT-CMV', 'SE-DE'].map(c => (
-                                    <option key={c} value={c}>{c}</option>
-                                ))
-                            )}
+                            {baseClassGroup.options.map(c => (
+                                <option key={c} value={c}>{c}</option>
+                            ))}
                         </select>
                         <p className="text-muted text-xs mt-2">
-                            {state.timetableConditions.targetGrade <= 2
-                                ? "1~2年生向けの基本的なクラス分けです。"
-                                : "3~4年生向けの専門コース（トラック）に応じたクラス分けです。"}
+                            {baseClassGroup.description}
                         </p>
                     </div>
 

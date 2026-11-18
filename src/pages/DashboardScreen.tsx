@@ -499,17 +499,17 @@ export const DashboardScreen: React.FC = () => {
                                 ))}
                                 <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
                                     <div className="text-gray-500 text-sm">大学</div>
-                                    <div className="col-span-2 font-medium text-gray-500">{state.userProfile.university} (変更不可)</div>
+                                    <div className="col-span-2 font-medium text-gray-500">{currentUniversity.name} (変更不可)</div>
                                 </div>
                                 <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
                                     <div className="text-gray-500 text-sm">成績評価システム</div>
                                     <div className="col-span-2 font-medium text-gray-800">
-                                        {state.userProfile.gradingScale.map(g => g.label).join(', ')}
+                                        {getGradingScale().map(g => g.label).join(', ')}
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
                                     <div className="text-gray-500 text-sm">学期制</div>
-                                    <div className="col-span-2 font-medium text-gray-800">{state.userProfile.termSystem}</div>
+                                    <div className="col-span-2 font-medium text-gray-800">{currentUniversity.termSystemLabel}</div>
                                 </div>
                                 <div className="grid grid-cols-3 border-b border-gray-100 pb-3 items-center">
                                     <div className="text-gray-500 text-sm">連携アカウント</div>

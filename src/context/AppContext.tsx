@@ -2,6 +2,7 @@ import React, { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
 import type { AppState } from '../types';
 import { isCoursePassed } from '../utils/grades';
+import { currentUniversity } from '../config/currentUniversity';
 import { auth, googleProvider } from '../lib/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import type { User } from 'firebase/auth';
@@ -149,7 +150,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
             const nextTerm = prev.timetableConditions.term === 'first' ? 'second' : 'first';
             const nextGrade = prev.timetableConditions.term === 'second'
-                ? Math.min(6, prev.timetableConditions.targetGrade + 1)
+                ? Math.min(currentUniversity.gradeRange.max, prev.timetableConditions.targetGrade + 1)
                 : prev.timetableConditions.targetGrade;
 
             return {

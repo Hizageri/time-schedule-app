@@ -1,19 +1,15 @@
 import type { AppState } from '../types';
+import { currentUniversity } from '../config/currentUniversity';
 
+// 大学名・学期制・成績の段階・学年・ベースクラスの初期値は、今の大学の設定から作る
 export const defaultState: AppState = {
     currentScreen: 1,
     userProfile: {
         nickname: '',
-        university: '会津大学',
+        university: currentUniversity.name,
         dreamJob: '',
-        gradingScale: [
-            { label: 'A', point: 4 },
-            { label: 'B', point: 3 },
-            { label: 'C', point: 2 },
-            { label: 'D', point: 0 },
-            { label: 'F', point: 0 }
-        ],
-        termSystem: '4学期制',
+        gradingScale: currentUniversity.gradingScale.map(s => ({ ...s })),
+        termSystem: currentUniversity.termSystemLabel,
         enrollmentYearMonth: '',
         expectedGraduationYearMonth: ''
     },
@@ -22,11 +18,11 @@ export const defaultState: AppState = {
         maxPeriods: 5
     },
     timetableConditions: {
-        targetGrade: 1,
+        targetGrade: currentUniversity.gradeRange.min,
         term: 'first',
         hasRetake: false,
         retakeClasses: [],
-        baseClass: 'C1'
+        baseClass: currentUniversity.baseClasses[0]?.options[0] ?? ''
     },
     selectedCourses: [],
     committedClasses: [],
