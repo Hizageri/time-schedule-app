@@ -5,7 +5,7 @@
 > 画面の HTML の比較で差分が出たら、成績の選択肢の D の分だけであることを確かめてから基準を作り直す（それ以外の差分は不具合として直す）。
 
 - [ ] 1. 準備：データの形と大学ごとの設定
-- [ ] 1.1 `data-model.md` に新しい形を書く
+- [x] 1.1 `data-model.md` に新しい形を書く
   - `UniversityConfig`（大学名・学期制の名前・学期とクォーター・通年の有無・曜日・時限・学年の範囲・ベースクラス・成績の段階・成績の読みかえ）と、`CourseConditions`（学年・学期・学期の中のどこか・再履修）、`CourseData.conditions`・`ClassInfo.conditions` を書く。保存データ（`AppState`）の型は変えないこと、`userProfile.gradingScale`・`termSystem`・`university` を計算と表示に使わなくなることも書く
   - `data-model.md` が設計の型と一致している
   - _Requirements: 1.1, 2.1, 4.2_
