@@ -6,6 +6,7 @@ import { MOCK_COURSES } from '../data';
 import { isPassingGradePoint } from '../utils/grades';
 import { useTimetableGrid } from '../hooks/useTimetableGrid';
 import { getSelectablePeriods } from '../config/universityConfig';
+import { currentUniversity } from '../config/currentUniversity';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, formatYearMonth, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
 import type { YearMonthDraft } from '../utils/studentPeriod';
@@ -445,7 +446,7 @@ export const DashboardScreen: React.FC = () => {
                                                 value={editMaxPeriods}
                                                 onChange={(e) => setEditMaxPeriods(Number(e.target.value))}
                                             >
-                                                {getSelectablePeriods().map(p => (
+                                                {getSelectablePeriods(currentUniversity).map(p => (
                                                     <option key={p} value={p}>{p}限まで</option>
                                                 ))}
                                             </select>

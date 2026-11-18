@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { ChevronRight } from 'lucide-react';
 import { getSelectablePeriods } from '../config/universityConfig';
+import { currentUniversity } from '../config/currentUniversity';
 import { PROFILE_TEXT_MAX_LENGTH } from '../config/inputLimits';
 import { MONTH_OPTIONS, getYearOptions, toYearMonthDraft, validateStudentPeriod } from '../utils/studentPeriod';
 import type { YearMonthDraft } from '../utils/studentPeriod';
@@ -136,7 +137,7 @@ export const OnboardingScreen: React.FC = () => {
                                     value={state.timetableSettings.maxPeriods}
                                     onChange={(e) => updateSettings({ maxPeriods: Number(e.target.value) })}
                                 >
-                                    {getSelectablePeriods().map(p => (
+                                    {getSelectablePeriods(currentUniversity).map(p => (
                                         <option key={p} value={p}>{p}限まで</option>
                                     ))}
                                 </select>

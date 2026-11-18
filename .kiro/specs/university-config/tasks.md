@@ -4,13 +4,13 @@
 > 保存データの形（`AppState`）は変えない。
 > 画面の HTML の比較で差分が出たら、成績の選択肢の D の分だけであることを確かめてから基準を作り直す（それ以外の差分は不具合として直す）。
 
-- [ ] 1. 準備：データの形と大学ごとの設定
+- [x] 1. 準備：データの形と大学ごとの設定
 - [x] 1.1 `data-model.md` に新しい形を書く
   - `UniversityConfig`（大学名・学期制の名前・学期とクォーター・通年の有無・曜日・時限・学年の範囲・ベースクラス・成績の段階・成績の読みかえ）と、`CourseConditions`（学年・学期・学期の中のどこか・再履修）、`CourseData.conditions`・`ClassInfo.conditions` を書く。保存データ（`AppState`）の型は変えないこと、`userProfile.gradingScale`・`termSystem`・`university` を計算と表示に使わなくなることも書く
   - `data-model.md` が設計の型と一致している
   - _Requirements: 1.1, 2.1, 4.2_
 
-- [ ] 1.2 大学ごとの設定と、今の大学を決める部品を作る
+- [x] 1.2 大学ごとの設定と、今の大学を決める部品を作る
   - `config/universityConfig.ts` に型と選択肢を作る関数を置き、`config/universities/aizu.ts`（会津大学）・`test.ts`（試しの大学）・`config/currentUniversity.ts`（開発サーバーで `VITE_UNIVERSITY=test` のときだけ試しの大学）を作る。今の `CURRENT_UNIVERSITY` を使っているところは、`currentUniversity` に置きかえる
   - 本番のビルドの出力（`dist/`）に試しの大学の名前が入っていないことと、開発サーバーで環境変数を付けたときだけ試しの大学になることを確かめてある
   - _Depends: 1.1_
