@@ -1,0 +1,57 @@
+[
+    {
+        "id_name": "T101 試しの基礎A",
+        "credits": 2,
+        "outline": "試しの大学の科目（1年・春学期）。設定どおりに動くかを確かめるためだけに使う。",
+        "conditions": { "grades": [1], "term": "first", "slot": { "type": "whole" }, "isRetake": false },
+        "classes": [
+            { "class_id": "A組", "schedule": ["月-1", "月-2"] },
+            { "class_id": "B組", "schedule": ["火-1", "火-2"] }
+        ]
+    },
+    {
+        "id_name": "T102 試しの基礎B",
+        "credits": 2,
+        "outline": "試しの大学の科目（1・2年・春学期・7限）。",
+        "conditions": { "grades": [1, 2], "term": "first", "slot": { "type": "whole" }, "isRetake": false },
+        "classes": [
+            { "class_id": "ALL", "schedule": ["金-7"] }
+        ]
+    },
+    {
+        "id_name": "T103 試しの演習",
+        "credits": 1,
+        "outline": "試しの大学の科目（1年・秋学期）。",
+        "conditions": { "grades": [1], "term": "second", "slot": { "type": "whole" }, "isRetake": false },
+        "classes": [
+            { "class_id": "ALL", "schedule": ["水-3"] }
+        ]
+    },
+    {
+        "id_name": "T201 試しの応用",
+        "credits": 2,
+        "outline": "試しの大学の科目（2年・春学期）。",
+        "conditions": { "grades": [2], "term": "first", "slot": { "type": "whole" }, "isRetake": false },
+        "classes": [
+            { "class_id": "ALL", "schedule": ["木-4"] }
+        ]
+    },
+    {
+        "id_name": "T401 試しの卒業研究",
+        "credits": 4,
+        "outline": "試しの大学の科目（4年・春学期）。",
+        "conditions": { "grades": [4], "term": "first", "slot": { "type": "whole" }, "isRetake": false },
+        "classes": [
+            { "class_id": "ALL", "schedule": ["月-5"] }
+        ]
+    },
+    {
+        "id_name": "T109 試しの集中講義",
+        "credits": 1,
+        "outline": "試しの大学の科目（1年・春学期・集中講義）。",
+        "conditions": { "grades": [1], "term": "first", "slot": { "type": "intensive" }, "isRetake": false },
+        "classes": [
+            { "class_id": "ALL", "schedule": ["TBD"] }
+        ]
+    }
+]

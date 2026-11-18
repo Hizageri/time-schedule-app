@@ -6,5 +6,7 @@ import type { UniversityConfig } from './universityConfig';
 import { aizuUniversity } from './universities/aizu';
 import { testUniversity } from './universities/test';
 
-export const currentUniversity: UniversityConfig =
-    import.meta.env.DEV && import.meta.env.VITE_UNIVERSITY === 'test' ? testUniversity : aizuUniversity;
+/** 試しの大学で動いているか。本番のビルドでは必ず false */
+export const isTestUniversity: boolean = import.meta.env.DEV && import.meta.env.VITE_UNIVERSITY === 'test';
+
+export const currentUniversity: UniversityConfig = isTestUniversity ? testUniversity : aizuUniversity;
