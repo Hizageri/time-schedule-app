@@ -2,10 +2,10 @@
 import { useMemo } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { MOCK_COURSES } from '../data';
-import type { CourseData } from '../types';
-import { filterByBit, isRetakeCandidate } from '../utils/courseFilter';
+import type { CourseConditions, CourseData } from '../types';
+import { filterAvailableCourses, isRetakeCandidate } from '../utils/courseFilter';
 import { isCoursePassed } from '../utils/grades';
-import { isInSessionTerm } from '../utils/targetBit';
+import { matchesTerm } from '../utils/courseConditions';
 import { MAX_SELECTED_COURSES } from '../config/inputLimits';
 
 export function useAvailableCourses(): {
@@ -20,7 +20,7 @@ export function useAvailableCourses(): {
 
     // 今の学年の科目（currentCourses）と、下の学年でまだ合格していない科目（earlierCourses）に分けて出す
     const { currentCourses, earlierCourses } = useMemo(() => {
-        const baseFiltered = filterByBit(MOCK_COURSES, {
+        const baseFiltered = filterAvailableCourses(MOCK_COURSES, {
             selectedGrade: state.timetableConditions.targetGrade,
             term: state.timetableConditions.term,
             isReRegistrationOnly: state.timetableConditions.hasRetake,
@@ -46,12 +46,12 @@ export function useAvailableCourses(): {
             if (!isCandidate) return false;
 
             // 学期（前期／後期など）が一致しているか判定
-            const checkTermMatch = (b: number | undefined) => {
-                if (b === undefined) return false;
-                return isInSessionTerm(b, state.timetableConditions.term);
+            const checkTermMatch = (conditions: CourseConditions | undefined) => {
+                if (conditions === undefined) return false;
+                return matchesTerm(conditions, state.timetableConditions.term);
             };
 
-            return checkTermMatch(c.target_bit) || c.classes.some(cls => checkTermMatch(cls.target_bit));
+            return checkTermMatch(c.conditions) || c.classes.some(cls => checkTermMatch(cls.conditions));
         });
 
         // 既に合格済みのものは filterByBit や isRetakeCandidate 側で除外済み

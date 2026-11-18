@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import type { CourseData } from '../types';
 import { isCourseFailed } from '../utils/grades';
-import { getTargetGrades, getPeriodLabel } from '../utils/targetBit';
+import { getCourseConditions, getGradesLabel, getPeriodLabel } from '../utils/courseConditions';
+import { currentUniversity } from '../config/currentUniversity';
+import { getTermLabel } from '../config/universityConfig';
 import { BookOpen, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 import { getSubjectColor } from '../utils/subjectColor';
 import { CourseDetailModal } from '../components/CourseDetailModal';
@@ -15,19 +17,19 @@ export const CourseSelectionScreen: React.FC = () => {
     const { currentCourses, earlierCourses, selectedCredits, toggleCourse } = useAvailableCourses();
 
     const userYear = state.timetableConditions.targetGrade;
-    const termLabel = state.timetableConditions.term === 'second' ? '後期' : state.timetableConditions.term === 'full' ? '通年' : '前期';
+    const termLabel = getTermLabel(currentUniversity, state.timetableConditions.term);
     const earlierYearsLabel = userYear - 1 <= 1 ? '1年' : `1〜${userYear - 1}年`;
 
     const renderCourseCard = (course: CourseData) => {
-        const displayBit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
+        const displayConditions = getCourseConditions(course);
         const isSelected = state.selectedCourses.some(c => c.id_name === course.id_name);
 
-        const gradesArr = getTargetGrades(displayBit);
+        const gradesArr = displayConditions?.grades ?? [];
         // 再履修：成績が不合格（ポイント 0）の科目。未履修：対象学年がすべて今の学年より下で、まだ合格していない科目
         const failed = isCourseFailed(course.id_name, state.grades, state.userProfile.gradingScale);
         const lowerYearOnly = gradesArr.length > 0 && Math.max(...gradesArr) < userYear;
 
-        const periodLabel = getPeriodLabel(displayBit);
+        const periodLabel = getPeriodLabel(currentUniversity, displayConditions);
         const colorClass = getSubjectColor(course.id_name);
         return (
             <div key={course.id_name}
@@ -59,7 +61,7 @@ export const CourseSelectionScreen: React.FC = () => {
                             <h3 className="font-bold text-lg text-foreground leading-tight mb-1">{course.id_name}</h3>
                             <div className="flex flex-wrap gap-1 mt-2">
                                 <span className="bg-blue-50 text-blue-700 border border-blue-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
-                                    対象: {gradesArr.length === 6 ? '全学年' : `${gradesArr.join(',')}年`}
+                                    対象: {getGradesLabel(currentUniversity, gradesArr)}
                                 </span>
                                 <span className="bg-green-50 text-green-700 border border-green-200 px-1.5 py-0.5 rounded text-[10px] font-medium">
                                     {periodLabel}
@@ -135,7 +137,7 @@ export const CourseSelectionScreen: React.FC = () => {
                         <section className="mb-10">
                             <h2 className="text-lg font-bold text-foreground">下の学年でまだ合格していない科目</h2>
                             <p className="text-sm text-muted mt-1 mb-4">
-                                {earlierYearsLabel}が対象の{termLabel}・通年の科目のうち、まだ合格していないものです。今の学期の時間割に入れられます。
+                                {earlierYearsLabel}が対象の{termLabel}{currentUniversity.hasFullYearCourses ? "・通年" : ""}の科目のうち、まだ合格していないものです。今の学期の時間割に入れられます。
                             </p>
                             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                                 {earlierCourses.map(renderCourseCard)}

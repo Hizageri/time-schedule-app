@@ -7,8 +7,11 @@ export interface TermDef {
     id: 'first' | 'second';
     /** 例：'前期' */
     label: string;
-    /** 学期の中のクォーター。会津大学は2つ（前期は Q1・Q2）。ない大学は [] */
-    quarters: { label: string }[];
+    /**
+     * 学期の中のクォーター。会津大学は2つ（前期は Q1・Q2）。ない大学は []。
+     * label は時間割の切りかえに、courseLabel は科目カードの開講時期に出す名前
+     */
+    quarters: { label: string; courseLabel: string }[];
 }
 
 /** ベースクラスの選択肢（学年ごと） */

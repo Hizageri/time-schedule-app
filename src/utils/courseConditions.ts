@@ -1,5 +1,7 @@
 // 共通の形の科目の条件（CourseConditions）で判定する関数。大学ごとの元の形（会津大学の target_bit）は読まない
 import type { ClassInfo, CourseConditions, CourseData } from '../types';
+import type { UniversityConfig } from '../config/universityConfig';
+import { getTermDef } from '../config/universityConfig';
 
 export type Term = 'first' | 'second' | 'full';
 
@@ -31,3 +33,17 @@ export const getCourseConditions = (course: CourseData): CourseConditions | unde
 /** クラスの条件（クラスの条件 → 科目の条件） */
 export const getClassConditions = (course: CourseData, cls: ClassInfo): CourseConditions | undefined =>
     cls.conditions ?? course.conditions;
+
+/** 科目カードの開講時期の名前（会津大学：1Q〜4Q・前期・後期・通年・集中） */
+export const getPeriodLabel = (config: UniversityConfig, conditions: CourseConditions | undefined): string => {
+    if (!conditions) return '不明';
+    if (conditions.slot.type === 'intensive') return '集中';
+    if (conditions.term === 'full') return conditions.slot.type === 'whole' ? '通年' : '不明';
+    const termDef = getTermDef(config, conditions.term);
+    if (conditions.slot.type === 'whole') return termDef.label;
+    return termDef.quarters[conditions.slot.index]?.courseLabel ?? '不明';
+};
+
+/** 対象の学年の名前（大学の学年の範囲をすべて含むときは '全学年'） */
+export const getGradesLabel = (config: UniversityConfig, grades: number[]): string =>
+    grades.length === config.gradeRange.max - config.gradeRange.min + 1 ? '全学年' : `${grades.join(',')}年`;

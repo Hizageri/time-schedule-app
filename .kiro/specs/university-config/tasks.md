@@ -30,7 +30,7 @@
   - _Requirements: 2.1, 5.1_
 
 - [ ] 3. 計算と表示が設定と共通の形を読むようにする
-- [ ] 3.1 科目の絞り込みを共通の形の条件にする
+- [x] 3.1 科目の絞り込みを共通の形の条件にする
   - `utils/courseFilter.ts`・`hooks/useAvailableCourses.ts`・科目選択の画面（学年のラベル・学期のラベル）を、共通の形の条件と大学の設定で動くようにする
   - ビルドと `npm run check:ui` がすべて通る
   - _Depends: 2.2_

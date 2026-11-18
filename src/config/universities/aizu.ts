@@ -6,8 +6,8 @@ export const aizuUniversity: UniversityConfig = {
     name: '会津大学',
     termSystemLabel: '4学期制',
     terms: [
-        { id: 'first', label: '前期', quarters: [{ label: 'Q1' }, { label: 'Q2' }] },
-        { id: 'second', label: '後期', quarters: [{ label: 'Q3' }, { label: 'Q4' }] },
+        { id: 'first', label: '前期', quarters: [{ label: 'Q1', courseLabel: '1Q' }, { label: 'Q2', courseLabel: '2Q' }] },
+        { id: 'second', label: '後期', quarters: [{ label: 'Q3', courseLabel: '3Q' }, { label: 'Q4', courseLabel: '4Q' }] },
     ],
     hasFullYearCourses: true,
     days: ['月', '火', '水', '木', '金', '土'],

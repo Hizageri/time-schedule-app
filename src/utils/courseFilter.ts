@@ -1,5 +1,7 @@
 import type { AppState, CourseData } from '../types';
-import { getTargetGrades, isInSessionTerm, isRetakeCourse } from './targetBit';
+import type { CourseConditions } from '../types';
+import { getCourseConditions, includesGrade, isRetake, matchesTerm } from './courseConditions';
+import type { Term } from './courseConditions';
 import { isCourseFailed, isCoursePassed } from './grades';
 
 /**
@@ -20,19 +22,19 @@ export const isRetakeCandidate = (
     if (isCourseFailed(course.id_name, userGrades, gradingScale)) return true;
 
     // 3. 履修年次を過ぎているか判定
-    const bit = course.target_bit ?? course.classes[0]?.target_bit ?? 0;
-    const targetGrades = getTargetGrades(bit);
+    const targetGrades = getCourseConditions(course)?.grades ?? [];
     const maxGrade = Math.max(...targetGrades, 0);
 
     // まだ合格しておらず、現在の学年が推奨学年の上限を超えている
     return currentGrade > maxGrade;
 };
 
-export const filterByBit = (
+/** 今の学年・学期で受講できる科目（共通の形の条件で判定する）。合格済みの科目は出さない */
+export const filterAvailableCourses = (
     allCourses: CourseData[],
     filters: {
         selectedGrade: number,
-        term: 'first' | 'second' | 'full',
+        term: Term,
         isReRegistrationOnly: boolean,
         userGrades: AppState['grades'],
         earnedCredits: AppState['earnedCredits'],
@@ -46,36 +48,36 @@ export const filterByBit = (
         if (isCoursePassed(course.id_name, userGrades, earnedCredits, gradingScale)) return false;
 
         // --- 判定ロジック ---
-        const checkMatch = (bit: number | undefined) => {
-            if (bit === undefined) return false;
+        const checkMatch = (conditions: CourseConditions | undefined) => {
+            if (conditions === undefined) return false;
 
             // 通常：指定した学年が含まれているか
             // 再履修のみ：ユーザーの成績と年次を元に判定
             const gradeMatch = isReRegistrationOnly
                 ? isRetakeCandidate(course, userGrades, earnedCredits, gradingScale, selectedGrade)
-                : (bit & (1 << (selectedGrade - 1))) > 0;
+                : includesGrade(conditions, selectedGrade);
 
-            return gradeMatch && isInSessionTerm(bit, term);
+            return gradeMatch && matchesTerm(conditions, term);
         };
 
-        // 1. コース直下にビットがあるかチェック
-        if (checkMatch(course.target_bit)) return true;
+        // 1. 科目の条件があるかチェック
+        if (checkMatch(course.conditions)) return true;
 
         // 2. ひとつでも条件に合うクラス(C1, C2など)があるかチェック
-        return course.classes.some(c => checkMatch(c.target_bit));
+        return course.classes.some(c => checkMatch(c.conditions));
 
     }).sort((a, b) => {
-        // ソート用のビット取得（外側になければ最初のクラスのビットを代用）
-        const aBit = a.target_bit ?? a.classes[0]?.target_bit ?? 0;
-        const bBit = b.target_bit ?? b.classes[0]?.target_bit ?? 0;
+        // 並べ替え用の条件（科目になければ最初のクラスの条件を代用）
+        const aConditions = getCourseConditions(a);
+        const bConditions = getCourseConditions(b);
 
-        const aRetake = isRetakeCourse(aBit) ? 1 : 0;
-        const bRetake = isRetakeCourse(bBit) ? 1 : 0;
+        const aRetake = aConditions && isRetake(aConditions) ? 1 : 0;
+        const bRetake = bConditions && isRetake(bConditions) ? 1 : 0;
 
         if (aRetake !== bRetake) return bRetake - aRetake;
 
-        const minGradeA = Math.min(...getTargetGrades(aBit));
-        const minGradeB = Math.min(...getTargetGrades(bBit));
+        const minGradeA = Math.min(...(aConditions?.grades ?? []));
+        const minGradeB = Math.min(...(bConditions?.grades ?? []));
         return Math.abs(minGradeA - selectedGrade) - Math.abs(minGradeB - selectedGrade);
     });
 };
