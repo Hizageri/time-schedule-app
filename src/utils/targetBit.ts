@@ -6,15 +6,16 @@ import type { AppState, CourseConditions } from '../types';
 export type QuarterType = 'odd' | 'even' | 'across' | 'intensive';
 export type Term = AppState['timetableConditions']['term'];
 
-/** 学期のビット（bit 8-9）。0=前期 1=後期 2=通年 */
+/** 学期のビット（bit 8-9）。0=前期 1=後期 2=通年 3=前期・後期のどちらかで受ける */
 export const getTermBit = (bit: number): number => (bit >> 8) & 3;
 
 /** 今の学期の値（'first'→0、'second'→1、'full'→2） */
 export const toSessionTermBit = (term: Term): number => (term === 'second' ? 1 : term === 'full' ? 2 : 0);
 
-/** 通年（2）なら常に、それ以外は今の学期と一致すれば true */
+/** 通年（2）なら常に、前期・後期のどちらか（3）なら今の学期が前期か後期のとき、それ以外は今の学期と一致すれば true */
 export const isInSessionTerm = (bit: number, term: Term): boolean => {
     const courseTerm = getTermBit(bit);
+    if (courseTerm === 3) return term === 'first' || term === 'second';
     return courseTerm === 2 || courseTerm === toSessionTermBit(term);
 };
 
@@ -40,6 +41,7 @@ export const getTermLabel = (bit: number): string => {
     if (termVal === 0) return '前期';
     if (termVal === 1) return '後期';
     if (termVal === 2) return '通年';
+    if (termVal === 3) return '前期・後期';
     return '不明';
 };
 
@@ -111,16 +113,16 @@ export const canTakeClass = (targetBit: number, studentBit: number): boolean => 
 };
 
 /**
- * 会津大学の target_bit を共通の形の条件にする。学期のビットが決まりにない値（3）なら null。
+ * 会津大学の target_bit を共通の形の条件にする。
+ * 学期：前期 → first、後期 → second、通年 → full、前期・後期のどちらか → either
  * クォーター：奇数Q → 0、偶数Q → 1、またぎ → 学期を通して、集中講義など → 集中
  */
-export const toCourseConditions = (bit: number): CourseConditions | null => {
+export const toCourseConditions = (bit: number): CourseConditions => {
     const termBit = getTermBit(bit);
-    if (termBit === 3) return null;
     const quarter = getQuarterType(bit);
     return {
         grades: getTargetGrades(bit),
-        term: termBit === 0 ? 'first' : termBit === 1 ? 'second' : 'full',
+        term: termBit === 0 ? 'first' : termBit === 1 ? 'second' : termBit === 2 ? 'full' : 'either',
         slot: quarter === 'odd' ? { type: 'quarter', index: 0 }
             : quarter === 'even' ? { type: 'quarter', index: 1 }
             : quarter === 'across' ? { type: 'whole' }

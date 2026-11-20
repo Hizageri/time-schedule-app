@@ -70,7 +70,8 @@ export interface UniversityConfig {
  */
 export interface CourseConditions {
   grades: number[];                         // 対象の学年
-  term: 'first' | 'second' | 'full';        // 学期（通年は 'full'）
+  /** 学期。'full' = 1年を通して1つの授業（通年）。'either' = 同じ授業が前期にも後期にもあり、どちらかで受ける（前期と後期の両方の一覧に出す） */
+  term: 'first' | 'second' | 'full' | 'either';
   /** 学期の中のどこか：クォーターの番号（0 始まり。会津大学は奇数Q=0・偶数Q=1）、学期を通して（またぎ）、集中講義など */
   slot: { type: 'quarter'; index: number } | { type: 'whole' } | { type: 'intensive' };
   isRetake: boolean;                        // 再履修向けか
@@ -91,7 +92,7 @@ export type CourseConditionsFile = Record<string, {
  *
  *  bit 0-5  : 対象学年（bit0 = 1年 … bit5 = 6年。複数立てられる）
  *  bit 6-7  : クォーター  00=奇数Q / 01=偶数Q / 10=またぎ(前期 or 後期を通して) / 11=集中講義など
- *  bit 8-9  : 学期        00=前期 / 01=後期 / 10=通年
+ *  bit 8-9  : 学期        00=前期 / 01=後期 / 10=通年 / 11=前期・後期のどちらかで受ける（2026-11-20〜）
  *  bit 10   : 再履修クラス 1=再履修向け / 0=通常
  *
  *  例：323 = 0b001_0100_0011 → 1,2年 / 偶数Q / 後期 → 4Q

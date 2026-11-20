@@ -26,15 +26,19 @@ export default {
             ok(page.errors.length === 0, `試しの大学：条件の画面のエラーがない（${page.errors}）`);
             await page.context().close();
 
-            // 科目の絞り込み：1年・春学期 → T101・T102・T109。秋学期 → T103
+            // 科目の絞り込み：1年・春学期 → T101・T102・T105・T109。秋学期 → T103・T105（T105 は春学期・秋学期のどちらかで受ける）
             page = await openTest({ uid: 't', docs: { 'users/t': { currentScreen: 3, userProfile: profile, timetableConditions: { targetGrade: 1, term: 'first', baseClass: 'A組' } } } });
             const firstTerm = (await cardNames(page)).sort().join(',');
-            ok(firstTerm === 'T101 試しの基礎A,T102 試しの基礎B,T109 試しの集中講義', `試しの大学：1年・春学期の科目（${firstTerm}）`);
+            ok(firstTerm === 'T101 試しの基礎A,T102 試しの基礎B,T105 試しの選択講義,T109 試しの集中講義', `試しの大学：1年・春学期の科目（${firstTerm}）`);
             const labels = await page.locator('div.cursor-pointer span.bg-green-50').allTextContents();
             ok(labels.includes('春学期') && labels.includes('集中'), `試しの大学：開講時期は学期の名前（クォーターなし）と集中（${labels}）`);
+            const eitherLabel = async () => (await page.locator('div.cursor-pointer', { has: page.locator('h3', { hasText: 'T105 試しの選択講義' }) }).locator('span.bg-green-50').textContent())?.trim();
+            ok((await eitherLabel()) === '春学期・秋学期', '試しの大学：どちらかの学期で受ける科目の開講時期は「春学期・秋学期」');
             await page.context().close();
             page = await openTest({ uid: 't', docs: { 'users/t': { currentScreen: 3, userProfile: profile, timetableConditions: { targetGrade: 1, term: 'second', baseClass: 'A組' } } } });
-            ok((await cardNames(page)).join(',') === 'T103 試しの演習', '試しの大学：1年・秋学期の科目は T103 だけ（通年なし）');
+            const secondTerm = (await cardNames(page)).sort().join(',');
+            ok(secondTerm === 'T103 試しの演習,T105 試しの選択講義', `試しの大学：1年・秋学期の科目は T103 と、どちらかの学期で受ける T105（通年なし）（${secondTerm}）`);
+            ok((await eitherLabel()) === '春学期・秋学期', '試しの大学：秋学期の一覧でも T105 は「春学期・秋学期」');
             await page.context().close();
 
             // 時間割の表示（生成のプレビュー）：月〜金・7限・クォーターの切りかえなし

@@ -5,9 +5,11 @@ import { getTermDef } from '../config/universityConfig';
 
 export type Term = 'first' | 'second' | 'full';
 
-/** 今の学期に開講しているか（通年の科目は、どの学期でも対象） */
-export const matchesTerm = (conditions: CourseConditions, term: Term): boolean =>
-    conditions.term === 'full' || conditions.term === term;
+/** 今の学期に開講しているか（通年の科目は、どの学期でも対象。前期・後期のどちらかで受ける科目は、前期でも後期でも対象） */
+export const matchesTerm = (conditions: CourseConditions, term: Term): boolean => {
+    if (conditions.term === 'either') return term === 'first' || term === 'second';
+    return conditions.term === 'full' || conditions.term === term;
+};
 
 /** その学年が対象か */
 export const includesGrade = (conditions: CourseConditions, grade: number): boolean =>
@@ -34,11 +36,17 @@ export const getCourseConditions = (course: CourseData): CourseConditions | unde
 export const getClassConditions = (course: CourseData, cls: ClassInfo): CourseConditions | undefined =>
     cls.conditions ?? course.conditions;
 
-/** 科目カードの開講時期の名前（会津大学：1Q〜4Q・前期・後期・通年・集中） */
+/** 科目カードの開講時期の名前（会津大学：1Q〜4Q・前期・後期・通年・集中・前期・後期のどちらか（例：前期・後期、1Q・3Q）） */
 export const getPeriodLabel = (config: UniversityConfig, conditions: CourseConditions | undefined): string => {
     if (!conditions) return '不明';
     if (conditions.slot.type === 'intensive') return '集中';
     if (conditions.term === 'full') return conditions.slot.type === 'whole' ? '通年' : '不明';
+    if (conditions.term === 'either') {
+        // 前期・後期のそれぞれの名前をつなぐ（クォーターが決まっていれば、両方の学期のそのクォーターの名前）
+        const slot = conditions.slot;
+        const names = config.terms.map(t => slot.type === 'whole' ? t.label : t.quarters[slot.index]?.courseLabel);
+        return names.every(n => n !== undefined) ? names.join('・') : '不明';
+    }
     const termDef = getTermDef(config, conditions.term);
     if (conditions.slot.type === 'whole') return termDef.label;
     return termDef.quarters[conditions.slot.index]?.courseLabel ?? '不明';

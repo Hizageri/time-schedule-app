@@ -28,6 +28,15 @@
         ]
     },
     {
+        "id_name": "T105 試しの選択講義",
+        "credits": 1,
+        "outline": "試しの大学の科目（1年・春学期と秋学期の両方にあり、どちらかで受ける）。",
+        "conditions": { "grades": [1], "term": "either", "slot": { "type": "whole" }, "isRetake": false },
+        "classes": [
+            { "class_id": "ALL", "schedule": ["木-2"] }
+        ]
+    },
+    {
         "id_name": "T201 試しの応用",
         "credits": 2,
         "outline": "試しの大学の科目（2年・春学期）。",

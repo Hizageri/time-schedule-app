@@ -33,8 +33,8 @@ export interface CourseData {
 export interface CourseConditions {
     /** 対象の学年 */
     grades: number[];
-    /** 学期（通年は 'full'） */
-    term: 'first' | 'second' | 'full';
+    /** 学期。'full' = 1年を通して1つの授業（通年）。'either' = 同じ授業が前期にも後期にもあり、どちらかで受ける */
+    term: 'first' | 'second' | 'full' | 'either';
     /** 学期の中のどこか：クォーターの番号（0 始まり）、学期を通して、集中講義など */
     slot: { type: 'quarter'; index: number } | { type: 'whole' } | { type: 'intensive' };
     /** 再履修向けか */

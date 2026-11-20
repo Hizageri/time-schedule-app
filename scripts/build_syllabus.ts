@@ -51,10 +51,6 @@ const convert = (where: string, bit: unknown): CourseConditions | undefined => {
         return undefined;
     }
     const conditions = toCourseConditions(bit);
-    if (!conditions) {
-        problem(where, `学期のビットが決まりにない値（target_bit ${bit}）`);
-        return undefined;
-    }
 
     // 照らし合わせ：学年
     for (let grade = 1; grade <= 6; grade++) {
@@ -64,7 +60,9 @@ const convert = (where: string, bit: unknown): CourseConditions | undefined => {
     // 照らし合わせ：学期（今の学期が前期・後期・通年のそれぞれで、対象になるか）
     for (const term of TERMS) {
         const expected = isInSessionTerm(bit, term);
-        const actual = conditions.term === 'full' || conditions.term === term;
+        const actual = conditions.term === 'either'
+            ? term === 'first' || term === 'second'
+            : conditions.term === 'full' || conditions.term === term;
         if (actual !== expected) problem(where, `学期（${term}）の判定が target_bit の読み取りと違う`);
     }
     // 照らし合わせ：クォーター
@@ -84,6 +82,15 @@ const convert = (where: string, bit: unknown): CourseConditions | undefined => {
     if (conditions.term === 'full') {
         if (!config.hasFullYearCourses) problem(where, '通年の科目がない大学なのに通年になっている');
         if (conditions.slot.type === 'quarter') problem(where, '通年の科目なのにクォーターが1つに決まっている');
+    } else if (conditions.term === 'either') {
+        // 前期・後期のどちらか：両方の学期が設定にあり、クォーターの番号が両方の学期の中にある
+        for (const id of ['first', 'second'] as const) {
+            const termDef = config.terms.find(t => t.id === id);
+            if (!termDef) problem(where, `前期・後期のどちらかの科目なのに、学期 ${id} が設定にない`);
+            else if (conditions.slot.type === 'quarter' && conditions.slot.index >= termDef.quarters.length) {
+                problem(where, `クォーターの番号 ${conditions.slot.index} が学期 ${id} の設定（${termDef.quarters.length}つ）の外`);
+            }
+        }
     } else {
         const termDef = config.terms.find(t => t.id === conditions.term);
         if (!termDef) problem(where, `学期 ${conditions.term} が設定にない`);
