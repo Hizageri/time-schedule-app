@@ -11,6 +11,8 @@ export interface ClassInfo {
     schedule: TimeSlot[];
     // 追加: クラスごとにターゲットビットを持てるようにする（?をつけて任意にする）
     target_bit?: number;
+    /** 集中講義のクラスだけ：何学期の集中講義か（会津大学のシラバスと同じ 1〜4）。変換のスクリプトだけが読む */
+    intensive_quarter?: number;
     /** 共通の形の条件。src/data/index.ts で course_conditions.json から付ける（target_bit があるクラスだけ） */
     conditions?: CourseConditions;
 }
@@ -19,6 +21,8 @@ export interface CourseData {
     id_name: string;
     // 修正: 外側にビットがない場合もあるので、? をつけて任意（Optional）にする
     target_bit?: number;
+    /** 集中講義の科目だけ：何学期の集中講義か（会津大学のシラバスと同じ 1〜4。例：「2学期集中」→ 2）。変換のスクリプトだけが読む */
+    intensive_quarter?: number;
     credits: number;
     outline: string;
     grading?: { exam: number; report: number; others: number };
@@ -35,8 +39,8 @@ export interface CourseConditions {
     grades: number[];
     /** 学期。'full' = 1年を通して1つの授業（通年）。'either' = 同じ授業が前期にも後期にもあり、どちらかで受ける */
     term: 'first' | 'second' | 'full' | 'either';
-    /** 学期の中のどこか：クォーターの番号（0 始まり）、学期を通して、集中講義など */
-    slot: { type: 'quarter'; index: number } | { type: 'whole' } | { type: 'intensive' };
+    /** 学期の中のどこか：クォーターの番号（0 始まり）、学期を通して、集中講義など（index は何学期の集中講義か。分からなければなし） */
+    slot: { type: 'quarter'; index: number } | { type: 'whole' } | { type: 'intensive'; index?: number };
     /** 再履修向けか */
     isRetake: boolean;
 }

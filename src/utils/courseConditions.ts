@@ -36,10 +36,16 @@ export const getCourseConditions = (course: CourseData): CourseConditions | unde
 export const getClassConditions = (course: CourseData, cls: ClassInfo): CourseConditions | undefined =>
     cls.conditions ?? course.conditions;
 
-/** 科目カードの開講時期の名前（会津大学：1Q〜4Q・前期・後期・通年・集中・前期・後期のどちらか（例：前期・後期、1Q・3Q）） */
+/** 科目カードの開講時期の名前（会津大学：1Q〜4Q・前期・後期・通年・集中（学期が分かれば 2Q集中 など）・前期・後期のどちらか（例：前期・後期、1Q・3Q）） */
 export const getPeriodLabel = (config: UniversityConfig, conditions: CourseConditions | undefined): string => {
     if (!conditions) return '不明';
-    if (conditions.slot.type === 'intensive') return '集中';
+    if (conditions.slot.type === 'intensive') {
+        // 何学期の集中講義かが分かるときは、そのクォーターの名前をつける（例：2Q集中）
+        const index = conditions.slot.index;
+        if (index === undefined || conditions.term === 'full' || conditions.term === 'either') return '集中';
+        const quarter = getTermDef(config, conditions.term).quarters[index];
+        return quarter ? `${quarter.courseLabel}集中` : '集中';
+    }
     if (conditions.term === 'full') return conditions.slot.type === 'whole' ? '通年' : '不明';
     if (conditions.term === 'either') {
         // 前期・後期のそれぞれの名前をつなぐ（クォーターが決まっていれば、両方の学期のそのクォーターの名前）

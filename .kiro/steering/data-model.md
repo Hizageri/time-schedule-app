@@ -73,7 +73,8 @@ export interface CourseConditions {
   /** 学期。'full' = 1年を通して1つの授業（通年）。'either' = 同じ授業が前期にも後期にもあり、どちらかで受ける（前期と後期の両方の一覧に出す） */
   term: 'first' | 'second' | 'full' | 'either';
   /** 学期の中のどこか：クォーターの番号（0 始まり。会津大学は奇数Q=0・偶数Q=1）、学期を通して（またぎ）、集中講義など */
-  slot: { type: 'quarter'; index: number } | { type: 'whole' } | { type: 'intensive' };
+  /** 集中講義の index は、何学期の集中講義か（0 始まりのクォーターの番号。分からなければなし） */
+  slot: { type: 'quarter'; index: number } | { type: 'whole' } | { type: 'intensive'; index?: number };
   isRetake: boolean;                        // 再履修向けか
 }
 
@@ -125,6 +126,7 @@ export interface ClassInfo {
   class_id: string;          // "C1", "ALL", "CS" など
   schedule: TimeSlot[];      // 1クラスあたり複数コマ（例：["金-9","金-10","火-9","火-10"]）
   target_bit?: TargetBit;    // クラスごとに条件が違う場合だけある（現データでは16件）
+  intensive_quarter?: number; // 集中講義のクラスだけ：何学期の集中講義か（シラバスと同じ 1〜4）。target_bit がクラスにあるときだけ書く
   /** `src/data/index.ts` で course_conditions.json から付け足される（target_bit があるクラスだけ） */
   conditions?: CourseConditions;
 }
@@ -133,6 +135,7 @@ export interface ClassInfo {
 export interface CourseData {
   id_name: string;           // "HS01 哲学" のように「科目コード 科目名」。IDと表示名を兼ねている [要確認]
   target_bit?: TargetBit;    // 科目単位の条件（現データでは192件にある）
+  intensive_quarter?: number; // 集中講義の科目だけ：何学期の集中講義か（シラバスと同じ 1〜4。例：「2学期集中」→ 2）。2026-11-25〜
   credits: number;
   outline: string;
   grading?: { exam: number; report: number; others: number }; // 割合（%）

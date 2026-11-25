@@ -27,12 +27,46 @@ const outputPath = path.resolve(argValue('--output') ?? path.join(root, 'src/dat
 interface RawClass {
     class_id?: unknown;
     target_bit?: unknown;
+    intensive_quarter?: unknown;
 }
 interface RawCourse {
     id_name?: unknown;
     target_bit?: unknown;
+    intensive_quarter?: unknown;
     classes?: unknown;
 }
+
+/**
+ * 集中講義の学期（intensive_quarter。シラバスと同じ 1〜4）を、共通の形のクォーターの番号にする（1・3 → 0、2・4 → 1）。
+ * 集中講義でない・1〜4 でない・学期と合わない（前期なのに 3・4 など）・通年か前期・後期のどちらかの科目にある、なら止まる
+ */
+const applyIntensiveQuarter = (where: string, conditions: CourseConditions, value: unknown): CourseConditions => {
+    if (value === undefined) return conditions;
+    if (typeof value !== 'number' || !Number.isInteger(value) || value < 1 || value > 4) {
+        problem(where, `intensive_quarter が 1〜4 ではない（${JSON.stringify(value)}）`);
+        return conditions;
+    }
+    if (conditions.slot.type !== 'intensive') {
+        problem(where, `集中講義でないのに intensive_quarter がある（${value}）`);
+        return conditions;
+    }
+    if (conditions.term === 'full' || conditions.term === 'either') {
+        problem(where, `通年か前期・後期のどちらかの科目に intensive_quarter がある（${value}）`);
+        return conditions;
+    }
+    const term = value <= 2 ? 'first' : 'second';
+    if (term !== conditions.term) {
+        problem(where, `intensive_quarter（${value}）が target_bit の学期（${conditions.term === 'first' ? '前期' : '後期'}）と合わない`);
+        return conditions;
+    }
+    const index = (value - 1) % 2;
+    const termDef = config.terms.find(t => t.id === term);
+    if (!termDef || index >= termDef.quarters.length) {
+        problem(where, `intensive_quarter（${value}）のクォーターが設定にない`);
+        return conditions;
+    }
+    return { ...conditions, slot: { type: 'intensive', index } };
+};
 
 const problems: string[] = [];
 const problem = (where: string, reason: string) => problems.push(`${where}：${reason}`);
@@ -131,9 +165,11 @@ let conditionCount = 0;
     if (course.target_bit !== undefined) {
         const conditions = convert(name, course.target_bit);
         if (conditions) {
-            entry.course = conditions;
+            entry.course = applyIntensiveQuarter(name, conditions, course.intensive_quarter);
             conditionCount++;
         }
+    } else if (course.intensive_quarter !== undefined) {
+        problem(name, '科目に target_bit がないのに intensive_quarter がある（クラスに書く）');
     }
     const classes: Record<string, CourseConditions> = {};
     const seenClassIds = new Set<string>();
@@ -153,9 +189,11 @@ let conditionCount = 0;
         if (cls.target_bit !== undefined) {
             const conditions = convert(where, cls.target_bit);
             if (conditions) {
-                classes[classId] = conditions;
+                classes[classId] = applyIntensiveQuarter(where, conditions, cls.intensive_quarter);
                 conditionCount++;
             }
+        } else if (cls.intensive_quarter !== undefined) {
+            problem(where, 'クラスに target_bit がないのに intensive_quarter がある（科目に書く）');
         } else if (course.target_bit === undefined) {
             // 科目にもクラスにもビットがないと、このクラスの条件が決まらない
             problem(where, '科目にもクラスにも target_bit がない');
