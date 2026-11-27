@@ -1,6 +1,7 @@
 # Structure Steering
 
-> updated_at: 2026-11-16（api/_lib/geminiClient.ts・responseSchemas.ts を追加）
+> updated_at: 2026-11-27（university-config：大学ごとの設定・共通の形の科目の条件・シラバスの変換のスクリプト）
+> 2026-11-16：api/_lib/geminiClient.ts・responseSchemas.ts を追加
 > 2026-11-06：docs/用語集.md を追加
 > 2026-11-05：docs/adr/ を追加
 > 2026-10-30：src-structure-migration で目標の構成への移行が終わった。現状の構成・依存の向き・画面に残っている計算を書き直した
@@ -29,6 +30,7 @@ docs/
   用語集.md                作者の言葉で書いた用語の説明
 scripts/
   build_reviews.js         口コミ JSON とプロンプト用科目一覧の再生成
+  build_syllabus.ts        シラバスの変換：syllabus.json → course_conditions.json（共通の形の科目の条件）。npm run build:syllabus
 src/
   main.tsx                 エントリ。assets/styles/index.css を読み込み App を描画
   App.tsx                  AppProvider・認証ゲート（保存データの読み込みに失敗したときの画面を含む）・画面切替（ScreenManager）
@@ -52,22 +54,27 @@ src/
     defaultState.ts        状態の初期値
   services/aiApi.ts        /api/* を ID トークン付きで呼ぶクライアント関数とレスポンス型（401 ならログアウト）
   utils/
-    targetBit.ts           target_bit の読み取り（学期・クォーター・学年・再履修）とラベル。学期・クォーターの判定はここだけ
-    courseFilter.ts        科目の絞り込み（filterByBit・isRetakeCandidate）
-    grades.ts              合否の判定（isPassingGradePoint・isCoursePassed・isCourseFailed）
+    courseConditions.ts    共通の形の科目の条件の判定（学期・学年・クォーター・集中・再履修）と、開講時期・対象学年の表示の名前
+    targetBit.ts           会津大学の target_bit の読み取りと、共通の形への変換（toCourseConditions）。使うのは変換のスクリプトと、保存データの targetBit を読むところだけ
+    courseFilter.ts        科目の絞り込み（filterAvailableCourses・isRetakeCandidate）
+    grades.ts              成績の段階（大学の設定から。読みかえ D → F）と合否の判定（isPassingGradePoint・isCoursePassed・isCourseFailed）
     timetable.ts           ピンを守るクラスの決め方（resolveClassAssignments）、いちばん遅い時限、コマ表のセル探し（findClassesInSlot・findIntensiveEntries）、未使用の重なり判定
-    timetableMock.ts       AI が使えないときの代わりの時間割の生成
+    timetableMock.ts       AI が使えないときの代わりの時間割の生成（どこからも使われていない。target_bit を読む古い形のまま）
     studentPeriod.ts       入学・卒業予定年月の確かめと表示（validateStudentPeriod 等）
     subjectColor.ts        科目コード→色（getSubjectColor）
     classNames.ts          cn()
   lib/firebase.ts          Firebase 初期化（auth, db, googleProvider を export）と、ID トークンの取得・ログアウト（getCurrentIdToken・signOutCurrentUser）
   config/
-    universityConfig.ts    今の大学（会津大学）の、大学ごとに変わる値（最後の時限・最大時限の下限）と、最大時限の選択肢
+    universityConfig.ts    大学ごとの設定の型（UniversityConfig）と、設定から選択肢を作る関数（最大時限・学年・ベースクラス・学期の名前）
+    universities/aizu.ts   会津大学の設定
+    universities/test.ts   試しの大学の設定（開発サーバーで VITE_UNIVERSITY=test のときだけ。本番のビルドに入らない）
+    currentUniversity.ts   今の大学を決める（currentUniversity・isTestUniversity）
     inputLimits.ts         ブラウザ側の入力の上限（選べる科目数・プロフィールの文字数）。api/_lib/validation.ts の値と同じにする
   types/index.ts           型（中身は data-model.md と一致させる）
   data/
-    index.ts               JSON を結合して MOCK_COURSES を作る
-    *.json, *.md           syllabus.json / raw_reviews.json / reviews_bit.json / reviews_text.json / course_list_for_prompt.md
+    index.ts               今の大学の科目一覧（MOCK_COURSES）を作る。会津大学は syllabus.json に口コミと共通の形の条件を結合する。findCourse で科目 ID から引く
+    *.json, *.md           syllabus.json / course_conditions.json（生成物）/ raw_reviews.json / reviews_bit.json / reviews_text.json / course_list_for_prompt.md
+    test_university/courses.json 試しの大学の科目（共通の形の条件で直接書く）
 checks/ui/                 試しの画面（npm run check:ui。使い方は tech.md）
 ```
 
@@ -201,4 +208,5 @@ services/aiApi ─▶ lib/firebase（ID トークン）─▶ /api/*
 ## データファイルの扱い
 
 - `reviews_bit.json`・`reviews_text.json`・`course_list_for_prompt.md` は生成物。直接編集せず、`raw_reviews.json` を直して `npm run build:reviews`
+- `course_conditions.json` は生成物。直接編集せず、`syllabus.json` を直して `npm run build:syllabus`。科目を足す・消すときは、`raw_reviews.json` も合わせて `npm run build:reviews` も流す
 - `syllabus.json`（203科目）は手で管理されている。形の崩れていた `OT03-001` の `classes` は 2026-10-12 に直したが、読む側は引き続き `schedule` がない可能性を考える（`?? []`）

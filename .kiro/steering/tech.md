@@ -1,6 +1,7 @@
 # Technology Steering
 
-> updated_at: 2026-11-16（gemini-model-migration：AI の SDK・モデル・返答の受け取り方）
+> updated_at: 2026-11-27（university-config：大学ごとの設定、共通の形の科目の条件、シラバスの変換のスクリプト、VITE_UNIVERSITY）
+> 2026-11-16：gemini-model-migration：AI の SDK・モデル・返答の受け取り方
 > 2026-10-24：secure-and-stable：AI 窓口の前処理、保存の流れ
 > 2026-10-08 時点のコードから作成。
 > 外部サービスの設定（Firebase の承認済みドメイン、Vercel の環境変数、トラブル対応）は `deployment.md`、型定義は `data-model.md` を参照。
@@ -60,8 +61,11 @@
 
 ## データ表現の要点
 
-- `target_bit`（11ビット）：bit0-5 学年 / bit6-7 クォーター（奇数・偶数・またぎ・集中）/ bit8-9 学期（前期・後期・通年）/ bit10 再履修
-- 科目単位の `target_bit` がなければクラス単位の `target_bit` を見る（`course.target_bit ?? course.classes[0]?.target_bit`）
+- **大学ごとの設定**（2026-11-27〜）：大学名・学期制・学期とクォーター・曜日・時限・学年の範囲・ベースクラス・成績の段階を、大学ごとに `src/config/universities/*.ts`（TypeScript）に書く。計算と表示は `src/config/currentUniversity.ts` の `currentUniversity` を読む。利用者が使えるのは会津大学だけ（設定の置き方は `university-config` の `research.md` の決定）
+- **共通の形の科目の条件**（`CourseConditions`：学年・学期・学期の中のどこか・再履修）：アプリの計算と表示はこれだけを読む（`src/utils/courseConditions.ts`）。会津大学は `scripts/build_syllabus.ts` が `syllabus.json` の `target_bit`・`intensive_quarter` から作り、`src/data/course_conditions.json`（生成物）に書き出す。`src/data/index.ts` が科目に結合する（ADR-0024）
+- `target_bit`（11ビット。会津大学の元データ）：bit0-5 学年 / bit6-7 クォーター（奇数・偶数・またぎ・集中）/ bit8-9 学期（前期・後期・通年・前期・後期のどちらか）/ bit10 再履修。アプリの中で読むのは、変換のスクリプトと、保存データの `committedClasses[].targetBit`（確定した時間割の表示）だけ（`src/utils/targetBit.ts`）
+- `intensive_quarter`（`syllabus.json`、2026-11-25〜）：集中講義の科目だけ。何学期の集中講義か（シラバスと同じ 1〜4）
+- 科目単位の条件がなければクラス単位の条件を見る（`course.conditions ?? course.classes[0]?.conditions`）
 - `reviews_bit`（12ビット）：難易度・課題量・テスト・出席を各3ビット
 - コマ文字列は `"月-1"` 形式（最大 11 限）。集中講義には `"TBD"` や `"8/24(月)"` のような日付文字列も入る
 - 型の正は `data-model.md`。現在のコード上の型は `src/types/index.ts`、初期値は `src/context/defaultState.ts`
@@ -72,6 +76,7 @@
 |------|----------|------|
 | `GOOGLE_API_KEY`（または `GEMINI_API_KEY`） | `api/*` | サーバー専用。`VITE_` を付けない |
 | `VITE_FIREBASE_*`（6個） | `src/lib/firebase.ts` | ブラウザに公開される前提の値。`vite.config.ts` の `define` でも埋め込む |
+| `VITE_UNIVERSITY` | `src/config/currentUniversity.ts` | 開発サーバー（`npm run dev`・試しの画面）でだけ効く。`test` で試しの大学になる。本番のビルドでは `import.meta.env.DEV` が `false` に置きかわるので、何を入れても会津大学になり、試しの大学の設定は `dist/` に入らない（ADR-0025）。Vercel には入れない |
 
 - 見本は `.env.example`。`.env` は commit しない
 - 保存場所と Redeploy の注意は `deployment.md` を参照
@@ -83,6 +88,9 @@ npm run dev            # Vite + 自作ミドルウェアで /api/* も動く（h
 npm run build          # tsc -b && vite build（型チェックを兼ねる）
 npm run lint           # ESLint（typescript-eslint, react-hooks, react-refresh）
 npm run build:reviews  # raw_reviews.json → reviews_bit.json / reviews_text.json / course_list_for_prompt.md
+npm run build:syllabus # syllabus.json → course_conditions.json（共通の形の科目の条件。照らし合わせ・数・値の範囲を確かめ、おかしければ書かずに止まる）
+                       #   試すとき：npm run build:syllabus -- --input <写し> --output <書き出す先>
+                       #   Node.js の型を取り除いて動かす仕組みで、TypeScript のまま動かす（Node.js 22.18 以上）
 npm run check:ui       # 試しの画面ですべての確認を流す（-- --only <名前の一部> で一部だけ）
 ```
 
@@ -92,6 +100,7 @@ npm run check:ui       # 試しの画面ですべての確認を流す（-- --on
 - 本物の Firebase・Gemini・本番の URL には接続しない（`localhost` 以外への通信は止める）。`.env` も読まない。本番のビルドには入らない（`src/` の外にある）
 - 最初に1回だけ、Playwright のブラウザを入れる：`npx playwright install chromium`
 - 確認の追加：`checks/ui/scenarios/` に `*.mjs` を足す（`run.mjs` の `open`・`flush`・`ok` を使う）
+- 試しの大学での確認：`withTestUniversity(async openTest => …)` で、`VITE_UNIVERSITY=test` の開発サーバーを別に立てて開く（`scenarios/95-university.mjs`）
 - 画面の HTML の基準の作り直し：`npm run check:ui -- --update-snapshots`（見た目を変える spec で、変えたことを確かめてから使う）
 
 - 開発時は `vite.config.ts` の `local-api-handler` が `/api/<name>` を `api/<name>.ts` に振り分け、Vercel の `req.body` / `res.status().json()` を真似る
