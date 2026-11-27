@@ -53,8 +53,8 @@ export interface UniversityConfig {
 }
 
 /**
- * 会津大学：前期（Q1・Q2）・後期（Q3・Q4）、通年あり、月〜土、11限まで（最大時限の選択肢は 5〜11）、学年 1〜6、
- *   ベースクラスは 1〜2年が C1〜C6・3年以上が CS・IT-SPR・SY・CN・IT-CMV・SE-DE、
+ * 会津大学：前期（Q1・Q2）・後期（Q3・Q4）、通年あり、月〜土、11限まで（最大時限の選択肢は 5〜11）、学年 1〜4（2026-11-27 に 1〜6 から変えた）、
+ *   ベースクラスは 1〜2年が C1〜C6・3〜4年が CS・IT-SPR・SY・CN・IT-CMV・SE-DE、
  *   成績の段階は A=4（80点以上）・B=3（65〜79点）・C=2（50〜64点）・F=0（50点未満）。D はなく、保存データの D は F として読む
  * 試しの大学（開発サーバーで VITE_UNIVERSITY=test のときだけ）：前期・後期でクォーターなし、通年なし、月〜金、7限まで、
  *   学年 1〜4、ベースクラスは1つのグループ、成績の段階は S=4・A=3・B=2・C=1・F=0
@@ -156,7 +156,12 @@ export interface RawReview {
   exam: number;              // 1〜5
   attendance: number;        // 1〜5
   comment: string;
+  /** 例の値（本物の口コミではない）なら true。2026-11-27〜。example_note に、いつ・なぜ入れたかを書く */
+  is_example?: boolean;
+  example_note?: string;
 }
+// 注意（2026-11-27 作者より）：raw_reviews.json の値は、ほとんどが作者が入れた例の値（本物の口コミではない）。
+// 本物の口コミを集めて入れ直していく予定。それより前に入れた例の値には is_example が付いていない
 
 // ─────────────────────────────────────────────
 // 3. ユーザーデータ（Firestore: users/{uid} にこの型を丸ごと保存）
@@ -202,7 +207,7 @@ export interface AppState {
     maxPeriods: number;      // 5〜大学の最後の時限（会津大学は 11）。初期値 5。範囲は大学の設定から作る
   };
   timetableConditions: {
-    targetGrade: number;     // 大学の設定の学年の範囲（会津大学は 1〜6）
+    targetGrade: number;     // 大学の設定の学年の範囲（会津大学は 1〜4。2026-11-27 までは 1〜6）
     term: 'first' | 'second' | 'full'; // 'full' を選ぶUIはない
     hasRetake: boolean;      // ONにするUIはない [要確認]
     retakeClasses: string[]; // 値を入れる処理がない [要確認]

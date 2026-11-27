@@ -1576,6 +1576,16 @@
     "comment": ""
   },
   {
+    "id": "OT03-021 CPUを創ってみよう",
+    "difficulty": 4,
+    "assignment": 3,
+    "exam": 1,
+    "attendance": 4,
+    "comment": "",
+    "is_example": true,
+    "example_note": "2026-11-27 に作者の依頼で入れた例の値（本物の口コミではない）。本物の口コミを集めたら入れ直す"
+  },
+  {
     "id": "NS01 力学（再履修）",
     "difficulty": 5,
     "assignment": 4,

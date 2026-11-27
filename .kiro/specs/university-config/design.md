@@ -140,7 +140,7 @@ export interface UniversityConfig {
 }
 ```
 
-会津大学の値：`terms` は前期（Q1・Q2）と後期（Q3・Q4）、`hasFullYearCourses: true`、`days` は月〜土、`lastPeriod: 11`、`minSelectablePeriod: 5`、`gradeRange` 1〜6、`baseClasses` は1〜2年に C1〜C6・3年以上に CS・IT-SPR・SY・CN・IT-CMV・SE-DE、`gradingScale` は A=4・B=3・C=2・F=0、`gradeAliases` は `{ D: 'F' }`。
+会津大学の値：`terms` は前期（Q1・Q2）と後期（Q3・Q4）、`hasFullYearCourses: true`、`days` は月〜土、`lastPeriod: 11`、`minSelectablePeriod: 5`、`gradeRange` 1〜4（2026-11-27 に 1〜6 から変えた）、`baseClasses` は1〜2年に C1〜C6・3〜4年に CS・IT-SPR・SY・CN・IT-CMV・SE-DE、`gradingScale` は A=4・B=3・C=2・F=0、`gradeAliases` は `{ D: 'F' }`。
 
 試しの大学の値（会津大学と違うところを持たせる）：前期・後期の2学期でクォーターなし、通年なし、月〜金、7限まで、学年 1〜4、ベースクラスは1つのグループ、成績の段階は S=4・A=3・B=2・C=1・F=0。
 
