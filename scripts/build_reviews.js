@@ -71,6 +71,8 @@ if (fs.existsSync(syllabusPath)) {
         } else if (term === 0b10 && quarter === 0b10) {
             return '通年';
         }
+        // 前期・後期のどちらかで受ける科目（2026-11-20〜。university-config）
+        if (term === 0b11) return '前期・後期';
         return '不明';
     }
 

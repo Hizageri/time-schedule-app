@@ -21,7 +21,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -48,7 +49,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -89,7 +91,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -102,7 +105,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -268,7 +272,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -283,7 +288,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -298,7 +304,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -329,7 +336,8 @@
       ],
       "term": "second",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -344,7 +352,8 @@
       ],
       "term": "second",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -848,7 +857,8 @@
         ],
         "term": "second",
         "slot": {
-          "type": "whole"
+          "type": "quarter",
+          "index": 1
         },
         "isRetake": false
       }
@@ -922,7 +932,8 @@
         ],
         "term": "second",
         "slot": {
-          "type": "whole"
+          "type": "quarter",
+          "index": 1
         },
         "isRetake": false
       }
@@ -951,7 +962,8 @@
         ],
         "term": "second",
         "slot": {
-          "type": "whole"
+          "type": "quarter",
+          "index": 1
         },
         "isRetake": false
       }
@@ -1207,7 +1219,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -1273,7 +1286,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -1884,7 +1898,7 @@
         3,
         4
       ],
-      "term": "first",
+      "term": "either",
       "slot": {
         "type": "whole"
       },
@@ -1898,7 +1912,7 @@
         3,
         4
       ],
-      "term": "first",
+      "term": "either",
       "slot": {
         "type": "whole"
       },
@@ -1912,7 +1926,7 @@
         3,
         4
       ],
-      "term": "first",
+      "term": "either",
       "slot": {
         "type": "whole"
       },
@@ -1926,7 +1940,7 @@
         3,
         4
       ],
-      "term": "first",
+      "term": "either",
       "slot": {
         "type": "whole"
       },
@@ -1967,7 +1981,7 @@
         3,
         4
       ],
-      "term": "first",
+      "term": "either",
       "slot": {
         "type": "whole"
       },
@@ -1982,7 +1996,7 @@
         3,
         4
       ],
-      "term": "first",
+      "term": "either",
       "slot": {
         "type": "whole"
       },
@@ -1999,22 +2013,8 @@
       ],
       "term": "second",
       "slot": {
-        "type": "intensive"
-      },
-      "isRetake": false
-    }
-  },
-  "OT10 課外活動コースII＜インターンシップII（国内A）＞": {
-    "course": {
-      "grades": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "term": "first",
-      "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2029,7 +2029,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2044,22 +2045,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
-      },
-      "isRetake": false
-    }
-  },
-  "OT10 課外活動コース II＜インターンシップIII（シリコンバレーA）＞": {
-    "course": {
-      "grades": [
-        1,
-        2,
-        3,
-        4
-      ],
-      "term": "first",
-      "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2074,7 +2061,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2102,7 +2090,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2283,7 +2272,8 @@
       ],
       "term": "second",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2295,7 +2285,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2307,7 +2298,8 @@
       ],
       "term": "first",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2356,7 +2348,8 @@
       ],
       "term": "second",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2368,7 +2361,8 @@
       ],
       "term": "second",
       "slot": {
-        "type": "intensive"
+        "type": "intensive",
+        "index": 1
       },
       "isRetake": false
     }
@@ -2681,7 +2675,7 @@
         3,
         4
       ],
-      "term": "full",
+      "term": "first",
       "slot": {
         "type": "whole"
       },
@@ -2712,6 +2706,21 @@
         4
       ],
       "term": "full",
+      "slot": {
+        "type": "whole"
+      },
+      "isRetake": false
+    }
+  },
+  "OT03-021 CPUを創ってみよう": {
+    "course": {
+      "grades": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "term": "second",
       "slot": {
         "type": "whole"
       },

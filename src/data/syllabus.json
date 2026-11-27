@@ -24,6 +24,7 @@
     {
         "id_name": "HS05 文学",
         "target_bit": 195,
+        "intensive_quarter": 2,
         "credits": 2,
         "grading": {
             "exam": 40,
@@ -68,6 +69,7 @@
     {
         "id_name": "HS07 ジェンダー・セクシュアリティ論",
         "target_bit": 195,
+        "intensive_quarter": 2,
         "credits": 2,
         "grading": {
             "exam": 20,
@@ -134,6 +136,7 @@
     {
         "id_name": "HS12 日本国憲法",
         "target_bit": 195,
+        "intensive_quarter": 2,
         "credits": 2,
         "grading": {
             "exam": 70,
@@ -157,6 +160,7 @@
     {
         "id_name": "HS13 国際関係論",
         "target_bit": 195,
+        "intensive_quarter": 2,
         "credits": 2,
         "grading": {
             "exam": 0,
@@ -485,6 +489,7 @@
     {
         "id_name": "SS04 生涯スポーツ科学実習（水泳）",
         "target_bit": 207,
+        "intensive_quarter": 2,
         "credits": 1,
         "grading": {
             "exam": 0,
@@ -508,6 +513,7 @@
     {
         "id_name": "SS04 生涯スポーツ科学実習（動きの科学）",
         "target_bit": 207,
+        "intensive_quarter": 2,
         "credits": 1,
         "grading": {
             "exam": 0,
@@ -531,6 +537,7 @@
     {
         "id_name": "SS04 生涯スポーツ科学実習（バレーボール）",
         "target_bit": 207,
+        "intensive_quarter": 2,
         "credits": 1,
         "grading": {
             "exam": 0,
@@ -577,6 +584,7 @@
     {
         "id_name": "SS04 生涯スポーツ科学実習（スキー）",
         "target_bit": 463,
+        "intensive_quarter": 4,
         "credits": 1,
         "grading": {
             "exam": 0,
@@ -597,6 +605,7 @@
     {
         "id_name": "SS04 生涯スポーツ科学実習（スノーボード）",
         "target_bit": 463,
+        "intensive_quarter": 4,
         "credits": 1,
         "grading": {
             "exam": 0,
@@ -1579,7 +1588,7 @@
         "classes": [
             {
                 "class_id": "C3/C4",
-                "target_bit": 385,
+                "target_bit": 321,
                 "schedule": [
                     "火-1",
                     "火-2",
@@ -1699,7 +1708,7 @@
     "classes": [
       {
         "class_id": "C1/C2",
-        "target_bit": 385,
+        "target_bit": 321,
         "schedule": [
           "火-1",
           "火-2",
@@ -1748,7 +1757,7 @@
     "classes": [
       {
         "class_id": "C5/C6",
-        "target_bit": 385,
+        "target_bit": 321,
         "schedule": [
           "火-7",
           "火-8",
@@ -2307,6 +2316,7 @@
     {
         "id_name": "LI07 情報と職業",
         "target_bit": 200,
+        "intensive_quarter": 2,
         "credits": 2,
         "outline": "情報社会における職業について，社会的視点と個人的視点から検討する。情報社会において個人がどのように働き，生活するかについて考えられるようになることを到達目標とする。",
         "grading": {
@@ -2417,6 +2427,7 @@
     {
         "id_name": "LI12 創造力開発スタジオ",
         "target_bit": 206,
+        "intensive_quarter": 2,
         "credits": 2,
         "outline": "創造活動の初学者に対して、創造のプロセスを体験し、創造活動の性質を理解してもらうための講義と実践演習を行う。実践演習では、実在する課題からテーマを選択し、グループごとに新しく有益な解決策・アイデアを提案する。",
         "grading": {
@@ -3848,7 +3859,7 @@
     },
     {
         "id_name": "OT02-1 ベンチャー体験工房 1",
-        "target_bit": 142,
+        "target_bit": 910,
         "credits": 1,
         "outline": "テーマ：モノのネットワーク化で安全・安心・便利な生活環境の実現。ウェアラブルセンシング、通信、人工知能技術を用いた健康増進、生活支援、危険防止のためのIoTシステムの研究開発を行っていきます。足圧センサWondeStepを活用します。",
         "grading": {
@@ -3868,7 +3879,7 @@
     },
     {
         "id_name": "OT02-2 ベンチャー体験工房 2",
-        "target_bit": 142,
+        "target_bit": 910,
         "credits": 1,
         "outline": "テーマ：宇宙開発×ICT。宇宙開発に関する課題解決型学習(PBL)を行う。衛星や探査車、ミッションだけでなく地上試験等で取得されたデータも利活用して、機械学習、データサイエンス、データキュレーション、ソフトウエア開発等を行う。",
         "grading": {
@@ -3888,7 +3899,7 @@
     },
     {
         "id_name": "OT02-6 ベンチャー体験工房 6",
-        "target_bit": 142,
+        "target_bit": 910,
         "credits": 1,
         "outline": "ベンチャー体験工房では、地域や企業の抱える課題やニーズを把握の上、自分の意思でテーマを設定・選択し、テクノロジベンチャーへの発展を意識しながら、新製品・新サービスにつながる研究・開発の擬似体験をする。",
         "grading": {
@@ -3908,7 +3919,7 @@
     },
     {
         "id_name": "OT02-9 ベンチャー体験工房 9",
-        "target_bit": 142,
+        "target_bit": 910,
         "credits": 1,
         "outline": "入浴中の心電信号を自動的に測定・蓄積・解析・表示するシステム「快風」を用い、生体信号の計測から信号処理・データ解析までの一連のプロセスを通じて、生体情報工学の基礎知識と最新技術の日常健康管理における応用を体験する。",
         "grading": {
@@ -3968,7 +3979,7 @@
     },
     {
         "id_name": "OT08 TOEIC準備コース(Level A)",
-        "target_bit": 143,
+        "target_bit": 911,
         "credits": 1,
         "outline": "The course is designed to enhance students’ English proficiency through learning expressions commonly found in the TOEIC test. After the whole training program, you are expected to score over 450 on the TOEIC test.",
         "grading": {
@@ -3988,7 +3999,7 @@
     },
     {
         "id_name": "OT08 TOEIC準備コース(Level B)",
-        "target_bit": 143,
+        "target_bit": 911,
         "credits": 1,
         "outline": "The course is designed to enhance students’ English proficiency through learning expressions commonly found in the TOEIC test. After the whole training program, you are expected to score over 525 on the TOEIC test.",
         "grading": {
@@ -4009,6 +4020,7 @@
     {
         "id_name": "OT10 課外活動コース II＜インターンシップIII（大連）＞",
         "target_bit": 463,
+        "intensive_quarter": 4,
         "credits": 2,
         "outline": "海外の研修所や企業の現場において「実習」を体験することにより、グローバルICT人材としての素養を身に着けることを目的とします。中国の大連東軟信息学院とアルパイン株式会社の産学協同プログラムです。",
         "grading": {
@@ -4026,27 +4038,9 @@
         ]
     },
     {
-        "id_name": "OT10 課外活動コースII＜インターンシップII（国内A）＞",
-        "target_bit": 207,
-        "credits": 2,
-        "outline": "国内の大手企業の現場における「実習」を体験することにより、企業文化の理解、及び主体的な実践力を身に着けることを目的とします。実習先：アルプスアルパイン株式会社。",
-        "grading": {
-            "exam": 0,
-            "report": 80,
-            "others": 20
-        },
-        "classes": [
-            {
-                "class_id": "ALL",
-                "schedule": [
-                    "TBD"
-                ]
-            }
-        ]
-    },
-    {
         "id_name": "OT10 課外活動コースII＜インターンシップII（国内C）＞",
         "target_bit": 207,
+        "intensive_quarter": 2,
         "credits": 2,
         "outline": "国内の大手企業の現場における「実習」を体験することにより、企業文化の理解、及び主体的な実践力を身に着けることを目的とします。実習先：アルプス・アルパイン株式会社。",
         "grading": {
@@ -4066,6 +4060,7 @@
     {
         "id_name": "OT10 課外活動コースII＜インターンシップII（国内D）＞",
         "target_bit": 207,
+        "intensive_quarter": 2,
         "credits": 2,
         "outline": "国内の大手企業の現場における「実習」を体験することにより、企業文化の理解、及び主体的な実践力を身に着けることを目的とします。実習先：サイバートラスト株式会社。",
         "grading": {
@@ -4083,27 +4078,9 @@
         ]
     },
     {
-        "id_name": "OT10 課外活動コース II＜インターンシップIII（シリコンバレーA）＞",
-        "target_bit": 207,
-        "credits": 2,
-        "outline": "海外の研修所や企業の現場において「実習」を体験し、グローバルICT人材の素養を身に着けることを目的とします。米国の会津大学シリコンバレー拠点を中心に、製品開発実習や企業訪問を行います。",
-        "grading": {
-            "exam": 0,
-            "report": 50,
-            "others": 50
-        },
-        "classes": [
-            {
-                "class_id": "ALL",
-                "schedule": [
-                    "TBD"
-                ]
-            }
-        ]
-    },
-    {
         "id_name": "OT10 課外活動コース II＜インターンシップIII（ダナン）＞",
         "target_bit": 207,
+        "intensive_quarter": 2,
         "credits": 2,
         "outline": "ベトナムのFPT大学との協定に基づいて実施されるプログラムです。ダナン市に渡航しビジネスの基礎を英語で学んだ後に、現地企業等のインターンシップに参加、グローバルビジネスを学びます。",
         "grading": {
@@ -4145,6 +4122,7 @@
     {
         "id_name": "TE01 教師入門",
         "target_bit": 194,
+        "intensive_quarter": 2,
         "credits": 2,
         "outline": "中学校・高等学校の教員免許状の取得に必要な必修の科目であり、教職課程への導入的性格をもつ。教員の役割と責任、教職の意義について理解を深め、制度面の知識を習得する。",
         "grading": {
@@ -4452,6 +4430,7 @@
     {
         "id_name": "TE15 キャリア教育",
         "target_bit": 452,
+        "intensive_quarter": 4,
         "credits": 2,
         "outline": "児童生徒の社会的・職業的自立に向けて必要な資質を育むキャリア教育の意義や理論を概説する。事例紹介やペア・グループによる研究プロジェクトも行う。",
         "grading": {
@@ -4471,6 +4450,7 @@
     {
         "id_name": "TE16 教育実習１",
         "target_bit": 200,
+        "intensive_quarter": 2,
         "credits": 4,
         "outline": "中学校一種、または中高両方の免許取得希望者を対象とした、教育実習校での3週間の実習。学校教育の現場で実践を通して研究する。",
         "grading": {
@@ -4490,6 +4470,7 @@
     {
         "id_name": "TE17 教育実習２",
         "target_bit": 200,
+        "intensive_quarter": 2,
         "credits": 2,
         "outline": "高校一種のみの免許の取得希望者が対象の教育実習であり、教育実習校で２週間の実習を行う。",
         "grading": {
@@ -4571,6 +4552,7 @@
     {
         "id_name": "TE21 特別支援教育入門",
         "target_bit": 450,
+        "intensive_quarter": 4,
         "credits": 1,
         "outline": "インクルーシブ教育の考えを説明し、個々の教育的ニーズを把握し、ニーズに応じた適切な指導と必要な支援を行うことの必要性を示す。",
         "grading": {
@@ -4590,6 +4572,7 @@
     {
         "id_name": "TE22 総合的な学習の時間の指導法",
         "target_bit": 450,
+        "intensive_quarter": 4,
         "credits": 1,
         "outline": "「総合的な学習の時間」の指導に必要な事項を理解し、創意工夫を生かした教育活動の展開に必要な基礎的知識を学習する。",
         "grading": {
@@ -5144,7 +5127,7 @@
     },
     {
         "id_name": "OT03-017 アントレプレナーシップ育成プログラム",
-        "target_bit": 655,
+        "target_bit": 143,
         "credits": 1,
         "outline": "学生の「自分らしさを活かして挑戦する力」を育成することを目的とする。ワークショップ形式の学びを通して、自己・他者理解を深めながら、関心をアイデアとして整理し形にするプロセスを体験する。",
         "grading": {
@@ -5212,6 +5195,40 @@
                 "schedule": [
                     "月-9",
                     "月-10"
+                ]
+            },
+            {
+                "class_id": "木曜枠",
+                "schedule": [
+                    "木-9",
+                    "木-10"
+                ]
+            }
+        ]
+    },
+    {
+        "id_name": "OT03-021 CPUを創ってみよう",
+        "target_bit": 399,
+        "credits": 1,
+        "outline": "中央演算処理装置 (CPU)はスマートフォンやパソコン、家電製品など私たちの身の回りの情報機器に搭載されている「頭脳」です。このプロジェクトでは「CPUを実際に作って動かそう」をコンセプトに、HWエンジニア界隈で有名な4-bit CPU 「TD4」(※1)を例題に用いてCPUおよびその構成パーツについて学んでいきます。※1「CPUの創り方 (渡波郁著, マイナビ出版)」CPUとは言ってもCGを表示したりAIのような事はできませんが、LEDを光らせたり文字を表示させたりと「動いた！」という実感は直に得られると思います。CPUというハードウェアに興味がある方は(内容的には難しいですが)ぜひトライしてみてください。もちろん2年生以上の方も興味があればウェルカムです。",
+        "grading": {
+            "exam": 0,
+            "report": 100,
+            "others": 0
+        },
+        "classes": [
+            {
+                "class_id": "月曜枠",
+                "schedule": [
+                    "月-9",
+                    "月-10"
+                ]
+            },
+            {
+                "class_id": "水曜枠",
+                "schedule": [
+                    "水-9",
+                    "水-10"
                 ]
             },
             {

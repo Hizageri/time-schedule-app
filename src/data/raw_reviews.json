@@ -1176,14 +1176,6 @@
     "comment": ""
   },
   {
-    "id": "OT10 課外活動コースII＜インターンシップII（国内A）＞",
-    "difficulty": 4,
-    "assignment": 4,
-    "exam": 5,
-    "attendance": 4,
-    "comment": ""
-  },
-  {
     "id": "OT10 課外活動コースII＜インターンシップII（国内C）＞",
     "difficulty": 4,
     "assignment": 3,
@@ -1197,14 +1189,6 @@
     "assignment": 1,
     "exam": 5,
     "attendance": 3,
-    "comment": ""
-  },
-  {
-    "id": "OT10 課外活動コース II＜インターンシップIII（シリコンバレーA）＞",
-    "difficulty": 5,
-    "assignment": 3,
-    "exam": 4,
-    "attendance": 1,
     "comment": ""
   },
   {

@@ -131,11 +131,11 @@ export interface ClassInfo {
   conditions?: CourseConditions;
 }
 
-/** syllabus.json の1要素（204件） */
+/** syllabus.json の1要素（203件。2026-11-27 に作者のシラバスとの見比べで2科目を消し1科目を足した） */
 export interface CourseData {
   id_name: string;           // "HS01 哲学" のように「科目コード 科目名」。IDと表示名を兼ねている [要確認]
-  target_bit?: TargetBit;    // 科目単位の条件（現データでは192件にある）
-  intensive_quarter?: number; // 集中講義の科目だけ：何学期の集中講義か（シラバスと同じ 1〜4。例：「2学期集中」→ 2）。2026-11-25〜
+  target_bit?: TargetBit;    // 科目単位の条件（現データでは191件にある）
+  intensive_quarter?: number; // 集中講義の科目だけ：何学期の集中講義か（シラバスと同じ 1〜4。例：「2学期集中」→ 2。夏季集中は 2、冬季集中は 4）。2026-11-25〜（現データでは21件）
   credits: number;
   outline: string;
   grading?: { exam: number; report: number; others: number }; // 割合（%）
@@ -305,7 +305,7 @@ export interface ChatbotResponse {
 - `selectedCourses` には `conditions` を入れない（科目を選ぶときに外す。保存データと AI 窓口に送る中身を今までと同じ形に保つため）。条件は `id_name`・`class_id` で科目データ（`src/data/index.ts` の `findCourse`）から引き直す
 - 成績の段階は保存データの `gradingScale` ではなく、大学の設定から読む。成績のラベルは `gradeAliases` で読みかえてから段階を引く（会津大学：D → F。どちらも 0 ポイントの不合格）。保存データの値は書きかえない
 - `course_conditions.json` は生成物。直さずに `syllabus.json` を直して `npm run build:syllabus`
-- `syllabus.json` の `OT03-001` は以前 `classes` の中に科目オブジェクトが入れ子になっていて、`class_id` と `schedule` がなかった（詳細モーダルが落ちる原因だった）。2026-10-12 に `月曜枠`（月-9, 月-10）・`木曜枠`（木-9, 木-10）の2クラスに直した。今は全204科目のクラスに `class_id` と `schedule` がある
+- `syllabus.json` の `OT03-001` は以前 `classes` の中に科目オブジェクトが入れ子になっていて、`class_id` と `schedule` がなかった（詳細モーダルが落ちる原因だった）。2026-10-12 に `月曜枠`（月-9, 月-10）・`木曜枠`（木-9, 木-10）の2クラスに直した。今は全203科目のクラスに `class_id` と `schedule` がある
 - それでも手で管理しているデータなので、`schedule` を読むときは `cls.schedule ?? []` のように、ない場合に備える（詳細モーダル・生成画面・ダッシュボード・`checkScheduleConflict` はそうしてある）
 - 画面の描画中にエラーが起きても真っ白にならないよう、`src/components/ErrorBoundary.tsx` で画面全体を囲んでいる。エラー時はコマどり先輩の口調のエラー画面と「戻る」ボタンを出す
 - コード上の `TimeSlot` 型は `"月-1"` 〜 `"金-10"` のリテラルと `string` の合併型だが、実質は `string`

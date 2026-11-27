@@ -201,4 +201,4 @@ services/aiApi ─▶ lib/firebase（ID トークン）─▶ /api/*
 ## データファイルの扱い
 
 - `reviews_bit.json`・`reviews_text.json`・`course_list_for_prompt.md` は生成物。直接編集せず、`raw_reviews.json` を直して `npm run build:reviews`
-- `syllabus.json`（204科目）は手で管理されている。形の崩れていた `OT03-001` の `classes` は 2026-10-12 に直したが、読む側は引き続き `schedule` がない可能性を考える（`?? []`）
+- `syllabus.json`（203科目）は手で管理されている。形の崩れていた `OT03-001` の `classes` は 2026-10-12 に直したが、読む側は引き続き `schedule` がない可能性を考える（`?? []`）

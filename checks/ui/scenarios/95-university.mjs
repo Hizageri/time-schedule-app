@@ -95,6 +95,19 @@ export default {
             '会津大学：選んだ科目の保存データに conditions が入らない（科目にもクラスにも）');
         await page.context().close();
 
+        // 会津大学：見比べで直した科目の条件（タスク 4.2）。集中講義の学期、前期・後期のどちらか、足した科目・消した科目
+        const cardLabel = (p, name) => p.locator('div.cursor-pointer', { has: p.locator('h3', { hasText: name }) }).first().locator('span.bg-green-50').textContent();
+        page = await open({ uid: 'd', docs: { 'users/d': { currentScreen: 3, userProfile: profile, timetableConditions: { targetGrade: 1, term: 'first', baseClass: 'C1' } } } });
+        ok((await cardLabel(page, 'HS05 文学'))?.trim() === '2Q集中', '会津大学：何学期の集中講義かが分かる科目は「2Q集中」と出る（HS05 文学）');
+        ok((await cardLabel(page, 'OT08 TOEIC準備コース(Level A)'))?.trim() === '前期・後期', '会津大学：前期・後期のどちらかで受ける科目は、前期の一覧に「前期・後期」と出る');
+        ok(!(await cardNames(page)).some(n => n.includes('国内A') || n.includes('シリコンバレーA')), '会津大学：今のシラバスにない科目（インターンシップ 国内A・シリコンバレーA）は出ない');
+        await page.context().close();
+        page = await open({ uid: 'd', docs: { 'users/d': { currentScreen: 3, userProfile: profile, timetableConditions: { targetGrade: 1, term: 'second', baseClass: 'C1' } } } });
+        const secondNames = await cardNames(page);
+        ok(secondNames.includes('OT08 TOEIC準備コース(Level A)') && (await cardLabel(page, 'OT08 TOEIC準備コース(Level A)'))?.trim() === '前期・後期', '会津大学：前期・後期のどちらかで受ける科目は、後期の一覧にも出る');
+        ok(secondNames.includes('OT03-021 CPUを創ってみよう') && (await cardLabel(page, 'OT03-021 CPUを創ってみよう'))?.trim() === '後期', '会津大学：足した科目（OT03-021 CPUを創ってみよう）が後期の一覧に出る');
+        await page.context().close();
+
         // 会津大学：D が入った保存データは F と同じ（0 ポイントの不合格）
         const dCourse = course(first);
         const aCourse = course('NS01 力学');
