@@ -79,12 +79,12 @@
   - _Depends: 2.1_
   - _Requirements: 7.1, 7.2, 7.3_
 
-- [ ] 4.3 全体を確かめる
+- [x] 4.3 全体を確かめる
   - ビルドと `npm run check:ui` がすべて通る。lint の指摘が増えておらず、この spec で書いたコードに `any` がない。`dist/` に試しの大学の設定が入っていない。保存データの型（`AppState`）が変わっていない
   - _Depends: 4.1, 4.2_
   - _Requirements: 4.2, 4.3, 6.1_
 
-- [ ] 4.4 steering と本番での確認の手順をまとめる
+- [x] 4.4 steering と本番での確認の手順をまとめる
   - `data-model.md`・`product.md`（成績の段階）・`tech.md`（大学ごとの設定・変換のスクリプト・`VITE_UNIVERSITY`）・`structure.md`（新しいファイル）を合わせる。`production-check.md` に、作者が本番で確かめる手順（共通の確認 1〜6、成績の選択肢が A・B・C・F だけ）を書く
   - _Depends: 4.3_
   - _Requirements: 6.2, 6.3_
